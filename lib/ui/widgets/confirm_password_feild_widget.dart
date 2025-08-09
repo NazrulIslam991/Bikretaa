@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ConfirmPasswordFeildWidget extends StatelessWidget {
   const ConfirmPasswordFeildWidget({
@@ -18,26 +19,45 @@ class ConfirmPasswordFeildWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: _confirmpasswordEcontroller,
-      autovalidateMode: AutovalidateMode.onUserInteraction,
-      decoration: InputDecoration(
-        hintText: "Confirm Password",
-        labelText: "Confirm Password",
-        prefixIcon: Icon(Icons.lock, color: Colors.blue),
-        suffixIcon: Icon(Icons.remove_red_eye, color: Colors.blue),
+    return Container(
+      height: 45.h,
+      child: TextFormField(
+        controller: _confirmpasswordEcontroller,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        decoration: InputDecoration(
+          hintText: "Confirm Password",
+          labelText: "Confirm Password",
+          hintStyle: TextStyle(
+            fontWeight: FontWeight.normal,
+            color: Colors.black,
+            letterSpacing: 0.4,
+            fontSize: 12.h,
+          ),
+          labelStyle: TextStyle(
+            fontWeight: FontWeight.normal,
+            color: Colors.grey.shade700,
+            letterSpacing: 0.4,
+            fontSize: 12.h,
+          ),
+          prefixIcon: Icon(Icons.lock, color: Colors.blue, size: 20.sp),
+          suffixIcon: Icon(
+            Icons.remove_red_eye,
+            color: Colors.blue,
+            size: 20.sp,
+          ),
+        ),
+        textInputAction: TextInputAction.done,
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'Please enter Password';
+          } else if (value != _passwordEcontroller.text) {
+            return 'Passwords do not match';
+          } else if (!validateCPassword(value)) {
+            return "Password must be 8+ chars with uppercase, lowercase & special char.";
+          }
+          return null;
+        },
       ),
-      textInputAction: TextInputAction.done,
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return 'Please enter Password';
-        } else if (value != _passwordEcontroller.text) {
-          return 'Passwords do not match';
-        } else if (!validateCPassword(value)) {
-          return 'Password must be at least 8 characters long and include:\n- 1 uppercase letter\n- 1 lowercase letter\n- 1 special character (! @ # \$ & * ~)';
-        }
-        return null; // Input is valid
-      },
     );
   }
 }

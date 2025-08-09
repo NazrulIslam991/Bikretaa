@@ -10,6 +10,7 @@ import 'package:bikretaa/ui/widgets/shop_type_dropdown_menu.dart';
 import 'package:bikretaa/ui/widgets/snackbar_messege.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CreateAccountByInformation extends StatefulWidget {
   const CreateAccountByInformation({super.key});
@@ -40,7 +41,7 @@ class _CreateAccountByInformationState
         child: Center(
           child: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.only(left: 30, right: 30),
+              padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 15.w),
               child: Form(
                 key: _formKey,
                 child: Column(
@@ -51,56 +52,85 @@ class _CreateAccountByInformationState
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
 
-                    SizedBox(height: 20),
+                    SizedBox(height: 20.h),
 
-                    ShopNameWidget(shopNameEcontroller: _shopNameEcontroller),
-
-                    SizedBox(height: 20),
-
-                    EmailFeildWidget(emailEcontroller: _emailEcontroller),
-                    SizedBox(height: 20),
-
-                    MobileFeildWidget(mobileEcontroller: _mobileEcontroller),
-
-                    SizedBox(height: 20),
-
-                    ShopTypeDropdownWidget(
-                      onSaved: (value) {
-                        selectedShopType = value;
-                      },
+                    Container(
+                      height: 65.h,
+                      child: ShopNameWidget(
+                        shopNameEcontroller: _shopNameEcontroller,
+                      ),
                     ),
 
-                    SizedBox(height: 20),
-
-                    PasswordFeildWidget(
-                      passwordEcontroller: _passwordEcontroller,
-                    ),
-                    SizedBox(height: 20),
-
-                    ConfirmPasswordFeildWidget(
-                      confirmpasswordEcontroller: _confirmpasswordEcontroller,
-                      passwordEcontroller: _passwordEcontroller,
+                    SizedBox(height: 5.h),
+                    Container(
+                      height: 65.h,
+                      child: EmailFeildWidget(
+                        emailEcontroller: _emailEcontroller,
+                      ),
                     ),
 
-                    SizedBox(height: 16),
+                    SizedBox(height: 5.h),
+                    Container(
+                      height: 65.h,
+                      child: MobileFeildWidget(
+                        mobileEcontroller: _mobileEcontroller,
+                      ),
+                    ),
+
+                    ////SizedBox(height: 20.h),
+                    Container(
+                      height: 65.h,
+                      child: ShopTypeDropdownWidget(
+                        onSaved: (value) {
+                          selectedShopType = value;
+                        },
+                      ),
+                    ),
+
+                    //SizedBox(height: 5.h),
+                    Container(
+                      height: 65.h,
+                      child: PasswordFeildWidget(
+                        passwordEcontroller: _passwordEcontroller,
+                      ),
+                    ),
+
+                    SizedBox(height: 5.h),
+                    Container(
+                      height: 65.h,
+                      child: ConfirmPasswordFeildWidget(
+                        confirmpasswordEcontroller: _confirmpasswordEcontroller,
+                        passwordEcontroller: _passwordEcontroller,
+                      ),
+                    ),
+
+                    SizedBox(height: 40.h),
 
                     Visibility(
                       visible: !_SignupInProgress,
                       replacement: CenterCircularProgressIndiacator(),
                       child: ElevatedButton(
                         onPressed: SignUpComplete,
-                        child: Text('Done'),
+                        child: Text(
+                          'Done',
+                          style: TextStyle(
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12.h,
+                          ),
+                        ),
                       ),
                     ),
-                    SizedBox(height: 40),
+                    SizedBox(height: 20.h),
                     Center(
                       child: RichText(
                         text: TextSpan(
                           text: "Have an account? ",
                           style: TextStyle(
-                            fontWeight: FontWeight.normal,
+                            fontWeight: FontWeight.w600,
                             color: Colors.black,
                             letterSpacing: 0.4,
+                            fontSize: 10.h,
                           ),
                           children: [
                             TextSpan(
@@ -109,6 +139,7 @@ class _CreateAccountByInformationState
                                 fontStyle: FontStyle.italic,
                                 color: Colors.blueAccent,
                                 fontWeight: FontWeight.w700,
+                                fontSize: 10.h,
                               ),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = (() => _onTapSignIn()),

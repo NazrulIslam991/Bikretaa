@@ -8,6 +8,7 @@ import 'package:bikretaa/ui/screens/signup/create_account_screen.dart';
 import 'package:bikretaa/ui/screens/signup/otp_verification_screen.dart';
 import 'package:bikretaa/ui/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class BikretaaApp extends StatelessWidget {
   const BikretaaApp({super.key});
@@ -16,84 +17,85 @@ class BikretaaApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      //navigatorKey: navigator,
-      theme: ThemeData(
-        textTheme: TextTheme(
-          titleLarge: TextStyle(
-            fontSize: 35,
-            fontWeight: FontWeight.w700,
-            color: Colors.blue,
-          ),
-          titleSmall: TextStyle(
-            fontSize: 15,
-            fontWeight: FontWeight.normal,
-            color: Colors.grey,
-          ),
-        ),
-        inputDecorationTheme: InputDecorationTheme(
-          // input theme
-          hintStyle: TextStyle(color: Colors.grey),
-          fillColor: Colors.white,
-
-          filled: true,
-
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: BorderSide(color: Colors.blue, width: 1),
-          ),
-
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: BorderSide(color: Colors.grey, width: 1),
-          ),
-
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: BorderSide(color: Colors.blueAccent, width: 2),
-          ),
-
-          errorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: BorderSide(color: Colors.red, width: 1),
-          ),
-
-          focusedErrorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: BorderSide(color: Colors.redAccent, width: 2),
-          ),
-        ),
-
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            fixedSize: Size.fromWidth(double.maxFinite),
-            backgroundColor: Colors.blue,
-            foregroundColor: Colors.white,
-            padding: EdgeInsets.symmetric(vertical: 12),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
+    return ScreenUtilInit(
+      designSize: const Size(360, 690),
+      minTextAdapt: true,
+      builder: (context, child) {
+        return MaterialApp(
+          // navigatorKey: navigator,
+          theme: ThemeData(
+            textTheme: TextTheme(
+              titleLarge: TextStyle(
+                fontSize: 33.sp,
+                fontWeight: FontWeight.w700,
+                color: Colors.blue,
+              ),
+              titleSmall: TextStyle(
+                fontSize: 15.sp,
+                fontWeight: FontWeight.normal,
+                color: Colors.grey,
+              ),
+            ),
+            inputDecorationTheme: InputDecorationTheme(
+              hintStyle: const TextStyle(color: Colors.grey),
+              fillColor: Colors.white,
+              filled: true,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: const BorderSide(color: Colors.blue, width: 1),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: const BorderSide(color: Colors.grey, width: 1),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: const BorderSide(
+                  color: Colors.blueAccent,
+                  width: 2,
+                ),
+              ),
+              errorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: const BorderSide(color: Colors.red, width: 1),
+              ),
+              focusedErrorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: const BorderSide(color: Colors.redAccent, width: 2),
+              ),
+            ),
+            elevatedButtonTheme: ElevatedButtonThemeData(
+              style: ElevatedButton.styleFrom(
+                fixedSize: const Size.fromWidth(double.maxFinite),
+                backgroundColor: Colors.blue,
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+            ),
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(foregroundColor: Colors.green),
             ),
           ),
-        ),
-        textButtonTheme: TextButtonThemeData(
-          style: TextButton.styleFrom(foregroundColor: Colors.green),
-        ),
-      ),
-      initialRoute: '/',
-      routes: {
-        SplashScreen.name: (context) => SplashScreen(),
-        SigninScreen.name: (context) => SigninScreen(),
-        CreateAccountScreen.name: (context) => CreateAccountScreen(),
-        CreateAccountByInformation.name: (context) =>
-            CreateAccountByInformation(),
-        OTPVerificationScreen.name: (context) => OTPVerificationScreen(),
-        ForgotPasswordScreen.name: (context) => ForgotPasswordScreen(),
-        MainNavBarScreen.name: (context) => MainNavBarScreen(),
-        DetailsProductScreen.name: (context) => DetailsProductScreen(),
-        AddProductScreen.name: (context) => AddProductScreen(),
-        // UpdateProfileScreen.name: (context) => UpdateProfileScreen(),
+          initialRoute: '/',
+          routes: {
+            SplashScreen.name: (context) => SplashScreen(),
+            SigninScreen.name: (context) => SigninScreen(),
+            CreateAccountScreen.name: (context) => CreateAccountScreen(),
+            CreateAccountByInformation.name: (context) =>
+                CreateAccountByInformation(),
+            OTPVerificationScreen.name: (context) => OTPVerificationScreen(),
+            ForgotPasswordScreen.name: (context) => ForgotPasswordScreen(),
+            MainNavBarScreen.name: (context) => MainNavBarScreen(),
+            DetailsProductScreen.name: (context) => DetailsProductScreen(),
+            AddProductScreen.name: (context) => AddProductScreen(),
+            // UpdateProfileScreen.name: (context) => UpdateProfileScreen(),
+          },
+          debugShowCheckedModeBanner: false,
+        );
       },
-      debugShowCheckedModeBanner: false,
     );
   }
 }

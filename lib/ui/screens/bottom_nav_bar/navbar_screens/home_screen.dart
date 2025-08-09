@@ -2,6 +2,7 @@ import 'package:bikretaa/ui/widgets/custom_drawer.dart';
 import 'package:bikretaa/ui/widgets/most_sold_product_card.dart';
 import 'package:bikretaa/ui/widgets/summary_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -19,17 +20,24 @@ class _HomeScreenState extends State<HomeScreen> {
         //backgroundColor: Colors.blueAccent.shade100,
         title: Text(
           "Home",
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.normal),
+          style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
         actions: [
-          IconButton(onPressed: () {}, icon: Icon(Icons.notifications)),
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.notifications, size: 23.h),
+          ),
         ],
       ),
-      drawer: CustomDrawer(),
+      drawer: Container(
+        height: double.infinity,
+        width: 240.w,
+        child: CustomDrawer(),
+      ),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
-        padding: EdgeInsets.only(left: 15, right: 15, top: 10),
+        padding: EdgeInsets.symmetric(vertical: 0.h, horizontal: 15.w),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -38,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
               style: TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
-                fontSize: 24,
+                fontSize: 24.h,
               ),
             ),
             Text(
@@ -47,21 +55,21 @@ class _HomeScreenState extends State<HomeScreen> {
                 textStyle: TextStyle(
                   color: Colors.black,
                   letterSpacing: .5,
-                  fontSize: 20,
+                  fontSize: 20.h,
                 ),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 10),
+              padding: EdgeInsets.symmetric(vertical: 10.h),
               child: GridView.builder(
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
 
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,
-                  mainAxisSpacing: 10,
-                  crossAxisSpacing: 5,
-                  childAspectRatio: 2 / 2.3,
+                  //mainAxisSpacing: 2.h,
+                  //crossAxisSpacing: 2.h,
+                  childAspectRatio: 1.h / 1.6.h,
                 ),
                 itemBuilder: (context, index) {
                   return home_summary_card(
@@ -74,24 +82,26 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
 
-            SizedBox(height: 15),
-
+            //SizedBox(height: 15),
             Padding(
-              padding: EdgeInsets.only(left: 10, right: 10, top: 10),
+              padding: EdgeInsets.symmetric(vertical: 5.h),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     "Most Sold Products",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14.h,
+                    ),
                   ),
                   TextButton(
                     onPressed: () {},
                     child: Text(
-                      "Show Details",
+                      "Show Details...",
                       style: TextStyle(
                         color: Colors.blue,
-                        fontSize: 14,
+                        fontSize: 10.h,
                         fontStyle: FontStyle.italic,
                       ),
                     ),
@@ -101,7 +111,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
 
             Padding(
-              padding: EdgeInsets.only(top: 10),
+              padding: EdgeInsets.only(top: 0),
               child: ListView.builder(
                 itemBuilder: (context, index) {
                   return Most_Sold_Product_Card(
@@ -118,24 +128,26 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
 
-            SizedBox(height: 15),
-
+            //SizedBox(height: 15),
             Padding(
-              padding: EdgeInsets.only(left: 10, right: 10, top: 10),
+              padding: EdgeInsets.symmetric(vertical: 5.h),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     "Sales and Due Report",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14.h,
+                    ),
                   ),
                   TextButton(
                     onPressed: () {},
                     child: Text(
-                      "Show Details",
+                      "Show Details...",
                       style: TextStyle(
                         color: Colors.blue,
-                        fontSize: 14,
+                        fontSize: 10.h,
                         fontStyle: FontStyle.italic,
                       ),
                     ),
@@ -143,7 +155,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
-            SizedBox(height: 15),
+            SizedBox(height: 5.h),
 
             ClipRRect(
               borderRadius: BorderRadius.circular(15),
@@ -154,7 +166,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 fit: BoxFit.cover,
               ),
             ),
-            SizedBox(height: 25),
+            SizedBox(height: 25.h),
             ClipRRect(
               borderRadius: BorderRadius.circular(15),
               child: Image.asset(
@@ -164,7 +176,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 fit: BoxFit.cover,
               ),
             ),
-            SizedBox(height: 25),
+            SizedBox(height: 5.h),
           ],
         ),
       ),

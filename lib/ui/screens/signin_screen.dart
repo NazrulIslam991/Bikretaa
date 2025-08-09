@@ -7,6 +7,7 @@ import 'package:bikretaa/ui/widgets/password_feild_widget.dart';
 import 'package:bikretaa/ui/widgets/snackbar_messege.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SigninScreen extends StatefulWidget {
   const SigninScreen({super.key});
@@ -29,7 +30,7 @@ class _SigninScreenState extends State<SigninScreen> {
         child: Center(
           child: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.only(left: 30, right: 30),
+              padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 15.w),
               child: Form(
                 key: _formKey,
                 child: Column(
@@ -42,14 +43,22 @@ class _SigninScreenState extends State<SigninScreen> {
                       ),
                     ),
 
-                    SizedBox(height: 40),
+                    SizedBox(height: 40.h),
 
-                    EmailFeildWidget(emailEcontroller: _emailEcontroller),
+                    Container(
+                      height: 65.h,
+                      child: EmailFeildWidget(
+                        emailEcontroller: _emailEcontroller,
+                      ),
+                    ),
 
-                    SizedBox(height: 20),
+                    SizedBox(height: 5.h),
 
-                    PasswordFeildWidget(
-                      passwordEcontroller: _passwordEcontroller,
+                    Container(
+                      height: 65.h,
+                      child: PasswordFeildWidget(
+                        passwordEcontroller: _passwordEcontroller,
+                      ),
                     ),
 
                     Row(
@@ -63,12 +72,13 @@ class _SigninScreenState extends State<SigninScreen> {
                               color: Colors.lightBlue,
                               fontStyle: FontStyle.italic,
                               fontWeight: FontWeight.bold,
+                              fontSize: 11.h,
                             ),
                           ),
                         ),
                       ],
                     ),
-                    SizedBox(height: 16),
+                    SizedBox(height: 16.h),
 
                     Visibility(
                       visible: !_signinProgressIndicator,
@@ -76,11 +86,18 @@ class _SigninScreenState extends State<SigninScreen> {
                       ///replacement: CenterCircularProgressIndiacator(),
                       child: ElevatedButton(
                         onPressed: () => _onTapSignin(),
-                        child: Text('Done'),
+                        child: Text(
+                          'Done',
+                          style: TextStyle(
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12.h,
+                          ),
+                        ),
                       ),
                     ),
 
-                    SizedBox(height: 20),
+                    SizedBox(height: 20.h),
                     Center(
                       child: RichText(
                         text: TextSpan(
@@ -89,6 +106,7 @@ class _SigninScreenState extends State<SigninScreen> {
                             fontWeight: FontWeight.w600,
                             color: Colors.black,
                             letterSpacing: 0.4,
+                            fontSize: 10.h,
                           ),
                           children: [
                             TextSpan(
@@ -97,6 +115,7 @@ class _SigninScreenState extends State<SigninScreen> {
                                 fontStyle: FontStyle.italic,
                                 color: Colors.blueAccent,
                                 fontWeight: FontWeight.w700,
+                                fontSize: 10.h,
                               ),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = (() => _onTapSignUp()),

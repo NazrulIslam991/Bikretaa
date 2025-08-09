@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class Most_Sold_Product_Card extends StatelessWidget {
   final String ProductName;
@@ -17,23 +18,23 @@ class Most_Sold_Product_Card extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 4,
+      elevation: 5,
       color: Colors.white,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.h)),
       child: Padding(
-        padding: EdgeInsets.all(10.0),
+        padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 10.w),
         child: Row(
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(4.h),
               child: Image.asset(
                 imagePath,
-                height: 90,
-                width: 90,
+                height: 70.h,
+                width: 90.w,
                 fit: BoxFit.cover,
               ),
             ),
-            const SizedBox(width: 12),
+            SizedBox(width: 12.h),
 
             // Product Info (Name + Quantity)
             Expanded(
@@ -45,14 +46,14 @@ class Most_Sold_Product_Card extends StatelessWidget {
                     ProductName,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 16,
+                      fontSize: 15.h,
                       color: Colors.black,
                     ),
                   ),
-                  const SizedBox(height: 4),
+                  SizedBox(height: 4.h),
                   Text(
                     '$soldProductUnit units sold',
-                    style: const TextStyle(fontSize: 14, color: Colors.grey),
+                    style: TextStyle(fontSize: 12.h, color: Colors.grey),
                   ),
                 ],
               ),
@@ -61,8 +62,8 @@ class Most_Sold_Product_Card extends StatelessWidget {
             // Total Amount
             Text(
               '+$totalSoldPrice tk',
-              style: const TextStyle(
-                fontSize: 16,
+              style: TextStyle(
+                fontSize: 14.h,
                 color: Colors.green,
                 fontWeight: FontWeight.bold,
               ),

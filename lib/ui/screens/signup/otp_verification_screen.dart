@@ -3,6 +3,7 @@ import 'package:bikretaa/ui/screens/signup/create_account_by_information.dart';
 import 'package:bikretaa/ui/widgets/background.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class OTPVerificationScreen extends StatefulWidget {
@@ -24,7 +25,7 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
         child: Center(
           child: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.only(left: 40, right: 40),
+              padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 15.w),
               child: Form(
                 key: _formKey,
                 child: Column(
@@ -37,13 +38,19 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                     SizedBox(height: 5),
                     Text(
                       "Enter verification code, we send to your email address",
-                      style: Theme.of(context).textTheme.titleSmall,
+                      style: TextStyle(
+                        fontWeight: FontWeight.normal,
+                        color: Colors.grey,
+                        letterSpacing: 0.4,
+                        fontStyle: FontStyle.italic,
+                        fontSize: 12.sp,
+                      ),
                     ),
                     SizedBox(height: 50),
 
                     Container(
-                      height: 60,
-                      width: double.infinity,
+                      height: 50.h,
+                      width: double.infinity.h,
                       child: PinCodeTextField(
                         length: 6,
                         obscureText: false,
@@ -52,8 +59,8 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                         pinTheme: PinTheme(
                           shape: PinCodeFieldShape.box,
                           borderRadius: BorderRadius.circular(5),
-                          fieldHeight: 60,
-                          fieldWidth: 50,
+                          fieldHeight: 45.h,
+                          fieldWidth: 40.h,
                           activeColor: Colors.blue,
                           activeFillColor: Colors.blue.shade100,
                           selectedColor: Colors.green,
@@ -80,9 +87,10 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                         Text(
                           "Don't receive a code? ",
                           style: TextStyle(
+                            color: Colors.grey,
+                            fontStyle: FontStyle.italic,
                             fontWeight: FontWeight.normal,
-                            color: Colors.black,
-                            letterSpacing: 0.4,
+                            fontSize: 11.h,
                           ),
                         ),
                         TextButton(
@@ -93,20 +101,21 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                               color: Colors.lightBlue,
                               fontStyle: FontStyle.italic,
                               fontWeight: FontWeight.bold,
+                              fontSize: 11.h,
                             ),
                           ),
                         ),
                       ],
                     ),
 
-                    SizedBox(height: 40),
+                    SizedBox(height: 30.h),
 
                     ElevatedButton(
                       onPressed: () => _OnTapEmailVerification(),
                       child: Text("verify"),
                     ),
 
-                    SizedBox(height: 40),
+                    SizedBox(height: 20.h),
 
                     Center(
                       child: Column(
@@ -118,13 +127,16 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                                 fontWeight: FontWeight.w600,
                                 color: Colors.black,
                                 letterSpacing: 0.4,
+                                fontSize: 10.h,
                               ),
                               children: [
                                 TextSpan(
                                   text: 'Sign In',
                                   style: TextStyle(
-                                    color: Colors.green,
+                                    fontStyle: FontStyle.italic,
+                                    color: Colors.blueAccent,
                                     fontWeight: FontWeight.w700,
+                                    fontSize: 10.h,
                                   ),
                                   recognizer: TapGestureRecognizer()
                                     ..onTap = (() => SignIn()),

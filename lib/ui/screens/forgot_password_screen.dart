@@ -5,6 +5,7 @@ import 'package:bikretaa/ui/widgets/email_feild_controller.dart';
 import 'package:bikretaa/ui/widgets/snackbar_messege.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
@@ -25,7 +26,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         child: Center(
           child: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.only(left: 30, right: 30),
+              padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 15.w),
               child: Form(
                 key: _formKey,
                 child: Column(
@@ -38,7 +39,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       ),
                     ),
 
-                    SizedBox(height: 5),
+                    SizedBox(height: 5.h),
 
                     Center(
                       child: Text(
@@ -48,15 +49,21 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                           color: Colors.black,
                           letterSpacing: 0.4,
                           fontStyle: FontStyle.italic,
+                          fontSize: 12.sp,
                         ),
                       ),
                     ),
 
-                    SizedBox(height: 40),
+                    SizedBox(height: 40.h),
 
-                    EmailFeildWidget(emailEcontroller: _emailEcontroller),
+                    Container(
+                      height: 65.h,
+                      child: EmailFeildWidget(
+                        emailEcontroller: _emailEcontroller,
+                      ),
+                    ),
 
-                    SizedBox(height: 30),
+                    SizedBox(height: 30.h),
 
                     Visibility(
                       visible: _forgotPassword_ProgressIndicator == false,
@@ -64,7 +71,14 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       replacement: CenterCircularProgressIndiacator(),
                       child: ElevatedButton(
                         onPressed: () => _OnTapResetLinkSend(),
-                        child: Text('Reset Link'),
+                        child: Text(
+                          'Reset Link',
+                          style: TextStyle(
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12.h,
+                          ),
+                        ),
                       ),
                     ),
 
@@ -77,6 +91,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                             fontWeight: FontWeight.normal,
                             color: Colors.black,
                             letterSpacing: 0.4,
+                            fontSize: 10.h,
                           ),
                           children: [
                             TextSpan(
@@ -85,6 +100,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                 fontStyle: FontStyle.italic,
                                 color: Colors.blueAccent,
                                 fontWeight: FontWeight.w700,
+                                fontSize: 10.h,
                               ),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = (() => _onTapSignIn()),

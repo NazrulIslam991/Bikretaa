@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});
@@ -7,51 +8,60 @@ class CustomDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(
       child: ListView(
-        padding: const EdgeInsets.all(0),
+        padding: EdgeInsets.all(0),
         children: [
-          const DrawerHeader(
+          DrawerHeader(
             decoration: BoxDecoration(color: Colors.blueGrey),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CircleAvatar(
-                  radius: 33,
+                  radius: 25.h,
                   backgroundImage: AssetImage('assets/images/messi.webp'),
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 10.h),
                 Text(
                   "Md Nazrul Islam Nayon",
                   style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 14.h,
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
                   "nazrulislamnayon991@gmail.com",
-                  style: TextStyle(color: Colors.greenAccent, fontSize: 13),
+                  style: TextStyle(color: Colors.greenAccent, fontSize: 10.h),
                 ),
               ],
             ),
           ),
 
           ListTile(
-            leading: const Icon(Icons.home),
-            title: const Text(' Home '),
+            leading: Icon(Icons.home, size: 20.h),
+            title: Text(
+              ' Home',
+              style: TextStyle(color: Colors.black, fontSize: 12.h),
+            ),
             onTap: () {
               Navigator.pop(context);
             },
           ),
           ListTile(
-            leading: const Icon(Icons.edit),
-            title: const Text(' Edit Profile '),
+            leading: Icon(Icons.edit, size: 20.h),
+            title: Text(
+              ' Edit Profile',
+              style: TextStyle(color: Colors.black, fontSize: 12.h),
+            ),
             onTap: () {
               Navigator.pop(context);
             },
           ),
           ListTile(
-            leading: const Icon(Icons.logout),
-            title: const Text('LogOut'),
+            leading: Icon(Icons.logout, size: 20.h),
+            title: Text(
+              'LogOut',
+              style: TextStyle(color: Colors.black, fontSize: 12.h),
+            ),
             onTap: () {
               Navigator.pop(context);
             },

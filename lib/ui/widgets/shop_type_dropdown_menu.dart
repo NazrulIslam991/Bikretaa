@@ -1,5 +1,6 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ShopTypeDropdownWidget extends StatefulWidget {
   final void Function(String?)? onSaved;
@@ -35,15 +36,23 @@ class _ShopTypeDropdownWidgetState extends State<ShopTypeDropdownWidget> {
     return DropdownButtonFormField2<String>(
       isExpanded: true,
       decoration: InputDecoration(
-        contentPadding: const EdgeInsets.symmetric(vertical: 16),
+        contentPadding: EdgeInsets.symmetric(vertical: 12.h),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
       ),
-      hint: const Text('Select Shop Type', style: TextStyle(fontSize: 15)),
+      hint: Text(
+        'Select Shop Type',
+        style: TextStyle(
+          fontWeight: FontWeight.normal,
+          color: Colors.grey.shade700,
+          letterSpacing: 0.4,
+          fontSize: 12.h,
+        ),
+      ),
       items: shopTypes
           .map(
             (type) => DropdownMenuItem<String>(
               value: type,
-              child: Text(type, style: const TextStyle(fontSize: 15)),
+              child: Text(type, style: TextStyle(fontSize: 12.h)),
             ),
           )
           .toList(),
@@ -71,7 +80,7 @@ class _ShopTypeDropdownWidgetState extends State<ShopTypeDropdownWidget> {
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
       ),
       menuItemStyleData: const MenuItemStyleData(
-        padding: EdgeInsets.symmetric(horizontal: 16),
+        padding: EdgeInsets.symmetric(horizontal: 12),
       ),
     );
   }

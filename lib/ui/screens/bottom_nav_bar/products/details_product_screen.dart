@@ -1,5 +1,6 @@
 import 'package:bikretaa/ui/widgets/divider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class DetailsProductScreen extends StatelessWidget {
@@ -10,7 +11,7 @@ class DetailsProductScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Product Details", style: TextStyle(fontSize: 25)),
+        title: Text("Product Details", style: TextStyle(fontSize: 22.h)),
         centerTitle: true,
       ),
 
@@ -19,53 +20,53 @@ class DetailsProductScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.circular(2),
+              borderRadius: BorderRadius.circular(0.h),
               child: Image.asset(
                 "assets/images/most_products_sold.jpeg",
                 width: double.infinity,
-                height: 250,
+                height: 170.h,
                 fit: BoxFit.cover,
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(right: 15, left: 15, top: 5),
+              padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 10.w),
               child: Text(
                 "Product Name",
-                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 20.h, fontWeight: FontWeight.bold),
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(right: 15, left: 15),
+              padding: EdgeInsets.symmetric(vertical: 0.h, horizontal: 10.w),
               child: Text(
                 "Categories Name and Sub-Categories",
                 style: GoogleFonts.italianno(
                   textStyle: TextStyle(
                     color: Colors.black,
                     letterSpacing: .5,
-                    fontSize: 20,
+                    fontSize: 18.h,
                   ),
                 ),
               ),
             ),
             Padding(
               padding: EdgeInsets.only(
-                right: 15,
-                left: 15,
-                top: 25,
-                bottom: 10,
+                right: 25.h,
+                left: 25.h,
+                top: 15.h,
+                bottom: 10.h,
               ),
               child: Text(
                 "Product information",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 16.h, fontWeight: FontWeight.bold),
               ),
             ),
             Divider_widget(),
             Padding(
               padding: EdgeInsetsGeometry.only(
-                right: 20,
-                left: 20,
-                top: 20,
-                bottom: 20,
+                right: 20.h,
+                left: 20.h,
+                top: 10.h,
+                bottom: 10.h,
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -77,15 +78,15 @@ class DetailsProductScreen extends StatelessWidget {
                       Text(
                         "Quantity in Stock",
                         style: TextStyle(
-                          fontSize: 15,
+                          fontSize: 14.h,
                           color: Colors.grey.shade700,
                         ),
                       ),
-                      SizedBox(height: 10),
+                      SizedBox(height: 10.h),
                       Text(
                         "150",
                         style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 12.h,
                           color: Colors.blue,
                           fontStyle: FontStyle.italic,
                           fontWeight: FontWeight.normal,
@@ -100,15 +101,15 @@ class DetailsProductScreen extends StatelessWidget {
                       Text(
                         "Product Code",
                         style: TextStyle(
-                          fontSize: 15,
+                          fontSize: 14.h,
                           color: Colors.grey.shade700,
                         ),
                       ),
-                      SizedBox(height: 10),
+                      SizedBox(height: 10.h),
                       Text(
                         "TOM-0054",
                         style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 12.h,
                           color: Colors.blue,
                           fontWeight: FontWeight.normal,
                           fontStyle: FontStyle.italic,
@@ -122,10 +123,10 @@ class DetailsProductScreen extends StatelessWidget {
             Divider_widget(),
             Padding(
               padding: EdgeInsetsGeometry.only(
-                right: 20,
-                left: 20,
-                top: 20,
-                bottom: 20,
+                right: 20.h,
+                left: 20.h,
+                top: 10.h,
+                bottom: 10.h,
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -137,15 +138,15 @@ class DetailsProductScreen extends StatelessWidget {
                       Text(
                         "Purchase Price",
                         style: TextStyle(
-                          fontSize: 15,
+                          fontSize: 14.h,
                           color: Colors.grey.shade700,
                         ),
                       ),
-                      SizedBox(height: 10),
+                      SizedBox(height: 10.h),
                       Text(
                         "150 tk",
                         style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 12.h,
                           color: Colors.blue,
                           fontStyle: FontStyle.italic,
                           fontWeight: FontWeight.normal,
@@ -160,7 +161,7 @@ class DetailsProductScreen extends StatelessWidget {
                       Text(
                         "Selling Price",
                         style: TextStyle(
-                          fontSize: 15,
+                          fontSize: 14.h,
                           color: Colors.grey.shade700,
                         ),
                       ),
@@ -168,7 +169,7 @@ class DetailsProductScreen extends StatelessWidget {
                       Text(
                         '200 tk',
                         style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 12.h,
                           color: Colors.blue,
                           fontWeight: FontWeight.normal,
                           fontStyle: FontStyle.italic,
@@ -182,10 +183,10 @@ class DetailsProductScreen extends StatelessWidget {
             Divider_widget(),
             Padding(
               padding: EdgeInsetsGeometry.only(
-                right: 20,
-                left: 20,
-                top: 20,
-                bottom: 20,
+                right: 20.h,
+                left: 20.h,
+                top: 10.h,
+                bottom: 10.h,
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -197,7 +198,7 @@ class DetailsProductScreen extends StatelessWidget {
                       Text(
                         "Manufacture Date",
                         style: TextStyle(
-                          fontSize: 15,
+                          fontSize: 14.h,
                           color: Colors.grey.shade700,
                         ),
                       ),
@@ -205,7 +206,7 @@ class DetailsProductScreen extends StatelessWidget {
                       Text(
                         "01/02/2025",
                         style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 12.h,
                           color: Colors.blue,
                           fontStyle: FontStyle.italic,
                           fontWeight: FontWeight.normal,
@@ -220,7 +221,7 @@ class DetailsProductScreen extends StatelessWidget {
                       Text(
                         "Expiry Date",
                         style: TextStyle(
-                          fontSize: 15,
+                          fontSize: 14.h,
                           color: Colors.grey.shade700,
                         ),
                       ),
@@ -228,7 +229,7 @@ class DetailsProductScreen extends StatelessWidget {
                       Text(
                         "01/02/2026",
                         style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 12.h,
                           color: Colors.blue,
                           fontWeight: FontWeight.normal,
                           fontStyle: FontStyle.italic,
@@ -242,22 +243,22 @@ class DetailsProductScreen extends StatelessWidget {
 
             Padding(
               padding: EdgeInsets.only(
-                right: 15,
-                left: 15,
-                top: 25,
-                bottom: 10,
+                right: 20.h,
+                left: 20.h,
+                top: 25.h,
+                bottom: 10.h,
               ),
               child: Text(
                 "Product Description",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 16.h, fontWeight: FontWeight.bold),
               ),
             ),
             Padding(
               padding: EdgeInsets.only(
-                right: 15,
-                left: 15,
-                top: 10,
-                bottom: 30,
+                right: 20.h,
+                left: 20.h,
+                top: 5.h,
+                bottom: 30.h,
               ),
               child: Text(
                 "This premium quality Basmati rice is ideal for everyday cooking and special occasions. Grown in the fertile plains, it offers a rich aroma and long, fluffy grains after cooking. Perfect for biryani, pulao, or steamed rice dishes. Hygienically packed to preserve freshness and nutrition.",
@@ -265,7 +266,7 @@ class DetailsProductScreen extends StatelessWidget {
                   textStyle: TextStyle(
                     color: Colors.black,
                     letterSpacing: .5,
-                    fontSize: 20,
+                    fontSize: 14.h,
                   ),
                 ),
               ),
@@ -275,18 +276,18 @@ class DetailsProductScreen extends StatelessWidget {
       ),
 
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(15),
+        padding: EdgeInsets.all(10.h),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            SizedBox(
-              width: 120,
-              height: 45,
+            Container(
+              height: 40.h,
+              width: 90.w,
               child: ElevatedButton(onPressed: () {}, child: Text("Edit")),
             ),
-            SizedBox(
-              width: 120,
-              height: 45,
+            Container(
+              height: 40.h,
+              width: 90.w,
               child: ElevatedButton(onPressed: () {}, child: Text("Delete")),
             ),
           ],

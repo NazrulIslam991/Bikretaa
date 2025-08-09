@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class EmailFeildWidget extends StatelessWidget {
   const EmailFeildWidget({
@@ -16,24 +17,39 @@ class EmailFeildWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: _emailEcontroller,
-      decoration: InputDecoration(
-        labelText: "Email",
-        hintText: "Email",
-        prefixIcon: Icon(Icons.email, color: Colors.blue),
+    return Container(
+      height: 45.h,
+      child: TextFormField(
+        controller: _emailEcontroller,
+        decoration: InputDecoration(
+          labelText: "Email",
+          hintText: "Email",
+          labelStyle: TextStyle(
+            fontWeight: FontWeight.normal,
+            color: Colors.grey.shade700,
+            letterSpacing: 0.4,
+            fontSize: 12.h,
+          ),
+          hintStyle: TextStyle(
+            fontWeight: FontWeight.normal,
+            color: Colors.black,
+            letterSpacing: 0.4,
+            fontSize: 12.h,
+          ),
+          prefixIcon: Icon(Icons.email, color: Colors.blue, size: 20.sp),
+        ),
+        textInputAction: TextInputAction.next,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'Please enter an email address';
+          } else if (!validateEmail(value)) {
+            return 'Please enter a valid email address';
+          }
+          return null;
+        },
+        autofillHints: [AutofillHints.email],
       ),
-      textInputAction: TextInputAction.next,
-      autovalidateMode: AutovalidateMode.onUserInteraction,
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return 'Please enter an email address';
-        } else if (!validateEmail(value)) {
-          return 'Please enter a valid email address';
-        }
-        return null; // Input is valid
-      },
-      autofillHints: [AutofillHints.email],
     );
   }
 }

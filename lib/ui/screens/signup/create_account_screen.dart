@@ -6,6 +6,7 @@ import 'package:bikretaa/ui/widgets/email_feild_controller.dart';
 import 'package:bikretaa/ui/widgets/snackbar_messege.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CreateAccountScreen extends StatefulWidget {
   const CreateAccountScreen({super.key});
@@ -27,7 +28,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
         child: Center(
           child: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.only(left: 30, right: 30),
+              padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 15.w),
               child: Form(
                 key: _formKey,
                 child: Column(
@@ -40,25 +41,31 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                       ),
                     ),
 
-                    SizedBox(height: 5),
+                    SizedBox(height: 5.h),
 
                     Center(
                       child: Text(
                         "We'll send a one-time password to your email address",
                         style: TextStyle(
                           fontWeight: FontWeight.normal,
-                          color: Colors.black,
+                          color: Colors.grey,
                           letterSpacing: 0.4,
                           fontStyle: FontStyle.italic,
+                          fontSize: 12.sp,
                         ),
                       ),
                     ),
 
-                    SizedBox(height: 40),
+                    SizedBox(height: 40.h),
 
-                    EmailFeildWidget(emailEcontroller: _emailEcontroller),
+                    Container(
+                      height: 65.h,
+                      child: EmailFeildWidget(
+                        emailEcontroller: _emailEcontroller,
+                      ),
+                    ),
 
-                    SizedBox(height: 30),
+                    SizedBox(height: 30.h),
 
                     Visibility(
                       visible: _Verificaton_code_ProgressIndicator == false,
@@ -66,7 +73,14 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                       replacement: CenterCircularProgressIndiacator(),
                       child: ElevatedButton(
                         onPressed: () => _onTapVerifyEmail(),
-                        child: Text('Next'),
+                        child: Text(
+                          'Next',
+                          style: TextStyle(
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12.h,
+                          ),
+                        ),
                       ),
                     ),
 
@@ -76,9 +90,10 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                         text: TextSpan(
                           text: "Have an account? ",
                           style: TextStyle(
-                            fontWeight: FontWeight.normal,
+                            fontWeight: FontWeight.w600,
                             color: Colors.black,
                             letterSpacing: 0.4,
+                            fontSize: 10.h,
                           ),
                           children: [
                             TextSpan(
@@ -87,6 +102,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                 fontStyle: FontStyle.italic,
                                 color: Colors.blueAccent,
                                 fontWeight: FontWeight.w700,
+                                fontSize: 10.h,
                               ),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = (() => _onTapSignIn()),

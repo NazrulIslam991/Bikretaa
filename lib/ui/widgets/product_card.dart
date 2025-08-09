@@ -1,5 +1,6 @@
 import 'package:bikretaa/ui/screens/bottom_nav_bar/products/details_product_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ProductCardWidget extends StatelessWidget {
@@ -24,78 +25,87 @@ class ProductCardWidget extends StatelessWidget {
       color: Colors.white,
       elevation: 8,
       shadowColor: Colors.blueAccent,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.h)),
       child: SizedBox(
-        child: Padding(
-          padding: const EdgeInsets.all(10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(5),
-                child: Image.asset(
-                  imagePath,
-                  width: double.infinity,
-                  height: 100,
-                  fit: BoxFit.cover,
-                ),
+        child: Column(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(5.h),
+                topRight: Radius.circular(5.h),
               ),
-              const SizedBox(height: 10),
-              Text(
-                productName,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 14,
-                  color: Colors.black87,
-                ),
+              child: Image.asset(
+                imagePath,
+                width: double.infinity,
+                height: 80.h,
+                fit: BoxFit.cover,
               ),
-              Text(
-                category,
-                style: TextStyle(fontSize: 12, color: Colors.grey[600]),
-              ),
-              const SizedBox(height: 5),
-              Text(
-                "Total: $totalUnit units",
-                style: const TextStyle(fontSize: 12, color: Colors.black),
-              ),
-              const SizedBox(height: 5),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 10.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "$unitPrice tk",
-                    style: GoogleFonts.italianno(
-                      textStyle: TextStyle(
-                        color: Colors.red,
-                        letterSpacing: .5,
-                        fontSize: 30,
-                      ),
+                    productName,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12.h,
+                      color: Colors.black87,
                     ),
                   ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pushNamed(
-                        context,
-                        DetailsProductScreen.name,
-                      );
-                    },
-
-                    style: TextButton.styleFrom(padding: EdgeInsets.zero),
-                    child: Text(
-                      "show more...",
-                      style: GoogleFonts.abyssinicaSil(
-                        textStyle: TextStyle(
-                          color: Colors.blue,
-                          letterSpacing: .5,
-                          fontSize: 12,
+                  Text(
+                    category,
+                    style: TextStyle(fontSize: 10.h, color: Colors.grey[600]),
+                  ),
+                  SizedBox(height: 5.h),
+                  Text(
+                    "Total: $totalUnit units",
+                    style: TextStyle(fontSize: 10.h, color: Colors.black),
+                  ),
+                  SizedBox(height: 5.h),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "$unitPrice tk",
+                        style: GoogleFonts.italianno(
+                          textStyle: TextStyle(
+                            color: Colors.red,
+                            letterSpacing: .5,
+                            fontSize: 18.h,
+                          ),
                         ),
                       ),
-                    ),
+                      Container(
+                        height: 18.h,
+                        child: TextButton(
+                          onPressed: () {
+                            Navigator.pushNamed(
+                              context,
+                              DetailsProductScreen.name,
+                            );
+                          },
+
+                          style: TextButton.styleFrom(padding: EdgeInsets.zero),
+                          child: Text(
+                            "show more...",
+                            style: GoogleFonts.abyssinicaSil(
+                              textStyle: TextStyle(
+                                color: Colors.blue,
+                                letterSpacing: .5,
+                                fontSize: 10.h,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

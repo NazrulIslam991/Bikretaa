@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class home_summary_card extends StatelessWidget {
   final int totalProducts;
@@ -13,22 +14,22 @@ class home_summary_card extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       color: Colors.white,
-      elevation: 8,
+      elevation: 5.h,
       shadowColor: Colors.blueAccent,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.h)),
       child: SizedBox(
         child: Padding(
-          padding: const EdgeInsets.only(top: 5),
+          padding: EdgeInsets.symmetric(vertical: 18.h, horizontal: 5.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               CircleAvatar(
-                radius: 20,
+                radius: 20.h,
                 backgroundColor: Colors.green.shade100,
                 child: ClipOval(
                   child: SizedBox(
-                    width: 25,
-                    height: 25,
+                    width: 20.h,
+                    height: 20.w,
                     child: Image.asset(
                       'assets/images/doller.png',
                       fit: BoxFit.contain,
@@ -36,27 +37,30 @@ class home_summary_card extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 5),
+              SizedBox(height: 5.h),
               Text(
                 CardTitle,
                 style: TextStyle(
                   fontStyle: FontStyle.italic,
                   color: Colors.blue.shade400,
-                  fontSize: 12,
+                  fontSize: 12.h,
                 ),
               ),
               Text(
                 "$totalProducts",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.h),
               ),
-              TextButton(
-                onPressed: () {},
-                child: Text(
-                  "Show Details",
-                  style: TextStyle(
-                    fontStyle: FontStyle.italic,
-                    color: Colors.blue.shade400,
-                    fontSize: 10,
+              Container(
+                height: 28.h,
+                child: TextButton(
+                  onPressed: () {},
+                  child: Text(
+                    "Show Details",
+                    style: TextStyle(
+                      fontStyle: FontStyle.italic,
+                      color: Colors.blue.shade400,
+                      fontSize: 10.h,
+                    ),
                   ),
                 ),
               ),
