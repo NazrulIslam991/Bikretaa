@@ -17,7 +17,7 @@ class PasswordFeildWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 45.h,
+      //height: 45.h,
       child: TextFormField(
         controller: _passwordEcontroller,
         autovalidateMode: AutovalidateMode.onUserInteraction,

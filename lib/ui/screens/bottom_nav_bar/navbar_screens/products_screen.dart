@@ -1,6 +1,5 @@
 import 'package:bikretaa/ui/screens/bottom_nav_bar/products/add_product_screen.dart';
 import 'package:bikretaa/ui/widgets/product_card.dart';
-import 'package:bikretaa/ui/widgets/search_bar.dart';
 import 'package:bikretaa/ui/widgets/snackbar_messege.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,6 +10,7 @@ class ProductsScreen extends StatefulWidget {
 
   @override
   State<ProductsScreen> createState() => _ProductsScreenState();
+  static const name = 'Product_Screen';
 }
 
 class _ProductsScreenState extends State<ProductsScreen> {
@@ -28,23 +28,34 @@ class _ProductsScreenState extends State<ProductsScreen> {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 50.h,
-        title: Padding(
-          padding: EdgeInsets.only(top: 10.h),
-          child: SizedBox(
-            height: 40.h,
-            child: CustomSearchBar(
-              controller: searchController,
-              onChanged: (value) {
-                setState(() {
-                  searchText = value;
-                });
-                if (value.isNotEmpty) {
-                  showSnackbarMessage(context, searchText);
-                }
-              },
+        title: SizedBox(
+          height: 40.h,
+          child: TextField(
+            controller: searchController,
+            onChanged: (value) {
+              setState(() {
+                searchText = value;
+              });
+              if (value.isNotEmpty) {
+                showSnackbarMessage(context, searchText);
+              }
+            },
+            decoration: InputDecoration(
+              hintText: 'Search products...',
+              prefixIcon: Icon(Icons.search),
+              contentPadding: EdgeInsets.symmetric(vertical: 8.h),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10.r),
+                borderSide: BorderSide.none,
+              ),
+              filled: true,
+              fillColor: Colors.white,
             ),
+            style: TextStyle(fontSize: 16.sp),
+            textInputAction: TextInputAction.search,
           ),
         ),
+        backgroundColor: Colors.white10,
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 15.w),
@@ -94,12 +105,11 @@ class _ProductsScreenState extends State<ProductsScreen> {
                 child: GridView.builder(
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
-
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     mainAxisSpacing: 10.h,
                     crossAxisSpacing: 5.h,
-                    childAspectRatio: 1.h / 1.3.h,
+                    childAspectRatio: 1.h / 1.4.h,
                   ),
                   itemBuilder: (context, index) {
                     return ProductCardWidget(
@@ -117,7 +127,6 @@ class _ProductsScreenState extends State<ProductsScreen> {
           ),
         ),
       ),
-
       floatingActionButton: Container(
         height: 50,
         width: 50,

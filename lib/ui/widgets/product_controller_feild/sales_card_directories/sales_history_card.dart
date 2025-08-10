@@ -30,10 +30,10 @@ class SalesHistoryCard extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(left: 0.w, right: 0.w, bottom: 10.h),
       child: Container(
-        padding: EdgeInsets.all(10.w),
+        padding: EdgeInsets.all(8.w),
         decoration: BoxDecoration(
           color: Color(0xFF1D9BF0),
-          borderRadius: BorderRadius.circular(15.r),
+          borderRadius: BorderRadius.circular(12.r),
           boxShadow: [
             BoxShadow(
               color: Colors.black.withOpacity(0.1),
@@ -103,7 +103,9 @@ class SalesHistoryCard extends StatelessWidget {
                       Text(
                         'Total Items : ',
                         style: TextStyle(
-                          color: Colors.black87,
+                          color: Colors.indigo,
+                          fontStyle: FontStyle.italic,
+                          fontWeight: FontWeight.normal,
                           fontSize: 12.sp,
                         ),
                       ),
@@ -123,7 +125,9 @@ class SalesHistoryCard extends StatelessWidget {
                       Text(
                         'Total Cost : ',
                         style: TextStyle(
-                          color: Colors.black87,
+                          color: Colors.indigo,
+                          fontStyle: FontStyle.italic,
+                          fontWeight: FontWeight.normal,
                           fontSize: 12.sp,
                         ),
                       ),
@@ -143,7 +147,9 @@ class SalesHistoryCard extends StatelessWidget {
                       Text(
                         'Discount : ',
                         style: TextStyle(
-                          color: Colors.black87,
+                          color: Colors.indigo,
+                          fontStyle: FontStyle.italic,
+                          fontWeight: FontWeight.normal,
                           fontSize: 12.sp,
                         ),
                       ),
@@ -163,7 +169,9 @@ class SalesHistoryCard extends StatelessWidget {
                       Text(
                         'Discount Amount : ',
                         style: TextStyle(
-                          color: Colors.black87,
+                          color: Colors.indigo,
+                          fontStyle: FontStyle.italic,
+                          fontWeight: FontWeight.normal,
                           fontSize: 12.sp,
                         ),
                       ),
@@ -183,7 +191,9 @@ class SalesHistoryCard extends StatelessWidget {
                       Text(
                         'Grand Total : ',
                         style: TextStyle(
-                          color: Colors.black87,
+                          color: Colors.indigo,
+                          fontStyle: FontStyle.italic,
+                          fontWeight: FontWeight.normal,
                           fontSize: 12.sp,
                         ),
                       ),

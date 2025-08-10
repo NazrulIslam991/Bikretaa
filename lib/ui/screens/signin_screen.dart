@@ -54,31 +54,37 @@ class _SigninScreenState extends State<SigninScreen> {
 
                     SizedBox(height: 5.h),
 
-                    Container(
-                      height: 65.h,
-                      child: PasswordFeildWidget(
-                        passwordEcontroller: _passwordEcontroller,
-                      ),
-                    ),
-
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        TextButton(
-                          onPressed: () => _onTapForgetPassword(),
-                          child: Text(
-                            'Forgot Password?',
-                            style: TextStyle(
-                              color: Colors.lightBlue,
-                              fontStyle: FontStyle.italic,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 11.h,
+                        Container(
+                          height: 65.h,
+                          child: PasswordFeildWidget(
+                            passwordEcontroller: _passwordEcontroller,
+                          ),
+                        ),
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: Transform.translate(
+                            offset: Offset(0, -20.h),
+                            child: TextButton(
+                              onPressed: () => _onTapForgetPassword(),
+                              child: Text(
+                                'Forgot Password?',
+                                style: TextStyle(
+                                  color: Colors.lightBlue,
+                                  fontStyle: FontStyle.italic,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 11.h,
+                                ),
+                              ),
                             ),
                           ),
                         ),
                       ],
                     ),
-                    SizedBox(height: 16.h),
+
+                    SizedBox(height: 20.h),
 
                     Visibility(
                       visible: !_signinProgressIndicator,

@@ -1,9 +1,11 @@
+import 'package:bikretaa/ui/screens/bottom_nav_bar/navbar_screens/products_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class home_summary_card extends StatelessWidget {
   final int totalProducts;
   final String CardTitle;
+
   const home_summary_card({
     super.key,
     required this.totalProducts,
@@ -50,10 +52,12 @@ class home_summary_card extends StatelessWidget {
                 "$totalProducts",
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.h),
               ),
-              Container(
+              SizedBox(
                 height: 28.h,
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    _onTapProductPage(context);
+                  },
                   child: Text(
                     "Show Details",
                     style: TextStyle(
@@ -69,5 +73,9 @@ class home_summary_card extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _onTapProductPage(BuildContext context) {
+    Navigator.pushNamed(context, ProductsScreen.name);
   }
 }

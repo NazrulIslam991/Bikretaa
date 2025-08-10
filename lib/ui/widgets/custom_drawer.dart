@@ -10,29 +10,32 @@ class CustomDrawer extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.all(0),
         children: [
-          DrawerHeader(
-            decoration: BoxDecoration(color: Colors.blueGrey),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CircleAvatar(
-                  radius: 25.h,
-                  backgroundImage: AssetImage('assets/images/messi.webp'),
-                ),
-                SizedBox(height: 10.h),
-                Text(
-                  "Md Nazrul Islam Nayon",
-                  style: TextStyle(
-                    fontSize: 14.h,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
+          Container(
+            height: 160.h,
+            child: DrawerHeader(
+              decoration: BoxDecoration(color: Colors.blueGrey),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CircleAvatar(
+                    radius: 25.h,
+                    backgroundImage: AssetImage('assets/images/messi.webp'),
                   ),
-                ),
-                Text(
-                  "nazrulislamnayon991@gmail.com",
-                  style: TextStyle(color: Colors.greenAccent, fontSize: 10.h),
-                ),
-              ],
+                  SizedBox(height: 10.h),
+                  Text(
+                    "Md Nazrul Islam Nayon",
+                    style: TextStyle(
+                      fontSize: 14.h,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    "nazrulislamnayon991@gmail.com",
+                    style: TextStyle(color: Colors.greenAccent, fontSize: 10.h),
+                  ),
+                ],
+              ),
             ),
           ),
 

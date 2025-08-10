@@ -1,6 +1,5 @@
 import 'package:bikretaa/ui/widgets/product_controller_feild/sales_card_directories/sales_history_card.dart';
 import 'package:bikretaa/ui/widgets/product_controller_feild/sales_card_directories/sales_summary_card.dart';
-import 'package:bikretaa/ui/widgets/search_bar.dart';
 import 'package:bikretaa/ui/widgets/snackbar_messege.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -28,21 +27,32 @@ class _SalesScreenState extends State<SalesScreen> {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 50.h,
-        title: Padding(
-          padding: EdgeInsets.only(top: 10.h),
-          child: SizedBox(
-            height: 40.h,
-            child: CustomSearchBar(
-              controller: searchController,
-              onChanged: (value) {
-                setState(() {
-                  searchText = value;
-                });
-                if (value.isNotEmpty) {
-                  showSnackbarMessage(context, searchText);
-                }
-              },
+        backgroundColor: Colors.white10,
+        title: SizedBox(
+          height: 40.h,
+          child: TextField(
+            controller: searchController,
+            onChanged: (value) {
+              setState(() {
+                searchText = value;
+              });
+              if (value.isNotEmpty) {
+                showSnackbarMessage(context, searchText);
+              }
+            },
+            decoration: InputDecoration(
+              hintText: 'Search sales...',
+              prefixIcon: Icon(Icons.search),
+              contentPadding: EdgeInsets.symmetric(vertical: 8.h),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10.r),
+                borderSide: BorderSide.none,
+              ),
+              filled: true,
+              fillColor: Colors.white,
             ),
+            style: TextStyle(fontSize: 16.sp),
+            textInputAction: TextInputAction.search,
           ),
         ),
       ),
@@ -94,7 +104,6 @@ class _SalesScreenState extends State<SalesScreen> {
                 child: GridView.builder(
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
-
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     mainAxisSpacing: 10.h,
@@ -143,7 +152,7 @@ class _SalesScreenState extends State<SalesScreen> {
               ListView.builder(
                 itemBuilder: (context, index) {
                   return SalesHistoryCard(
-                    customerName: 'John Doe',
+                    customerName: 'Customer Name',
                     paymentType: 'Cash',
                     totalItems: 5,
                     totalCost: 1000.0,

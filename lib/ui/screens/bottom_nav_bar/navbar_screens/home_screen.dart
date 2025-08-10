@@ -17,7 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        //backgroundColor: Colors.blueAccent.shade100,
+        backgroundColor: Colors.white10,
         title: Text(
           "Home",
           style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
@@ -30,6 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
+
       drawer: Container(
         height: double.infinity,
         width: 240.w,
@@ -69,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   crossAxisCount: 3,
                   //mainAxisSpacing: 2.h,
                   //crossAxisSpacing: 2.h,
-                  childAspectRatio: 1.h / 1.6.h,
+                  childAspectRatio: 1.h / 1.7.h,
                 ),
                 itemBuilder: (context, index) {
                   return home_summary_card(
