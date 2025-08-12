@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "343143440118",
+    "project_id": "bikretaa-87c9e",
+    "storage_bucket": "bikretaa-87c9e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:343143440118:android:c3fb01f3076a5e16f2d6d7",
+        "android_client_info": {
+          "package_name": "com.example.bikretaa"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9gkUbCb40H5EzhIh-0ExKdxFgGd7x5xw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

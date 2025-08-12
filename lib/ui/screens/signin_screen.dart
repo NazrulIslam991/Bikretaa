@@ -1,10 +1,12 @@
+import 'package:bikretaa/database/signin_and_signup/firestore_user_check.dart';
 import 'package:bikretaa/ui/screens/bottom_nav_bar/main_nav_bar_screen.dart';
 import 'package:bikretaa/ui/screens/forgot_password_screen.dart';
 import 'package:bikretaa/ui/screens/signup/create_account_screen.dart';
 import 'package:bikretaa/ui/widgets/background.dart';
+import 'package:bikretaa/ui/widgets/circular_progress_indicatior.dart';
 import 'package:bikretaa/ui/widgets/email_feild_controller.dart';
 import 'package:bikretaa/ui/widgets/password_feild_widget.dart';
-import 'package:bikretaa/ui/widgets/snackbar_messege.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -66,7 +68,7 @@ class _SigninScreenState extends State<SigninScreen> {
                         Align(
                           alignment: Alignment.centerRight,
                           child: Transform.translate(
-                            offset: Offset(0, -20.h),
+                            offset: Offset(0, -15.h),
                             child: TextButton(
                               onPressed: () => _onTapForgetPassword(),
                               child: Text(
@@ -89,7 +91,7 @@ class _SigninScreenState extends State<SigninScreen> {
                     Visibility(
                       visible: !_signinProgressIndicator,
 
-                      ///replacement: CenterCircularProgressIndiacator(),
+                      replacement: CenterCircularProgressIndiacator(),
                       child: ElevatedButton(
                         onPressed: () => _onTapSignin(),
                         child: Text(
@@ -140,19 +142,74 @@ class _SigninScreenState extends State<SigninScreen> {
     );
   }
 
-  void _onTapSignin() {
+  void _onTapSignin() async {
     if (_formKey.currentState!.validate()) {
-      final email = _emailEcontroller.text;
-      final password = _passwordEcontroller.text;
-      showSnackbarMessage(
+      _signInProcess();
+    }
+  }
+
+  Future<void> _signInProcess() async {
+    final email = _emailEcontroller.text.trim();
+    final password = _passwordEcontroller.text.trim();
+
+    setState(() {
+      _signinProgressIndicator = true;
+    });
+
+    bool userExists = await FirestoreUtils.checkUserExists(email);
+    if (!userExists) {
+      ScaffoldMessenger.of(
         context,
-        "Your Email is $email and password is $password",
-      );
+      ).showSnackBar(const SnackBar(content: Text('No account found')));
+      setState(() {
+        _signinProgressIndicator = false;
+      });
+      return;
+    }
+
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
+
       Navigator.pushNamedAndRemoveUntil(
         context,
         MainNavBarScreen.name,
         (predicate) => false,
       );
+
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        MainNavBarScreen.name,
+        (predicate) => false,
+      );
+
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text("Login successful!")));
+    } on FirebaseAuthException catch (e) {
+      String errorMessage;
+
+      if (e.code == 'user-not-found') {
+        errorMessage = 'No account found for that email.';
+      } else if (e.code == 'wrong-password') {
+        errorMessage = 'Incorrect password. Please try again.';
+      } else if (e.code == 'invalid-email') {
+        errorMessage = 'The email address is not valid.';
+      } else {
+        errorMessage = 'Login failed. Please try again.';
+      }
+
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(errorMessage)));
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('An unexpected error occurred: $e')),
+      );
+    } finally {
+      setState(() {
+        _signinProgressIndicator = false;
+      });
     }
   }
 

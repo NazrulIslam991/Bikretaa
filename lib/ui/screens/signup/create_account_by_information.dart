@@ -7,13 +7,15 @@ import 'package:bikretaa/ui/widgets/mobile_feild_widget.dart';
 import 'package:bikretaa/ui/widgets/password_feild_widget.dart';
 import 'package:bikretaa/ui/widgets/shop_name_widget.dart';
 import 'package:bikretaa/ui/widgets/shop_type_dropdown_menu.dart';
-import 'package:bikretaa/ui/widgets/snackbar_messege.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CreateAccountByInformation extends StatefulWidget {
-  const CreateAccountByInformation({super.key});
+  final String email;
+  const CreateAccountByInformation({super.key, required this.email});
 
   @override
   State<CreateAccountByInformation> createState() =>
@@ -29,6 +31,8 @@ class _CreateAccountByInformationState
   TextEditingController _mobileEcontroller = TextEditingController();
   TextEditingController _passwordEcontroller = TextEditingController();
   TextEditingController _confirmpasswordEcontroller = TextEditingController();
+
+  //late String userEmail;
 
   bool _isExpanded = false;
   String? selectedShopType;
@@ -66,6 +70,7 @@ class _CreateAccountByInformationState
                       height: 65.h,
                       child: EmailFeildWidget(
                         emailEcontroller: _emailEcontroller,
+                        emailText: widget.email,
                       ),
                     ),
 
@@ -82,7 +87,9 @@ class _CreateAccountByInformationState
                       height: 65.h,
                       child: ShopTypeDropdownWidget(
                         onSaved: (value) {
-                          selectedShopType = value;
+                          setState(() {
+                            selectedShopType = value;
+                          });
                         },
                       ),
                     ),
@@ -104,7 +111,7 @@ class _CreateAccountByInformationState
                       ),
                     ),
 
-                    SizedBox(height: 40.h),
+                    SizedBox(height: 5.h),
 
                     Visibility(
                       visible: !_SignupInProgress,
@@ -160,21 +167,77 @@ class _CreateAccountByInformationState
 
   void SignUpComplete() {
     if (_formKey.currentState!.validate()) {
-      final email = _emailEcontroller.text;
-      final password = _passwordEcontroller.text;
-      final shopName = _shopNameEcontroller.text;
-      final phone = _mobileEcontroller.text;
-      final shopType = selectedShopType;
-      showSnackbarMessage(
+      _formKey.currentState!.save();
+      signUpProcess();
+    }
+  }
+
+  Future<void> signUpProcess() async {
+    final email = widget.email;
+    final password = _passwordEcontroller.text.trim();
+    final shopName = _shopNameEcontroller.text.trim();
+    final phone = '+8801' + _mobileEcontroller.text.trim();
+    final shopType = selectedShopType;
+
+    setState(() {
+      _SignupInProgress = true;
+    });
+
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
+
+      String uid = userCredential.user!.uid;
+
+      await FirebaseFirestore.instance.collection('users').doc(uid).set({
+        'Shop name': shopName,
+        'Email': email,
+        'Mobile': phone,
+        'Shop Type': shopType,
+        'createdAt': DateTime.now(),
+      });
+
+      ScaffoldMessenger.of(
         context,
-        "shop name :  $shopName , email : $email mobile : $phone shop type : $shopType and  password : $password , ",
-      );
+      ).showSnackBar(const SnackBar(content: Text("Sign Up Successful!")));
 
       Navigator.pushNamedAndRemoveUntil(
         context,
         SigninScreen.name,
         (predicate) => false,
       );
+    } on FirebaseAuthException catch (e) {
+      String errorMessage;
+
+      switch (e.code) {
+        case 'weak-password':
+          errorMessage =
+              'Your password is too weak. Please use at least 6 characters.';
+          break;
+        case 'email-already-in-use':
+          errorMessage = 'This email is already registered. Try signing in.';
+          break;
+        case 'invalid-email':
+          errorMessage = 'The email address is not valid.';
+          break;
+        default:
+          errorMessage =
+              e.message ?? 'An unexpected error occurred. Please try again.';
+      }
+
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(errorMessage)));
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Something went wrong. Please try again.'),
+        ),
+      );
+    } finally {
+      setState(() {
+        _SignupInProgress = false;
+      });
     }
   }
 

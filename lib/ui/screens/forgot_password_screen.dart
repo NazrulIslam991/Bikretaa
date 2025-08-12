@@ -1,8 +1,9 @@
+import 'package:bikretaa/database/signin_and_signup/firestore_user_check.dart';
 import 'package:bikretaa/ui/screens/signin_screen.dart';
 import 'package:bikretaa/ui/widgets/background.dart';
 import 'package:bikretaa/ui/widgets/circular_progress_indicatior.dart';
 import 'package:bikretaa/ui/widgets/email_feild_controller.dart';
-import 'package:bikretaa/ui/widgets/snackbar_messege.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -67,7 +68,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
                     Visibility(
                       visible: _forgotPassword_ProgressIndicator == false,
-
                       replacement: CenterCircularProgressIndiacator(),
                       child: ElevatedButton(
                         onPressed: () => _OnTapResetLinkSend(),
@@ -121,9 +121,66 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
   void _OnTapResetLinkSend() {
     if (_formKey.currentState!.validate()) {
-      final email = _emailEcontroller.text;
-      showSnackbarMessage(context, "Your Email is $email");
+      sendPasswordResetLinkProcess();
+    }
+  }
+
+  Future<void> sendPasswordResetLinkProcess() async {
+    final email = _emailEcontroller.text.trim();
+
+    setState(() {
+      _forgotPassword_ProgressIndicator = true;
+    });
+
+    bool userExists = await FirestoreUtils.checkUserExists(email);
+
+    if (!userExists) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("No user found for that email.")),
+      );
+      setState(() {
+        _forgotPassword_ProgressIndicator = false;
+      });
+      return;
+    }
+
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            "Password Reset Link sent successfully! Check your email.",
+          ),
+        ),
+      );
+
       Navigator.pushReplacementNamed(context, SigninScreen.name);
+    } on FirebaseAuthException catch (e) {
+      String errorMessage;
+
+      switch (e.code) {
+        case 'invalid-email':
+          errorMessage = "The email address is not valid.";
+          break;
+        case 'too-many-requests':
+          errorMessage = "Too many requests. Please try again later.";
+          break;
+        default:
+          errorMessage = e.message ?? "An error occurred. Please try again.";
+      }
+
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(errorMessage)));
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('An unexpected error occurred: $e')),
+      );
+    } finally {
+      setState(() {
+        _forgotPassword_ProgressIndicator = false;
+      });
     }
   }
 

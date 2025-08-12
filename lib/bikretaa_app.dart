@@ -4,9 +4,7 @@ import 'package:bikretaa/ui/screens/bottom_nav_bar/products/add_product_screen.d
 import 'package:bikretaa/ui/screens/bottom_nav_bar/products/details_product_screen.dart';
 import 'package:bikretaa/ui/screens/forgot_password_screen.dart';
 import 'package:bikretaa/ui/screens/signin_screen.dart';
-import 'package:bikretaa/ui/screens/signup/create_account_by_information.dart';
 import 'package:bikretaa/ui/screens/signup/create_account_screen.dart';
-import 'package:bikretaa/ui/screens/signup/otp_verification_screen.dart';
 import 'package:bikretaa/ui/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -85,9 +83,8 @@ class BikretaaApp extends StatelessWidget {
             SplashScreen.name: (context) => SplashScreen(),
             SigninScreen.name: (context) => SigninScreen(),
             CreateAccountScreen.name: (context) => CreateAccountScreen(),
-            CreateAccountByInformation.name: (context) =>
-                CreateAccountByInformation(),
-            OTPVerificationScreen.name: (context) => OTPVerificationScreen(),
+            //CreateAccountByInformation.name: (context) => CreateAccountByInformation(),
+            //OTPVerificationScreen.name: (context) => OTPVerificationScreen(),
             ForgotPasswordScreen.name: (context) => ForgotPasswordScreen(),
             MainNavBarScreen.name: (context) => MainNavBarScreen(),
             DetailsProductScreen.name: (context) => DetailsProductScreen(),

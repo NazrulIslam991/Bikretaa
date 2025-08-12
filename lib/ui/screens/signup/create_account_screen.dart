@@ -1,3 +1,7 @@
+import 'package:bikretaa/database/network_caller.dart';
+import 'package:bikretaa/database/signin_and_signup/firestore_user_check.dart';
+import 'package:bikretaa/database/signin_and_signup/otp_generator.dart';
+import 'package:bikretaa/database/signin_and_signup/urls.dart';
 import 'package:bikretaa/ui/screens/signin_screen.dart';
 import 'package:bikretaa/ui/screens/signup/otp_verification_screen.dart';
 import 'package:bikretaa/ui/widgets/background.dart';
@@ -18,11 +22,13 @@ class CreateAccountScreen extends StatefulWidget {
 
 class _CreateAccountScreenState extends State<CreateAccountScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  TextEditingController _emailEcontroller = TextEditingController();
-  bool _Verificaton_code_ProgressIndicator = false;
+  final TextEditingController _emailEcontroller = TextEditingController();
+  bool _verificationCodeProgressIndicator = false;
 
   @override
   Widget build(BuildContext context) {
+    final email = _emailEcontroller.text.trim();
+
     return Scaffold(
       body: Background_image(
         child: Center(
@@ -40,9 +46,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
                     ),
-
                     SizedBox(height: 5.h),
-
                     Center(
                       child: Text(
                         "We'll send a one-time password to your email address",
@@ -55,21 +59,16 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                         ),
                       ),
                     ),
-
                     SizedBox(height: 40.h),
-
-                    Container(
+                    SizedBox(
                       height: 65.h,
                       child: EmailFeildWidget(
                         emailEcontroller: _emailEcontroller,
                       ),
                     ),
-
                     SizedBox(height: 30.h),
-
                     Visibility(
-                      visible: _Verificaton_code_ProgressIndicator == false,
-
+                      visible: !_verificationCodeProgressIndicator,
                       replacement: CenterCircularProgressIndiacator(),
                       child: ElevatedButton(
                         onPressed: () => _onTapVerifyEmail(),
@@ -83,7 +82,6 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                         ),
                       ),
                     ),
-
                     SizedBox(height: 20),
                     Center(
                       child: RichText(
@@ -105,7 +103,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                 fontSize: 10.h,
                               ),
                               recognizer: TapGestureRecognizer()
-                                ..onTap = (() => _onTapSignIn()),
+                                ..onTap = _onTapSignIn,
                             ),
                           ],
                         ),
@@ -121,19 +119,65 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
     );
   }
 
-  void _onTapVerifyEmail() {
-    if (_formKey.currentState!.validate()) {
-      final email = _emailEcontroller.text;
-      showSnackbarMessage(context, "Your Email is $email");
-      Navigator.pushNamed(context, OTPVerificationScreen.name);
-    }
-  }
-
   void _onTapSignIn() {
     Navigator.pushNamedAndRemoveUntil(
       context,
       SigninScreen.name,
       (predicate) => false,
     );
+  }
+
+  void _onTapVerifyEmail() async {
+    if (_formKey.currentState!.validate()) {
+      final email = _emailEcontroller.text.trim();
+      setState(() => _verificationCodeProgressIndicator = true);
+
+      bool userExists = await FirestoreUtils.checkUserExists(email);
+
+      if (userExists) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Account already exists with this email."),
+          ),
+        );
+        setState(() {
+          _verificationCodeProgressIndicator = false;
+        });
+        return;
+      }
+
+      final otp = OtpGenerator.generate(length: 6);
+
+      final NetworkResponse response = await NetworkCaller.postRequest(
+        url: Urls.sendEmailOtp,
+        body: {
+          "sender": {"name": "Bikretaa", "email": "rentrover2025@gmail.com"},
+          "to": [
+            {"email": email},
+          ],
+          "subject": "Your OTP Code",
+          "htmlContent":
+              "<html><body><h2>Your OTP code is:</h2><h1>$otp</h1></body></html>",
+        },
+        isBrevoRequest: true,
+      );
+
+      setState(() => _verificationCodeProgressIndicator = false);
+
+      if (response.isSuccess) {
+        showSnackbarMessage(context, "OTP sent to $email");
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => OTPVerificationScreen(email: email, otp: otp),
+          ),
+        );
+      } else {
+        showSnackbarMessage(
+          context,
+          "Failed to send OTP: ${response.errorMessage}",
+        );
+      }
+    }
   }
 }

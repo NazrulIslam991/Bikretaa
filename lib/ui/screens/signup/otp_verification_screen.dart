@@ -1,13 +1,25 @@
+import 'package:bikretaa/database/network_caller.dart';
+import 'package:bikretaa/database/signin_and_signup/otp_generator.dart';
+import 'package:bikretaa/database/signin_and_signup/urls.dart';
 import 'package:bikretaa/ui/screens/signin_screen.dart';
 import 'package:bikretaa/ui/screens/signup/create_account_by_information.dart';
 import 'package:bikretaa/ui/widgets/background.dart';
+import 'package:bikretaa/ui/widgets/circular_progress_indicatior.dart';
+import 'package:bikretaa/ui/widgets/snackbar_messege.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class OTPVerificationScreen extends StatefulWidget {
-  const OTPVerificationScreen({super.key});
+  final String email;
+  final String otp;
+
+  const OTPVerificationScreen({
+    super.key,
+    required this.email,
+    required this.otp,
+  });
 
   @override
   State<OTPVerificationScreen> createState() => _OTPVerificationScreenState();
@@ -16,11 +28,27 @@ class OTPVerificationScreen extends StatefulWidget {
 
 class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  TextEditingController _otpEController = TextEditingController();
+  late TextEditingController _otpEController;
+
+  late String currentOtp;
+  bool _otpVerificationProgress = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _otpEController = TextEditingController();
+    currentOtp = widget.otp;
+  }
+
+  @override
+  void dispose() {
+    _otpEController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(),
       body: Background_image(
         child: Center(
           child: SingleChildScrollView(
@@ -37,7 +65,8 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                     ),
                     SizedBox(height: 5),
                     Text(
-                      "Enter verification code, we send to your email address",
+                      "Enter verification code sent to your email address",
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         fontWeight: FontWeight.normal,
                         color: Colors.grey,
@@ -50,7 +79,7 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
 
                     Container(
                       height: 50.h,
-                      width: double.infinity.h,
+                      width: double.infinity,
                       child: PinCodeTextField(
                         length: 6,
                         obscureText: false,
@@ -74,9 +103,8 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                         enableActiveFill: true,
                         controller: _otpEController,
                         onCompleted: (v) {
-                          print("Completed");
+                          print("OTP input completed: $v");
                         },
-
                         appContext: context,
                       ),
                     ),
@@ -85,7 +113,7 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Text(
-                          "Don't receive a code? ",
+                          "Didn't receive a code? ",
                           style: TextStyle(
                             color: Colors.grey,
                             fontStyle: FontStyle.italic,
@@ -94,7 +122,7 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                           ),
                         ),
                         TextButton(
-                          onPressed: () => _onTapResendCode(),
+                          onPressed: _onTapResendCode,
                           child: Text(
                             'Resend',
                             style: TextStyle(
@@ -110,41 +138,41 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
 
                     SizedBox(height: 30.h),
 
-                    ElevatedButton(
-                      onPressed: () => _OnTapEmailVerification(),
-                      child: Text("verify"),
+                    Visibility(
+                      visible: !_otpVerificationProgress,
+                      replacement: CenterCircularProgressIndiacator(),
+                      child: ElevatedButton(
+                        onPressed: _onTapVerify,
+                        child: Text("Verify"),
+                      ),
                     ),
 
                     SizedBox(height: 20.h),
 
                     Center(
-                      child: Column(
-                        children: [
-                          RichText(
-                            text: TextSpan(
-                              text: "Have an account? ",
+                      child: RichText(
+                        text: TextSpan(
+                          text: "Have an account? ",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black,
+                            letterSpacing: 0.4,
+                            fontSize: 10.h,
+                          ),
+                          children: [
+                            TextSpan(
+                              text: 'Sign In',
                               style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                color: Colors.black,
-                                letterSpacing: 0.4,
+                                fontStyle: FontStyle.italic,
+                                color: Colors.blueAccent,
+                                fontWeight: FontWeight.w700,
                                 fontSize: 10.h,
                               ),
-                              children: [
-                                TextSpan(
-                                  text: 'Sign In',
-                                  style: TextStyle(
-                                    fontStyle: FontStyle.italic,
-                                    color: Colors.blueAccent,
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 10.h,
-                                  ),
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = (() => SignIn()),
-                                ),
-                              ],
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = _onTapSignIn,
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ],
@@ -157,7 +185,7 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
     );
   }
 
-  void SignIn() {
+  void _onTapSignIn() {
     Navigator.pushNamedAndRemoveUntil(
       context,
       SigninScreen.name,
@@ -165,9 +193,73 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
     );
   }
 
-  void _OnTapEmailVerification() {
-    Navigator.pushNamed(context, CreateAccountByInformation.name);
+  void _onTapVerify() async {
+    final enteredOtp = _otpEController.text.trim();
+
+    if (enteredOtp.isEmpty) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Please enter the OTP")));
+      return;
+    }
+
+    setState(() {
+      _otpVerificationProgress = true;
+    });
+
+    await Future.delayed(Duration(seconds: 2));
+
+    if (enteredOtp == currentOtp) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("OTP Verified Successfully!")));
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => CreateAccountByInformation(email: widget.email),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Invalid OTP! Please try again.")));
+    }
+
+    setState(() {
+      _otpVerificationProgress = false;
+    });
   }
 
-  void _onTapResendCode() {}
+  void _onTapResendCode() async {
+    final email = widget.email;
+
+    final otp = OtpGenerator.generate(length: 6);
+
+    final NetworkResponse response = await NetworkCaller.postRequest(
+      url: Urls.sendEmailOtp,
+      body: {
+        "sender": {"name": "Bikretaa", "email": "rentrover2025@gmail.com"},
+        "to": [
+          {"email": email},
+        ],
+        "subject": "Your OTP Code",
+        "htmlContent":
+            "<html><body><h2>Your OTP code is:</h2><h1>$otp</h1></body></html>",
+      },
+      isBrevoRequest: true,
+    );
+
+    if (response.isSuccess) {
+      setState(() {
+        currentOtp = otp;
+      });
+      showSnackbarMessage(context, "OTP resent to $email");
+    } else {
+      showSnackbarMessage(
+        context,
+        "Failed to resend OTP: ${response.errorMessage}",
+      );
+    }
+  }
 }
