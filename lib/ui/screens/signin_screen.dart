@@ -6,6 +6,7 @@ import 'package:bikretaa/ui/widgets/background.dart';
 import 'package:bikretaa/ui/widgets/circular_progress_indicatior.dart';
 import 'package:bikretaa/ui/widgets/email_feild_controller.dart';
 import 'package:bikretaa/ui/widgets/password_feild_widget.dart';
+import 'package:bikretaa/ui/widgets/snackbar_messege.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -142,12 +143,14 @@ class _SigninScreenState extends State<SigninScreen> {
     );
   }
 
+  // start signin process
   void _onTapSignin() async {
     if (_formKey.currentState!.validate()) {
       _signInProcess();
     }
   }
 
+  //"Database section for the sign-in process"
   Future<void> _signInProcess() async {
     final email = _emailEcontroller.text.trim();
     final password = _passwordEcontroller.text.trim();
@@ -158,9 +161,7 @@ class _SigninScreenState extends State<SigninScreen> {
 
     bool userExists = await FirestoreUtils.checkUserExists(email);
     if (!userExists) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text('No account found')));
+      showSnackbarMessage(context, 'No account found');
       setState(() {
         _signinProgressIndicator = false;
       });
@@ -177,15 +178,7 @@ class _SigninScreenState extends State<SigninScreen> {
         (predicate) => false,
       );
 
-      Navigator.pushNamedAndRemoveUntil(
-        context,
-        MainNavBarScreen.name,
-        (predicate) => false,
-      );
-
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text("Login successful!")));
+      showSnackbarMessage(context, "Login successful!");
     } on FirebaseAuthException catch (e) {
       String errorMessage;
 
@@ -199,13 +192,9 @@ class _SigninScreenState extends State<SigninScreen> {
         errorMessage = 'Login failed. Please try again.';
       }
 
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(errorMessage)));
+      showSnackbarMessage(context, errorMessage);
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('An unexpected error occurred: $e')),
-      );
+      showSnackbarMessage(context, 'An unexpected error occurred: $e');
     } finally {
       setState(() {
         _signinProgressIndicator = false;
@@ -213,10 +202,12 @@ class _SigninScreenState extends State<SigninScreen> {
     }
   }
 
+  // Forgot password button section
   void _onTapForgetPassword() {
     Navigator.pushReplacementNamed(context, ForgotPasswordScreen.name);
   }
 
+  //signup button section
   void _onTapSignUp() {
     Navigator.pushReplacementNamed(context, CreateAccountScreen.name);
   }

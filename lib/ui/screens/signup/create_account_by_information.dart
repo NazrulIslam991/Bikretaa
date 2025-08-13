@@ -7,6 +7,7 @@ import 'package:bikretaa/ui/widgets/mobile_feild_widget.dart';
 import 'package:bikretaa/ui/widgets/password_feild_widget.dart';
 import 'package:bikretaa/ui/widgets/shop_name_widget.dart';
 import 'package:bikretaa/ui/widgets/shop_type_dropdown_menu.dart';
+import 'package:bikretaa/ui/widgets/snackbar_messege.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
@@ -32,9 +33,6 @@ class _CreateAccountByInformationState
   TextEditingController _passwordEcontroller = TextEditingController();
   TextEditingController _confirmpasswordEcontroller = TextEditingController();
 
-  //late String userEmail;
-
-  bool _isExpanded = false;
   String? selectedShopType;
 
   bool _SignupInProgress = false;
@@ -165,6 +163,7 @@ class _CreateAccountByInformationState
     );
   }
 
+  //create account button section
   void SignUpComplete() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
@@ -172,6 +171,7 @@ class _CreateAccountByInformationState
     }
   }
 
+  //"Database section for the sign-up process"
   Future<void> signUpProcess() async {
     final email = widget.email;
     final password = _passwordEcontroller.text.trim();
@@ -196,11 +196,7 @@ class _CreateAccountByInformationState
         'Shop Type': shopType,
         'createdAt': DateTime.now(),
       });
-
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text("Sign Up Successful!")));
-
+      showSnackbarMessage(context, "Sign Up Successful!");
       Navigator.pushNamedAndRemoveUntil(
         context,
         SigninScreen.name,
@@ -225,15 +221,9 @@ class _CreateAccountByInformationState
               e.message ?? 'An unexpected error occurred. Please try again.';
       }
 
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(errorMessage)));
+      showSnackbarMessage(context, errorMessage);
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Something went wrong. Please try again.'),
-        ),
-      );
+      showSnackbarMessage(context, 'Something went wrong. Please try again.');
     } finally {
       setState(() {
         _SignupInProgress = false;
@@ -241,6 +231,7 @@ class _CreateAccountByInformationState
     }
   }
 
+  //sign in button section
   void _onTapSignIn() {
     Navigator.pushNamedAndRemoveUntil(
       context,

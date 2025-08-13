@@ -27,8 +27,6 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final email = _emailEcontroller.text.trim();
-
     return Scaffold(
       body: Background_image(
         child: Center(
@@ -119,6 +117,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
     );
   }
 
+  //signup button section
   void _onTapSignIn() {
     Navigator.pushNamedAndRemoveUntil(
       context,
@@ -127,6 +126,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
     );
   }
 
+  //"Database section for verify email process"
   void _onTapVerifyEmail() async {
     if (_formKey.currentState!.validate()) {
       final email = _emailEcontroller.text.trim();
@@ -135,11 +135,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
       bool userExists = await FirestoreUtils.checkUserExists(email);
 
       if (userExists) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text("Account already exists with this email."),
-          ),
-        );
+        showSnackbarMessage(context, "Account already exists with this email.");
         setState(() {
           _verificationCodeProgressIndicator = false;
         });
@@ -148,6 +144,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
 
       final otp = OtpGenerator.generate(length: 6);
 
+      // api call and send otp
       final NetworkResponse response = await NetworkCaller.postRequest(
         url: Urls.sendEmailOtp,
         body: {
@@ -155,9 +152,17 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
           "to": [
             {"email": email},
           ],
-          "subject": "Your OTP Code",
+          "subject": "Your One-Time Password (OTP) Code",
           "htmlContent":
-              "<html><body><h2>Your OTP code is:</h2><h1>$otp</h1></body></html>",
+              "<html lang="
+              "><body>"
+              "<h2>One-Time Verification Code</h2>"
+              "<p>Dear User,</p>"
+              "<p>Your One-Time Password (OTP) for verification is:</p>"
+              "<h1 style='color:#2E86C1;'>$otp</h1>"
+              "<br>"
+              "<p>Best regards,<br>BIkretaa Team</p>"
+              "</body></html>",
         },
         isBrevoRequest: true,
       );

@@ -3,6 +3,7 @@ import 'package:bikretaa/ui/screens/signin_screen.dart';
 import 'package:bikretaa/ui/widgets/background.dart';
 import 'package:bikretaa/ui/widgets/circular_progress_indicatior.dart';
 import 'package:bikretaa/ui/widgets/email_feild_controller.dart';
+import 'package:bikretaa/ui/widgets/snackbar_messege.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -119,12 +120,14 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     );
   }
 
+  //start the send Password reset link
   void _OnTapResetLinkSend() {
     if (_formKey.currentState!.validate()) {
       sendPasswordResetLinkProcess();
     }
   }
 
+  //"Database section for the send Password reset link process"
   Future<void> sendPasswordResetLinkProcess() async {
     final email = _emailEcontroller.text.trim();
 
@@ -135,9 +138,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     bool userExists = await FirestoreUtils.checkUserExists(email);
 
     if (!userExists) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("No user found for that email.")),
-      );
+      showSnackbarMessage(context, "No user found for that email.");
       setState(() {
         _forgotPassword_ProgressIndicator = false;
       });
@@ -146,13 +147,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
     try {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text(
-            "Password Reset Link sent successfully! Check your email.",
-          ),
-        ),
+      showSnackbarMessage(
+        context,
+        "Password Reset Link sent successfully! Check your email.",
       );
 
       Navigator.pushReplacementNamed(context, SigninScreen.name);
@@ -169,14 +166,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         default:
           errorMessage = e.message ?? "An error occurred. Please try again.";
       }
-
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(errorMessage)));
+      showSnackbarMessage(context, errorMessage);
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('An unexpected error occurred: $e')),
-      );
+      showSnackbarMessage(context, 'An unexpected error occurred: $e');
     } finally {
       setState(() {
         _forgotPassword_ProgressIndicator = false;
@@ -184,6 +176,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     }
   }
 
+  //signup button section
   void _onTapSignIn() {
     Navigator.pushReplacementNamed(context, SigninScreen.name);
   }

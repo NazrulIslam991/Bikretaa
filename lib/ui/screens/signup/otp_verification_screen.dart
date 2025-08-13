@@ -185,6 +185,7 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
     );
   }
 
+  //signip button section
   void _onTapSignIn() {
     Navigator.pushNamedAndRemoveUntil(
       context,
@@ -193,27 +194,17 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
     );
   }
 
+  //verify otp process"
   void _onTapVerify() async {
     final enteredOtp = _otpEController.text.trim();
-
-    if (enteredOtp.isEmpty) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text("Please enter the OTP")));
-      return;
-    }
-
     setState(() {
       _otpVerificationProgress = true;
     });
 
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(Duration(seconds: 3));
 
     if (enteredOtp == currentOtp) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text("OTP Verified Successfully!")));
-
+      showSnackbarMessage(context, "OTP Verified Successfully!");
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -221,9 +212,7 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
         ),
       );
     } else {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text("Invalid OTP! Please try again.")));
+      showSnackbarMessage(context, "Invalid OTP! Please try again.");
     }
 
     setState(() {
@@ -231,6 +220,7 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
     });
   }
 
+  //"Database section for resend otp process"
   void _onTapResendCode() async {
     final email = widget.email;
 
@@ -243,9 +233,17 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
         "to": [
           {"email": email},
         ],
-        "subject": "Your OTP Code",
+        "subject": "Your One-Time Password (OTP) Code",
         "htmlContent":
-            "<html><body><h2>Your OTP code is:</h2><h1>$otp</h1></body></html>",
+            "<html lang="
+            "><body>"
+            "<h2>One-Time Verification Code</h2>"
+            "<p>Dear User,</p>"
+            "<p>Your One-Time Password (OTP) for verification is:</p>"
+            "<h1 style='color:#2E86C1;'>$otp</h1>"
+            "<br>"
+            "<p>Best regards,<br>BIkretaa Team</p>"
+            "</body></html>",
       },
       isBrevoRequest: true,
     );

@@ -83,6 +83,7 @@ class CustomDrawer extends StatelessWidget {
     );
   }
 
+  // logout section
   Future<void> _logout(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
     Navigator.pushNamedAndRemoveUntil(
@@ -92,6 +93,7 @@ class CustomDrawer extends StatelessWidget {
     );
   }
 
+  // pop up messege show for confirm delete account
   Future<void> showDeleteAccountDialog(BuildContext context) async {
     bool? confirmDelete = await showDialog<bool>(
       context: context,
@@ -120,6 +122,7 @@ class CustomDrawer extends StatelessWidget {
     }
   }
 
+  // delete account section
   Future<void> deleteAcoount(BuildContext context) async {
     try {
       User? user = FirebaseAuth.instance.currentUser;
@@ -144,20 +147,11 @@ class CustomDrawer extends StatelessWidget {
     } on FirebaseAuthException catch (e) {
       if (e.code == 'requires-recent-login') {
         print("Re-authentication required: ${e.message}");
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Please re-login and try again.')),
-        );
       } else {
         print("Error deleting user account: ${e.message}");
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error deleting account: ${e.message}')),
-        );
       }
     } catch (e) {
       print("An unexpected error occurred: $e");
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('An unexpected error occurred: $e')),
-      );
     }
   }
 }
