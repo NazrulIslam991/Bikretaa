@@ -1,3 +1,4 @@
+import 'package:bikretaa/models/user_model.dart';
 import 'package:bikretaa/ui/screens/signin_screen.dart';
 import 'package:bikretaa/ui/widgets/background.dart';
 import 'package:bikretaa/ui/widgets/circular_progress_indicatior.dart';
@@ -188,14 +189,19 @@ class _CreateAccountByInformationState
           .createUserWithEmailAndPassword(email: email, password: password);
 
       String uid = userCredential.user!.uid;
+      final userModel = UserModel(
+        shopName: shopName,
+        email: email,
+        phone: phone,
+        shopType: shopType,
+        createdAt: DateTime.now(),
+      );
 
-      await FirebaseFirestore.instance.collection('users').doc(uid).set({
-        'Shop name': shopName,
-        'Email': email,
-        'Mobile': phone,
-        'Shop Type': shopType,
-        'createdAt': DateTime.now(),
-      });
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(uid)
+          .set(userModel.toMap());
+
       showSnackbarMessage(context, "Sign Up Successful!");
       Navigator.pushNamedAndRemoveUntil(
         context,

@@ -1,15 +1,19 @@
-import 'package:bikretaa/ui/widgets/product_controller_feild/product_barcode_no_controller.dart';
+import 'package:bikretaa/models/product_model.dart';
+import 'package:bikretaa/ui/widgets/circular_progress_indicatior.dart';
 import 'package:bikretaa/ui/widgets/product_controller_feild/product_brand_controller.dart';
 import 'package:bikretaa/ui/widgets/product_controller_feild/product_description_controller.dart';
 import 'package:bikretaa/ui/widgets/product_controller_feild/product_discount_controller.dart';
 import 'package:bikretaa/ui/widgets/product_controller_feild/product_expire_date_controller.dart';
+import 'package:bikretaa/ui/widgets/product_controller_feild/product_id_controller.dart';
 import 'package:bikretaa/ui/widgets/product_controller_feild/product_manufacture_date_controller.dart';
 import 'package:bikretaa/ui/widgets/product_controller_feild/product_name_controller.dart';
 import 'package:bikretaa/ui/widgets/product_controller_feild/product_purchase_price_controller.dart';
 import 'package:bikretaa/ui/widgets/product_controller_feild/product_quantity_controller.dart';
 import 'package:bikretaa/ui/widgets/product_controller_feild/product_selling_price_controller.dart';
 import 'package:bikretaa/ui/widgets/product_controller_feild/product_supplier_name_controller.dart';
-import 'package:bikretaa/ui/widgets/shop_type_dropdown_menu.dart';
+import 'package:bikretaa/ui/widgets/snackbar_messege.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -18,12 +22,13 @@ class AddProductScreen extends StatefulWidget {
 
   @override
   State<AddProductScreen> createState() => _AddProductScreenState();
-  static const name = 'Details_product';
+  static const name = 'Add_product';
 }
 
 class _AddProductScreenState extends State<AddProductScreen> {
   final TextEditingController _productNameController = TextEditingController();
   final TextEditingController _brandNameController = TextEditingController();
+  final TextEditingController _productIdController = TextEditingController();
   final TextEditingController _PurchasePriceController =
       TextEditingController();
   final TextEditingController _SellingPriceController = TextEditingController();
@@ -31,7 +36,6 @@ class _AddProductScreenState extends State<AddProductScreen> {
       TextEditingController();
   final TextEditingController _QuantityController = TextEditingController();
   final TextEditingController _SuppliarNameController = TextEditingController();
-  final TextEditingController _BarCodeNoController = TextEditingController();
   final TextEditingController _ProductDescriptionController =
       TextEditingController();
   final TextEditingController _ManufactureDateController =
@@ -39,7 +43,8 @@ class _AddProductScreenState extends State<AddProductScreen> {
   final TextEditingController _ExpireDateController = TextEditingController();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  String? selectedShopType;
+
+  bool _addProductProgressIndicator = false;
 
   @override
   void dispose() {
@@ -50,7 +55,6 @@ class _AddProductScreenState extends State<AddProductScreen> {
     _DiscountPriceController.dispose();
     _QuantityController.dispose();
     _SuppliarNameController.dispose();
-    _BarCodeNoController.dispose();
     _ProductDescriptionController.dispose();
     _ManufactureDateController.dispose();
     _ExpireDateController.dispose();
@@ -84,6 +88,12 @@ class _AddProductScreenState extends State<AddProductScreen> {
                   height: 65.h,
                   child: ProductBrandController(
                     productBandNameController: _brandNameController,
+                  ),
+                ),
+                Container(
+                  height: 65.h,
+                  child: ProductIdController(
+                    ProductIdController: _productIdController,
                   ),
                 ),
 
@@ -128,26 +138,12 @@ class _AddProductScreenState extends State<AddProductScreen> {
                 ),
 
                 //SizedBox(height: 5.h),
-                Container(
-                  height: 65.h,
-                  child: ProductBarCodeController(
-                    productBarCodeController: _BarCodeNoController,
-                  ),
-                ),
-
-                //SizedBox(height: 5.h),
-                ProductDescriptionController(
-                  productDescriptionController: _ProductDescriptionController,
-                ),
-
-                SizedBox(height: 15.h),
-                ShopTypeDropdownWidget(
-                  onSaved: (value) {
-                    selectedShopType = value;
-                  },
-                ),
-                SizedBox(height: 20.h),
-
+                // Container(
+                //   height: 65.h,
+                //   child: ProductBarCodeController(
+                //     productBarCodeController: _BarCodeNoController,
+                //   ),
+                // ),
                 Container(
                   height: 65.h,
                   child: ProductManufactureDateController(
@@ -164,6 +160,19 @@ class _AddProductScreenState extends State<AddProductScreen> {
                   ),
                 ),
                 //SizedBox(height: 5.h),
+
+                //SizedBox(height: 5.h),
+                ProductDescriptionController(
+                  productDescriptionController: _ProductDescriptionController,
+                ),
+
+                SizedBox(height: 15.h),
+
+                // ShopTypeDropdownWidget(
+                //   onSaved: (value) {
+                //     selectedShopType = value;
+                //   },
+                // ),
               ],
             ),
           ),
@@ -173,86 +182,98 @@ class _AddProductScreenState extends State<AddProductScreen> {
         padding: EdgeInsets.only(bottom: 15, top: 0, right: 16, left: 16),
         child: Container(
           height: 40.h,
-          child: ElevatedButton(
-            onPressed: _onTapAddProduct,
-            child: Text("Add Product"),
+          child: Visibility(
+            visible: !_addProductProgressIndicator,
+            replacement: CenterCircularProgressIndiacator(),
+            child: ElevatedButton(
+              onPressed: _onTapAddProduct,
+              child: Text("Add Product"),
+            ),
           ),
         ),
       ),
     );
   }
 
-  void _onTapAddProduct() {
-    if (_formKey.currentState!.validate()) {
-      _formKey.currentState!.save();
+  void _onTapAddProduct() async {
+    if (!_formKey.currentState!.validate()) return;
+    _formKey.currentState!.save();
 
-      final productName = _productNameController.text.trim();
-      final brandName = _brandNameController.text.trim();
-      final purchasePrice =
-          double.tryParse(_PurchasePriceController.text.trim()) ?? 0;
-      final sellingPrice =
-          double.tryParse(_SellingPriceController.text.trim()) ?? 0;
-      final discountPrice =
-          double.tryParse(_DiscountPriceController.text.trim()) ?? 0;
-      final quantity = int.tryParse(_QuantityController.text.trim()) ?? 0;
-      final supplierName = _SuppliarNameController.text.trim();
-      final barcodeNo = _BarCodeNoController.text.trim();
-      final description = _ProductDescriptionController.text.trim();
-      final manufactureDate = _ManufactureDateController.text.trim();
-      final expireDate = _ExpireDateController.text.trim();
+    setState(() {
+      _addProductProgressIndicator = true;
+    });
 
-      final productData = {
-        'productName': productName,
-        'brandName': brandName,
-        'purchasePrice': purchasePrice,
-        'sellingPrice': sellingPrice,
-        'discountPrice': discountPrice,
-        'quantity': quantity,
-        'supplierName': supplierName,
-        'barcodeNo': barcodeNo,
-        'description': description,
-        'manufactureDate': manufactureDate,
-        'expireDate': expireDate,
-        'shopType': selectedShopType ?? '',
-        'createdAt': DateTime.now().toIso8601String(),
-      };
+    final productId = _productIdController.text.trim();
+    final productName = _productNameController.text.trim();
+    final brandName = _brandNameController.text.trim();
+    final purchasePrice =
+        double.tryParse(_PurchasePriceController.text.trim()) ?? 0;
+    final sellingPrice =
+        double.tryParse(_SellingPriceController.text.trim()) ?? 0;
+    final discountPrice =
+        double.tryParse(_DiscountPriceController.text.trim()) ?? 0;
+    final quantity = int.tryParse(_QuantityController.text.trim()) ?? 0;
+    final supplierName = _SuppliarNameController.text.trim();
+    final description = _ProductDescriptionController.text.trim();
+    final manufactureDate = _ManufactureDateController.text.trim();
+    final expireDate = _ExpireDateController.text.trim();
+    final createdAt = DateTime.now();
 
-      print(productData);
+    final product = Product(
+      productId: productId,
+      productName: productName,
+      brandName: brandName,
+      purchasePrice: purchasePrice,
+      sellingPrice: sellingPrice,
+      discountPrice: discountPrice,
+      quantity: quantity,
+      supplierName: supplierName,
+      description: description,
+      manufactureDate: manufactureDate,
+      expireDate: expireDate,
+      createdAt: createdAt,
+    );
 
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('Product added successfully!')));
+    try {
+      final uid = FirebaseAuth.instance.currentUser?.uid;
+      if (uid == null) return;
 
-      _formKey.currentState!.reset();
-      _productNameController.clear();
-      _brandNameController.clear();
-      _PurchasePriceController.clear();
-      _SellingPriceController.clear();
-      _DiscountPriceController.clear();
-      _QuantityController.clear();
-      _SuppliarNameController.clear();
-      _BarCodeNoController.clear();
-      _ProductDescriptionController.clear();
-      _ManufactureDateController.clear();
-      _ExpireDateController.clear();
+      final docRef = FirebaseFirestore.instance
+          .collection("Products")
+          .doc(uid)
+          .collection("products_list")
+          .doc(product.productId);
 
+      final docSnapshot = await docRef.get();
+
+      if (docSnapshot.exists) {
+        showSnackbarMessage(context, 'Product ID already exists!');
+      } else {
+        await docRef.set(product.toMap());
+        showSnackbarMessage(context, 'Product added successfully!');
+        _clearControllers();
+        Navigator.pop(context);
+      }
+    } catch (e) {
+      showSnackbarMessage(context, 'Error adding product: $e');
+    } finally {
       setState(() {
-        selectedShopType = null;
+        _addProductProgressIndicator = false;
       });
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            'Please fill all required fields properly',
-            style: TextStyle(
-              fontStyle: FontStyle.italic,
-              color: Colors.blueAccent,
-              fontWeight: FontWeight.w700,
-              fontSize: 10.h,
-            ),
-          ),
-        ),
-      );
     }
+  }
+
+  void _clearControllers() {
+    _productNameController.clear();
+    _brandNameController.clear();
+    _productIdController.clear();
+    _PurchasePriceController.clear();
+    _SellingPriceController.clear();
+    _DiscountPriceController.clear();
+    _QuantityController.clear();
+    _SuppliarNameController.clear();
+    _ProductDescriptionController.clear();
+    _ManufactureDateController.clear();
+    _ExpireDateController.clear();
   }
 }

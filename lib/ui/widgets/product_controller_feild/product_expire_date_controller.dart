@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 
 class ProductExpireDateController extends StatelessWidget {
   const ProductExpireDateController({
@@ -15,6 +16,7 @@ class ProductExpireDateController extends StatelessWidget {
       height: 45.h,
       child: TextFormField(
         controller: _ProductExpireDateController,
+        readOnly: true,
         decoration: InputDecoration(
           hintText: "Expire Date",
           labelText: "Expire Date",
@@ -30,13 +32,26 @@ class ProductExpireDateController extends StatelessWidget {
             letterSpacing: 0.4,
             fontSize: 12.h,
           ),
+          suffixIcon: Icon(Icons.calendar_today),
         ),
         textInputAction: TextInputAction.next,
         autovalidateMode: AutovalidateMode.onUserInteraction,
+        onTap: () async {
+          DateTime? pickedDate = await showDatePicker(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(2000),
+            lastDate: DateTime(2100),
+          );
+
+          if (pickedDate != null) {
+            String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
+            _ProductExpireDateController.text = formattedDate;
+          }
+        },
         validator: (value) {
-          String shop_name = value ?? '';
-          if (shop_name.isEmpty) {
-            return 'Expire date  is required';
+          if (value == null || value.isEmpty) {
+            return 'Expire date is required';
           }
           return null;
         },

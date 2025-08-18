@@ -147,12 +147,20 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
     try {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+      setState(() {
+        _forgotPassword_ProgressIndicator = false;
+      });
+
       showSnackbarMessage(
         context,
         "Password Reset Link sent successfully! Check your email.",
       );
 
-      Navigator.pushReplacementNamed(context, SigninScreen.name);
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        SigninScreen.name,
+        (predicate) => false,
+      );
     } on FirebaseAuthException catch (e) {
       String errorMessage;
 

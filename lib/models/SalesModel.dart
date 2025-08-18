@@ -1,0 +1,36 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+class SalesModel {
+  final String customerName;
+  final String customerMobile;
+  final String customerAddress;
+  final double grandTotal;
+  final double paidAmount;
+  final double dueAmount;
+  final List<Map<String, String>> products;
+  final DateTime? timestamp;
+
+  SalesModel({
+    required this.customerName,
+    required this.customerMobile,
+    required this.customerAddress,
+    required this.grandTotal,
+    required this.paidAmount,
+    required this.dueAmount,
+    required this.products,
+    this.timestamp,
+  });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'customerName': customerName,
+      'customerMobile': customerMobile,
+      'customerAddress': customerAddress,
+      'grandTotal': grandTotal,
+      'paidAmount': paidAmount,
+      'dueAmount': dueAmount,
+      'products': products,
+      'timestamp': timestamp ?? FieldValue.serverTimestamp(),
+    };
+  }
+}

@@ -32,6 +32,7 @@ class ProductDiscountController extends StatelessWidget {
           ),
         ),
         textInputAction: TextInputAction.next,
+        keyboardType: TextInputType.number,
         autovalidateMode: AutovalidateMode.onUserInteraction,
         validator: (value) {
           String shop_name = value ?? '';

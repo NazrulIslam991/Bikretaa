@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class ProductQuantityController extends StatelessWidget {
-  const ProductQuantityController({
+class CustomerNameController extends StatelessWidget {
+  const CustomerNameController({
     super.key,
-    required TextEditingController productQuantityController,
-  }) : _productQuantityController = productQuantityController;
+    required TextEditingController CustomerNameController,
+  }) : _CustomerNameController = CustomerNameController;
 
-  final TextEditingController _productQuantityController;
+  final TextEditingController _CustomerNameController;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 45.h,
       child: TextFormField(
-        controller: _productQuantityController,
+        controller: _CustomerNameController,
         decoration: InputDecoration(
-          hintText: "Product Quantity",
-          labelText: "Product Quantity",
+          hintText: "Customer Name",
+          labelText: "Customer Name",
+          prefixIcon: Icon(Icons.person, color: Colors.blue),
           labelStyle: TextStyle(
             fontWeight: FontWeight.normal,
             color: Colors.grey.shade700,
@@ -32,12 +33,12 @@ class ProductQuantityController extends StatelessWidget {
           ),
         ),
         textInputAction: TextInputAction.next,
-        keyboardType: TextInputType.number,
+        keyboardType: TextInputType.text,
         autovalidateMode: AutovalidateMode.onUserInteraction,
         validator: (value) {
           String shop_name = value ?? '';
           if (shop_name.isEmpty) {
-            return 'Product Quantity is required';
+            return 'Customer Name is required';
           }
           return null;
         },

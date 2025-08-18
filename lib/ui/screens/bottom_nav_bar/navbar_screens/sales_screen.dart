@@ -1,6 +1,9 @@
+import 'package:bikretaa/database/sales_screen_database.dart';
+import 'package:bikretaa/ui/screens/bottom_nav_bar/sales_product/add_sales_screen.dart';
 import 'package:bikretaa/ui/widgets/product_controller_feild/sales_card_directories/sales_history_card.dart';
 import 'package:bikretaa/ui/widgets/product_controller_feild/sales_card_directories/sales_summary_card.dart';
-import 'package:bikretaa/ui/widgets/snackbar_messege.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -13,6 +16,8 @@ class SalesScreen extends StatefulWidget {
 }
 
 class _SalesScreenState extends State<SalesScreen> {
+  final SalesScreenDatabase _repo = SalesScreenDatabase();
+
   TextEditingController searchController = TextEditingController();
   String searchText = "";
 
@@ -24,6 +29,14 @@ class _SalesScreenState extends State<SalesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final uid = FirebaseAuth.instance.currentUser?.uid;
+    if (uid == null) {
+      // WidgetsBinding.instance.addPostFrameCallback((_) {
+      //   Navigator.pushReplacementNamed(context, '/login');
+      // });
+      return Scaffold(body: Center(child: CircularProgressIndicator()));
+    }
+
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 50.h,
@@ -32,18 +45,11 @@ class _SalesScreenState extends State<SalesScreen> {
           height: 40.h,
           child: TextField(
             controller: searchController,
-            onChanged: (value) {
-              setState(() {
-                searchText = value;
-              });
-              if (value.isNotEmpty) {
-                showSnackbarMessage(context, searchText);
-              }
-            },
+            onChanged: (value) =>
+                setState(() => searchText = value.toLowerCase()),
             decoration: InputDecoration(
-              hintText: 'Search sales...',
+              hintText: 'Search sales by ID or customer...',
               prefixIcon: Icon(Icons.search),
-              contentPadding: EdgeInsets.symmetric(vertical: 8.h),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10.r),
                 borderSide: BorderSide.none,
@@ -52,10 +58,10 @@ class _SalesScreenState extends State<SalesScreen> {
               fillColor: Colors.white,
             ),
             style: TextStyle(fontSize: 16.sp),
-            textInputAction: TextInputAction.search,
           ),
         ),
       ),
+
       body: Padding(
         padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 15.w),
         child: SingleChildScrollView(
@@ -64,7 +70,6 @@ class _SalesScreenState extends State<SalesScreen> {
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,14 +82,8 @@ class _SalesScreenState extends State<SalesScreen> {
                         ),
                       ),
                       Text(
-                        "Today 100 products have been sold !!!",
-                        style: GoogleFonts.italianno(
-                          textStyle: TextStyle(
-                            color: Colors.black,
-                            letterSpacing: .5,
-                            fontSize: 20.h,
-                          ),
-                        ),
+                        "Today’s sales summary",
+                        style: GoogleFonts.italianno(fontSize: 20.h),
                       ),
                     ],
                   ),
@@ -99,90 +98,164 @@ class _SalesScreenState extends State<SalesScreen> {
                 ],
               ),
               SizedBox(height: 15.h),
-              Padding(
-                padding: EdgeInsets.only(top: 0),
-                child: GridView.builder(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 10.h,
-                    crossAxisSpacing: 5.h,
-                    childAspectRatio: 1.5.h / 0.7.h,
-                  ),
-                  itemBuilder: (context, index) {
-                    return SalesSummaryCard(
-                      amount: "52,980 tk",
-                      label: (index % 2 == 0) ? "Today's Sales" : "Today's due",
-                      bgColor: (index % 2 == 0)
-                          ? Color(0xFFFFC727) // Yellow-like
-                          : Color(0xFF10B981), // Teal/Green
-                      iconPath: 'assets/images/pie_chart.png',
-                    );
-                  },
-                  itemCount: 6,
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 5.h),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Today's sales history",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14.h,
-                      ),
-                    ),
-                    TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        "Show mores...",
-                        style: TextStyle(
-                          color: Colors.blue,
-                          fontSize: 10.h,
-                          fontStyle: FontStyle.italic,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              ListView.builder(
-                itemBuilder: (context, index) {
-                  return SalesHistoryCard(
-                    customerName: 'Customer Name',
-                    paymentType: 'Cash',
-                    totalItems: 5,
-                    totalCost: 1000.0,
-                    discountPercentage: 10.0,
-                    discountAmount: 100.0,
-                    grandTotal: 900.0,
-                    time: '11:55:43',
-                    date: '12/08/2025',
+
+              StreamBuilder<QuerySnapshot>(
+                stream: _repo.getTodaySales(),
+                builder: (context, salesSnapshot) {
+                  if (!salesSnapshot.hasData)
+                    return CircularProgressIndicator();
+                  final salesDocs = salesSnapshot.data!.docs.where((doc) {
+                    final sale = doc.data() as Map<String, dynamic>;
+                    final customerName = sale['customerName']
+                        .toString()
+                        .toLowerCase();
+                    final salesID = doc.id.toLowerCase();
+                    return customerName.contains(searchText) ||
+                        salesID.contains(searchText);
+                  }).toList();
+
+                  return StreamBuilder<QuerySnapshot>(
+                    stream: _repo.getTodayRevenue(),
+                    builder: (context, revenueSnapshot) {
+                      if (!revenueSnapshot.hasData)
+                        return CircularProgressIndicator();
+
+                      final totals = _repo.calculateTotals(
+                        salesDocs,
+                        revenueSnapshot.data!.docs,
+                      );
+
+                      return Column(
+                        children: [
+                          Row(
+                            children: [
+                              Expanded(
+                                child: SalesSummaryCard(
+                                  amount:
+                                      'BDT ${totals["totalSales"]!.toStringAsFixed(2)}',
+                                  label: "Today's Sales",
+                                  bgColor: Color(0xFFFFC727),
+                                  iconPath: 'assets/images/pie_chart.png',
+                                ),
+                              ),
+                              SizedBox(width: 10.w),
+                              Expanded(
+                                child: SalesSummaryCard(
+                                  amount:
+                                      'BDT ${totals["totalRevenue"]!.toStringAsFixed(2)}',
+                                  label: "Today's Revenue",
+                                  bgColor: Color(0xFF10B981),
+                                  iconPath: 'assets/images/pie_chart.png',
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 10.h),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: SalesSummaryCard(
+                                  amount: totals["totalDue"] == 0
+                                      ? 'Paid'
+                                      : 'BDT ${totals["totalDue"]!.toStringAsFixed(2)}',
+                                  label: "Today's Due",
+                                  bgColor: Color(0xFFFFC727),
+                                  iconPath: 'assets/images/pie_chart.png',
+                                ),
+                              ),
+                              SizedBox(width: 10.w),
+                              Expanded(
+                                child: SalesSummaryCard(
+                                  amount:
+                                      'BDT ${totals["totalPaid"]!.toStringAsFixed(2)}',
+                                  label: "Today's Paid",
+                                  bgColor: Color(0xFF10B981),
+                                  iconPath: 'assets/images/pie_chart.png',
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      );
+                    },
                   );
                 },
-                itemCount: 4,
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
+              ),
+
+              SizedBox(height: 15.h),
+              Text(
+                "Today's sales history",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.h),
+              ),
+              SizedBox(height: 10.h),
+
+              StreamBuilder<QuerySnapshot>(
+                stream: _repo.getTodaySales(),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData)
+                    return Center(child: CircularProgressIndicator());
+                  final salesDocs = snapshot.data!.docs.where((doc) {
+                    final sale = doc.data() as Map<String, dynamic>;
+                    final customerName = sale['customerName']
+                        .toString()
+                        .toLowerCase();
+                    final salesID = doc.id.toLowerCase();
+                    return customerName.contains(searchText) ||
+                        salesID.contains(searchText);
+                  }).toList();
+
+                  if (salesDocs.isEmpty)
+                    return Center(child: Text("No sales today"));
+
+                  return ListView.builder(
+                    itemCount: salesDocs.length,
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      var sale =
+                          salesDocs[index].data() as Map<String, dynamic>;
+                      int totalItems = (sale['products'] as List).length;
+                      double totalCost = (sale['products'] as List).fold(
+                        0.0,
+                        (sum, item) =>
+                            sum + double.parse(item['totalPrice'].toString()),
+                      );
+
+                      Timestamp timestamp = sale['timestamp'] as Timestamp;
+                      DateTime saleDate = timestamp.toDate();
+
+                      return SalesHistoryCard(
+                        customerName: sale['customerName'],
+                        customerMobile: sale['customerMobile'],
+                        customerAddress: sale['customerAddress'],
+                        paymentType: sale['dueAmount'].toDouble() == 0
+                            ? 'Paid'
+                            : 'Due',
+                        totalItems: totalItems,
+                        totalCost: totalCost,
+                        grandTotal: sale['grandTotal'].toDouble(),
+                        paidAmount: sale['paidAmount'].toDouble(),
+                        dueAmount: sale['dueAmount'].toDouble(),
+                        salesID: salesDocs[index].id,
+                        time:
+                            "${saleDate.hour.toString().padLeft(2, '0')}:${saleDate.minute.toString().padLeft(2, '0')}:${saleDate.second.toString().padLeft(2, '0')}",
+                        date:
+                            "${saleDate.year}-${saleDate.month.toString().padLeft(2, '0')}-${saleDate.day.toString().padLeft(2, '0')}",
+                      );
+                    },
+                  );
+                },
               ),
             ],
           ),
         ),
       ),
-      floatingActionButton: Container(
-        height: 50,
-        width: 50,
-        child: FloatingActionButton(
-          onPressed: () {
-            //Navigator.pushNamed(context, AddProductScreen.name);
-          },
-          backgroundColor: Colors.blueGrey.shade50,
-          foregroundColor: Colors.blueGrey,
-          child: Icon(Icons.add_box_outlined, size: 20.h),
-        ),
+
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => Navigator.pushNamed(context, AddSalesScreen.name),
+        backgroundColor: Colors.blueGrey.shade50,
+        foregroundColor: Colors.blueGrey,
+        child: Icon(Icons.add_box_outlined, size: 20.h),
       ),
     );
   }

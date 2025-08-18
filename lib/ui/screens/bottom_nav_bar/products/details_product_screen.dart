@@ -4,7 +4,33 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class DetailsProductScreen extends StatelessWidget {
-  const DetailsProductScreen({super.key});
+  final String productId;
+  final String productName;
+  final String brandName;
+  final double purchasePrice;
+  final double sellingPrice;
+  final double discountPrice;
+  final int quantity;
+  final String supplierName;
+  final String description;
+  final String manufactureDate;
+  final String expireDate;
+  final String imagePath;
+  const DetailsProductScreen({
+    super.key,
+    required this.productId, //
+    required this.productName, //
+    required this.brandName, //
+    required this.purchasePrice, //
+    required this.sellingPrice, //
+    required this.discountPrice,
+    required this.quantity, //
+    required this.supplierName,
+    required this.description, //
+    required this.manufactureDate, //
+    required this.expireDate, //
+    required this.imagePath,
+  });
   static const String name = 'DetailsProductScreen';
 
   @override
@@ -31,14 +57,14 @@ class DetailsProductScreen extends StatelessWidget {
             Padding(
               padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 10.w),
               child: Text(
-                "Product Name",
+                productName,
                 style: TextStyle(fontSize: 20.h, fontWeight: FontWeight.bold),
               ),
             ),
             Padding(
               padding: EdgeInsets.symmetric(vertical: 0.h, horizontal: 10.w),
               child: Text(
-                "Categories Name and Sub-Categories",
+                "Brand Name : $brandName",
                 style: GoogleFonts.italianno(
                   textStyle: TextStyle(
                     color: Colors.black,
@@ -84,7 +110,7 @@ class DetailsProductScreen extends StatelessWidget {
                       ),
                       SizedBox(height: 10.h),
                       Text(
-                        "150",
+                        "$quantity unit",
                         style: TextStyle(
                           fontSize: 12.h,
                           color: Colors.blue,
@@ -107,7 +133,7 @@ class DetailsProductScreen extends StatelessWidget {
                       ),
                       SizedBox(height: 10.h),
                       Text(
-                        "TOM-0054",
+                        productId,
                         style: TextStyle(
                           fontSize: 12.h,
                           color: Colors.blue,
@@ -136,6 +162,67 @@ class DetailsProductScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
+                        "Suppier Name",
+                        style: TextStyle(
+                          fontSize: 14.h,
+                          color: Colors.grey.shade700,
+                        ),
+                      ),
+                      SizedBox(height: 10.h),
+                      Text(
+                        supplierName,
+                        style: TextStyle(
+                          fontSize: 12.h,
+                          color: Colors.blue,
+                          fontStyle: FontStyle.italic,
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Discount",
+                        style: TextStyle(
+                          fontSize: 14.h,
+                          color: Colors.grey.shade700,
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      Text(
+                        '$discountPrice tk',
+                        style: TextStyle(
+                          fontSize: 12.h,
+                          color: Colors.blue,
+                          fontWeight: FontWeight.normal,
+                          fontStyle: FontStyle.italic,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            Divider_widget(),
+
+            Padding(
+              padding: EdgeInsetsGeometry.only(
+                right: 20.h,
+                left: 20.h,
+                top: 10.h,
+                bottom: 10.h,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
                         "Purchase Price",
                         style: TextStyle(
                           fontSize: 14.h,
@@ -144,7 +231,7 @@ class DetailsProductScreen extends StatelessWidget {
                       ),
                       SizedBox(height: 10.h),
                       Text(
-                        "150 tk",
+                        "$purchasePrice tk",
                         style: TextStyle(
                           fontSize: 12.h,
                           color: Colors.blue,
@@ -167,7 +254,7 @@ class DetailsProductScreen extends StatelessWidget {
                       ),
                       SizedBox(height: 10),
                       Text(
-                        '200 tk',
+                        '$sellingPrice tk',
                         style: TextStyle(
                           fontSize: 12.h,
                           color: Colors.blue,
@@ -204,7 +291,7 @@ class DetailsProductScreen extends StatelessWidget {
                       ),
                       SizedBox(height: 10),
                       Text(
-                        "01/02/2025",
+                        manufactureDate,
                         style: TextStyle(
                           fontSize: 12.h,
                           color: Colors.blue,
@@ -227,7 +314,7 @@ class DetailsProductScreen extends StatelessWidget {
                       ),
                       SizedBox(height: 10),
                       Text(
-                        "01/02/2026",
+                        expireDate,
                         style: TextStyle(
                           fontSize: 12.h,
                           color: Colors.blue,
@@ -245,7 +332,7 @@ class DetailsProductScreen extends StatelessWidget {
               padding: EdgeInsets.only(
                 right: 20.h,
                 left: 20.h,
-                top: 25.h,
+                top: 15.h,
                 bottom: 10.h,
               ),
               child: Text(
@@ -257,11 +344,11 @@ class DetailsProductScreen extends StatelessWidget {
               padding: EdgeInsets.only(
                 right: 20.h,
                 left: 20.h,
-                top: 5.h,
-                bottom: 30.h,
+                top: 0.h,
+                bottom: 10.h,
               ),
               child: Text(
-                "This premium quality Basmati rice is ideal for everyday cooking and special occasions. Grown in the fertile plains, it offers a rich aroma and long, fluffy grains after cooking. Perfect for biryani, pulao, or steamed rice dishes. Hygienically packed to preserve freshness and nutrition.",
+                description,
                 style: GoogleFonts.ibarraRealNova(
                   textStyle: TextStyle(
                     color: Colors.black,

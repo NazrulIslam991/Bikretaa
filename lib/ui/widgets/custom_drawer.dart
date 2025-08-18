@@ -4,86 +4,100 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class CustomDrawer extends StatelessWidget {
+class CustomDrawer extends StatefulWidget {
   const CustomDrawer({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Drawer(
-      child: ListView(
-        padding: EdgeInsets.all(0),
-        children: [
-          Container(
-            height: 160.h,
-            child: DrawerHeader(
-              decoration: BoxDecoration(color: Colors.blueGrey),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CircleAvatar(
-                    radius: 25.h,
-                    backgroundImage: AssetImage('assets/images/messi.webp'),
-                  ),
-                  SizedBox(height: 10.h),
-                  Text(
-                    "Md Nazrul Islam Nayon",
-                    style: TextStyle(
-                      fontSize: 14.h,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    "nazrulislamnayon991@gmail.com",
-                    style: TextStyle(color: Colors.greenAccent, fontSize: 10.h),
-                  ),
-                ],
-              ),
-            ),
-          ),
+  State<CustomDrawer> createState() => _CustomDrawerState();
+}
 
-          ListTile(
-            leading: Icon(Icons.home, size: 20.h),
-            title: Text(
-              ' Home',
-              style: TextStyle(color: Colors.black, fontSize: 12.h),
-            ),
-            onTap: () {
-              Navigator.pop(context);
-            },
+class _CustomDrawerState extends State<CustomDrawer> {
+  bool _loading = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        Drawer(
+          child: ListView(
+            padding: EdgeInsets.all(0),
+            children: [
+              Container(
+                height: 160.h,
+                child: DrawerHeader(
+                  decoration: BoxDecoration(color: Colors.blueGrey),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      CircleAvatar(
+                        radius: 25.h,
+                        backgroundImage: AssetImage('assets/images/messi.webp'),
+                      ),
+                      SizedBox(height: 10.h),
+                      Text(
+                        "Md Nazrul Islam Nayon",
+                        style: TextStyle(
+                          fontSize: 14.h,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        "nazrulislamnayon991@gmail.com",
+                        style: TextStyle(
+                          color: Colors.greenAccent,
+                          fontSize: 10.h,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              ListTile(
+                leading: Icon(Icons.home, size: 20.h),
+                title: Text(
+                  ' Home',
+                  style: TextStyle(color: Colors.black, fontSize: 12.h),
+                ),
+                onTap: () => Navigator.pop(context),
+              ),
+              ListTile(
+                leading: Icon(Icons.edit, size: 20.h),
+                title: Text(
+                  ' Edit Profile',
+                  style: TextStyle(color: Colors.black, fontSize: 12.h),
+                ),
+                onTap: () => Navigator.pop(context),
+              ),
+              ListTile(
+                leading: Icon(Icons.logout, size: 20.h),
+                title: Text(
+                  'LogOut',
+                  style: TextStyle(color: Colors.black, fontSize: 12.h),
+                ),
+                onTap: () => _logout(context),
+              ),
+              ListTile(
+                leading: Icon(Icons.delete, size: 20.h),
+                title: Text(
+                  'Delete Account',
+                  style: TextStyle(color: Colors.black, fontSize: 12.h),
+                ),
+                onTap: () => showDeleteAccountDialog(context),
+              ),
+            ],
           ),
-          ListTile(
-            leading: Icon(Icons.edit, size: 20.h),
-            title: Text(
-              ' Edit Profile',
-              style: TextStyle(color: Colors.black, fontSize: 12.h),
-            ),
-            onTap: () {
-              Navigator.pop(context);
-            },
+        ),
+        if (_loading)
+          Container(
+            color: Colors.black.withOpacity(0.5),
+            alignment: Alignment.center,
+            child: CircularProgressIndicator(),
           ),
-          ListTile(
-            leading: Icon(Icons.logout, size: 20.h),
-            title: Text(
-              'LogOut',
-              style: TextStyle(color: Colors.black, fontSize: 12.h),
-            ),
-            onTap: () => _logout(context),
-          ),
-          ListTile(
-            leading: Icon(Icons.delete, size: 20.h),
-            title: Text(
-              'Delete Acoount',
-              style: TextStyle(color: Colors.black, fontSize: 12.h),
-            ),
-            onTap: () => showDeleteAccountDialog(context),
-          ),
-        ],
-      ),
+      ],
     );
   }
 
-  // logout section
   Future<void> _logout(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
     Navigator.pushNamedAndRemoveUntil(
@@ -93,7 +107,6 @@ class CustomDrawer extends StatelessWidget {
     );
   }
 
-  // pop up messege show for confirm delete account
   Future<void> showDeleteAccountDialog(BuildContext context) async {
     bool? confirmDelete = await showDialog<bool>(
       context: context,
@@ -102,15 +115,11 @@ class CustomDrawer extends StatelessWidget {
         content: Text('Are you sure you want to delete your account?'),
         actions: [
           TextButton(
-            onPressed: () {
-              Navigator.of(context).pop(false);
-            },
+            onPressed: () => Navigator.of(context).pop(false),
             child: Text('No'),
           ),
           TextButton(
-            onPressed: () {
-              Navigator.of(context).pop(true);
-            },
+            onPressed: () => Navigator.of(context).pop(true),
             child: Text('Yes'),
           ),
         ],
@@ -118,12 +127,12 @@ class CustomDrawer extends StatelessWidget {
     );
 
     if (confirmDelete == true) {
-      await deleteAcoount(context);
+      await deleteAccount(context);
     }
   }
 
-  // delete account section
-  Future<void> deleteAcoount(BuildContext context) async {
+  Future<void> deleteAccount(BuildContext context) async {
+    setState(() => _loading = true);
     try {
       User? user = FirebaseAuth.instance.currentUser;
 
@@ -132,26 +141,71 @@ class CustomDrawer extends StatelessWidget {
 
         await FirebaseFirestore.instance.collection('users').doc(uid).delete();
 
-        await user.delete();
+        final productsSnapshot = await FirebaseFirestore.instance
+            .collection("Products")
+            .doc(uid)
+            .collection("products_list")
+            .get();
+        for (var doc in productsSnapshot.docs) await doc.reference.delete();
 
-        print("User account and Firestore document deleted successfully.");
+        final salesSnapshot = await FirebaseFirestore.instance
+            .collection("Sales")
+            .doc(uid)
+            .collection("sales_list")
+            .get();
+        for (var doc in salesSnapshot.docs) await doc.reference.delete();
 
-        Navigator.pushNamedAndRemoveUntil(
-          context,
-          SigninScreen.name,
-          (route) => false,
-        );
-      } else {
-        print("No user is currently signed in.");
-      }
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'requires-recent-login') {
-        print("Re-authentication required: ${e.message}");
-      } else {
-        print("Error deleting user account: ${e.message}");
+        final paidSnapshot = await FirebaseFirestore.instance
+            .collection("Paid")
+            .doc(uid)
+            .collection("paid_list")
+            .get();
+        for (var doc in paidSnapshot.docs) await doc.reference.delete();
+
+        final dueSnapshot = await FirebaseFirestore.instance
+            .collection("Due")
+            .doc(uid)
+            .collection("due_list")
+            .get();
+        for (var doc in dueSnapshot.docs) await doc.reference.delete();
+
+        final revenueSnapshot = await FirebaseFirestore.instance
+            .collection("Revenue")
+            .doc(uid)
+            .collection("revenue_list")
+            .get();
+        for (var doc in revenueSnapshot.docs) await doc.reference.delete();
+
+        try {
+          await user.delete();
+        } on FirebaseAuthException catch (e) {
+          if (e.code == 'requires-recent-login') {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  'Please log in again to delete your account from Firebase Auth.',
+                ),
+              ),
+            );
+            await FirebaseAuth.instance.signOut();
+            return;
+          } else {
+            rethrow;
+          }
+        }
+
+        if (mounted) {
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            SigninScreen.name,
+            (route) => false,
+          );
+        }
       }
     } catch (e) {
-      print("An unexpected error occurred: $e");
+      print("Unexpected error: $e");
+    } finally {
+      if (mounted) setState(() => _loading = false);
     }
   }
 }

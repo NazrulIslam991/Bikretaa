@@ -32,6 +32,7 @@ class ProductNameController extends StatelessWidget {
           ),
         ),
         textInputAction: TextInputAction.next,
+        keyboardType: TextInputType.text,
         autovalidateMode: AutovalidateMode.onUserInteraction,
         validator: (value) {
           String shop_name = value ?? '';

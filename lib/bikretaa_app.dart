@@ -1,7 +1,7 @@
 import 'package:bikretaa/ui/screens/bottom_nav_bar/main_nav_bar_screen.dart';
 import 'package:bikretaa/ui/screens/bottom_nav_bar/navbar_screens/products_screen.dart';
 import 'package:bikretaa/ui/screens/bottom_nav_bar/products/add_product_screen.dart';
-import 'package:bikretaa/ui/screens/bottom_nav_bar/products/details_product_screen.dart';
+import 'package:bikretaa/ui/screens/bottom_nav_bar/sales_product/add_sales_screen.dart';
 import 'package:bikretaa/ui/screens/forgot_password_screen.dart';
 import 'package:bikretaa/ui/screens/signin_screen.dart';
 import 'package:bikretaa/ui/screens/signup/create_account_screen.dart';
@@ -87,9 +87,10 @@ class BikretaaApp extends StatelessWidget {
             //OTPVerificationScreen.name: (context) => OTPVerificationScreen(),
             ForgotPasswordScreen.name: (context) => ForgotPasswordScreen(),
             MainNavBarScreen.name: (context) => MainNavBarScreen(),
-            DetailsProductScreen.name: (context) => DetailsProductScreen(),
+            //DetailsProductScreen.name: (context) => DetailsProductScreen(),
             AddProductScreen.name: (context) => AddProductScreen(),
             ProductsScreen.name: (context) => ProductsScreen(),
+            AddSalesScreen.name: (context) => AddSalesScreen(),
           },
           debugShowCheckedModeBanner: false,
         );

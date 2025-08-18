@@ -33,11 +33,11 @@ class ProductDescriptionController extends StatelessWidget {
               fontSize: 12.h,
             ),
             border: OutlineInputBorder(),
-            alignLabelWithHint: true, // aligns label at the top when multiline
+            alignLabelWithHint: true,
           ),
           keyboardType: TextInputType.multiline,
-          maxLines: null, // makes it expandable if needed
-          minLines: 5, // ensures it's at least 5 lines tall
+          maxLines: null,
+          minLines: 5,
           textInputAction: TextInputAction.newline,
           autovalidateMode: AutovalidateMode.onUserInteraction,
           validator: (value) {

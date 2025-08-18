@@ -5,7 +5,7 @@ class FirestoreUtils {
     try {
       final QuerySnapshot result = await FirebaseFirestore.instance
           .collection('users')
-          .where('Email', isEqualTo: email)
+          .where('email', isEqualTo: email)
           .limit(1)
           .get();
 

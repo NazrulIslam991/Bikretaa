@@ -3,26 +3,32 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SalesHistoryCard extends StatelessWidget {
   final String customerName;
+  final String customerMobile;
+  final String customerAddress;
   final String paymentType;
   final int totalItems;
   final double totalCost;
-  final double discountPercentage;
-  final double discountAmount;
+  final double paidAmount;
+  final double dueAmount;
   final double grandTotal;
   final String time;
   final String date;
+  final String salesID;
 
   SalesHistoryCard({
     Key? key,
     required this.customerName,
+    required this.customerMobile,
+    required this.customerAddress,
     required this.paymentType,
     required this.totalItems,
     required this.totalCost,
-    required this.discountPercentage,
-    required this.discountAmount,
+    required this.paidAmount,
+    required this.dueAmount,
     required this.grandTotal,
     required this.time,
     required this.date,
+    required this.salesID,
   }) : super(key: key);
 
   @override
@@ -46,7 +52,7 @@ class SalesHistoryCard extends StatelessWidget {
         child: Column(
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,20 +71,47 @@ class SalesHistoryCard extends StatelessWidget {
                     ),
                   ],
                 ),
+                SizedBox(width: 8.w),
                 Expanded(
-                  child: Center(
-                    child: Text(
-                      customerName,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.bold,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Center(
+                        child: Text(
+                          customerName,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
-                    ),
+                      SizedBox(height: 2.h),
+                      Center(
+                        child: Text(
+                          "Mobile: $customerMobile",
+                          style: TextStyle(
+                            color: Colors.white70,
+                            fontSize: 10.sp,
+                          ),
+                        ),
+                      ),
+                      Center(
+                        child: Text(
+                          "Address: $customerAddress",
+                          style: TextStyle(
+                            color: Colors.white70,
+                            fontSize: 10.sp,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 Text(
-                  paymentType,
+                  dueAmount == 0
+                      ? 'Paid'
+                      : 'Due:${dueAmount.toStringAsFixed(2)} tk',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 10.sp,
@@ -132,7 +165,7 @@ class SalesHistoryCard extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        'BDT ${totalCost.toStringAsFixed(2)}',
+                        'BDT ${totalCost.toStringAsFixed(2)} tk',
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 10.sp,
@@ -145,7 +178,7 @@ class SalesHistoryCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Discount : ',
+                        'Paid Amount : ',
                         style: TextStyle(
                           color: Colors.indigo,
                           fontStyle: FontStyle.italic,
@@ -154,7 +187,7 @@ class SalesHistoryCard extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        '${discountPercentage.toStringAsFixed(0)}%',
+                        '${paidAmount.toStringAsFixed(2)} tk',
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 10.sp,
@@ -167,7 +200,7 @@ class SalesHistoryCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Discount Amount : ',
+                        'Due Amount : ',
                         style: TextStyle(
                           color: Colors.indigo,
                           fontStyle: FontStyle.italic,
@@ -176,7 +209,7 @@ class SalesHistoryCard extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        'BDT ${discountAmount.toStringAsFixed(2)}',
+                        'BDT ${dueAmount.toStringAsFixed(2)} tk',
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 10.sp,
@@ -189,7 +222,7 @@ class SalesHistoryCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Grand Total : ',
+                        'Sell ID : ',
                         style: TextStyle(
                           color: Colors.indigo,
                           fontStyle: FontStyle.italic,
@@ -198,7 +231,7 @@ class SalesHistoryCard extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        'BDT ${grandTotal.toStringAsFixed(2)}',
+                        salesID,
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 10.sp,
