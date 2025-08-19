@@ -1,3 +1,4 @@
+import 'package:bikretaa/database/product_database.dart';
 import 'package:bikretaa/models/product_model.dart';
 import 'package:bikretaa/ui/widgets/circular_progress_indicatior.dart';
 import 'package:bikretaa/ui/widgets/product_controller_feild/product_brand_controller.dart';
@@ -12,8 +13,6 @@ import 'package:bikretaa/ui/widgets/product_controller_feild/product_quantity_co
 import 'package:bikretaa/ui/widgets/product_controller_feild/product_selling_price_controller.dart';
 import 'package:bikretaa/ui/widgets/product_controller_feild/product_supplier_name_controller.dart';
 import 'package:bikretaa/ui/widgets/snackbar_messege.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -26,6 +25,8 @@ class AddProductScreen extends StatefulWidget {
 }
 
 class _AddProductScreenState extends State<AddProductScreen> {
+  final _addProductDatabase = ProductDatabase();
+
   final TextEditingController _productNameController = TextEditingController();
   final TextEditingController _brandNameController = TextEditingController();
   final TextEditingController _productIdController = TextEditingController();
@@ -43,7 +44,6 @@ class _AddProductScreenState extends State<AddProductScreen> {
   final TextEditingController _ExpireDateController = TextEditingController();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
   bool _addProductProgressIndicator = false;
 
   @override
@@ -82,8 +82,6 @@ class _AddProductScreenState extends State<AddProductScreen> {
                     ProductNameController: _productNameController,
                   ),
                 ),
-
-                //SizedBox(height: 5.h),
                 Container(
                   height: 65.h,
                   child: ProductBrandController(
@@ -93,57 +91,40 @@ class _AddProductScreenState extends State<AddProductScreen> {
                 Container(
                   height: 65.h,
                   child: ProductIdController(
-                    ProductIdController: _productIdController,
+                    productIdController: _productIdController,
+                    readOnly: false,
                   ),
                 ),
-
-                //SizedBox(height: 5.h),
                 Container(
                   height: 65.h,
                   child: ProductPurchasePrice(
                     ProductPurchasePrice: _PurchasePriceController,
                   ),
                 ),
-
-                //SizedBox(height: 5.h),
                 Container(
                   height: 65.h,
                   child: ProductSellingPriceController(
                     ProductSellingPriceController: _SellingPriceController,
                   ),
                 ),
-
-                //SizedBox(height: 5.h),
                 Container(
                   height: 65.h,
                   child: ProductDiscountController(
                     productDiscountController: _DiscountPriceController,
                   ),
                 ),
-
-                //SizedBox(height: 5.h),
                 Container(
                   height: 65.h,
                   child: ProductQuantityController(
                     productQuantityController: _QuantityController,
                   ),
                 ),
-
-                //SizedBox(height: 5.h),
                 Container(
                   height: 65.h,
                   child: ProductSupplierNameController(
                     productSupplierNameController: _SuppliarNameController,
                   ),
                 ),
-
-                //SizedBox(height: 5.h),
-                // Container(
-                //   height: 65.h,
-                //   child: ProductBarCodeController(
-                //     productBarCodeController: _BarCodeNoController,
-                //   ),
-                // ),
                 Container(
                   height: 65.h,
                   child: ProductManufactureDateController(
@@ -151,28 +132,16 @@ class _AddProductScreenState extends State<AddProductScreen> {
                         _ManufactureDateController,
                   ),
                 ),
-
-                //SizedBox(height: 5.h),
                 Container(
                   height: 65.h,
                   child: ProductExpireDateController(
                     ProductExpireDateController: _ExpireDateController,
                   ),
                 ),
-                //SizedBox(height: 5.h),
-
-                //SizedBox(height: 5.h),
                 ProductDescriptionController(
                   productDescriptionController: _ProductDescriptionController,
                 ),
-
                 SizedBox(height: 15.h),
-
-                // ShopTypeDropdownWidget(
-                //   onSaved: (value) {
-                //     selectedShopType = value;
-                //   },
-                // ),
               ],
             ),
           ),
@@ -199,67 +168,36 @@ class _AddProductScreenState extends State<AddProductScreen> {
     if (!_formKey.currentState!.validate()) return;
     _formKey.currentState!.save();
 
-    setState(() {
-      _addProductProgressIndicator = true;
-    });
-
-    final productId = _productIdController.text.trim();
-    final productName = _productNameController.text.trim();
-    final brandName = _brandNameController.text.trim();
-    final purchasePrice =
-        double.tryParse(_PurchasePriceController.text.trim()) ?? 0;
-    final sellingPrice =
-        double.tryParse(_SellingPriceController.text.trim()) ?? 0;
-    final discountPrice =
-        double.tryParse(_DiscountPriceController.text.trim()) ?? 0;
-    final quantity = int.tryParse(_QuantityController.text.trim()) ?? 0;
-    final supplierName = _SuppliarNameController.text.trim();
-    final description = _ProductDescriptionController.text.trim();
-    final manufactureDate = _ManufactureDateController.text.trim();
-    final expireDate = _ExpireDateController.text.trim();
-    final createdAt = DateTime.now();
+    setState(() => _addProductProgressIndicator = true);
 
     final product = Product(
-      productId: productId,
-      productName: productName,
-      brandName: brandName,
-      purchasePrice: purchasePrice,
-      sellingPrice: sellingPrice,
-      discountPrice: discountPrice,
-      quantity: quantity,
-      supplierName: supplierName,
-      description: description,
-      manufactureDate: manufactureDate,
-      expireDate: expireDate,
-      createdAt: createdAt,
+      productId: _productIdController.text.trim(),
+      productName: _productNameController.text.trim(),
+      brandName: _brandNameController.text.trim(),
+      purchasePrice: double.tryParse(_PurchasePriceController.text.trim()) ?? 0,
+      sellingPrice: double.tryParse(_SellingPriceController.text.trim()) ?? 0,
+      discountPrice: double.tryParse(_DiscountPriceController.text.trim()) ?? 0,
+      quantity: int.tryParse(_QuantityController.text.trim()) ?? 0,
+      supplierName: _SuppliarNameController.text.trim(),
+      description: _ProductDescriptionController.text.trim(),
+      manufactureDate: _ManufactureDateController.text.trim(),
+      expireDate: _ExpireDateController.text.trim(),
+      createdAt: DateTime.now(),
     );
 
     try {
-      final uid = FirebaseAuth.instance.currentUser?.uid;
-      if (uid == null) return;
-
-      final docRef = FirebaseFirestore.instance
-          .collection("Products")
-          .doc(uid)
-          .collection("products_list")
-          .doc(product.productId);
-
-      final docSnapshot = await docRef.get();
-
-      if (docSnapshot.exists) {
-        showSnackbarMessage(context, 'Product ID already exists!');
-      } else {
-        await docRef.set(product.toMap());
+      final added = await _addProductDatabase.addProduct(product);
+      if (added) {
         showSnackbarMessage(context, 'Product added successfully!');
         _clearControllers();
         Navigator.pop(context);
+      } else {
+        showSnackbarMessage(context, 'Product ID already exists!');
       }
     } catch (e) {
       showSnackbarMessage(context, 'Error adding product: $e');
     } finally {
-      setState(() {
-        _addProductProgressIndicator = false;
-      });
+      setState(() => _addProductProgressIndicator = false);
     }
   }
 

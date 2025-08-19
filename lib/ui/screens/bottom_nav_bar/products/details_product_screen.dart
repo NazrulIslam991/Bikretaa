@@ -1,3 +1,7 @@
+import 'package:bikretaa/database/product_database.dart';
+import 'package:bikretaa/ui/screens/bottom_nav_bar/products/update_product_screen.dart';
+import 'package:bikretaa/ui/widgets/circular_progress_indicatior_2.dart';
+import 'package:bikretaa/ui/widgets/confirm_dialog.dart';
 import 'package:bikretaa/ui/widgets/divider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -16,31 +20,34 @@ class DetailsProductScreen extends StatelessWidget {
   final String manufactureDate;
   final String expireDate;
   final String imagePath;
+
   const DetailsProductScreen({
     super.key,
-    required this.productId, //
-    required this.productName, //
-    required this.brandName, //
-    required this.purchasePrice, //
-    required this.sellingPrice, //
+    required this.productId,
+    required this.productName,
+    required this.brandName,
+    required this.purchasePrice,
+    required this.sellingPrice,
     required this.discountPrice,
-    required this.quantity, //
+    required this.quantity,
     required this.supplierName,
-    required this.description, //
-    required this.manufactureDate, //
-    required this.expireDate, //
+    required this.description,
+    required this.manufactureDate,
+    required this.expireDate,
     required this.imagePath,
   });
+
   static const String name = 'DetailsProductScreen';
 
   @override
   Widget build(BuildContext context) {
+    final ProductDatabase _deleteProduct = ProductDatabase();
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Product Details", style: TextStyle(fontSize: 22.h)),
         centerTitle: true,
       ),
-
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -88,7 +95,7 @@ class DetailsProductScreen extends StatelessWidget {
             ),
             Divider_widget(),
             Padding(
-              padding: EdgeInsetsGeometry.only(
+              padding: EdgeInsets.only(
                 right: 20.h,
                 left: 20.h,
                 top: 10.h,
@@ -120,7 +127,6 @@ class DetailsProductScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -148,7 +154,7 @@ class DetailsProductScreen extends StatelessWidget {
             ),
             Divider_widget(),
             Padding(
-              padding: EdgeInsetsGeometry.only(
+              padding: EdgeInsets.only(
                 right: 20.h,
                 left: 20.h,
                 top: 10.h,
@@ -180,7 +186,6 @@ class DetailsProductScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -207,9 +212,8 @@ class DetailsProductScreen extends StatelessWidget {
               ),
             ),
             Divider_widget(),
-
             Padding(
-              padding: EdgeInsetsGeometry.only(
+              padding: EdgeInsets.only(
                 right: 20.h,
                 left: 20.h,
                 top: 10.h,
@@ -241,7 +245,6 @@ class DetailsProductScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -269,7 +272,7 @@ class DetailsProductScreen extends StatelessWidget {
             ),
             Divider_widget(),
             Padding(
-              padding: EdgeInsetsGeometry.only(
+              padding: EdgeInsets.only(
                 right: 20.h,
                 left: 20.h,
                 top: 10.h,
@@ -301,7 +304,6 @@ class DetailsProductScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -327,7 +329,6 @@ class DetailsProductScreen extends StatelessWidget {
                 ],
               ),
             ),
-
             Padding(
               padding: EdgeInsets.only(
                 right: 20.h,
@@ -361,23 +362,91 @@ class DetailsProductScreen extends StatelessWidget {
           ],
         ),
       ),
-
       bottomNavigationBar: Padding(
         padding: EdgeInsets.all(10.h),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Container(
+            SizedBox(
               height: 40.h,
               width: 90.w,
-              child: ElevatedButton(onPressed: () {}, child: Text("Edit")),
+              child: ElevatedButton(
+                onPressed: () {
+                  _onTapEdit(context);
+                },
+                child: const Text("Edit"),
+              ),
             ),
-            Container(
+
+            SizedBox(
               height: 40.h,
               width: 90.w,
-              child: ElevatedButton(onPressed: () {}, child: Text("Delete")),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                onPressed: () {
+                  _onTapDelete(context);
+                },
+                child: const Text("Delete"),
+              ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  void _onTapDelete(BuildContext context) async {
+    final ProductDatabase _deleteProductDatabase = ProductDatabase();
+
+    final confirm = await showConfirmDialog(
+      context: context,
+      title: "Delete Product",
+      content: "Are you sure you want to delete this product?",
+      confirmText: "Delete",
+      confirmColor: Colors.red,
+    );
+
+    if (confirm) {
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => CircularProgressIndicator2(),
+      );
+
+      try {
+        await _deleteProductDatabase.deleteProduct(productId);
+
+        Navigator.pop(context);
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Product deleted successfully")),
+        );
+        Navigator.pop(context);
+      } catch (e) {
+        Navigator.pop(context);
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text("Failed to delete: $e")));
+      }
+    }
+  }
+
+  void _onTapEdit(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => UpdateProductScreen(
+          productId: productId,
+          productName: productName,
+          brandName: brandName,
+          purchasePrice: purchasePrice,
+          sellingPrice: sellingPrice,
+          discountPrice: discountPrice,
+          quantity: quantity,
+          supplierName: supplierName,
+          description: description,
+          manufactureDate: manufactureDate,
+          expireDate: expireDate,
         ),
       ),
     );

@@ -1,4 +1,5 @@
 import 'package:bikretaa/ui/screens/signin_screen.dart';
+import 'package:bikretaa/ui/widgets/confirm_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -83,7 +84,19 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   'Delete Account',
                   style: TextStyle(color: Colors.black, fontSize: 12.h),
                 ),
-                onTap: () => showDeleteAccountDialog(context),
+                onTap: () async {
+                  final confirm = await showConfirmDialog(
+                    context: context,
+                    title: "Delete Account",
+                    content: "Are you sure you want to delete your account?",
+                    confirmText: "Delete",
+                    confirmColor: Colors.red,
+                  );
+
+                  if (confirm) {
+                    await deleteAccount(context);
+                  }
+                },
               ),
             ],
           ),
@@ -105,30 +118,6 @@ class _CustomDrawerState extends State<CustomDrawer> {
       SigninScreen.name,
       (route) => false,
     );
-  }
-
-  Future<void> showDeleteAccountDialog(BuildContext context) async {
-    bool? confirmDelete = await showDialog<bool>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text('Delete Account'),
-        content: Text('Are you sure you want to delete your account?'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(false),
-            child: Text('No'),
-          ),
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(true),
-            child: Text('Yes'),
-          ),
-        ],
-      ),
-    );
-
-    if (confirmDelete == true) {
-      await deleteAccount(context);
-    }
   }
 
   Future<void> deleteAccount(BuildContext context) async {

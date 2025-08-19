@@ -4,10 +4,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class ProductIdController extends StatelessWidget {
   const ProductIdController({
     super.key,
-    required TextEditingController ProductIdController,
-  }) : _productIdController = ProductIdController;
+    required TextEditingController productIdController,
+    this.readOnly = false,
+  }) : _productIdController = productIdController;
 
   final TextEditingController _productIdController;
+  final bool readOnly;
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +17,7 @@ class ProductIdController extends StatelessWidget {
       height: 45.h,
       child: TextFormField(
         controller: _productIdController,
+        readOnly: readOnly,
         decoration: InputDecoration(
           hintText: "Product id",
           labelText: "Product id",
@@ -34,8 +37,8 @@ class ProductIdController extends StatelessWidget {
         textInputAction: TextInputAction.next,
         autovalidateMode: AutovalidateMode.onUserInteraction,
         validator: (value) {
-          String shop_name = value ?? '';
-          if (shop_name.isEmpty) {
+          String productId = value ?? '';
+          if (productId.isEmpty) {
             return 'Product id is required';
           }
           return null;
