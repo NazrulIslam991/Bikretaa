@@ -1,4 +1,5 @@
 import 'package:bikretaa/ui/screens/signin_screen.dart';
+import 'package:bikretaa/ui/widgets/circular_progress_indicatior_2.dart';
 import 'package:bikretaa/ui/widgets/confirm_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -76,7 +77,22 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   'LogOut',
                   style: TextStyle(color: Colors.black, fontSize: 12.h),
                 ),
-                onTap: () => _logout(context),
+                onTap: () async {
+                  final confirm = await showConfirmDialog(
+                    context: context,
+                    title: "Logout",
+                    content: "Are you sure you want to logout?",
+                    confirmText: "Logout",
+                    confirmColor: Colors.red,
+                  );
+
+                  if (confirm) {
+                    setState(() => _loading = true);
+                    await Future.delayed(Duration(milliseconds: 300));
+                    await _logout(context);
+                    if (mounted) setState(() => _loading = false);
+                  }
+                },
               ),
               ListTile(
                 leading: Icon(Icons.delete, size: 20.h),
@@ -94,19 +110,17 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   );
 
                   if (confirm) {
+                    setState(() => _loading = true);
+                    await Future.delayed(Duration(milliseconds: 300));
                     await deleteAccount(context);
+                    if (mounted) setState(() => _loading = false);
                   }
                 },
               ),
             ],
           ),
         ),
-        if (_loading)
-          Container(
-            color: Colors.black.withOpacity(0.5),
-            alignment: Alignment.center,
-            child: CircularProgressIndicator(),
-          ),
+        if (_loading) const CircularProgressIndicator2(),
       ],
     );
   }
@@ -121,7 +135,6 @@ class _CustomDrawerState extends State<CustomDrawer> {
   }
 
   Future<void> deleteAccount(BuildContext context) async {
-    setState(() => _loading = true);
     try {
       User? user = FirebaseAuth.instance.currentUser;
 
@@ -169,14 +182,15 @@ class _CustomDrawerState extends State<CustomDrawer> {
           await user.delete();
         } on FirebaseAuthException catch (e) {
           if (e.code == 'requires-recent-login') {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(
-                  'Please log in again to delete your account from Firebase Auth.',
-                ),
-              ),
-            );
             await FirebaseAuth.instance.signOut();
+            await showConfirmDialog(
+              context: context,
+              title: "Re-login Required",
+              content:
+                  "Please log in again to delete your account from Firebase Auth.",
+              confirmText: "Ok",
+              confirmColor: Colors.blue,
+            );
             return;
           } else {
             rethrow;
@@ -193,8 +207,6 @@ class _CustomDrawerState extends State<CustomDrawer> {
       }
     } catch (e) {
       print("Unexpected error: $e");
-    } finally {
-      if (mounted) setState(() => _loading = false);
     }
   }
 }

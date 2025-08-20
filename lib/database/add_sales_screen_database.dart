@@ -94,7 +94,7 @@ class AddSalesScreen_database {
     }
   }
 
-  /// Fetch Product by ID
+  //Fetch Product by ID
   Future<Product?> fetchProductById(String uid, String productId) async {
     try {
       final docRef = _db

@@ -89,7 +89,7 @@ class SalesHistoryCard extends StatelessWidget {
                       SizedBox(height: 2.h),
                       Center(
                         child: Text(
-                          "Mobile: $customerMobile",
+                          customerMobile,
                           style: TextStyle(
                             color: Colors.white70,
                             fontSize: 10.sp,

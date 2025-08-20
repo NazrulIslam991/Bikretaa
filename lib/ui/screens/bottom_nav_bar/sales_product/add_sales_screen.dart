@@ -1,5 +1,6 @@
 import 'package:bikretaa/database/add_sales_screen_database.dart';
 import 'package:bikretaa/models/SalesModel.dart';
+import 'package:bikretaa/ui/widgets/circular_progress_indicatior_2.dart';
 import 'package:bikretaa/ui/widgets/mobile_feild_widget.dart';
 import 'package:bikretaa/ui/widgets/product_sales_controller/customer_address.dart';
 import 'package:bikretaa/ui/widgets/product_sales_controller/customer_name_controller.dart';
@@ -32,6 +33,14 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
   List<Map<String, String>> _addedProducts = [];
 
   @override
+  void initState() {
+    super.initState();
+    _paidController.addListener(() {
+      setState(() {});
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     final uid = FirebaseAuth.instance.currentUser?.uid;
 
@@ -50,105 +59,27 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                   child: Column(
                     children: [
                       SizedBox(height: 10.h),
-                      CustomerNameController(
-                        CustomerNameController: _customerNameController,
+                      Container(
+                        height: 65.h,
+                        child: CustomerNameController(
+                          CustomerNameController: _customerNameController,
+                        ),
                       ),
-                      SizedBox(height: 5.h),
-                      MobileFeildWidget(mobileEcontroller: _mobileEcontroller),
-                      SizedBox(height: 5.h),
-                      CustomerAddressController(
-                        CustomerAddressController: _customerAddressController,
+                      Container(
+                        height: 65.h,
+                        child: MobileFeildWidget(
+                          mobileEcontroller: _mobileEcontroller,
+                        ),
                       ),
-                      SizedBox(height: 15.h),
+                      Container(
+                        height: 65.h,
+                        child: CustomerAddressController(
+                          CustomerAddressController: _customerAddressController,
+                        ),
+                      ),
 
                       // Products list
-                      Container(
-                        height: 230.h,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey),
-                          borderRadius: BorderRadius.circular(12.r),
-                        ),
-                        child: _addedProducts.isEmpty
-                            ? Center(child: Text("No products added"))
-                            : Column(
-                                children: [
-                                  Expanded(
-                                    child: ListView.builder(
-                                      itemCount: _addedProducts.length,
-                                      itemBuilder: (context, index) {
-                                        final item = _addedProducts[index];
-                                        return Card(
-                                          margin: EdgeInsets.symmetric(
-                                            vertical: 4.h,
-                                          ),
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(
-                                              10.r,
-                                            ),
-                                          ),
-                                          child: ListTile(
-                                            contentPadding:
-                                                EdgeInsets.symmetric(
-                                                  horizontal: 12.w,
-                                                  vertical: 6.h,
-                                                ),
-                                            leading: CircleAvatar(
-                                              backgroundColor:
-                                                  Colors.blueGrey.shade50,
-                                              child: Text(
-                                                item['quantity'] ?? "0",
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.blueGrey,
-                                                ),
-                                              ),
-                                            ),
-                                            title: Text(
-                                              item['productName'] ?? "",
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: 14.sp,
-                                              ),
-                                            ),
-                                            subtitle: Text(
-                                              "Unit: ${item['unitPrice']} tk\nTotal: ${item['totalPrice']} tk",
-                                              style: TextStyle(
-                                                fontSize: 12.sp,
-                                                color: Colors.black54,
-                                              ),
-                                            ),
-                                            trailing: IconButton(
-                                              icon: Icon(
-                                                Icons.delete,
-                                                color: Colors.redAccent,
-                                              ),
-                                              onPressed: () {
-                                                setState(() {
-                                                  _addedProducts.removeAt(
-                                                    index,
-                                                  );
-                                                });
-                                              },
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                  Divider(),
-                                  Padding(
-                                    padding: EdgeInsets.all(8.h),
-                                    child: Text(
-                                      "Grand Total: ${grandTotal.toStringAsFixed(2)} tk",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 14.sp,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                      ),
+                      _buildProductsList(),
 
                       SizedBox(height: 20.h),
 
@@ -204,7 +135,13 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                 border: Border.all(color: Colors.grey),
                                 borderRadius: BorderRadius.circular(8.r),
                               ),
-                              child: Text("Due: ${due.toStringAsFixed(2)} tk"),
+                              child: Text(
+                                "Due: ${due.toStringAsFixed(2)} tk",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: due < 0 ? Colors.red : Colors.black,
+                                ),
+                              ),
                             ),
                           ),
                         ],
@@ -218,15 +155,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
       bottomNavigationBar: Padding(
         padding: EdgeInsets.all(12.h),
         child: _loading
-            ? SizedBox(
-                height: 40.h,
-                child: Center(
-                  child: CircularProgressIndicator(
-                    strokeWidth: 2,
-                    valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
-                  ),
-                ),
-              )
+            ? CircularProgressIndicator2()
             : ElevatedButton(
                 onPressed: () {
                   final uid = FirebaseAuth.instance.currentUser?.uid;
@@ -241,10 +170,138 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
     );
   }
 
+  Widget _buildProductsList() {
+    return Container(
+      height: 230.h,
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.grey),
+        borderRadius: BorderRadius.circular(12.r),
+      ),
+      child: _addedProducts.isEmpty
+          ? Center(child: Text("No products added"))
+          : Column(
+              children: [
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: _addedProducts.length,
+                    itemBuilder: (context, index) {
+                      return _buildProductCard(index);
+                    },
+                  ),
+                ),
+                Divider(),
+                Padding(
+                  padding: EdgeInsets.all(8.h),
+                  child: Text(
+                    "Grand Total: ${grandTotal.toStringAsFixed(2)} tk",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14.sp,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+    );
+  }
+
+  Widget _buildProductCard(int index) {
+    final item = _addedProducts[index];
+
+    return Card(
+      margin: EdgeInsets.symmetric(vertical: 4.h),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.r)),
+      child: ListTile(
+        contentPadding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
+        leading: CircleAvatar(
+          backgroundColor: Colors.blueGrey.shade50,
+          child: Text(
+            item['quantity'] ?? "0",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.blueGrey,
+            ),
+          ),
+        ),
+        title: Text(
+          item['productName'] ?? "",
+          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14.sp),
+        ),
+        subtitle: Text(
+          "Unit: ${item['unitPrice']} tk\nTotal: ${item['totalPrice']} tk",
+          style: TextStyle(fontSize: 12.sp, color: Colors.black54),
+        ),
+        trailing: IconButton(
+          icon: Icon(Icons.delete, color: Colors.redAccent),
+          onPressed: () {
+            setState(() {
+              _addedProducts.removeAt(index);
+            });
+          },
+        ),
+      ),
+    );
+  }
+
+  void _addProductToList(String uid) async {
+    if (!_formKey.currentState!.validate()) return;
+
+    final productId = _productIdController.text.trim();
+    final quantityText = _quantityController.text.trim();
+    final product = await _salesService.fetchProductById(uid, productId);
+
+    if (product != null) {
+      final quantity = int.tryParse(quantityText) ?? 0;
+
+      if (quantity <= 0) return;
+
+      if (quantity > product.quantity) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text("Out of stock! Only ${product.quantity} available."),
+          ),
+        );
+        return;
+      }
+
+      final unitPrice = product.sellingPrice - product.discountPrice;
+      final totalPrice = unitPrice * quantity;
+
+      final newProduct = {
+        'productId': product.productId,
+        'productName': product.productName,
+        'quantity': quantity.toString(),
+        'unitPrice': unitPrice.toStringAsFixed(2),
+        'totalPrice': totalPrice.toStringAsFixed(2),
+      };
+
+      setState(() {
+        final existingIndex = _addedProducts.indexWhere(
+          (item) => item['productId'] == product.productId,
+        );
+
+        if (existingIndex != -1) {
+          _addedProducts[existingIndex] = newProduct;
+        } else {
+          _addedProducts.add(newProduct);
+        }
+      });
+
+      _productIdController.clear();
+      _quantityController.clear();
+    } else {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Product not found")));
+    }
+  }
+
   Future<void> _confirmSale(String uid) async {
+    if (!_formKey.currentState!.validate()) return;
+
     final sale = SalesModel(
       customerName: _customerNameController.text.trim(),
-      customerMobile: _mobileEcontroller.text.trim(),
+      customerMobile: '+8801' + _mobileEcontroller.text.trim(),
       customerAddress: _customerAddressController.text.trim(),
       grandTotal: grandTotal,
       paidAmount: double.tryParse(_paidController.text) ?? 0,
@@ -281,48 +338,6 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
     _customerNameController.clear();
     _mobileEcontroller.clear();
     _customerAddressController.clear();
-  }
-
-  void _addProductToList(String uid) async {
-    final productId = _productIdController.text.trim();
-    final quantityText = _quantityController.text.trim();
-
-    if (productId.isEmpty || quantityText.isEmpty) return;
-
-    final product = await _salesService.fetchProductById(uid, productId);
-
-    if (product != null) {
-      final quantity = int.tryParse(quantityText) ?? 0;
-      final unitPrice = product.sellingPrice - product.discountPrice;
-      final totalPrice = unitPrice * quantity;
-
-      final newProduct = {
-        'productId': product.productId,
-        'productName': product.productName,
-        'quantity': quantity.toString(),
-        'unitPrice': unitPrice.toStringAsFixed(2),
-        'totalPrice': totalPrice.toStringAsFixed(2),
-      };
-
-      setState(() {
-        final existingIndex = _addedProducts.indexWhere(
-          (item) => item['productId'] == product.productId,
-        );
-
-        if (existingIndex != -1) {
-          _addedProducts[existingIndex] = newProduct;
-        } else {
-          _addedProducts.add(newProduct);
-        }
-      });
-
-      _productIdController.clear();
-      _quantityController.clear();
-    } else {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text("Product not found")));
-    }
   }
 
   double get grandTotal => _addedProducts.fold(

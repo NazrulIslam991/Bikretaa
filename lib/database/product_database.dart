@@ -5,6 +5,25 @@ import 'package:firebase_auth/firebase_auth.dart';
 class ProductDatabase {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final String? uid = FirebaseAuth.instance.currentUser?.uid;
+  String? get currentUid => FirebaseAuth.instance.currentUser?.uid;
+
+  // Stream of products
+  Stream<List<Product>> getProductsStream() {
+    final uid = currentUid;
+    if (uid == null) return const Stream.empty();
+
+    return _firestore
+        .collection("Products")
+        .doc(uid)
+        .collection("products_list")
+        .orderBy("createdAt", descending: true)
+        .snapshots()
+        .map(
+          (snapshot) => snapshot.docs
+              .map((doc) => Product.fromMap(doc.data() as Map<String, dynamic>))
+              .toList(),
+        );
+  }
 
   /// Add a new product
   Future<bool> addProduct(Product product) async {
