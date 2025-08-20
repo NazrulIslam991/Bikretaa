@@ -4,10 +4,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class ProductDatabase {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  final String? uid = FirebaseAuth.instance.currentUser?.uid;
+
   String? get currentUid => FirebaseAuth.instance.currentUser?.uid;
 
-  // Stream of products
   Stream<List<Product>> getProductsStream() {
     final uid = currentUid;
     if (uid == null) return const Stream.empty();
@@ -25,8 +24,8 @@ class ProductDatabase {
         );
   }
 
-  /// Add a new product
   Future<bool> addProduct(Product product) async {
+    final uid = currentUid;
     if (uid == null) throw Exception("User not logged in");
 
     final docRef = _firestore
@@ -36,16 +35,14 @@ class ProductDatabase {
         .doc(product.productId);
 
     final docSnapshot = await docRef.get();
-    if (docSnapshot.exists) {
-      return false;
-    } else {
-      await docRef.set(product.toMap());
-      return true;
-    }
+    if (docSnapshot.exists) return false;
+
+    await docRef.set(product.toMap());
+    return true;
   }
 
-  /// Update an existing product
   Future<void> updateProduct(Product product) async {
+    final uid = currentUid;
     if (uid == null) throw Exception("User not logged in");
 
     final docRef = _firestore
@@ -53,17 +50,12 @@ class ProductDatabase {
         .doc(uid)
         .collection("products_list")
         .doc(product.productId);
-
-    final docSnapshot = await docRef.get();
-    if (!docSnapshot.exists) {
-      throw Exception("Product does not exist");
-    }
 
     await docRef.update(product.toMap());
   }
 
-  /// Delete a product
   Future<void> deleteProduct(String productId) async {
+    final uid = currentUid;
     if (uid == null) throw Exception("User not logged in");
 
     final docRef = _firestore
@@ -71,11 +63,6 @@ class ProductDatabase {
         .doc(uid)
         .collection("products_list")
         .doc(productId);
-
-    final docSnapshot = await docRef.get();
-    if (!docSnapshot.exists) {
-      throw Exception("Product does not exist");
-    }
 
     await docRef.delete();
   }

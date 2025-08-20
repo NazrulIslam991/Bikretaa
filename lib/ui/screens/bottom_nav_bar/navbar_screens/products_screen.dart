@@ -124,7 +124,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                         description: product.description,
                         manufactureDate: product.manufactureDate,
                         expireDate: product.expireDate,
-                        imagePath: "assets/images/most_products_sold.jpeg",
+                        imagePath: product.image,
                       );
                     },
                   ),

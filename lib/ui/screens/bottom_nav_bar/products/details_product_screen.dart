@@ -1,4 +1,5 @@
 import 'package:bikretaa/database/product_database.dart';
+import 'package:bikretaa/models/product_model.dart';
 import 'package:bikretaa/ui/screens/bottom_nav_bar/products/update_product_screen.dart';
 import 'package:bikretaa/ui/widgets/circular_progress_indicatior_2.dart';
 import 'package:bikretaa/ui/widgets/confirm_dialog.dart';
@@ -54,11 +55,38 @@ class DetailsProductScreen extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(0.h),
-              child: Image.asset(
-                "assets/images/most_products_sold.jpeg",
+              child: Image.network(
+                imagePath,
                 width: double.infinity,
                 height: 170.h,
                 fit: BoxFit.cover,
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return Container(
+                    width: double.infinity,
+                    height: 170.h,
+                    alignment: Alignment.center,
+                    child: CircularProgressIndicator(
+                      value: loadingProgress.expectedTotalBytes != null
+                          ? loadingProgress.cumulativeBytesLoaded /
+                                loadingProgress.expectedTotalBytes!
+                          : null,
+                    ),
+                  );
+                },
+                errorBuilder: (context, error, stackTrace) {
+                  return Container(
+                    width: double.infinity,
+                    height: 170.h,
+                    color: Colors.grey[300],
+                    alignment: Alignment.center,
+                    child: Icon(
+                      Icons.broken_image,
+                      size: 50.h,
+                      color: Colors.grey,
+                    ),
+                  );
+                },
               ),
             ),
             Padding(
@@ -432,22 +460,26 @@ class DetailsProductScreen extends StatelessWidget {
   }
 
   void _onTapEdit(BuildContext context) {
+    final product = Product(
+      productId: productId,
+      productName: productName,
+      brandName: brandName,
+      purchasePrice: purchasePrice,
+      sellingPrice: sellingPrice,
+      discountPrice: discountPrice,
+      quantity: quantity,
+      supplierName: supplierName,
+      description: description,
+      manufactureDate: manufactureDate,
+      expireDate: expireDate,
+      image: imagePath,
+      createdAt: DateTime.now(),
+    );
+
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => UpdateProductScreen(
-          productId: productId,
-          productName: productName,
-          brandName: brandName,
-          purchasePrice: purchasePrice,
-          sellingPrice: sellingPrice,
-          discountPrice: discountPrice,
-          quantity: quantity,
-          supplierName: supplierName,
-          description: description,
-          manufactureDate: manufactureDate,
-          expireDate: expireDate,
-        ),
+        builder: (context) => UpdateProductScreen(product: product),
       ),
     );
   }

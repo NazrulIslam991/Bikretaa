@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:bikretaa/database/product_database.dart';
+import 'package:bikretaa/main.dart';
 import 'package:bikretaa/models/product_model.dart';
 import 'package:bikretaa/ui/widgets/circular_progress_indicatior.dart';
+import 'package:bikretaa/ui/widgets/custom_image_picker.dart';
 import 'package:bikretaa/ui/widgets/product_controller_feild/product_brand_controller.dart';
 import 'package:bikretaa/ui/widgets/product_controller_feild/product_description_controller.dart';
 import 'package:bikretaa/ui/widgets/product_controller_feild/product_discount_controller.dart';
@@ -18,10 +22,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AddProductScreen extends StatefulWidget {
   const AddProductScreen({super.key});
+  static const name = 'Add_product';
 
   @override
   State<AddProductScreen> createState() => _AddProductScreenState();
-  static const name = 'Add_product';
 }
 
 class _AddProductScreenState extends State<AddProductScreen> {
@@ -43,6 +47,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
       TextEditingController();
   final TextEditingController _ExpireDateController = TextEditingController();
 
+  File? _selectedImage;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _addProductProgressIndicator = false;
 
@@ -50,6 +55,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
   void dispose() {
     _productNameController.dispose();
     _brandNameController.dispose();
+    _productIdController.dispose();
     _PurchasePriceController.dispose();
     _SellingPriceController.dispose();
     _DiscountPriceController.dispose();
@@ -59,6 +65,21 @@ class _AddProductScreenState extends State<AddProductScreen> {
     _ManufactureDateController.dispose();
     _ExpireDateController.dispose();
     super.dispose();
+  }
+
+  void _clearControllers() {
+    _productNameController.clear();
+    _brandNameController.clear();
+    _productIdController.clear();
+    _PurchasePriceController.clear();
+    _SellingPriceController.clear();
+    _DiscountPriceController.clear();
+    _QuantityController.clear();
+    _SuppliarNameController.clear();
+    _ProductDescriptionController.clear();
+    _ManufactureDateController.clear();
+    _ExpireDateController.clear();
+    _selectedImage = null;
   }
 
   @override
@@ -76,6 +97,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                SizedBox(height: 10.h),
                 Container(
                   height: 65.h,
                   child: ProductNameController(
@@ -142,13 +164,24 @@ class _AddProductScreenState extends State<AddProductScreen> {
                   productDescriptionController: _ProductDescriptionController,
                 ),
                 SizedBox(height: 15.h),
+
+                // Image Picker
+                CustomImagePicker(
+                  height: 150.h,
+                  width: double.infinity,
+                  onImageSelected: (File file) {
+                    _selectedImage = file;
+                  },
+                ),
+
+                SizedBox(height: 15.h),
               ],
             ),
           ),
         ),
       ),
       bottomNavigationBar: Padding(
-        padding: EdgeInsets.only(bottom: 15, top: 0, right: 16, left: 16),
+        padding: EdgeInsets.only(bottom: 15, left: 16, right: 16),
         child: Container(
           height: 40.h,
           child: Visibility(
@@ -168,24 +201,39 @@ class _AddProductScreenState extends State<AddProductScreen> {
     if (!_formKey.currentState!.validate()) return;
     _formKey.currentState!.save();
 
+    if (_selectedImage == null) {
+      showSnackbarMessage(context, "Please select a product image!");
+      return;
+    }
+
     setState(() => _addProductProgressIndicator = true);
 
-    final product = Product(
-      productId: _productIdController.text.trim(),
-      productName: _productNameController.text.trim(),
-      brandName: _brandNameController.text.trim(),
-      purchasePrice: double.tryParse(_PurchasePriceController.text.trim()) ?? 0,
-      sellingPrice: double.tryParse(_SellingPriceController.text.trim()) ?? 0,
-      discountPrice: double.tryParse(_DiscountPriceController.text.trim()) ?? 0,
-      quantity: int.tryParse(_QuantityController.text.trim()) ?? 0,
-      supplierName: _SuppliarNameController.text.trim(),
-      description: _ProductDescriptionController.text.trim(),
-      manufactureDate: _ManufactureDateController.text.trim(),
-      expireDate: _ExpireDateController.text.trim(),
-      createdAt: DateTime.now(),
-    );
-
     try {
+      final imageUrl = await cloudinaryService.uploadImage(_selectedImage!);
+      if (imageUrl == null) {
+        showSnackbarMessage(context, "Image upload failed!");
+        setState(() => _addProductProgressIndicator = false);
+        return;
+      }
+
+      final product = Product(
+        productId: _productIdController.text.trim(),
+        productName: _productNameController.text.trim(),
+        brandName: _brandNameController.text.trim(),
+        purchasePrice:
+            double.tryParse(_PurchasePriceController.text.trim()) ?? 0,
+        sellingPrice: double.tryParse(_SellingPriceController.text.trim()) ?? 0,
+        discountPrice:
+            double.tryParse(_DiscountPriceController.text.trim()) ?? 0,
+        quantity: int.tryParse(_QuantityController.text.trim()) ?? 0,
+        supplierName: _SuppliarNameController.text.trim(),
+        description: _ProductDescriptionController.text.trim(),
+        manufactureDate: _ManufactureDateController.text.trim(),
+        expireDate: _ExpireDateController.text.trim(),
+        image: imageUrl,
+        createdAt: DateTime.now(),
+      );
+
       final added = await _addProductDatabase.addProduct(product);
       if (added) {
         showSnackbarMessage(context, 'Product added successfully!');
@@ -199,19 +247,5 @@ class _AddProductScreenState extends State<AddProductScreen> {
     } finally {
       setState(() => _addProductProgressIndicator = false);
     }
-  }
-
-  void _clearControllers() {
-    _productNameController.clear();
-    _brandNameController.clear();
-    _productIdController.clear();
-    _PurchasePriceController.clear();
-    _SellingPriceController.clear();
-    _DiscountPriceController.clear();
-    _QuantityController.clear();
-    _SuppliarNameController.clear();
-    _ProductDescriptionController.clear();
-    _ManufactureDateController.clear();
-    _ExpireDateController.clear();
   }
 }

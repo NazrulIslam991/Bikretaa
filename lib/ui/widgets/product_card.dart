@@ -52,11 +52,34 @@ class ProductCardWidget extends StatelessWidget {
               ),
               child: Stack(
                 children: [
-                  Image.asset(
+                  Image.network(
                     imagePath,
                     width: double.infinity,
                     height: 80.h,
                     fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Container(
+                        width: double.infinity,
+                        height: 80.h,
+                        color: Colors.grey[300],
+                        alignment: Alignment.center,
+                        child: Icon(Icons.broken_image, size: 30.h),
+                      );
+                    },
+                    loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress == null) return child;
+                      return Container(
+                        width: double.infinity,
+                        height: 80.h,
+                        alignment: Alignment.center,
+                        child: CircularProgressIndicator(
+                          value: loadingProgress.expectedTotalBytes != null
+                              ? loadingProgress.cumulativeBytesLoaded /
+                                    loadingProgress.expectedTotalBytes!
+                              : null,
+                        ),
+                      );
+                    },
                   ),
                   if (outOfStock)
                     Container(
@@ -126,7 +149,6 @@ class ProductCardWidget extends StatelessWidget {
                         height: 18.h,
                         child: TextButton(
                           onPressed: () {
-                            // Always allow navigation to details screen
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -152,7 +174,7 @@ class ProductCardWidget extends StatelessWidget {
                             "show more...",
                             style: GoogleFonts.abyssinicaSil(
                               textStyle: TextStyle(
-                                color: Colors.blue, // always blue
+                                color: Colors.blue,
                                 letterSpacing: .5,
                                 fontSize: 10.h,
                               ),

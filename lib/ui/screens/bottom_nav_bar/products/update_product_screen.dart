@@ -1,6 +1,11 @@
+import 'dart:io';
+
 import 'package:bikretaa/database/product_database.dart';
+import 'package:bikretaa/main.dart';
 import 'package:bikretaa/models/product_model.dart';
+import 'package:bikretaa/ui/screens/bottom_nav_bar/navbar_screens/products_screen.dart';
 import 'package:bikretaa/ui/widgets/circular_progress_indicatior.dart';
+import 'package:bikretaa/ui/widgets/custom_image_picker.dart';
 import 'package:bikretaa/ui/widgets/product_controller_feild/product_brand_controller.dart';
 import 'package:bikretaa/ui/widgets/product_controller_feild/product_description_controller.dart';
 import 'package:bikretaa/ui/widgets/product_controller_feild/product_discount_controller.dart';
@@ -12,58 +17,36 @@ import 'package:bikretaa/ui/widgets/product_controller_feild/product_purchase_pr
 import 'package:bikretaa/ui/widgets/product_controller_feild/product_quantity_controller.dart';
 import 'package:bikretaa/ui/widgets/product_controller_feild/product_selling_price_controller.dart';
 import 'package:bikretaa/ui/widgets/product_controller_feild/product_supplier_name_controller.dart';
+import 'package:bikretaa/ui/widgets/snackbar_messege.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class UpdateProductScreen extends StatefulWidget {
-  final String productId;
-  final String productName;
-  final String brandName;
-  final double purchasePrice;
-  final double sellingPrice;
-  final double discountPrice;
-  final int quantity;
-  final String supplierName;
-  final String description;
-  final String manufactureDate;
-  final String expireDate;
+  final Product product;
 
-  const UpdateProductScreen({
-    super.key,
-    required this.productId,
-    required this.productName,
-    required this.brandName,
-    required this.purchasePrice,
-    required this.sellingPrice,
-    required this.discountPrice,
-    required this.quantity,
-    required this.supplierName,
-    required this.description,
-    required this.manufactureDate,
-    required this.expireDate,
-  });
+  const UpdateProductScreen({super.key, required this.product});
 
   @override
   State<UpdateProductScreen> createState() => _UpdateProductScreenState();
 }
 
 class _UpdateProductScreenState extends State<UpdateProductScreen> {
-  final _UpdateProductDatabase = ProductDatabase();
+  final _productDatabase = ProductDatabase();
 
-  final TextEditingController _productNameController = TextEditingController();
-  final TextEditingController _brandNameController = TextEditingController();
-  final TextEditingController _productIdController = TextEditingController();
-  final TextEditingController _purchasePriceController =
-      TextEditingController();
-  final TextEditingController _sellingPriceController = TextEditingController();
-  final TextEditingController _discountPriceController =
-      TextEditingController();
-  final TextEditingController _quantityController = TextEditingController();
-  final TextEditingController _supplierNameController = TextEditingController();
-  final TextEditingController _descriptionController = TextEditingController();
-  final TextEditingController _manufactureDateController =
-      TextEditingController();
-  final TextEditingController _expireDateController = TextEditingController();
+  late TextEditingController _productNameController;
+  late TextEditingController _brandNameController;
+  late TextEditingController _productIdController;
+  late TextEditingController _purchasePriceController;
+  late TextEditingController _sellingPriceController;
+  late TextEditingController _discountPriceController;
+  late TextEditingController _quantityController;
+  late TextEditingController _supplierNameController;
+  late TextEditingController _descriptionController;
+  late TextEditingController _manufactureDateController;
+  late TextEditingController _expireDateController;
+
+  File? _selectedImage;
+  String? _existingImageUrl;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _updateProductProgressIndicator = false;
@@ -71,25 +54,37 @@ class _UpdateProductScreenState extends State<UpdateProductScreen> {
   @override
   void initState() {
     super.initState();
-    // prefill form with product data
-    _productIdController.text = widget.productId;
-    _productNameController.text = widget.productName;
-    _brandNameController.text = widget.brandName;
-    _purchasePriceController.text = widget.purchasePrice.toString();
-    _sellingPriceController.text = widget.sellingPrice.toString();
-    _discountPriceController.text = widget.discountPrice.toString();
-    _quantityController.text = widget.quantity.toString();
-    _supplierNameController.text = widget.supplierName;
-    _descriptionController.text = widget.description;
-    _manufactureDateController.text = widget.manufactureDate;
-    _expireDateController.text = widget.expireDate;
+    final product = widget.product;
+
+    _productIdController = TextEditingController(text: product.productId);
+    _productNameController = TextEditingController(text: product.productName);
+    _brandNameController = TextEditingController(text: product.brandName);
+    _purchasePriceController = TextEditingController(
+      text: product.purchasePrice.toString(),
+    );
+    _sellingPriceController = TextEditingController(
+      text: product.sellingPrice.toString(),
+    );
+    _discountPriceController = TextEditingController(
+      text: product.discountPrice.toString(),
+    );
+    _quantityController = TextEditingController(
+      text: product.quantity.toString(),
+    );
+    _supplierNameController = TextEditingController(text: product.supplierName);
+    _descriptionController = TextEditingController(text: product.description);
+    _manufactureDateController = TextEditingController(
+      text: product.manufactureDate,
+    );
+    _expireDateController = TextEditingController(text: product.expireDate);
+    _existingImageUrl = product.image;
   }
 
   @override
   void dispose() {
+    _productIdController.dispose();
     _productNameController.dispose();
     _brandNameController.dispose();
-    _productIdController.dispose();
     _purchasePriceController.dispose();
     _sellingPriceController.dispose();
     _discountPriceController.dispose();
@@ -116,6 +111,7 @@ class _UpdateProductScreenState extends State<UpdateProductScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                SizedBox(height: 10.h),
                 Container(
                   height: 65.h,
                   child: ProductNameController(
@@ -182,14 +178,24 @@ class _UpdateProductScreenState extends State<UpdateProductScreen> {
                   productDescriptionController: _descriptionController,
                 ),
                 SizedBox(height: 15.h),
+
+                // Image Picker
+                CustomImagePicker(
+                  height: 150.h,
+                  width: double.infinity,
+                  onImageSelected: (File file) {
+                    _selectedImage = file;
+                  },
+                ),
+                SizedBox(height: 15.h),
               ],
             ),
           ),
         ),
       ),
       bottomNavigationBar: Padding(
-        padding: EdgeInsets.only(bottom: 15, top: 0, right: 16, left: 16),
-        child: Container(
+        padding: EdgeInsets.only(bottom: 15, left: 16, right: 16),
+        child: SizedBox(
           height: 40.h,
           child: Visibility(
             visible: !_updateProductProgressIndicator,
@@ -210,6 +216,19 @@ class _UpdateProductScreenState extends State<UpdateProductScreen> {
 
     setState(() => _updateProductProgressIndicator = true);
 
+    String? imageUrl = _existingImageUrl;
+
+    if (_selectedImage != null) {
+      final uploadedUrl = await cloudinaryService.uploadImage(_selectedImage!);
+      if (uploadedUrl != null) {
+        imageUrl = uploadedUrl;
+      } else {
+        showSnackbarMessage(context, "Image upload failed!");
+        setState(() => _updateProductProgressIndicator = false);
+        return;
+      }
+    }
+
     final updatedProduct = Product(
       productId: _productIdController.text.trim(),
       productName: _productNameController.text.trim(),
@@ -222,19 +241,20 @@ class _UpdateProductScreenState extends State<UpdateProductScreen> {
       description: _descriptionController.text.trim(),
       manufactureDate: _manufactureDateController.text.trim(),
       expireDate: _expireDateController.text.trim(),
+      image: imageUrl ?? '',
       createdAt: DateTime.now(),
     );
 
     try {
-      await _UpdateProductDatabase.updateProduct(updatedProduct);
-      ScaffoldMessenger.of(
+      await _productDatabase.updateProduct(updatedProduct);
+      showSnackbarMessage(context, "Product updated successfully");
+      Navigator.pushNamedAndRemoveUntil(
         context,
-      ).showSnackBar(SnackBar(content: Text("Product updated successfully")));
-      Navigator.pop(context);
+        ProductsScreen.name,
+        (predicate) => false,
+      );
     } catch (e) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text("Error updating product: $e")));
+      showSnackbarMessage(context, "Error updating product: $e");
     } finally {
       setState(() => _updateProductProgressIndicator = false);
     }

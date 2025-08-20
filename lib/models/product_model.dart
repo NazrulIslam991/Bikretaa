@@ -12,6 +12,7 @@ class Product {
   final String description;
   final String manufactureDate;
   final String expireDate;
+  final String image;
   final DateTime? createdAt;
 
   Product({
@@ -26,6 +27,7 @@ class Product {
     required this.description,
     required this.manufactureDate,
     required this.expireDate,
+    required this.image,
     this.createdAt,
   });
 
@@ -42,6 +44,7 @@ class Product {
       'description': description,
       'manufactureDate': manufactureDate,
       'expireDate': expireDate,
+      'image': image,
       'createdAt': createdAt?.toIso8601String() ?? FieldValue.serverTimestamp(),
     };
   }
@@ -59,6 +62,7 @@ class Product {
       description: map['description'] ?? '',
       manufactureDate: map['manufactureDate'] ?? '',
       expireDate: map['expireDate'] ?? '',
+      image: map['image'] ?? '',
       createdAt: map['createdAt'] != null
           ? DateTime.tryParse(map['createdAt'])
           : null,
