@@ -1,6 +1,5 @@
 import 'package:bikretaa/database/add_sales_screen_database.dart';
 import 'package:bikretaa/models/SalesModel.dart';
-import 'package:bikretaa/ui/widgets/circular_progress_indicatior_2.dart';
 import 'package:bikretaa/ui/widgets/mobile_feild_widget.dart';
 import 'package:bikretaa/ui/widgets/product_sales_controller/customer_address.dart';
 import 'package:bikretaa/ui/widgets/product_sales_controller/customer_name_controller.dart';
@@ -135,13 +134,21 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                 border: Border.all(color: Colors.grey),
                                 borderRadius: BorderRadius.circular(8.r),
                               ),
-                              child: Text(
-                                "Due: ${due.toStringAsFixed(2)} tk",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: due < 0 ? Colors.red : Colors.black,
-                                ),
-                              ),
+                              child: due < 0
+                                  ? Text(
+                                      "Please check your paid amount!",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.red,
+                                      ),
+                                    )
+                                  : Text(
+                                      "Due: ${due.toStringAsFixed(2)} tk",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                      ),
+                                    ),
                             ),
                           ),
                         ],
@@ -154,18 +161,22 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
 
       bottomNavigationBar: Padding(
         padding: EdgeInsets.all(12.h),
-        child: _loading
-            ? CircularProgressIndicator2()
-            : ElevatedButton(
-                onPressed: () {
-                  final uid = FirebaseAuth.instance.currentUser?.uid;
-                  if (uid != null) _confirmSale(uid);
-                },
-                style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.symmetric(vertical: 12.h),
-                ),
-                child: Text("Confirm", style: TextStyle(fontSize: 16.sp)),
-              ),
+        child: Visibility(
+          visible: !_loading,
+          replacement: SizedBox(
+            child: ElevatedButton(
+              onPressed: null,
+              child: CircularProgressIndicator(),
+            ),
+          ),
+          child: ElevatedButton(
+            onPressed: () {
+              final uid = FirebaseAuth.instance.currentUser?.uid;
+              if (uid != null) _confirmSale(uid);
+            },
+            child: Text("Confirm", style: TextStyle(fontSize: 16.sp)),
+          ),
+        ),
       ),
     );
   }

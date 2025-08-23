@@ -1,9 +1,9 @@
 import 'package:bikretaa/database/product_database.dart';
 import 'package:bikretaa/models/product_model.dart';
 import 'package:bikretaa/ui/screens/bottom_nav_bar/products/add_product_screen.dart';
-import 'package:bikretaa/ui/widgets/circular_progress_indicatior.dart';
 import 'package:bikretaa/ui/widgets/product_card.dart';
 import 'package:bikretaa/ui/widgets/product_controller_feild/product_filter_sheet.dart';
+import 'package:bikretaa/ui/widgets/product_screen_shimmer/product_shimmer_widget.dart';
 import 'package:bikretaa/ui/widgets/search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -51,7 +51,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
           stream: _productDatabase.getProductsStream(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return CenterCircularProgressIndiacator();
+              return ProductsShimmerScreen();
             }
             if (!snapshot.hasData || snapshot.data!.isEmpty) {
               return Center(child: Text("No products found"));

@@ -3,6 +3,8 @@ import 'package:bikretaa/ui/screens/bottom_nav_bar/sales_product/add_sales_scree
 import 'package:bikretaa/ui/widgets/product_controller_feild/sales_card_directories/sales_filter_sheet.dart';
 import 'package:bikretaa/ui/widgets/product_controller_feild/sales_card_directories/sales_history_card.dart';
 import 'package:bikretaa/ui/widgets/product_controller_feild/sales_card_directories/sales_summary_card.dart';
+import 'package:bikretaa/ui/widgets/sales_screen_shimmer/sales_history_shimmer.dart';
+import 'package:bikretaa/ui/widgets/sales_screen_shimmer/sales_summary_shimmer.dart';
 import 'package:bikretaa/ui/widgets/search_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -19,7 +21,6 @@ class SalesScreen extends StatefulWidget {
 
 class _SalesScreenState extends State<SalesScreen> {
   final SalesScreenDatabase _salesScreenDatabase = SalesScreenDatabase();
-
   TextEditingController searchController = TextEditingController();
   String searchText = "";
   DateTime? startDate;
@@ -103,8 +104,11 @@ class _SalesScreenState extends State<SalesScreen> {
                   endDate,
                 ),
                 builder: (context, salesSnapshot) {
-                  if (!salesSnapshot.hasData)
-                    return CircularProgressIndicator();
+                  if (salesSnapshot.connectionState ==
+                          ConnectionState.waiting ||
+                      !salesSnapshot.hasData) {
+                    return SalesSummaryShimmer();
+                  }
 
                   final salesDocs = salesSnapshot.data!.docs.where((doc) {
                     final sale = doc.data() as Map<String, dynamic>;
@@ -122,8 +126,11 @@ class _SalesScreenState extends State<SalesScreen> {
                       endDate,
                     ),
                     builder: (context, revenueSnapshot) {
-                      if (!revenueSnapshot.hasData)
-                        return CircularProgressIndicator();
+                      if (revenueSnapshot.connectionState ==
+                              ConnectionState.waiting ||
+                          !revenueSnapshot.hasData) {
+                        return SalesSummaryShimmer();
+                      }
 
                       final totals = _salesScreenDatabase.calculateTotals(
                         salesDocs,
@@ -136,36 +143,36 @@ class _SalesScreenState extends State<SalesScreen> {
                             children: [
                               Expanded(
                                 child: buildSummaryCard(
-                                  value: totals["totalSales"]!,
+                                  value: totals["totalSales"] ?? 0.00,
                                   label: "Sales",
                                   bgColor: Color(0xFFFFC727),
                                 ),
                               ),
-                              SizedBox(width: 10.w),
+                              SizedBox(width: 5.w),
                               Expanded(
                                 child: buildSummaryCard(
-                                  value: totals["totalRevenue"]!,
+                                  value: totals["totalRevenue"] ?? 0.00,
                                   label: "Revenue",
                                   bgColor: Color(0xFF10B981),
                                 ),
                               ),
                             ],
                           ),
-                          SizedBox(height: 10.h),
+                          SizedBox(height: 5.h),
                           Row(
                             children: [
                               Expanded(
                                 child: buildSummaryCard(
-                                  value: totals["totalDue"]!,
+                                  value: totals["totalDue"] ?? 0.00,
                                   label: "Due",
                                   bgColor: Color(0xFFFFC727),
                                   isPaidText: true,
                                 ),
                               ),
-                              SizedBox(width: 10.w),
+                              SizedBox(width: 5.w),
                               Expanded(
                                 child: buildSummaryCard(
-                                  value: totals["totalPaid"]!,
+                                  value: totals["totalPaid"] ?? 0.00,
                                   label: "Paid",
                                   bgColor: Color(0xFF10B981),
                                 ),
@@ -193,8 +200,10 @@ class _SalesScreenState extends State<SalesScreen> {
                   endDate,
                 ),
                 builder: (context, snapshot) {
-                  if (!snapshot.hasData)
-                    return Center(child: CircularProgressIndicator());
+                  if (snapshot.connectionState == ConnectionState.waiting ||
+                      !snapshot.hasData) {
+                    return Center(child: SalesHistoryShimmer());
+                  }
 
                   final salesDocs = snapshot.data!.docs.where((doc) {
                     final sale = doc.data() as Map<String, dynamic>;
@@ -236,7 +245,6 @@ class _SalesScreenState extends State<SalesScreen> {
           ),
         ),
       ),
-
       floatingActionButton: FloatingActionButton(
         onPressed: () => Navigator.pushNamed(context, AddSalesScreen.name),
         backgroundColor: Colors.blueGrey.shade50,
@@ -266,7 +274,6 @@ class _SalesScreenState extends State<SalesScreen> {
     );
   }
 
-  //summary card
   Widget buildSummaryCard({
     required double value,
     required String label,
@@ -276,15 +283,13 @@ class _SalesScreenState extends State<SalesScreen> {
   }) {
     return SalesSummaryCard(
       amount: isPaidText
-          ? (value == 0 ? 'Paid' : 'BDT ${value.toStringAsFixed(2)}')
+          ? (value == 0 ? 'BDT 0.00' : 'BDT ${value.toStringAsFixed(2)}')
           : 'BDT ${value.toStringAsFixed(2)}',
       label: label,
       bgColor: bgColor,
-      iconPath: iconPath,
     );
   }
 
-  // sales history card
   Widget buildSalesHistoryCard(Map<String, dynamic> sale, String saleID) {
     int totalItems = (sale['products'] as List).length;
     double totalCost = (sale['products'] as List).fold(
