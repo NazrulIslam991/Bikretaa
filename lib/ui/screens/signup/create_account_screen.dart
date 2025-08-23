@@ -1,7 +1,6 @@
-import 'package:bikretaa/database/network_caller.dart';
 import 'package:bikretaa/database/signin_and_signup/firestore_user_check.dart';
 import 'package:bikretaa/database/signin_and_signup/otp_generator.dart';
-import 'package:bikretaa/database/signin_and_signup/urls.dart';
+import 'package:bikretaa/database/signin_and_signup/otp_service.dart';
 import 'package:bikretaa/ui/screens/signin_screen.dart';
 import 'package:bikretaa/ui/screens/signup/otp_verification_screen.dart';
 import 'package:bikretaa/ui/widgets/background.dart';
@@ -145,27 +144,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
       final otp = OtpGenerator.generate(length: 6);
 
       // api call and send otp
-      final NetworkResponse response = await NetworkCaller.postRequest(
-        url: Urls.sendEmailOtp,
-        body: {
-          "sender": {"name": "Bikretaa", "email": "rentrover2025@gmail.com"},
-          "to": [
-            {"email": email},
-          ],
-          "subject": "Your One-Time Password (OTP) Code",
-          "htmlContent":
-              "<html lang="
-              "><body>"
-              "<h2>One-Time Verification Code</h2>"
-              "<p>Dear User,</p>"
-              "<p>Your One-Time Password (OTP) for verification is:</p>"
-              "<h1 style='color:#2E86C1;'>$otp</h1>"
-              "<br>"
-              "<p>Best regards,<br>BIkretaa Team</p>"
-              "</body></html>",
-        },
-        isBrevoRequest: true,
-      );
+      final response = await OtpApiService.sendOtp(email: email, otp: otp);
 
       setState(() => _verificationCodeProgressIndicator = false);
 
