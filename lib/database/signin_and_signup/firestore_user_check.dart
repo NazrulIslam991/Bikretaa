@@ -1,3 +1,4 @@
+import 'package:bikretaa/models/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FirestoreUtils {
@@ -12,6 +13,23 @@ class FirestoreUtils {
       return result.docs.isNotEmpty;
     } catch (e) {
       return false;
+    }
+  }
+
+  // Fetch user data by UID
+  static Future<UserModel?> getUserInformationByUid(String uid) async {
+    try {
+      final snapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(uid)
+          .get();
+
+      if (snapshot.exists && snapshot.data() != null) {
+        return UserModel.fromMap(snapshot.data()!);
+      }
+      return null;
+    } catch (e) {
+      return null;
     }
   }
 }

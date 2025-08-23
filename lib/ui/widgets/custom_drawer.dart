@@ -1,3 +1,4 @@
+import 'package:bikretaa/database/signin_and_signup/shared_preferences_helper.dart';
 import 'package:bikretaa/ui/screens/signin_screen.dart';
 import 'package:bikretaa/ui/widgets/circular_progress_indicatior_2.dart';
 import 'package:bikretaa/ui/widgets/confirm_dialog.dart';
@@ -15,6 +16,24 @@ class CustomDrawer extends StatefulWidget {
 
 class _CustomDrawerState extends State<CustomDrawer> {
   bool _loading = false;
+  String shopName = '';
+  String email = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserData();
+  }
+
+  Future<void> _loadUserData() async {
+    final user = await SharedPreferencesHelper.getUser();
+    if (user != null) {
+      setState(() {
+        shopName = user.shopName;
+        email = user.email;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +56,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                       ),
                       SizedBox(height: 10.h),
                       Text(
-                        "Md Nazrul Islam Nayon",
+                        shopName.isNotEmpty ? shopName : '',
                         style: TextStyle(
                           fontSize: 14.h,
                           color: Colors.white,
@@ -45,7 +64,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                         ),
                       ),
                       Text(
-                        "nazrulislamnayon991@gmail.com",
+                        shopName.isNotEmpty ? email : '',
                         style: TextStyle(
                           color: Colors.greenAccent,
                           fontSize: 10.h,

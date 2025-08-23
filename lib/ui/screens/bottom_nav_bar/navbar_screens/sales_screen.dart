@@ -81,7 +81,7 @@ class _SalesScreenState extends State<SalesScreen> {
                       ),
                       Text(
                         "Sales summary",
-                        style: GoogleFonts.italianno(fontSize: 20.h),
+                        style: GoogleFonts.abhayaLibre(fontSize: 16.h),
                       ),
                     ],
                   ),

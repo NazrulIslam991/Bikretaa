@@ -1,3 +1,4 @@
+import 'package:bikretaa/database/signin_and_signup/shared_preferences_helper.dart';
 import 'package:bikretaa/ui/widgets/custom_drawer.dart';
 import 'package:bikretaa/ui/widgets/most_sold_product_card.dart';
 import 'package:bikretaa/ui/widgets/summary_card.dart';
@@ -13,6 +14,23 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  String shopName = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserData();
+  }
+
+  Future<void> _loadUserData() async {
+    final user = await SharedPreferencesHelper.getUser();
+    if (user != null) {
+      setState(() {
+        shopName = user.shopName;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,12 +69,12 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             Text(
-              "MD Nazrul Islam Nayon",
-              style: GoogleFonts.italianno(
+              shopName.isNotEmpty ? shopName : '',
+              style: GoogleFonts.abhayaLibre(
                 textStyle: TextStyle(
                   color: Colors.black,
                   letterSpacing: .5,
-                  fontSize: 20.h,
+                  fontSize: 18.h,
                 ),
               ),
             ),

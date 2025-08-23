@@ -78,11 +78,11 @@ class _ProductsScreenState extends State<ProductsScreen> {
                           ),
                           Text(
                             "${products.length} products found",
-                            style: GoogleFonts.italianno(
+                            style: GoogleFonts.abhayaLibre(
                               textStyle: TextStyle(
                                 color: Colors.black,
-                                letterSpacing: .5,
-                                fontSize: 20.h,
+                                //letterSpacing: .5,
+                                fontSize: 16.h,
                               ),
                             ),
                           ),

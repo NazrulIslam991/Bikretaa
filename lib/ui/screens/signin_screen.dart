@@ -1,4 +1,5 @@
 import 'package:bikretaa/database/signin_and_signup/firestore_user_check.dart';
+import 'package:bikretaa/database/signin_and_signup/shared_preferences_helper.dart';
 import 'package:bikretaa/ui/screens/bottom_nav_bar/main_nav_bar_screen.dart';
 import 'package:bikretaa/ui/screens/forgot_password_screen.dart';
 import 'package:bikretaa/ui/screens/signup/create_account_screen.dart';
@@ -150,7 +151,8 @@ class _SigninScreenState extends State<SigninScreen> {
     }
   }
 
-  //"Database section for the sign-in process"
+  //"Database section for the sign-in process
+
   Future<void> _signInProcess() async {
     final email = _emailEcontroller.text.trim();
     final password = _passwordEcontroller.text.trim();
@@ -171,6 +173,13 @@ class _SigninScreenState extends State<SigninScreen> {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
+
+      final uid = userCredential.user!.uid;
+      final userInformation = await FirestoreUtils.getUserInformationByUid(uid);
+
+      if (userInformation != null) {
+        await SharedPreferencesHelper.saveUser(userInformation);
+      }
 
       Navigator.pushNamedAndRemoveUntil(
         context,
