@@ -59,7 +59,7 @@ class DetailsProductScreen extends StatelessWidget {
                 imagePath,
                 width: double.infinity,
                 height: 170.h,
-                fit: BoxFit.cover,
+                fit: BoxFit.contain,
                 loadingBuilder: (context, child, loadingProgress) {
                   if (loadingProgress == null) return child;
                   return Container(
@@ -100,11 +100,12 @@ class DetailsProductScreen extends StatelessWidget {
               padding: EdgeInsets.symmetric(vertical: 0.h, horizontal: 10.w),
               child: Text(
                 "Brand Name : $brandName",
-                style: GoogleFonts.italianno(
+                style: GoogleFonts.aBeeZee(
                   textStyle: TextStyle(
                     color: Colors.black,
                     letterSpacing: .5,
-                    fontSize: 18.h,
+                    fontSize: 12.h,
+                    fontStyle: FontStyle.italic,
                   ),
                 ),
               ),

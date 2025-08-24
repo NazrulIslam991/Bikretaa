@@ -1,8 +1,8 @@
 import 'package:bikretaa/database/product_database.dart';
 import 'package:bikretaa/models/product_model.dart';
 import 'package:bikretaa/ui/screens/bottom_nav_bar/products/add_product_screen.dart';
+import 'package:bikretaa/ui/widgets/bottom_filter_sheet/bottom_filter_sheet_for_product.dart';
 import 'package:bikretaa/ui/widgets/product_card.dart';
-import 'package:bikretaa/ui/widgets/product_controller_feild/product_filter_sheet.dart';
 import 'package:bikretaa/ui/widgets/product_screen_shimmer/product_shimmer_widget.dart';
 import 'package:bikretaa/ui/widgets/search_bar.dart';
 import 'package:flutter/material.dart';
@@ -81,7 +81,6 @@ class _ProductsScreenState extends State<ProductsScreen> {
                             style: GoogleFonts.abhayaLibre(
                               textStyle: TextStyle(
                                 color: Colors.black,
-                                //letterSpacing: .5,
                                 fontSize: 16.h,
                               ),
                             ),
@@ -105,9 +104,9 @@ class _ProductsScreenState extends State<ProductsScreen> {
                     physics: NeverScrollableScrollPhysics(),
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
-                      mainAxisSpacing: 10.h,
-                      crossAxisSpacing: 5.h,
-                      childAspectRatio: 1.h / 1.4.h,
+                      mainAxisSpacing: 5.h,
+                      crossAxisSpacing: 5.w,
+                      childAspectRatio: 1.w / 1.2.h,
                     ),
                     itemCount: products.length,
                     itemBuilder: (context, index) {
@@ -173,9 +172,25 @@ class _ProductsScreenState extends State<ProductsScreen> {
           .toList();
     }
 
+    DateTime now = DateTime.now();
+
     switch (selectedFilter) {
       case ProductFilter.lowStock:
         filtered = filtered.where((p) => p.quantity <= 5).toList();
+        break;
+      case ProductFilter.expired:
+        filtered = filtered.where((p) {
+          final expDate = DateTime.tryParse(p.expireDate);
+          return expDate != null && expDate.isBefore(now);
+        }).toList();
+        break;
+      case ProductFilter.expireSoon:
+        filtered = filtered.where((p) {
+          final expDate = DateTime.tryParse(p.expireDate);
+          return expDate != null &&
+              expDate.isAfter(now) &&
+              expDate.isBefore(now.add(Duration(days: 30)));
+        }).toList();
         break;
       case ProductFilter.aToZ:
         filtered.sort((a, b) => a.productName.compareTo(b.productName));

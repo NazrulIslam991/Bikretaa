@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:bikretaa/database/product_database.dart';
 import 'package:bikretaa/main.dart';
 import 'package:bikretaa/models/product_model.dart';
-import 'package:bikretaa/ui/screens/bottom_nav_bar/navbar_screens/products_screen.dart';
 import 'package:bikretaa/ui/widgets/circular_progress_indicatior.dart';
 import 'package:bikretaa/ui/widgets/custom_image_picker.dart';
 import 'package:bikretaa/ui/widgets/product_controller_feild/product_brand_controller.dart';
@@ -248,11 +247,7 @@ class _UpdateProductScreenState extends State<UpdateProductScreen> {
     try {
       await _productDatabase.updateProduct(updatedProduct);
       showSnackbarMessage(context, "Product updated successfully");
-      Navigator.pushNamedAndRemoveUntil(
-        context,
-        ProductsScreen.name,
-        (predicate) => false,
-      );
+      Navigator.pop(context);
     } catch (e) {
       showSnackbarMessage(context, "Error updating product: $e");
     } finally {
