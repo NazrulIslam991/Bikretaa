@@ -5,6 +5,7 @@ import 'package:bikretaa/ui/widgets/circular_progress_indicatior_2.dart';
 import 'package:bikretaa/ui/widgets/confirm_dialog.dart';
 import 'package:bikretaa/ui/widgets/divider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -167,14 +168,37 @@ class DetailsProductScreen extends StatelessWidget {
                         ),
                       ),
                       SizedBox(height: 10.h),
-                      Text(
-                        productId,
-                        style: TextStyle(
-                          fontSize: 12.h,
-                          color: Colors.blue,
-                          fontWeight: FontWeight.normal,
-                          fontStyle: FontStyle.italic,
-                        ),
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            productId,
+                            style: TextStyle(
+                              fontSize: 12.h,
+                              color: Colors.blue,
+                              fontWeight: FontWeight.normal,
+                              fontStyle: FontStyle.italic,
+                            ),
+                          ),
+                          SizedBox(width: 5.w),
+                          GestureDetector(
+                            onTap: () {
+                              Clipboard.setData(ClipboardData(text: productId));
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    'Product ID copied to clipboard',
+                                  ),
+                                ),
+                              );
+                            },
+                            child: Icon(
+                              Icons.copy,
+                              size: 18.h,
+                              color: Colors.blueGrey,
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),

@@ -189,7 +189,7 @@ class _SalesScreenState extends State<SalesScreen> {
               SizedBox(height: 15.h),
               Text(
                 "Sales history",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.h),
+                style: GoogleFonts.abhayaLibre(fontSize: 16.h),
               ),
               SizedBox(height: 10.h),
 

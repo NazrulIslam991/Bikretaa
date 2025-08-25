@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SalesHistoryCard extends StatelessWidget {
@@ -236,6 +237,22 @@ class SalesHistoryCard extends StatelessWidget {
                           color: Colors.black,
                           fontSize: 10.sp,
                           fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(width: 5.w),
+                      GestureDetector(
+                        onTap: () {
+                          Clipboard.setData(ClipboardData(text: salesID));
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Sales ID copied to clipboard'),
+                            ),
+                          );
+                        },
+                        child: Icon(
+                          Icons.copy,
+                          size: 12.h,
+                          color: Colors.blueGrey,
                         ),
                       ),
                     ],

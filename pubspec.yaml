@@ -29,6 +29,7 @@ dependencies:
   palette_generator: ^0.3.3+7
   shimmer: ^3.0.0
   shared_preferences: ^2.5.3
+  package_info_plus: ^8.3.1
 
 
 

@@ -6,30 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
-
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  String shopName = '';
-
-  @override
-  void initState() {
-    super.initState();
-    _loadUserData();
-  }
-
-  Future<void> _loadUserData() async {
-    final user = await SharedPreferencesHelper.getUser();
-    if (user != null) {
-      setState(() {
-        shopName = user.shopName;
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,152 +30,161 @@ class _HomeScreenState extends State<HomeScreen> {
       drawer: Container(
         height: double.infinity,
         width: 240.w,
-        child: CustomDrawer(),
+        child: const CustomDrawer(),
       ),
-      body: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        padding: EdgeInsets.symmetric(vertical: 0.h, horizontal: 15.w),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Welcome,",
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-                fontSize: 24.h,
-              ),
-            ),
-            Text(
-              shopName.isNotEmpty ? shopName : '',
-              style: GoogleFonts.abhayaLibre(
-                textStyle: TextStyle(
-                  color: Colors.black,
-                  letterSpacing: .5,
-                  fontSize: 18.h,
+
+      body: FutureBuilder(
+        future: SharedPreferencesHelper.getUser(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text("Error loading user data"));
+          } else if (!snapshot.hasData || snapshot.data == null) {
+            return Center(child: Text("No user data found"));
+          }
+
+          final user = snapshot.data!;
+          final shopName = user.shopName;
+
+          return SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            padding: EdgeInsets.symmetric(vertical: 0.h, horizontal: 15.w),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Welcome,",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 24.h,
+                  ),
                 ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 10.h),
-              child: GridView.builder(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  //mainAxisSpacing: 2.h,
-                  //crossAxisSpacing: 2.h,
-                  childAspectRatio: 1.h / 1.7.h,
+                Text(
+                  shopName.isNotEmpty ? shopName : '',
+                  style: GoogleFonts.abhayaLibre(
+                    textStyle: TextStyle(
+                      color: Colors.black,
+                      letterSpacing: .5,
+                      fontSize: 18.h,
+                    ),
+                  ),
                 ),
-                itemBuilder: (context, index) {
-                  return home_summary_card(
-                    totalProducts: 1000,
-                    CardTitle: 'Total Product',
-                  );
-                },
-                itemCount: 6,
-                //scrollDirection: Axis.vertical,
-              ),
-            ),
-
-            //SizedBox(height: 15),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 5.h),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Most Sold Products",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14.h,
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 10.h),
+                  child: GridView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3,
+                      childAspectRatio: 1.h / 1.7.h,
                     ),
+                    itemBuilder: (context, index) {
+                      return home_summary_card(
+                        totalProducts: 1000,
+                        CardTitle: 'Total Product',
+                      );
+                    },
+                    itemCount: 6,
                   ),
-                  TextButton(
-                    onPressed: () {},
-                    child: Text(
-                      "Show Details...",
-                      style: TextStyle(
-                        color: Colors.blue,
-                        fontSize: 10.h,
-                        fontStyle: FontStyle.italic,
+                ),
+
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 5.h),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Most Sold Products",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14.h,
+                        ),
                       ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
-            Padding(
-              padding: EdgeInsets.only(top: 0),
-              child: ListView.builder(
-                itemBuilder: (context, index) {
-                  return Most_Sold_Product_Card(
-                    ProductName: 'Product Name',
-                    soldProductUnit: 199,
-                    totalSoldPrice: 1200,
-                    imagePath: 'assets/images/most_products_sold.jpeg',
-                  );
-                },
-                itemCount: 4,
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-              ),
-            ),
-
-            //SizedBox(height: 15),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 5.h),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Sales and Due Report",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14.h,
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () {},
-                    child: Text(
-                      "Show Details...",
-                      style: TextStyle(
-                        color: Colors.blue,
-                        fontSize: 10.h,
-                        fontStyle: FontStyle.italic,
+                      TextButton(
+                        onPressed: () {},
+                        child: Text(
+                          "Show Details...",
+                          style: TextStyle(
+                            color: Colors.blue,
+                            fontSize: 10.h,
+                            fontStyle: FontStyle.italic,
+                          ),
+                        ),
                       ),
-                    ),
+                    ],
                   ),
-                ],
-              ),
-            ),
-            SizedBox(height: 5.h),
+                ),
 
-            ClipRRect(
-              borderRadius: BorderRadius.circular(15),
-              child: Image.asset(
-                'assets/images/sales_report.png',
-                //height: 270,
-                width: double.infinity,
-                fit: BoxFit.cover,
-              ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 0),
+                  child: ListView.builder(
+                    itemBuilder: (context, index) {
+                      return Most_Sold_Product_Card(
+                        ProductName: 'Product Name',
+                        soldProductUnit: 199,
+                        totalSoldPrice: 1200,
+                        imagePath: 'assets/images/most_products_sold.jpeg',
+                      );
+                    },
+                    itemCount: 4,
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                  ),
+                ),
+
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 5.h),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Sales and Due Report",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14.h,
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {},
+                        child: Text(
+                          "Show Details...",
+                          style: TextStyle(
+                            color: Colors.blue,
+                            fontSize: 10.h,
+                            fontStyle: FontStyle.italic,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 5.h),
+
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(15),
+                  child: Image.asset(
+                    'assets/images/sales_report.png',
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                SizedBox(height: 25.h),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(15),
+                  child: Image.asset(
+                    'assets/images/due_report.png',
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                SizedBox(height: 5.h),
+              ],
             ),
-            SizedBox(height: 25.h),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(15),
-              child: Image.asset(
-                'assets/images/due_report.png',
-                //height: 270,
-                width: double.infinity,
-                fit: BoxFit.cover,
-              ),
-            ),
-            SizedBox(height: 5.h),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
