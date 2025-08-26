@@ -1,5 +1,6 @@
 import 'package:bikretaa/ui/screens/bottom_nav_bar/main_nav_bar_screen.dart';
 import 'package:bikretaa/ui/screens/bottom_nav_bar/navbar_screens/products_screen.dart';
+import 'package:bikretaa/ui/screens/bottom_nav_bar/navbar_screens/setting_screen.dart';
 import 'package:bikretaa/ui/screens/bottom_nav_bar/products/add_product_screen.dart';
 import 'package:bikretaa/ui/screens/bottom_nav_bar/sales_product/add_sales_screen.dart';
 import 'package:bikretaa/ui/screens/forgot_password_screen.dart';
@@ -91,6 +92,7 @@ class BikretaaApp extends StatelessWidget {
             AddProductScreen.name: (context) => AddProductScreen(),
             ProductsScreen.name: (context) => ProductsScreen(),
             AddSalesScreen.name: (context) => AddSalesScreen(),
+            SettingScreen.name: (context) => SettingScreen(),
           },
           debugShowCheckedModeBanner: false,
         );
