@@ -1,5 +1,5 @@
 import 'package:bikretaa/ui/screens/bottom_nav_bar/main_nav_bar_screen.dart';
-import 'package:bikretaa/ui/screens/signin_screen.dart';
+import 'package:bikretaa/ui/screens/signin_and_signup/signin/signin_screen.dart';
 import 'package:bikretaa/ui/widgets/background.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:bikretaa/ui/widgets/snackbar_messege.dart';
+import 'package:bikretaa/ui/widgets/snack_bar_messege/snackbar_messege.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';

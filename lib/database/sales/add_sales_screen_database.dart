@@ -1,8 +1,8 @@
-import 'package:bikretaa/models/DueModel.dart';
-import 'package:bikretaa/models/PaidModel.dart';
-import 'package:bikretaa/models/RevenueModel.dart';
-import 'package:bikretaa/models/SalesModel.dart';
-import 'package:bikretaa/models/product_model.dart';
+import 'package:bikretaa/models/product/product_model.dart';
+import 'package:bikretaa/models/sales/DueModel.dart';
+import 'package:bikretaa/models/sales/PaidModel.dart';
+import 'package:bikretaa/models/sales/RevenueModel.dart';
+import 'package:bikretaa/models/sales/SalesModel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AddSalesScreen_database {

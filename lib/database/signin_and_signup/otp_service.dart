@@ -1,4 +1,4 @@
-import 'package:bikretaa/database/network_caller.dart';
+import 'package:bikretaa/database/signin_and_signup/network_caller.dart';
 import 'package:bikretaa/database/signin_and_signup/urls.dart';
 
 class OtpApiService {

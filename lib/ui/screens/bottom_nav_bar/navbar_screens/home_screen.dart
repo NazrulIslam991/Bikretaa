@@ -1,7 +1,7 @@
 import 'package:bikretaa/database/signin_and_signup/shared_preferences_helper.dart';
-import 'package:bikretaa/ui/widgets/custom_drawer.dart';
-import 'package:bikretaa/ui/widgets/most_sold_product_card.dart';
-import 'package:bikretaa/ui/widgets/summary_card.dart';
+import 'package:bikretaa/ui/widgets/card/product_card/summary_card.dart';
+import 'package:bikretaa/ui/widgets/card/sale_card/most_sold_product_card.dart';
+import 'package:bikretaa/ui/widgets/drawer/custom_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';

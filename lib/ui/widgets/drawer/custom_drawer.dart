@@ -1,7 +1,7 @@
 import 'package:bikretaa/database/signin_and_signup/shared_preferences_helper.dart';
-import 'package:bikretaa/ui/screens/signin_screen.dart';
-import 'package:bikretaa/ui/widgets/circular_progress_indicatior_2.dart';
-import 'package:bikretaa/ui/widgets/confirm_dialog.dart';
+import 'package:bikretaa/ui/screens/signin_and_signup/signin/signin_screen.dart';
+import 'package:bikretaa/ui/widgets/circular_progress/circular_progress_indicatior_2.dart';
+import 'package:bikretaa/ui/widgets/dialog_box/confirm_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

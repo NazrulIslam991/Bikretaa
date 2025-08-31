@@ -1,8 +1,8 @@
-import 'package:bikretaa/bikretaa_app.dart';
+import 'package:bikretaa/app/bikretaa_app.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-import 'database/cloudinary_database.dart';
+import 'database/product/cloudinary_database.dart';
 
 final cloudinaryService = CloudinaryService(
   cloudName: 'dqntrxknj',

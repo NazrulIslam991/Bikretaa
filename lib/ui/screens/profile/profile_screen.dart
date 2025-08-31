@@ -1,5 +1,5 @@
 import 'package:bikretaa/database/signin_and_signup/shared_preferences_helper.dart';
-import 'package:bikretaa/models/user_model.dart';
+import 'package:bikretaa/models/user/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

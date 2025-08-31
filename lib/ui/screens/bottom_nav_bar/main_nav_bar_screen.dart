@@ -31,7 +31,7 @@ class _MainNavBarScreenState extends State<MainNavBarScreen> {
       bottomNavigationBar: Container(
         height: 55.h,
         child: NavigationBar(
-          backgroundColor: Color(0xFFC5CAE9), // Soft Indigo
+          backgroundColor: Color(0xFFC5CAE9),
           indicatorColor: Colors.white,
           selectedIndex: _selected_sceen,
           onDestinationSelected: (int index) {

@@ -1,8 +1,8 @@
-import 'package:bikretaa/database/add_sales_screen_database.dart';
-import 'package:bikretaa/models/SalesModel.dart';
-import 'package:bikretaa/ui/widgets/mobile_feild_widget.dart';
-import 'package:bikretaa/ui/widgets/product_sales_controller/customer_address.dart';
-import 'package:bikretaa/ui/widgets/product_sales_controller/customer_name_controller.dart';
+import 'package:bikretaa/database/sales/add_sales_screen_database.dart';
+import 'package:bikretaa/models/sales/SalesModel.dart';
+import 'package:bikretaa/ui/widgets/text_feild/customer_address.dart';
+import 'package:bikretaa/ui/widgets/text_feild/customer_name_controller.dart';
+import 'package:bikretaa/ui/widgets/text_feild/mobile_feild_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

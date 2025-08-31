@@ -1,10 +1,10 @@
-import 'package:bikretaa/database/product_database.dart';
-import 'package:bikretaa/models/product_model.dart';
+import 'package:bikretaa/database/product/product_database.dart';
+import 'package:bikretaa/models/product/product_model.dart';
 import 'package:bikretaa/ui/screens/bottom_nav_bar/products/add_product_screen.dart';
 import 'package:bikretaa/ui/widgets/bottom_filter_sheet/bottom_filter_sheet_for_product.dart';
-import 'package:bikretaa/ui/widgets/product_card.dart';
-import 'package:bikretaa/ui/widgets/product_screen_shimmer/product_shimmer_widget.dart';
-import 'package:bikretaa/ui/widgets/search_bar.dart';
+import 'package:bikretaa/ui/widgets/card/product_card/product_card.dart';
+import 'package:bikretaa/ui/widgets/search_bar/search_bar.dart';
+import 'package:bikretaa/ui/widgets/shimmer/product_screen_shimmer/product_shimmer_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';

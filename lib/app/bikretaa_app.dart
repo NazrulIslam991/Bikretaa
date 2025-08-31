@@ -4,8 +4,8 @@ import 'package:bikretaa/ui/screens/bottom_nav_bar/navbar_screens/setting_screen
 import 'package:bikretaa/ui/screens/bottom_nav_bar/products/add_product_screen.dart';
 import 'package:bikretaa/ui/screens/bottom_nav_bar/sales_product/add_sales_screen.dart';
 import 'package:bikretaa/ui/screens/forgot_password_screen.dart';
-import 'package:bikretaa/ui/screens/signin_screen.dart';
-import 'package:bikretaa/ui/screens/signup/create_account_screen.dart';
+import 'package:bikretaa/ui/screens/signin_and_signup/sign_up/create_account_screen.dart';
+import 'package:bikretaa/ui/screens/signin_and_signup/signin/signin_screen.dart';
 import 'package:bikretaa/ui/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

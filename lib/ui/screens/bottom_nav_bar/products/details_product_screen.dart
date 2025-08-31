@@ -1,9 +1,9 @@
-import 'package:bikretaa/database/product_database.dart';
-import 'package:bikretaa/models/product_model.dart';
+import 'package:bikretaa/database/product/product_database.dart';
+import 'package:bikretaa/models/product/product_model.dart';
 import 'package:bikretaa/ui/screens/bottom_nav_bar/products/update_product_screen.dart';
-import 'package:bikretaa/ui/widgets/circular_progress_indicatior_2.dart';
-import 'package:bikretaa/ui/widgets/confirm_dialog.dart';
-import 'package:bikretaa/ui/widgets/divider.dart';
+import 'package:bikretaa/ui/widgets/circular_progress/circular_progress_indicatior_2.dart';
+import 'package:bikretaa/ui/widgets/dialog_box/confirm_dialog.dart';
+import 'package:bikretaa/ui/widgets/divider/divider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

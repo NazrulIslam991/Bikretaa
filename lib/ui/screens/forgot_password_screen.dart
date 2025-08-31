@@ -1,9 +1,9 @@
 import 'package:bikretaa/database/signin_and_signup/firestore_user_check.dart';
-import 'package:bikretaa/ui/screens/signin_screen.dart';
+import 'package:bikretaa/ui/screens/signin_and_signup/signin/signin_screen.dart';
 import 'package:bikretaa/ui/widgets/background.dart';
-import 'package:bikretaa/ui/widgets/circular_progress_indicatior.dart';
-import 'package:bikretaa/ui/widgets/email_feild_controller.dart';
-import 'package:bikretaa/ui/widgets/snackbar_messege.dart';
+import 'package:bikretaa/ui/widgets/circular_progress/circular_progress_indicatior.dart';
+import 'package:bikretaa/ui/widgets/snack_bar_messege/snackbar_messege.dart';
+import 'package:bikretaa/ui/widgets/text_feild/email_feild_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';

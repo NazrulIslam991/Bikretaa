@@ -1,10 +1,10 @@
 import 'package:bikretaa/database/signin_and_signup/shared_preferences_helper.dart';
-import 'package:bikretaa/models/user_model.dart';
-import 'package:bikretaa/ui/widgets/circular_progress_indicatior_2.dart';
-import 'package:bikretaa/ui/widgets/mobile_feild_widget.dart';
-import 'package:bikretaa/ui/widgets/shop_name_widget.dart';
-import 'package:bikretaa/ui/widgets/shop_type_dropdown_menu.dart';
-import 'package:bikretaa/ui/widgets/snackbar_messege.dart';
+import 'package:bikretaa/models/user/user_model.dart';
+import 'package:bikretaa/ui/widgets/circular_progress/circular_progress_indicatior_2.dart';
+import 'package:bikretaa/ui/widgets/drop_down_menu/shop_type_dropdown_menu.dart';
+import 'package:bikretaa/ui/widgets/snack_bar_messege/snackbar_messege.dart';
+import 'package:bikretaa/ui/widgets/text_feild/mobile_feild_widget.dart';
+import 'package:bikretaa/ui/widgets/text_feild/shop_name_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

@@ -1,11 +1,11 @@
-import 'package:bikretaa/database/sales_screen_database.dart';
+import 'package:bikretaa/database/sales/sales_screen_database.dart';
 import 'package:bikretaa/ui/screens/bottom_nav_bar/sales_product/add_sales_screen.dart';
 import 'package:bikretaa/ui/widgets/bottom_filter_sheet/bottom_filter_sheet_for_sales.dart';
-import 'package:bikretaa/ui/widgets/product_controller_feild/sales_card_directories/sales_history_card.dart';
-import 'package:bikretaa/ui/widgets/product_controller_feild/sales_card_directories/sales_summary_card.dart';
-import 'package:bikretaa/ui/widgets/sales_screen_shimmer/sales_history_shimmer.dart';
-import 'package:bikretaa/ui/widgets/sales_screen_shimmer/sales_summary_shimmer.dart';
-import 'package:bikretaa/ui/widgets/search_bar.dart';
+import 'package:bikretaa/ui/widgets/card/sale_card/sales_history_card.dart';
+import 'package:bikretaa/ui/widgets/card/sale_card/sales_summary_card.dart';
+import 'package:bikretaa/ui/widgets/search_bar/search_bar.dart';
+import 'package:bikretaa/ui/widgets/shimmer/sale_screen_shimmer/sales_history_shimmer.dart';
+import 'package:bikretaa/ui/widgets/shimmer/sale_screen_shimmer/sales_summary_shimmer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
