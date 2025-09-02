@@ -1,4 +1,4 @@
-import 'package:bikretaa/database/signin_and_signup/shared_preferences_helper.dart';
+import 'package:bikretaa/app/shared_preferences_helper.dart';
 import 'package:bikretaa/ui/screens/signin_and_signup/signin/signin_screen.dart';
 import 'package:bikretaa/ui/widgets/circular_progress/circular_progress_indicatior_2.dart';
 import 'package:bikretaa/ui/widgets/dialog_box/confirm_dialog.dart';
@@ -18,6 +18,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Stack(
       children: [
         Drawer(
@@ -25,11 +26,11 @@ class _CustomDrawerState extends State<CustomDrawer> {
             future: SharedPreferencesHelper.getUser(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(child: CircularProgressIndicator());
+                return Center(child: CircularProgressIndicator());
               }
 
               if (!snapshot.hasData || snapshot.data == null) {
-                return const Center(child: Text("No user data found"));
+                return Center(child: Text("No user data found"));
               }
 
               final user = snapshot.data!;
@@ -42,17 +43,20 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   Container(
                     height: 160.h,
                     child: DrawerHeader(
-                      decoration: const BoxDecoration(color: Colors.blueGrey),
+                      decoration: BoxDecoration(
+                        color: theme.colorScheme.surface,
+                      ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           CircleAvatar(
+                            backgroundColor: theme.colorScheme.primary,
                             radius: 25.h,
                             child: Text(
                               shopName.isNotEmpty ? shopName[0] : "S",
                               style: TextStyle(
                                 fontSize: 24.sp,
-                                color: Colors.black,
+                                color: theme.colorScheme.surface,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -62,14 +66,14 @@ class _CustomDrawerState extends State<CustomDrawer> {
                             shopName,
                             style: TextStyle(
                               fontSize: 14.h,
-                              color: Colors.white,
+                              color: Colors.black,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           Text(
                             email,
                             style: TextStyle(
-                              color: Colors.greenAccent,
+                              color: theme.colorScheme.primary,
                               fontSize: 10.h,
                             ),
                           ),
@@ -78,7 +82,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     ),
                   ),
                   ListTile(
-                    leading: Icon(Icons.home, size: 20.h),
+                    leading: Icon(Icons.home, size: 20.h, color: Colors.black),
                     title: Text(
                       'Home',
                       style: TextStyle(color: Colors.black, fontSize: 12.h),
@@ -86,7 +90,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     onTap: () => Navigator.pop(context),
                   ),
                   ListTile(
-                    leading: Icon(Icons.edit, size: 20.h),
+                    leading: Icon(Icons.edit, size: 20.h, color: Colors.black),
                     title: Text(
                       'Edit Profile',
                       style: TextStyle(color: Colors.black, fontSize: 12.h),
@@ -94,7 +98,11 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     onTap: () => Navigator.pop(context),
                   ),
                   ListTile(
-                    leading: Icon(Icons.logout, size: 20.h),
+                    leading: Icon(
+                      Icons.logout,
+                      size: 20.h,
+                      color: Colors.black,
+                    ),
                     title: Text(
                       'LogOut',
                       style: TextStyle(color: Colors.black, fontSize: 12.h),

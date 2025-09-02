@@ -39,9 +39,10 @@ class ProductCardWidget extends StatelessWidget {
     final DateTime now = DateTime.now();
     final DateTime? expDate = DateTime.tryParse(expireDate);
     final bool outOfStock = quantity == 0;
+    final theme = Theme.of(context);
 
     return Card(
-      color: Colors.white,
+      color: theme.cardColor,
       elevation: 8,
       shadowColor: Colors.blueAccent,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.h)),
@@ -59,7 +60,7 @@ class ProductCardWidget extends StatelessWidget {
                     imagePath,
                     width: double.infinity,
                     height: 80.h,
-                    fit: BoxFit.contain,
+                    fit: BoxFit.fill,
                     errorBuilder: (context, error, stackTrace) {
                       return Container(
                         width: double.infinity,
@@ -113,14 +114,17 @@ class ProductCardWidget extends StatelessWidget {
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 12.h,
-                      color: Colors.black87,
+                      color: theme.colorScheme.primary,
                     ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
                     productId,
-                    style: TextStyle(fontSize: 10.h, color: Colors.grey[600]),
+                    style: TextStyle(
+                      fontSize: 10.h,
+                      color: theme.colorScheme.surface,
+                    ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),

@@ -11,22 +11,23 @@ class ProductBrandController extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Container(
       height: 45.h,
       child: TextFormField(
         controller: _productBandNameController,
         decoration: InputDecoration(
-          hintText: "Product Brand",
+          hintText: "Enter product brand",
           labelText: "Product Brand",
           labelStyle: TextStyle(
             fontWeight: FontWeight.normal,
-            color: Colors.grey.shade700,
+            color: theme.colorScheme.primary,
             letterSpacing: 0.4,
             fontSize: 12.h,
           ),
           hintStyle: TextStyle(
             fontWeight: FontWeight.normal,
-            color: Colors.black,
+            color: Colors.grey,
             letterSpacing: 0.4,
             fontSize: 12.h,
           ),

@@ -24,8 +24,8 @@ class _PasswordFeildWidgetState extends State<PasswordFeildWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Container(
-      //height: 45.h,
       child: TextFormField(
         controller: widget._passwordEcontroller,
         obscureText: _obscureText,
@@ -34,14 +34,14 @@ class _PasswordFeildWidgetState extends State<PasswordFeildWidget> {
           hintText: "Password",
           hintStyle: TextStyle(
             fontWeight: FontWeight.normal,
-            color: Colors.black,
+            color: theme.colorScheme.primary,
             letterSpacing: 0.4,
             fontSize: 12.h,
           ),
           labelText: "Password",
           labelStyle: TextStyle(
             fontWeight: FontWeight.normal,
-            color: Colors.grey.shade700,
+            color: theme.colorScheme.primary,
             letterSpacing: 0.4,
             fontSize: 12.h,
           ),

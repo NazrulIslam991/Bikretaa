@@ -1,3 +1,4 @@
+import 'package:bikretaa/assets_path/assets_path.dart';
 import 'package:bikretaa/ui/screens/bottom_nav_bar/navbar_screens/home_screen.dart';
 import 'package:bikretaa/ui/screens/bottom_nav_bar/navbar_screens/products_screen.dart';
 import 'package:bikretaa/ui/screens/bottom_nav_bar/navbar_screens/reports_screen.dart';
@@ -26,45 +27,82 @@ class _MainNavBarScreenState extends State<MainNavBarScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
       body: _navigation_screen[_selected_sceen],
       bottomNavigationBar: Container(
         height: 55.h,
         child: NavigationBar(
-          backgroundColor: Color(0xFFC5CAE9),
-          indicatorColor: Colors.white,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          indicatorColor: theme.colorScheme.primary.withOpacity(0.4),
           selectedIndex: _selected_sceen,
           onDestinationSelected: (int index) {
             _selected_sceen = index;
             setState(() {});
           },
+          labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
           destinations: [
-            NavigationDestination(icon: Icon(Icons.home), label: 'Home'),
             NavigationDestination(
-              icon: Image.asset(
-                'assets/images/product.png',
-                width: 20.h,
-                height: 20.h,
-              ),
-              label: 'Prodcts',
+              icon: Icon(Icons.home, color: theme.iconTheme.color),
+              selectedIcon: Icon(Icons.home, color: theme.colorScheme.primary),
+              label: 'Home',
             ),
             NavigationDestination(
               icon: Image.asset(
-                'assets/images/doller.png',
+                AssetPaths.product,
                 width: 20.h,
                 height: 20.h,
+                color: theme.iconTheme.color,
+              ),
+              selectedIcon: Image.asset(
+                AssetPaths.product,
+                width: 20.h,
+                height: 20.h,
+                color: theme.colorScheme.primary,
+              ),
+              label: 'Products',
+            ),
+
+            NavigationDestination(
+              icon: Image.asset(
+                AssetPaths.doller,
+                width: 20.h,
+                height: 20.h,
+                color: theme.iconTheme.color,
+              ),
+              selectedIcon: Image.asset(
+                AssetPaths.doller,
+                width: 20.h,
+                height: 20.h,
+                color: theme.colorScheme.primary,
               ),
               label: 'Sales',
             ),
+
             NavigationDestination(
               icon: Image.asset(
-                'assets/images/report.png',
+                AssetPaths.report,
                 width: 20.h,
                 height: 20.h,
+                color: theme.iconTheme.color,
+              ),
+              selectedIcon: Image.asset(
+                AssetPaths.report,
+                width: 20.h,
+                height: 20.h,
+                color: theme.colorScheme.primary,
               ),
               label: 'Reports',
             ),
-            NavigationDestination(icon: Icon(Icons.settings), label: 'Setting'),
+
+            NavigationDestination(
+              icon: Icon(Icons.settings, color: theme.iconTheme.color),
+              selectedIcon: Icon(
+                Icons.settings,
+                color: theme.colorScheme.primary,
+              ),
+              label: 'Setting',
+            ),
           ],
         ),
       ),

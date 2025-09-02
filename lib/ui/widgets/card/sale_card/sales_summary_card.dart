@@ -15,6 +15,7 @@ class SalesSummaryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Card(
       color: bgColor,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.r)),

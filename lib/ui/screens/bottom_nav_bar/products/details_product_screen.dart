@@ -44,6 +44,7 @@ class DetailsProductScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ProductDatabase _deleteProduct = ProductDatabase();
+    final theme = Theme.of(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -60,7 +61,7 @@ class DetailsProductScreen extends StatelessWidget {
                 imagePath,
                 width: double.infinity,
                 height: 170.h,
-                fit: BoxFit.contain,
+                fit: BoxFit.fill,
                 loadingBuilder: (context, child, loadingProgress) {
                   if (loadingProgress == null) return child;
                   return Container(
@@ -94,7 +95,11 @@ class DetailsProductScreen extends StatelessWidget {
               padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 10.w),
               child: Text(
                 productName,
-                style: TextStyle(fontSize: 20.h, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontSize: 18.h,
+                  fontWeight: FontWeight.bold,
+                  color: theme.colorScheme.primary,
+                ),
               ),
             ),
             Padding(
@@ -103,7 +108,7 @@ class DetailsProductScreen extends StatelessWidget {
                 "Brand Name : $brandName",
                 style: GoogleFonts.aBeeZee(
                   textStyle: TextStyle(
-                    color: Colors.black,
+                    color: theme.colorScheme.primary,
                     letterSpacing: .5,
                     fontSize: 12.h,
                     fontStyle: FontStyle.italic,
@@ -115,7 +120,7 @@ class DetailsProductScreen extends StatelessWidget {
               padding: EdgeInsets.only(
                 right: 25.h,
                 left: 25.h,
-                top: 15.h,
+                top: 25.h,
                 bottom: 10.h,
               ),
               child: Text(
@@ -403,9 +408,10 @@ class DetailsProductScreen extends StatelessWidget {
               ),
               child: Text(
                 description,
+                textAlign: TextAlign.justify,
                 style: GoogleFonts.ibarraRealNova(
                   textStyle: TextStyle(
-                    color: Colors.black,
+                    color: theme.colorScheme.primary,
                     letterSpacing: .5,
                     fontSize: 14.h,
                   ),

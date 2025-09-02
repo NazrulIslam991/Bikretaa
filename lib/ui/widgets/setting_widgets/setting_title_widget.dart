@@ -21,6 +21,7 @@ class SettingsTileWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return ListTile(
       contentPadding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 0.h),
       leading: Container(
@@ -38,14 +39,17 @@ class SettingsTileWidget extends StatelessWidget {
         style: TextStyle(
           fontWeight: FontWeight.w600,
           fontSize: 14.sp,
-          color: danger ? Colors.red : Colors.black,
+          color: danger ? Colors.red : theme.colorScheme.primary,
         ),
       ),
       subtitle: subtitle == null
           ? null
           : Text(
               subtitle!,
-              style: TextStyle(fontSize: 10.sp, color: Colors.grey),
+              style: TextStyle(
+                fontSize: 10.sp,
+                color: theme.colorScheme.primary,
+              ),
             ),
       trailing: trailing ?? Icon(Icons.chevron_right_rounded, size: 18.sp),
       onTap: onTap,

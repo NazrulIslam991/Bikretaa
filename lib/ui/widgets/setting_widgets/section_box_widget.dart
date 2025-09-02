@@ -7,9 +7,10 @@ class SectionBoxWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: theme.colorScheme.onSecondary,
         borderRadius: BorderRadius.circular(12.r),
         border: Border.all(color: Colors.grey.shade300),
       ),

@@ -1,9 +1,10 @@
+import 'package:bikretaa/app/body_background.dart';
+import 'package:bikretaa/app/shared_preferences_helper.dart';
+import 'package:bikretaa/app/theme_controller.dart';
 import 'package:bikretaa/database/signin_and_signup/firestore_user_check.dart';
-import 'package:bikretaa/database/signin_and_signup/shared_preferences_helper.dart';
 import 'package:bikretaa/ui/screens/bottom_nav_bar/main_nav_bar_screen.dart';
 import 'package:bikretaa/ui/screens/forgot_password_screen.dart';
 import 'package:bikretaa/ui/screens/signin_and_signup/sign_up/create_account_screen.dart';
-import 'package:bikretaa/ui/widgets/background.dart';
 import 'package:bikretaa/ui/widgets/circular_progress/circular_progress_indicatior.dart';
 import 'package:bikretaa/ui/widgets/snack_bar_messege/snackbar_messege.dart';
 import 'package:bikretaa/ui/widgets/text_feild/email_feild_controller.dart';
@@ -12,6 +13,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class SigninScreen extends StatefulWidget {
   const SigninScreen({super.key});
@@ -26,11 +28,13 @@ class _SigninScreenState extends State<SigninScreen> {
   TextEditingController _emailEcontroller = TextEditingController();
   TextEditingController _passwordEcontroller = TextEditingController();
   bool _signinProgressIndicator = false;
+  final ThemeController _themeController = Get.find<ThemeController>();
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
-      body: Background_image(
+      body: BodyBackground(
         child: Center(
           child: SingleChildScrollView(
             child: Padding(
@@ -101,6 +105,7 @@ class _SigninScreenState extends State<SigninScreen> {
                           style: TextStyle(
                             fontStyle: FontStyle.italic,
                             fontWeight: FontWeight.bold,
+                            color: theme.colorScheme.primary,
                             fontSize: 12.h,
                           ),
                         ),
@@ -114,7 +119,7 @@ class _SigninScreenState extends State<SigninScreen> {
                           text: "Don't have an account? ",
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
-                            color: Colors.black,
+                            color: theme.colorScheme.primary,
                             letterSpacing: 0.4,
                             fontSize: 10.h,
                           ),

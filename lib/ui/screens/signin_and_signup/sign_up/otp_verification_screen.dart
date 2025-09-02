@@ -1,8 +1,8 @@
+import 'package:bikretaa/app/body_background.dart';
 import 'package:bikretaa/database/signin_and_signup/otp_generator.dart';
 import 'package:bikretaa/database/signin_and_signup/otp_service.dart';
 import 'package:bikretaa/ui/screens/signin_and_signup/sign_up/create_account_by_information.dart';
 import 'package:bikretaa/ui/screens/signin_and_signup/signin/signin_screen.dart';
-import 'package:bikretaa/ui/widgets/background.dart';
 import 'package:bikretaa/ui/widgets/circular_progress/circular_progress_indicatior.dart';
 import 'package:bikretaa/ui/widgets/snack_bar_messege/snackbar_messege.dart';
 import 'package:flutter/gestures.dart';
@@ -47,8 +47,9 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
-      body: Background_image(
+      body: BodyBackground(
         child: Center(
           child: SingleChildScrollView(
             child: Padding(
@@ -68,7 +69,7 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontWeight: FontWeight.normal,
-                        color: Colors.grey,
+                        color: theme.colorScheme.primary,
                         letterSpacing: 0.4,
                         fontStyle: FontStyle.italic,
                         fontSize: 12.sp,
@@ -100,6 +101,11 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                         animationDuration: Duration(milliseconds: 300),
                         backgroundColor: Colors.transparent,
                         enableActiveFill: true,
+                        textStyle: TextStyle(
+                          color: theme.colorScheme.onPrimary,
+                          fontSize: 18.sp,
+                          fontWeight: FontWeight.bold,
+                        ),
                         controller: _otpEController,
                         onCompleted: (v) {
                           print("OTP input completed: $v");
@@ -114,7 +120,7 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                         Text(
                           "Didn't receive a code? ",
                           style: TextStyle(
-                            color: Colors.grey,
+                            color: theme.colorScheme.primary,
                             fontStyle: FontStyle.italic,
                             fontWeight: FontWeight.normal,
                             fontSize: 11.h,
@@ -142,7 +148,10 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                       replacement: CenterCircularProgressIndiacator(),
                       child: ElevatedButton(
                         onPressed: _onTapVerify,
-                        child: Text("Verify"),
+                        child: Text(
+                          "Verify",
+                          style: TextStyle(color: theme.colorScheme.primary),
+                        ),
                       ),
                     ),
 
@@ -154,7 +163,7 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                           text: "Have an account? ",
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
-                            color: Colors.black,
+                            color: theme.colorScheme.primary,
                             letterSpacing: 0.4,
                             fontSize: 10.h,
                           ),

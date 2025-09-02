@@ -34,12 +34,14 @@ class SalesHistoryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Padding(
       padding: EdgeInsets.only(left: 0.w, right: 0.w, bottom: 10.h),
       child: Container(
         padding: EdgeInsets.all(8.w),
         decoration: BoxDecoration(
-          color: Color(0xFF1D9BF0),
+          color: theme.colorScheme.secondary,
+
           borderRadius: BorderRadius.circular(12.r),
           boxShadow: [
             BoxShadow(
@@ -61,14 +63,17 @@ class SalesHistoryCard extends StatelessWidget {
                     Text(
                       time,
                       style: TextStyle(
-                        color: Colors.white,
+                        color: theme.colorScheme.onPrimary,
                         fontSize: 10.sp,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
                     Text(
                       date,
-                      style: TextStyle(color: Colors.white, fontSize: 10.sp),
+                      style: TextStyle(
+                        color: theme.colorScheme.onPrimary,
+                        fontSize: 10.sp,
+                      ),
                     ),
                   ],
                 ),
@@ -81,7 +86,7 @@ class SalesHistoryCard extends StatelessWidget {
                         child: Text(
                           customerName,
                           style: TextStyle(
-                            color: Colors.white,
+                            color: theme.colorScheme.onPrimary,
                             fontSize: 14.sp,
                             fontWeight: FontWeight.bold,
                           ),
@@ -92,7 +97,7 @@ class SalesHistoryCard extends StatelessWidget {
                         child: Text(
                           customerMobile,
                           style: TextStyle(
-                            color: Colors.white70,
+                            color: theme.colorScheme.onPrimary,
                             fontSize: 10.sp,
                           ),
                         ),
@@ -101,7 +106,7 @@ class SalesHistoryCard extends StatelessWidget {
                         child: Text(
                           "Address: $customerAddress",
                           style: TextStyle(
-                            color: Colors.white70,
+                            color: theme.colorScheme.onPrimary,
                             fontSize: 10.sp,
                           ),
                         ),
@@ -114,7 +119,7 @@ class SalesHistoryCard extends StatelessWidget {
                       ? 'Paid'
                       : 'Due:${dueAmount.toStringAsFixed(2)} tk',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: theme.colorScheme.onPrimary,
                     fontSize: 10.sp,
                     fontWeight: FontWeight.w500,
                   ),
@@ -125,7 +130,7 @@ class SalesHistoryCard extends StatelessWidget {
             Container(
               padding: EdgeInsets.all(5.w),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: theme.colorScheme.onPrimary,
                 borderRadius: BorderRadius.circular(10.r),
               ),
               child: Column(
@@ -137,18 +142,19 @@ class SalesHistoryCard extends StatelessWidget {
                       Text(
                         'Total Items : ',
                         style: TextStyle(
-                          color: Colors.indigo,
-                          fontStyle: FontStyle.italic,
-                          fontWeight: FontWeight.normal,
+                          color: theme.colorScheme.primary,
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.bold,
                           fontSize: 12.sp,
                         ),
                       ),
                       Text(
                         totalItems.toString(),
                         style: TextStyle(
-                          color: Colors.black,
+                          color: theme.colorScheme.onSurface,
                           fontSize: 10.sp,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.normal,
+                          fontStyle: FontStyle.italic,
                         ),
                       ),
                     ],
@@ -159,18 +165,19 @@ class SalesHistoryCard extends StatelessWidget {
                       Text(
                         'Total Cost : ',
                         style: TextStyle(
-                          color: Colors.indigo,
-                          fontStyle: FontStyle.italic,
-                          fontWeight: FontWeight.normal,
+                          color: theme.colorScheme.primary,
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.bold,
                           fontSize: 12.sp,
                         ),
                       ),
                       Text(
                         'BDT ${totalCost.toStringAsFixed(2)} tk',
                         style: TextStyle(
-                          color: Colors.black,
+                          color: theme.colorScheme.onSurface,
                           fontSize: 10.sp,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.normal,
+                          fontStyle: FontStyle.italic,
                         ),
                       ),
                     ],
@@ -181,18 +188,19 @@ class SalesHistoryCard extends StatelessWidget {
                       Text(
                         'Paid Amount : ',
                         style: TextStyle(
-                          color: Colors.indigo,
-                          fontStyle: FontStyle.italic,
-                          fontWeight: FontWeight.normal,
+                          color: theme.colorScheme.primary,
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.bold,
                           fontSize: 12.sp,
                         ),
                       ),
                       Text(
                         '${paidAmount.toStringAsFixed(2)} tk',
                         style: TextStyle(
-                          color: Colors.black,
+                          color: theme.colorScheme.onSurface,
                           fontSize: 10.sp,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.normal,
+                          fontStyle: FontStyle.italic,
                         ),
                       ),
                     ],
@@ -203,18 +211,19 @@ class SalesHistoryCard extends StatelessWidget {
                       Text(
                         'Due Amount : ',
                         style: TextStyle(
-                          color: Colors.indigo,
-                          fontStyle: FontStyle.italic,
-                          fontWeight: FontWeight.normal,
+                          color: theme.colorScheme.primary,
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.bold,
                           fontSize: 12.sp,
                         ),
                       ),
                       Text(
                         'BDT ${dueAmount.toStringAsFixed(2)} tk',
                         style: TextStyle(
-                          color: Colors.black,
+                          color: theme.colorScheme.onSurface,
                           fontSize: 10.sp,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.normal,
+                          fontStyle: FontStyle.italic,
                         ),
                       ),
                     ],
@@ -225,18 +234,19 @@ class SalesHistoryCard extends StatelessWidget {
                       Text(
                         'Sell ID : ',
                         style: TextStyle(
-                          color: Colors.indigo,
-                          fontStyle: FontStyle.italic,
-                          fontWeight: FontWeight.normal,
+                          color: theme.colorScheme.primary,
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.bold,
                           fontSize: 12.sp,
                         ),
                       ),
                       Text(
                         salesID,
                         style: TextStyle(
-                          color: Colors.black,
+                          color: theme.colorScheme.onSurface,
                           fontSize: 10.sp,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.normal,
+                          fontStyle: FontStyle.italic,
                         ),
                       ),
                       SizedBox(width: 5.w),

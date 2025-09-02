@@ -1,4 +1,5 @@
-import 'package:bikretaa/database/signin_and_signup/shared_preferences_helper.dart';
+import 'package:bikretaa/app/shared_preferences_helper.dart';
+import 'package:bikretaa/app/theme_controller.dart';
 import 'package:bikretaa/models/user/user_model.dart';
 import 'package:bikretaa/ui/screens/bottom_nav_bar/about_and_help/about_screen.dart';
 import 'package:bikretaa/ui/screens/bottom_nav_bar/about_and_help/support_and_faqs_screen.dart';
@@ -15,6 +16,7 @@ import 'package:bikretaa/ui/widgets/snack_bar_messege/snackbar_messege.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 class SettingScreen extends StatefulWidget {
@@ -26,9 +28,11 @@ class SettingScreen extends StatefulWidget {
 }
 
 class _SettingScreenState extends State<SettingScreen> {
+  final ThemeController _themeController = Get.find<ThemeController>();
   bool _pushNotifications = true;
   bool _orderAlerts = true;
   bool _lowStockAlerts = true;
+  bool _language = true;
   bool _loading = false;
   String _appVersion = '';
   UserModel? _user;
@@ -43,6 +47,7 @@ class _SettingScreenState extends State<SettingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('Settings', style: TextStyle(fontSize: 24.sp)),
@@ -54,7 +59,7 @@ class _SettingScreenState extends State<SettingScreen> {
           // User Info Box
           Container(
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: theme.colorScheme.onSecondary,
               borderRadius: BorderRadius.circular(12.r),
               border: Border.all(color: Colors.grey.shade300),
             ),
@@ -71,7 +76,7 @@ class _SettingScreenState extends State<SettingScreen> {
                     children: [
                       CircleAvatar(
                         radius: 18.r,
-                        backgroundColor: Colors.blue.withOpacity(0.1),
+                        backgroundColor: theme.colorScheme.secondary,
                         child: Text(
                           _user?.shopName.isNotEmpty == true
                               ? _user!.shopName[0].toUpperCase()
@@ -79,7 +84,7 @@ class _SettingScreenState extends State<SettingScreen> {
                           style: TextStyle(
                             fontSize: 14.sp,
                             fontWeight: FontWeight.bold,
-                            color: Colors.blue,
+                            color: Colors.white,
                           ),
                         ),
                       ),
@@ -93,6 +98,7 @@ class _SettingScreenState extends State<SettingScreen> {
                               style: TextStyle(
                                 fontSize: 14.sp,
                                 fontWeight: FontWeight.w700,
+                                color: theme.colorScheme.primary,
                               ),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
@@ -102,7 +108,7 @@ class _SettingScreenState extends State<SettingScreen> {
                               _user?.email ?? 'Email',
                               style: TextStyle(
                                 fontSize: 10.sp,
-                                color: Colors.grey,
+                                color: theme.colorScheme.primary,
                               ),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
@@ -190,6 +196,36 @@ class _SettingScreenState extends State<SettingScreen> {
               ),
             ],
           ),
+
+          SectionTitleWidget(title: 'Language & Theme'),
+          SectionBoxWidget(
+            children: [
+              SettingsTileWidget(
+                icon: Icons.language,
+                title: 'Language',
+                subtitle: 'Select your preferred app language',
+                trailing: Switch(
+                  value: _language,
+                  onChanged: (v) => setState(() => _language = v),
+                ),
+              ),
+              SettingsTileWidget(
+                icon: Icons.dark_mode,
+                title: 'Theme',
+                subtitle: 'Switch between light and dark mode',
+                trailing: Obx(() {
+                  return Switch(
+                    value: _themeController.isDarkMode.value,
+                    onChanged: (value) {
+                      _themeController.toggleTheme();
+                    },
+                  );
+                }),
+              ),
+            ],
+          ),
+
+          SizedBox(height: 15.h),
 
           // ABOUT & HELP
           SectionTitleWidget(title: 'About & Help'),

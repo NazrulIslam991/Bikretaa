@@ -8,6 +8,7 @@ Future<bool> showConfirmDialog({
   String confirmText = "Confirm",
   Color confirmColor = Colors.red,
 }) async {
+  final theme = Theme.of(context);
   final result = await showDialog<bool>(
     context: context,
     barrierDismissible: false,
@@ -15,23 +16,27 @@ Future<bool> showConfirmDialog({
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       elevation: 8,
       child: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: EdgeInsets.all(20.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             // Title
             Text(
               title,
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
             ),
-            const SizedBox(height: 15),
+            SizedBox(height: 15),
             // Content
             Text(
               content,
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 16, color: Colors.grey[700]),
+              style: TextStyle(fontSize: 16, color: Colors.black),
             ),
-            const SizedBox(height: 25),
+            SizedBox(height: 25),
             // Buttons
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -44,16 +49,20 @@ Future<bool> showConfirmDialog({
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
-                      side: BorderSide(color: Colors.grey.shade400),
-                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      side: BorderSide(color: theme.colorScheme.primary),
+                      padding: EdgeInsets.symmetric(vertical: 14),
                     ),
                     child: Text(
                       cancelText,
-                      style: TextStyle(color: Colors.grey[800], fontSize: 16),
+                      style: TextStyle(
+                        color: theme.colorScheme.primary,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),
-                const SizedBox(width: 15),
+                SizedBox(width: 15),
                 // Confirm Button
                 Expanded(
                   child: ElevatedButton(
@@ -63,11 +72,11 @@ Future<bool> showConfirmDialog({
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
-                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      padding: EdgeInsets.symmetric(vertical: 14),
                     ),
                     child: Text(
                       confirmText,
-                      style: const TextStyle(color: Colors.white, fontSize: 16),
+                      style: TextStyle(color: Colors.white, fontSize: 16),
                     ),
                   ),
                 ),

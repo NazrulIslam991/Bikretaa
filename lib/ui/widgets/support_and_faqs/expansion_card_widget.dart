@@ -15,9 +15,11 @@ class ExpansionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Card(
       margin: EdgeInsets.only(bottom: 10.h),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
+      color: theme.cardColor,
       elevation: 2,
       child: ExpansionTile(
         tilePadding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 2.h),
@@ -25,8 +27,8 @@ class ExpansionCard extends StatelessWidget {
         title: Text(
           title,
           style: TextStyle(
-            fontWeight: FontWeight.w600,
-            color: titleColor ?? Colors.black,
+            fontWeight: FontWeight.bold,
+            color: theme.colorScheme.primary,
           ),
         ),
         children: description != null
@@ -36,6 +38,7 @@ class ExpansionCard extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 13.sp,
                     fontStyle: FontStyle.italic,
+                    color: theme.colorScheme.primary,
                   ),
                   textAlign: TextAlign.justify,
                 ),

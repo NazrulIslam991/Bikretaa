@@ -68,85 +68,90 @@ class SalesFilterSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 8.w),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Center(
-            child: Container(
-              width: 60.w,
-              height: 5.h,
-              decoration: BoxDecoration(
-                color: Colors.grey.shade300,
-                borderRadius: BorderRadius.circular(10.r),
+    final theme = Theme.of(context);
+    return Container(
+      decoration: BoxDecoration(
+        color: theme.colorScheme.surface,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(15.r),
+          topRight: Radius.circular(15.r),
+        ),
+      ),
+      child: Padding(
+        padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 8.w),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: Text(
+                "Filter Sales",
+                style: TextStyle(
+                  fontSize: 20.sp,
+                  fontWeight: FontWeight.bold,
+                  color: theme.colorScheme.onSurface,
+                ),
               ),
             ),
-          ),
-          SizedBox(height: 15.h),
-          Center(
-            child: Text(
-              "Filter Sales",
-              style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
-            ),
-          ),
-          SizedBox(height: 10.h),
+            SizedBox(height: 10.h),
 
-          // Filter cards
-          Column(
-            children: SalesFilter.values.map((filter) {
-              String title;
-              IconData icon;
-              Color color;
-              switch (filter) {
-                case SalesFilter.fixedDate:
-                  title = "Fixed Date";
-                  icon = Icons.date_range;
-                  color = Colors.blue;
-                  break;
-                case SalesFilter.lastWeek:
-                  title = "Last Week";
-                  icon = Icons.calendar_view_week;
-                  color = Colors.green;
-                  break;
-                case SalesFilter.lastMonth:
-                  title = "Last Month";
-                  icon = Icons.calendar_month;
-                  color = Colors.orange;
-                  break;
-                case SalesFilter.lastYear:
-                  title = "Last Year";
-                  icon = Icons.calendar_today;
-                  color = Colors.red;
-                  break;
-              }
+            // Filter cards
+            Column(
+              children: SalesFilter.values.map((filter) {
+                String title;
+                IconData icon;
+                Color color;
+                switch (filter) {
+                  case SalesFilter.fixedDate:
+                    title = "Fixed Date";
+                    icon = Icons.date_range;
+                    color = Colors.blue;
+                    break;
+                  case SalesFilter.lastWeek:
+                    title = "Last Week";
+                    icon = Icons.calendar_view_week;
+                    color = Colors.green;
+                    break;
+                  case SalesFilter.lastMonth:
+                    title = "Last Month";
+                    icon = Icons.calendar_month;
+                    color = Colors.orange;
+                    break;
+                  case SalesFilter.lastYear:
+                    title = "Last Year";
+                    icon = Icons.calendar_today;
+                    color = Colors.red;
+                    break;
+                }
 
-              return Card(
-                elevation: 2,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.r),
-                ),
-                margin: EdgeInsets.symmetric(vertical: 8.h),
-                child: ListTile(
-                  leading: CircleAvatar(
-                    backgroundColor: color.withOpacity(0.2),
-                    child: Icon(icon, color: color, size: 16.h),
+                return Card(
+                  color: theme.cardColor,
+                  elevation: 2,
+                  shadowColor: Colors.blueAccent,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.r),
                   ),
-                  title: Text(
-                    title,
-                    style: TextStyle(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w600,
+                  margin: EdgeInsets.symmetric(vertical: 8.h),
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      backgroundColor: color.withOpacity(0.2),
+                      child: Icon(icon, color: color, size: 16.h),
                     ),
+                    title: Text(
+                      title,
+                      style: TextStyle(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    trailing: Icon(Icons.arrow_forward_ios, size: 16.h),
+                    onTap: () => _handleFilterSelection(context, filter),
                   ),
-                  trailing: Icon(Icons.arrow_forward_ios, size: 16.h),
-                  onTap: () => _handleFilterSelection(context, filter),
-                ),
-              );
-            }).toList(),
-          ),
-        ],
+                );
+              }).toList(),
+            ),
+          ],
+        ),
       ),
     );
   }

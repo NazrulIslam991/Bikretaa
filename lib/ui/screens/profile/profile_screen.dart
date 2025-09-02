@@ -1,4 +1,4 @@
-import 'package:bikretaa/database/signin_and_signup/shared_preferences_helper.dart';
+import 'package:bikretaa/app/shared_preferences_helper.dart';
 import 'package:bikretaa/models/user/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -21,6 +21,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('Profile', style: TextStyle(fontSize: 24.sp)),
@@ -52,59 +53,62 @@ class _ProfileScreenState extends State<ProfileScreen> {
           return ListView(
             padding: EdgeInsets.all(16.w),
             children: [
-              Container(
-                padding: EdgeInsets.all(16.w),
-                decoration: BoxDecoration(
-                  color: Colors.blue.shade300,
-                  borderRadius: BorderRadius.circular(14.r),
+              Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.r),
                 ),
-                child: Row(
-                  children: [
-                    CircleAvatar(
-                      radius: 30.r,
-                      backgroundColor: Colors.white.withOpacity(0.3),
-                      child: Text(
-                        _user.shopName.isNotEmpty ? _user.shopName[0] : "S",
-                        style: TextStyle(
-                          fontSize: 24.sp,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
+                color: theme.cardColor,
+                elevation: 4, // shadow effect
+                child: Padding(
+                  padding: EdgeInsets.all(16.w),
+                  child: Row(
+                    children: [
+                      CircleAvatar(
+                        radius: 30.r,
+                        backgroundColor: theme.colorScheme.secondary,
+                        child: Text(
+                          _user.shopName.isNotEmpty ? _user.shopName[0] : "S",
+                          style: TextStyle(
+                            fontSize: 24.sp,
+                            color: theme.colorScheme.primary,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(width: 16.w),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            _user.shopName,
-                            style: TextStyle(
-                              fontSize: 20.sp,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
+                      SizedBox(width: 16.w),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              _user.shopName,
+                              style: TextStyle(
+                                fontSize: 20.sp,
+                                color: theme.colorScheme.primary,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                          SizedBox(height: 4.h),
-                          Text(
-                            _user.shopType ?? "Shop Type not set",
-                            style: TextStyle(
-                              fontSize: 14.sp,
-                              color: Colors.white,
+                            SizedBox(height: 4.h),
+                            Text(
+                              _user.shopType ?? "Shop Type not set",
+                              style: TextStyle(
+                                fontSize: 14.sp,
+                                color: theme.colorScheme.primary,
+                              ),
                             ),
-                          ),
-                          SizedBox(height: 4.h),
-                          Text(
-                            _user.email,
-                            style: TextStyle(
-                              fontSize: 14.sp,
-                              color: Colors.white,
+                            SizedBox(height: 4.h),
+                            Text(
+                              _user.email,
+                              style: TextStyle(
+                                fontSize: 14.sp,
+                                color: theme.colorScheme.primary,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               SizedBox(height: 20.h),
@@ -112,9 +116,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
               // Contact Info Card
               Card(
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12.r),
+                  borderRadius: BorderRadius.circular(10.r),
                 ),
-                elevation: 3,
+                color: theme.cardColor,
+                elevation: 4,
                 child: Padding(
                   padding: EdgeInsets.all(16.w),
                   child: Column(
@@ -125,15 +130,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         style: TextStyle(
                           fontSize: 16.sp,
                           fontWeight: FontWeight.bold,
+                          color: theme.colorScheme.primary,
                         ),
                       ),
-                      Divider(color: Colors.grey.shade300),
+                      Divider(color: Colors.grey.shade500),
                       SizedBox(height: 8.h),
                       Row(
                         children: [
                           Icon(Icons.email_outlined, color: Colors.blue),
                           SizedBox(width: 12.w),
-                          Text(_user.email, style: TextStyle(fontSize: 14.sp)),
+                          Text(
+                            _user.email,
+                            style: TextStyle(
+                              fontSize: 14.sp,
+                              color: theme.colorScheme.primary,
+                            ),
+                          ),
                         ],
                       ),
                       SizedBox(height: 12.h),
@@ -141,7 +153,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         children: [
                           Icon(Icons.phone_outlined, color: Colors.green),
                           SizedBox(width: 12.w),
-                          Text(_user.phone, style: TextStyle(fontSize: 14.sp)),
+                          Text(
+                            _user.phone,
+                            style: TextStyle(
+                              fontSize: 14.sp,
+                              color: theme.colorScheme.primary,
+                            ),
+                          ),
                         ],
                       ),
                       if (_user.createdAt != null) ...[
@@ -155,7 +173,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             SizedBox(width: 12.w),
                             Text(
                               "Joined: ${_user.createdAt!.toLocal().toString().split(' ')[0]}",
-                              style: TextStyle(fontSize: 14.sp),
+                              style: TextStyle(
+                                fontSize: 14.sp,
+                                color: theme.colorScheme.primary,
+                              ),
                             ),
                           ],
                         ),
@@ -170,23 +191,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
               // Actions Card
               Card(
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12.r),
+                  borderRadius: BorderRadius.circular(10.r),
                 ),
-                elevation: 3,
+                elevation: 4,
+                color: theme.cardColor,
                 child: Column(
                   children: [
                     ListTile(
                       leading: Icon(Icons.edit_outlined),
-                      title: Text("Edit Profile"),
+                      title: Text(
+                        "Edit Profile",
+                        style: TextStyle(color: theme.colorScheme.primary),
+                      ),
                       trailing: Icon(Icons.chevron_right),
                       onTap: () {
                         // Navigate to edit profile screen
                       },
                     ),
-                    Divider(height: 1, color: Colors.grey.shade300),
+                    Divider(height: 1, color: Colors.grey.shade500),
                     ListTile(
                       leading: Icon(Icons.lock_outline),
-                      title: Text("Change Password"),
+                      title: Text(
+                        "Change Password",
+                        style: TextStyle(color: theme.colorScheme.primary),
+                      ),
                       trailing: Icon(Icons.chevron_right),
                       onTap: () {
                         // Call change password functionality

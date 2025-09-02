@@ -81,6 +81,7 @@ class _CustomImagePickerState extends State<CustomImagePicker> {
   }
 
   void _showImagePickerOptions() {
+    final theme = Theme.of(context);
     showModalBottomSheet(
       context: context,
       shape: RoundedRectangleBorder(
@@ -88,13 +89,24 @@ class _CustomImagePickerState extends State<CustomImagePicker> {
       ),
       builder: (context) {
         return Container(
+          decoration: BoxDecoration(
+            color: theme.colorScheme.surface,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(15.r),
+              topRight: Radius.circular(15.r),
+            ),
+          ),
           padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 8.w),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
                 "Select Image",
-                style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontSize: 18.sp,
+                  fontWeight: FontWeight.bold,
+                  color: theme.colorScheme.onSurface,
+                ),
               ),
               SizedBox(height: 10.h),
               Row(
@@ -106,7 +118,11 @@ class _CustomImagePickerState extends State<CustomImagePicker> {
                         radius: 20.r,
                         backgroundColor: Colors.grey[200],
                         child: IconButton(
-                          icon: Icon(Icons.photo_library, size: 20.sp),
+                          icon: Icon(
+                            Icons.photo_library,
+                            size: 20.sp,
+                            color: Colors.black,
+                          ),
                           onPressed: () {
                             Navigator.of(context).pop();
                             _pickImage(ImageSource.gallery);
@@ -123,7 +139,11 @@ class _CustomImagePickerState extends State<CustomImagePicker> {
                         radius: 20.r,
                         backgroundColor: Colors.grey[200],
                         child: IconButton(
-                          icon: Icon(Icons.camera_alt, size: 20.sp),
+                          icon: Icon(
+                            Icons.camera_alt,
+                            size: 20.sp,
+                            color: Colors.black,
+                          ),
                           onPressed: () {
                             Navigator.of(context).pop();
                             _pickImage(ImageSource.camera);
@@ -146,6 +166,7 @@ class _CustomImagePickerState extends State<CustomImagePicker> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return GestureDetector(
       onTap: _showImagePickerOptions,
       child: Container(
@@ -155,7 +176,7 @@ class _CustomImagePickerState extends State<CustomImagePicker> {
           border: Border.all(color: Colors.grey),
           borderRadius: BorderRadius.circular(12.r),
           color: _selectedImage == null
-              ? Colors.grey[200]
+              ? theme.colorScheme.onPrimary
               : _imageBackgroundColor,
         ),
         child: _selectedImage != null
@@ -171,7 +192,7 @@ class _CustomImagePickerState extends State<CustomImagePicker> {
             : Center(
                 child: Text(
                   "Tap to select image",
-                  style: TextStyle(color: Colors.grey[700]),
+                  style: TextStyle(color: theme.colorScheme.primary),
                 ),
               ),
       ),

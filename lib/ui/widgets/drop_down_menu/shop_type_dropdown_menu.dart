@@ -33,6 +33,7 @@ class _ShopTypeDropdownWidgetState extends State<ShopTypeDropdownWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return DropdownButtonFormField2<String>(
       isExpanded: true,
       decoration: InputDecoration(
@@ -43,7 +44,7 @@ class _ShopTypeDropdownWidgetState extends State<ShopTypeDropdownWidget> {
         'Select Shop Type',
         style: TextStyle(
           fontWeight: FontWeight.normal,
-          color: Colors.grey.shade700,
+          color: theme.colorScheme.primary,
           letterSpacing: 0.4,
           fontSize: 12.h,
         ),
@@ -72,8 +73,8 @@ class _ShopTypeDropdownWidgetState extends State<ShopTypeDropdownWidget> {
       buttonStyleData: const ButtonStyleData(
         padding: EdgeInsets.only(right: 8),
       ),
-      iconStyleData: const IconStyleData(
-        icon: Icon(Icons.arrow_drop_down, color: Colors.black45),
+      iconStyleData: IconStyleData(
+        icon: Icon(Icons.arrow_drop_down, color: theme.colorScheme.primary),
         iconSize: 24,
       ),
       dropdownStyleData: DropdownStyleData(

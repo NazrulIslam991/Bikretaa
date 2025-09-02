@@ -1,4 +1,4 @@
-import 'package:bikretaa/database/signin_and_signup/shared_preferences_helper.dart';
+import 'package:bikretaa/app/shared_preferences_helper.dart';
 import 'package:bikretaa/models/user/user_model.dart';
 import 'package:bikretaa/ui/widgets/circular_progress/circular_progress_indicatior_2.dart';
 import 'package:bikretaa/ui/widgets/drop_down_menu/shop_type_dropdown_menu.dart';
@@ -32,6 +32,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('Update Profile', style: TextStyle(fontSize: 24.sp)),
@@ -54,9 +55,9 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                   height: 45.h,
                   padding: EdgeInsets.symmetric(horizontal: 12.w),
                   decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey.shade400),
+                    border: Border.all(color: theme.colorScheme.primary),
                     borderRadius: BorderRadius.circular(8.r),
-                    color: Colors.grey.shade100,
+                    color: theme.colorScheme.onPrimary,
                   ),
                   alignment: Alignment.centerLeft,
                   child: Row(
@@ -68,7 +69,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                           _emailEcontroller.text,
                           style: TextStyle(
                             fontSize: 13.sp,
-                            color: Colors.blue,
+                            color: theme.colorScheme.primary,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -92,7 +93,10 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                   onPressed: _updateProfile,
                   child: Text(
                     'Update Profile',
-                    style: TextStyle(fontSize: 14.sp),
+                    style: TextStyle(
+                      fontSize: 14.sp,
+                      color: theme.colorScheme.onPrimary,
+                    ),
                   ),
                 ),
               ],

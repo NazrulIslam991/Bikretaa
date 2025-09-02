@@ -1,6 +1,6 @@
+import 'package:bikretaa/app/body_background.dart';
 import 'package:bikretaa/models/user/user_model.dart';
 import 'package:bikretaa/ui/screens/signin_and_signup/signin/signin_screen.dart';
-import 'package:bikretaa/ui/widgets/background.dart';
 import 'package:bikretaa/ui/widgets/circular_progress/circular_progress_indicatior.dart';
 import 'package:bikretaa/ui/widgets/drop_down_menu/shop_type_dropdown_menu.dart';
 import 'package:bikretaa/ui/widgets/snack_bar_messege/snackbar_messege.dart';
@@ -39,8 +39,9 @@ class _CreateAccountByInformationState
   bool _SignupInProgress = false;
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
-      body: Background_image(
+      body: BodyBackground(
         child: Center(
           child: SingleChildScrollView(
             child: Padding(
@@ -122,6 +123,7 @@ class _CreateAccountByInformationState
                           style: TextStyle(
                             fontStyle: FontStyle.italic,
                             fontWeight: FontWeight.bold,
+                            color: theme.colorScheme.primary,
                             fontSize: 12.h,
                           ),
                         ),
@@ -134,7 +136,7 @@ class _CreateAccountByInformationState
                           text: "Have an account? ",
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
-                            color: Colors.black,
+                            color: theme.colorScheme.primary,
                             letterSpacing: 0.4,
                             fontSize: 10.h,
                           ),

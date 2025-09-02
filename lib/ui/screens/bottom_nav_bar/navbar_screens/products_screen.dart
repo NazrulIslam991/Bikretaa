@@ -1,3 +1,4 @@
+import 'package:bikretaa/assets_path/assets_path.dart';
 import 'package:bikretaa/database/product/product_database.dart';
 import 'package:bikretaa/models/product/product_model.dart';
 import 'package:bikretaa/ui/screens/bottom_nav_bar/products/add_product_screen.dart';
@@ -31,10 +32,10 @@ class _ProductsScreenState extends State<ProductsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 50.h,
-        backgroundColor: Colors.white10,
         title: CustomSearchBar(
           controller: searchController,
           onChanged: (value) =>
@@ -54,7 +55,12 @@ class _ProductsScreenState extends State<ProductsScreen> {
               return ProductsShimmerScreen();
             }
             if (!snapshot.hasData || snapshot.data!.isEmpty) {
-              return Center(child: Text("No products found"));
+              return Center(
+                child: Text(
+                  "No products found",
+                  style: TextStyle(color: theme.colorScheme.primary),
+                ),
+              );
             }
 
             final products = _applyFilter(snapshot.data!);
@@ -74,14 +80,15 @@ class _ProductsScreenState extends State<ProductsScreen> {
                             style: TextStyle(
                               fontSize: 25.h,
                               fontWeight: FontWeight.bold,
+                              color: theme.textTheme.bodyLarge?.color,
                             ),
                           ),
                           Text(
                             "${products.length} products found",
                             style: GoogleFonts.abhayaLibre(
                               textStyle: TextStyle(
-                                color: Colors.black,
                                 fontSize: 16.h,
+                                color: theme.textTheme.bodyLarge?.color,
                               ),
                             ),
                           ),
@@ -90,7 +97,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                       IconButton(
                         onPressed: _showFilterSheet,
                         icon: Image.asset(
-                          'assets/images/filter_icon.png',
+                          AssetPaths.filterIcon,
                           width: 25.h,
                           height: 25.h,
                         ),

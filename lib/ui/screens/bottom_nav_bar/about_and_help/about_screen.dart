@@ -1,3 +1,4 @@
+import 'package:bikretaa/assets_path/assets_path.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -6,6 +7,7 @@ class AboutScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
         title: Text("About Bikretaa", style: TextStyle(fontSize: 22.sp)),
@@ -23,7 +25,7 @@ class AboutScreen extends StatelessWidget {
                   CircleAvatar(
                     radius: 40.r,
                     backgroundColor: Colors.blue.shade100,
-                    backgroundImage: const AssetImage("assets/images/logo.png"),
+                    backgroundImage: AssetImage(AssetPaths.logo),
                   ),
                   SizedBox(height: 12.h),
                   Text(
@@ -40,7 +42,10 @@ class AboutScreen extends StatelessWidget {
                     child: Text(
                       "Bikretaa is a modern shop management app. It is designed specifically for shop owners to easily add products, track stock and expiry dates, manage due payments, and view detailed sales reports in one place.",
                       textAlign: TextAlign.justify,
-                      style: TextStyle(fontSize: 13.sp, color: Colors.black87),
+                      style: TextStyle(
+                        fontSize: 13.sp,
+                        color: theme.colorScheme.primary,
+                      ),
                     ),
                   ),
                 ],
@@ -67,7 +72,10 @@ class AboutScreen extends StatelessWidget {
               leading: Icon(Icons.speed, color: Colors.blue),
               title: Text(
                 "Fast product management",
-                style: TextStyle(fontSize: 13.sp),
+                style: TextStyle(
+                  fontSize: 13.sp,
+                  color: theme.colorScheme.primary,
+                ),
                 textAlign: TextAlign.justify,
               ),
             ),
@@ -76,7 +84,10 @@ class AboutScreen extends StatelessWidget {
               leading: Icon(Icons.inventory, color: Colors.blue),
               title: Text(
                 "Stock and expiry date tracking",
-                style: TextStyle(fontSize: 13.sp),
+                style: TextStyle(
+                  fontSize: 13.sp,
+                  color: theme.colorScheme.primary,
+                ),
                 textAlign: TextAlign.justify,
               ),
             ),
@@ -85,7 +96,10 @@ class AboutScreen extends StatelessWidget {
               leading: Icon(Icons.notifications_active, color: Colors.blue),
               title: Text(
                 "Low stock & expiry alerts",
-                style: TextStyle(fontSize: 13.sp),
+                style: TextStyle(
+                  fontSize: 13.sp,
+                  color: theme.colorScheme.primary,
+                ),
                 textAlign: TextAlign.justify,
               ),
             ),
@@ -94,7 +108,10 @@ class AboutScreen extends StatelessWidget {
               leading: Icon(Icons.bar_chart, color: Colors.blue),
               title: Text(
                 "Sales reports & analytics",
-                style: TextStyle(fontSize: 13.sp),
+                style: TextStyle(
+                  fontSize: 13.sp,
+                  color: theme.colorScheme.primary,
+                ),
                 textAlign: TextAlign.justify,
               ),
             ),
@@ -103,7 +120,10 @@ class AboutScreen extends StatelessWidget {
               leading: Icon(Icons.security, color: Colors.blue),
               title: Text(
                 "Secure login & account management",
-                style: TextStyle(fontSize: 13.sp),
+                style: TextStyle(
+                  fontSize: 13.sp,
+                  color: theme.colorScheme.primary,
+                ),
                 textAlign: TextAlign.justify,
               ),
             ),
@@ -126,9 +146,9 @@ class AboutScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                _teamMember("Md N.I. Nayon", "assets/images/nayon.jpg"),
-                _teamMember("Md Nasim", "assets/images/logo.png"),
-                _teamMember("Toha Fardin", "assets/images/fardin.jpg"),
+                _teamMember("Md N.I. Nayon", AssetPaths.nayon),
+                _teamMember("Md Nasim", AssetPaths.logo),
+                _teamMember("Toha Fardin", AssetPaths.fardin),
               ],
             ),
             SizedBox(height: 25.h),
@@ -137,7 +157,10 @@ class AboutScreen extends StatelessWidget {
             Center(
               child: Text(
                 "© 2025 Bikretaa Team. All Rights Reserved.",
-                style: TextStyle(fontSize: 11.sp, color: Colors.grey),
+                style: TextStyle(
+                  fontSize: 11.sp,
+                  color: theme.colorScheme.primary,
+                ),
               ),
             ),
           ],

@@ -41,6 +41,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final uid = FirebaseAuth.instance.currentUser?.uid;
 
     return Scaffold(
@@ -123,7 +124,12 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                             child: TextField(
                               controller: _paidController,
                               keyboardType: TextInputType.number,
-                              decoration: InputDecoration(labelText: "Paid"),
+                              decoration: InputDecoration(
+                                labelText: "Paid",
+                                labelStyle: TextStyle(
+                                  color: theme.colorScheme.onSurface,
+                                ),
+                              ),
                             ),
                           ),
                           SizedBox(width: 10.w),
@@ -146,7 +152,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                       "Due: ${due.toStringAsFixed(2)} tk",
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
-                                        color: Colors.black,
+                                        color: theme.colorScheme.onSurface,
                                       ),
                                     ),
                             ),

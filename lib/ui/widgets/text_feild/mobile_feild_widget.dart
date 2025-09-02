@@ -23,6 +23,7 @@ class MobileFeildWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final baseBorder = OutlineInputBorder(
       borderRadius: BorderRadius.circular(8.r),
       borderSide: BorderSide(color: Colors.grey.shade400, width: 1.5),
@@ -39,14 +40,14 @@ class MobileFeildWidget extends StatelessWidget {
         decoration: InputDecoration(
           labelStyle: TextStyle(
             fontWeight: FontWeight.normal,
-            color: Colors.grey.shade700,
+            color: theme.colorScheme.primary,
             letterSpacing: 0.4,
             fontSize: 12.h,
           ),
           labelText: "Phone Number",
           prefixText: '+8801 ',
           prefixStyle: TextStyle(
-            color: Colors.black,
+            color: theme.colorScheme.primary,
             fontSize: 12.h,
             fontWeight: FontWeight.normal,
           ),

@@ -1,5 +1,5 @@
+import 'package:bikretaa/app/shared_preferences_helper.dart';
 import 'package:bikretaa/database/account_info_delete/account_info_delete.dart';
-import 'package:bikretaa/database/signin_and_signup/shared_preferences_helper.dart';
 import 'package:bikretaa/ui/screens/signin_and_signup/signin/signin_screen.dart';
 import 'package:bikretaa/ui/widgets/circular_progress/circular_progress_indicatior_2.dart';
 import 'package:bikretaa/ui/widgets/dialog_box/confirm_dialog.dart';
@@ -19,6 +19,7 @@ class _SupportFaqScreenState extends State<SupportFaqScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
         title: Text("Support & FAQs", style: TextStyle(fontSize: 22.sp)),
@@ -32,7 +33,10 @@ class _SupportFaqScreenState extends State<SupportFaqScreen> {
               Text(
                 "Welcome to Bikretaa Support! Here you'll find answers to frequently asked questions and guides on using the app.",
                 textAlign: TextAlign.justify,
-                style: TextStyle(fontSize: 13.sp, color: Colors.black87),
+                style: TextStyle(
+                  fontSize: 13.sp,
+                  color: theme.colorScheme.primary,
+                ),
               ),
               SizedBox(height: 20.h),
 
@@ -72,12 +76,13 @@ class _SupportFaqScreenState extends State<SupportFaqScreen> {
                   borderRadius: BorderRadius.circular(12.r),
                 ),
                 elevation: 2,
+                color: theme.cardColor,
                 child: ExpansionTile(
                   title: Text(
                     "Account Deletion",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      color: Colors.red.shade900,
+                      color: theme.colorScheme.error,
                     ),
                   ),
                   children: [
@@ -94,7 +99,7 @@ class _SupportFaqScreenState extends State<SupportFaqScreen> {
                             style: TextStyle(
                               fontSize: 12.sp,
                               fontWeight: FontWeight.bold,
-                              color: Colors.red.shade800,
+                              color: theme.colorScheme.error,
                             ),
                           ),
                           SizedBox(height: 6.h),
@@ -106,7 +111,7 @@ class _SupportFaqScreenState extends State<SupportFaqScreen> {
                             "This action cannot be undone.",
                             style: TextStyle(
                               fontSize: 12.sp,
-                              color: Colors.black,
+                              color: theme.colorScheme.primary,
                               fontStyle: FontStyle.italic,
                             ),
                             textAlign: TextAlign.justify,
@@ -143,14 +148,14 @@ class _SupportFaqScreenState extends State<SupportFaqScreen> {
               // Help Section
               Text(
                 "Need More Help?",
-                style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold,color: theme.colorScheme.primary),
               ),
               SizedBox(height: 8.h),
               Card(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12.r),
                 ),
-                color: Colors.blue.shade50,
+                color: theme.cardColor,
                 child: Padding(
                   padding: EdgeInsets.all(12.w),
                   child: Column(
@@ -162,7 +167,7 @@ class _SupportFaqScreenState extends State<SupportFaqScreen> {
                         style: TextStyle(
                           fontSize: 14.sp,
                           fontWeight: FontWeight.bold,
-                          color: Colors.black,
+                          color:theme.colorScheme.primary,
                         ),
                       ),
                       SizedBox(height: 4.h),
@@ -183,7 +188,7 @@ class _SupportFaqScreenState extends State<SupportFaqScreen> {
                         "Send your queries to this email and our team will respond to you promptly.",
                         style: TextStyle(
                           fontSize: 12.sp,
-                          color: Colors.black87,
+                          color: theme.colorScheme.primary,
                         ),
                       ),
                     ],

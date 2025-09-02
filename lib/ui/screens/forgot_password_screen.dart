@@ -1,6 +1,6 @@
+import 'package:bikretaa/app/body_background.dart';
 import 'package:bikretaa/database/signin_and_signup/firestore_user_check.dart';
 import 'package:bikretaa/ui/screens/signin_and_signup/signin/signin_screen.dart';
-import 'package:bikretaa/ui/widgets/background.dart';
 import 'package:bikretaa/ui/widgets/circular_progress/circular_progress_indicatior.dart';
 import 'package:bikretaa/ui/widgets/snack_bar_messege/snackbar_messege.dart';
 import 'package:bikretaa/ui/widgets/text_feild/email_feild_controller.dart';
@@ -23,8 +23,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   bool _forgotPassword_ProgressIndicator = false;
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
-      body: Background_image(
+      body: BodyBackground(
         child: Center(
           child: SingleChildScrollView(
             child: Padding(
@@ -48,7 +49,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         "Please enter email address to reset the password",
                         style: TextStyle(
                           fontWeight: FontWeight.normal,
-                          color: Colors.black,
+                          color: theme.colorScheme.primary,
                           letterSpacing: 0.4,
                           fontStyle: FontStyle.italic,
                           fontSize: 12.sp,
@@ -77,6 +78,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                           style: TextStyle(
                             fontStyle: FontStyle.italic,
                             fontWeight: FontWeight.bold,
+                            color: theme.colorScheme.primary,
                             fontSize: 12.h,
                           ),
                         ),
@@ -90,7 +92,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                           text: "Have an account? ",
                           style: TextStyle(
                             fontWeight: FontWeight.normal,
-                            color: Colors.black,
+                            color: theme.colorScheme.primary,
                             letterSpacing: 0.4,
                             fontSize: 10.h,
                           ),

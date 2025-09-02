@@ -1,4 +1,5 @@
-import 'package:bikretaa/database/signin_and_signup/shared_preferences_helper.dart';
+import 'package:bikretaa/app/shared_preferences_helper.dart';
+import 'package:bikretaa/assets_path/assets_path.dart';
 import 'package:bikretaa/ui/widgets/card/product_card/summary_card.dart';
 import 'package:bikretaa/ui/widgets/card/sale_card/most_sold_product_card.dart';
 import 'package:bikretaa/ui/widgets/drawer/custom_drawer.dart';
@@ -11,9 +12,9 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white10,
         title: Text(
           "Home",
           style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
@@ -22,7 +23,11 @@ class HomeScreen extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {},
-            icon: Icon(Icons.notifications, size: 23.h),
+            icon: Icon(
+              Icons.notifications,
+              size: 23.h,
+              //color: theme.colorScheme.onPrimary,
+            ),
           ),
         ],
       ),
@@ -30,7 +35,7 @@ class HomeScreen extends StatelessWidget {
       drawer: Container(
         height: double.infinity,
         width: 240.w,
-        child: const CustomDrawer(),
+        child: CustomDrawer(),
       ),
 
       body: FutureBuilder(
@@ -56,7 +61,7 @@ class HomeScreen extends StatelessWidget {
                 Text(
                   "Welcome,",
                   style: TextStyle(
-                    color: Colors.black,
+                    color: theme.textTheme.bodyLarge?.color,
                     fontWeight: FontWeight.bold,
                     fontSize: 24.h,
                   ),
@@ -65,7 +70,7 @@ class HomeScreen extends StatelessWidget {
                   shopName.isNotEmpty ? shopName : '',
                   style: GoogleFonts.abhayaLibre(
                     textStyle: TextStyle(
-                      color: Colors.black,
+                      color: theme.textTheme.bodyMedium?.color,
                       letterSpacing: .5,
                       fontSize: 18.h,
                     ),
@@ -125,7 +130,7 @@ class HomeScreen extends StatelessWidget {
                         ProductName: 'Product Name',
                         soldProductUnit: 199,
                         totalSoldPrice: 1200,
-                        imagePath: 'assets/images/most_products_sold.jpeg',
+                        imagePath: AssetPaths.mostProductSold,
                       );
                     },
                     itemCount: 4,
@@ -166,7 +171,7 @@ class HomeScreen extends StatelessWidget {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(15),
                   child: Image.asset(
-                    'assets/images/sales_report.png',
+                    AssetPaths.salesReport,
                     width: double.infinity,
                     fit: BoxFit.cover,
                   ),
@@ -175,7 +180,7 @@ class HomeScreen extends StatelessWidget {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(15),
                   child: Image.asset(
-                    'assets/images/due_report.png',
+                    AssetPaths.dueReport,
                     width: double.infinity,
                     fit: BoxFit.cover,
                   ),

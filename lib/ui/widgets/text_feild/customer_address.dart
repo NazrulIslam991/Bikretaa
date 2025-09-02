@@ -11,6 +11,7 @@ class CustomerAddressController extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Container(
       height: 45.h,
       child: TextFormField(
@@ -21,13 +22,13 @@ class CustomerAddressController extends StatelessWidget {
           prefixIcon: Icon(Icons.location_on_outlined, color: Colors.blue),
           labelStyle: TextStyle(
             fontWeight: FontWeight.normal,
-            color: Colors.grey.shade700,
+            color: theme.colorScheme.primary,
             letterSpacing: 0.4,
             fontSize: 12.h,
           ),
           hintStyle: TextStyle(
             fontWeight: FontWeight.normal,
-            color: Colors.black,
+            color: Colors.grey,
             letterSpacing: 0.4,
             fontSize: 12.h,
           ),

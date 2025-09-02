@@ -11,6 +11,7 @@ class ProductDescriptionController extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return SizedBox(
       height: 150,
       child: Container(
@@ -22,13 +23,13 @@ class ProductDescriptionController extends StatelessWidget {
             labelText: "Product Description",
             labelStyle: TextStyle(
               fontWeight: FontWeight.normal,
-              color: Colors.grey.shade700,
+              color: theme.colorScheme.primary,
               letterSpacing: 0.4,
               fontSize: 12.h,
             ),
             hintStyle: TextStyle(
               fontWeight: FontWeight.normal,
-              color: Colors.black,
+              color: Colors.grey,
               letterSpacing: 0.4,
               fontSize: 12.h,
             ),

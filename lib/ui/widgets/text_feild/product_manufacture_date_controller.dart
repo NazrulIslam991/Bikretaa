@@ -12,23 +12,24 @@ class ProductManufactureDateController extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Container(
       height: 45.h,
       child: TextFormField(
         controller: _productManufactureDateController,
         readOnly: true,
         decoration: InputDecoration(
-          hintText: "Manufacture Date",
+          hintText: "Enter manufacture date",
           labelText: "Manufacture Date",
           labelStyle: TextStyle(
             fontWeight: FontWeight.normal,
-            color: Colors.grey.shade700,
+            color: theme.colorScheme.primary,
             letterSpacing: 0.4,
             fontSize: 12.h,
           ),
           hintStyle: TextStyle(
             fontWeight: FontWeight.normal,
-            color: Colors.black,
+            color: Colors.grey,
             letterSpacing: 0.4,
             fontSize: 12.h,
           ),
@@ -43,6 +44,23 @@ class ProductManufactureDateController extends StatelessWidget {
             initialDate: DateTime.now(),
             firstDate: DateTime(2000),
             lastDate: DateTime(2100),
+
+            builder: (BuildContext context, Widget? child) {
+              return Theme(
+                data: Theme.of(context).copyWith(
+                  dialogBackgroundColor: Colors.white,
+                  colorScheme: ColorScheme.light(
+                    primary: Colors.blueAccent,
+                    onPrimary: Colors.white,
+                    onSurface: Colors.black87,
+                  ),
+                  textButtonTheme: TextButtonThemeData(
+                    style: TextButton.styleFrom(foregroundColor: Colors.blue),
+                  ),
+                ),
+                child: child!,
+              );
+            },
           );
 
           if (pickedDate != null) {

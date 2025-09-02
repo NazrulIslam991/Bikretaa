@@ -1,3 +1,4 @@
+import 'package:bikretaa/assets_path/assets_path.dart';
 import 'package:bikretaa/database/sales/sales_screen_database.dart';
 import 'package:bikretaa/ui/screens/bottom_nav_bar/sales_product/add_sales_screen.dart';
 import 'package:bikretaa/ui/widgets/bottom_filter_sheet/bottom_filter_sheet_for_sales.dart';
@@ -42,6 +43,7 @@ class _SalesScreenState extends State<SalesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final uid = FirebaseAuth.instance.currentUser?.uid;
     if (uid == null) {
       return Scaffold(body: Center(child: CircularProgressIndicator()));
@@ -50,7 +52,6 @@ class _SalesScreenState extends State<SalesScreen> {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 50.h,
-        backgroundColor: Colors.white10,
         title: CustomSearchBar(
           controller: searchController,
           onChanged: (value) =>
@@ -77,18 +78,22 @@ class _SalesScreenState extends State<SalesScreen> {
                         style: TextStyle(
                           fontSize: 25.h,
                           fontWeight: FontWeight.bold,
+                          color: theme.textTheme.bodyLarge?.color,
                         ),
                       ),
                       Text(
                         "Sales summary",
-                        style: GoogleFonts.abhayaLibre(fontSize: 16.h),
+                        style: GoogleFonts.abhayaLibre(
+                          fontSize: 16.h,
+                          color: theme.textTheme.bodyLarge?.color,
+                        ),
                       ),
                     ],
                   ),
                   IconButton(
                     onPressed: _showFilterSheet,
                     icon: Image.asset(
-                      'assets/images/filter_icon.png',
+                      AssetPaths.filterIcon,
                       width: 25.h,
                       height: 25.h,
                     ),
@@ -278,7 +283,7 @@ class _SalesScreenState extends State<SalesScreen> {
     required double value,
     required String label,
     Color bgColor = Colors.blue,
-    String iconPath = 'assets/images/pie_chart.png',
+    String iconPath = AssetPaths.pie,
     bool isPaidText = false,
   }) {
     return SalesSummaryCard(

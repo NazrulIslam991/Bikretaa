@@ -1,9 +1,9 @@
+import 'package:bikretaa/app/body_background.dart';
 import 'package:bikretaa/database/signin_and_signup/firestore_user_check.dart';
 import 'package:bikretaa/database/signin_and_signup/otp_generator.dart';
 import 'package:bikretaa/database/signin_and_signup/otp_service.dart';
 import 'package:bikretaa/ui/screens/signin_and_signup/sign_up/otp_verification_screen.dart';
 import 'package:bikretaa/ui/screens/signin_and_signup/signin/signin_screen.dart';
-import 'package:bikretaa/ui/widgets/background.dart';
 import 'package:bikretaa/ui/widgets/circular_progress/circular_progress_indicatior.dart';
 import 'package:bikretaa/ui/widgets/snack_bar_messege/snackbar_messege.dart';
 import 'package:bikretaa/ui/widgets/text_feild/email_feild_controller.dart';
@@ -26,8 +26,9 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
-      body: Background_image(
+      body: BodyBackground(
         child: Center(
           child: SingleChildScrollView(
             child: Padding(
@@ -49,7 +50,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                         "We'll send a one-time password to your email address",
                         style: TextStyle(
                           fontWeight: FontWeight.normal,
-                          color: Colors.grey,
+                          color: theme.colorScheme.primary,
                           letterSpacing: 0.4,
                           fontStyle: FontStyle.italic,
                           fontSize: 12.sp,
@@ -74,6 +75,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                           style: TextStyle(
                             fontStyle: FontStyle.italic,
                             fontWeight: FontWeight.bold,
+                            color: theme.colorScheme.primary,
                             fontSize: 12.h,
                           ),
                         ),
@@ -86,7 +88,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                           text: "Have an account? ",
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
-                            color: Colors.black,
+                            color: theme.colorScheme.primary,
                             letterSpacing: 0.4,
                             fontSize: 10.h,
                           ),

@@ -17,9 +17,10 @@ class Most_Sold_Product_Card extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Card(
       elevation: 5,
-      color: Colors.white,
+      color: theme.cardColor,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.h)),
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 10.w),
@@ -47,7 +48,7 @@ class Most_Sold_Product_Card extends StatelessWidget {
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 15.h,
-                      color: Colors.black,
+                      color: theme.colorScheme.primary,
                     ),
                   ),
                   SizedBox(height: 4.h),

@@ -19,6 +19,7 @@ class CustomSearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return SizedBox(
       height: 40.h,
       child: TextField(
@@ -28,17 +29,17 @@ class CustomSearchBar extends StatelessWidget {
           hintText: hintText,
           hintStyle: TextStyle(
             fontWeight: FontWeight.normal,
-            color: Colors.black,
+            color: theme.colorScheme.primary,
             letterSpacing: 0.4,
             fontSize: fontSize.h,
           ),
-          prefixIcon: Icon(prefixIcon),
+          prefixIcon: Icon(prefixIcon, color: theme.colorScheme.primary),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.r),
             borderSide: BorderSide.none,
           ),
           filled: true,
-          fillColor: Colors.white,
+          //fillColor: Colors.white,
         ),
         style: TextStyle(fontSize: fontSize.sp),
       ),
