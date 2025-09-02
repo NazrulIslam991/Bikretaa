@@ -1,6 +1,7 @@
 import 'package:bikretaa/app/shared_preferences_helper.dart';
 import 'package:bikretaa/app/theme_controller.dart';
 import 'package:bikretaa/models/user/user_model.dart';
+import 'package:bikretaa/ui/app_version_services.dart';
 import 'package:bikretaa/ui/screens/bottom_nav_bar/about_and_help/about_screen.dart';
 import 'package:bikretaa/ui/screens/bottom_nav_bar/about_and_help/support_and_faqs_screen.dart';
 import 'package:bikretaa/ui/screens/profile/profile_screen.dart';
@@ -17,7 +18,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({super.key});
@@ -41,7 +41,6 @@ class _SettingScreenState extends State<SettingScreen> {
   @override
   void initState() {
     super.initState();
-    _loadAppVersion();
     _loadUser();
   }
 
@@ -256,7 +255,7 @@ class _SettingScreenState extends State<SettingScreen> {
               SettingsTileWidget(
                 icon: Icons.info_outline,
                 title: 'App Version',
-                subtitle: _appVersion.isEmpty ? 'Loading...' : _appVersion,
+                subtitle: 'version: ${AppVersionServces.currentAppVersion}',
                 onTap: () {},
               ),
             ],
@@ -362,14 +361,6 @@ class _SettingScreenState extends State<SettingScreen> {
         }
       } finally {}
     }
-  }
-
-  // app version
-  void _loadAppVersion() async {
-    PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    setState(() {
-      _appVersion = '${packageInfo.version} (${packageInfo.buildNumber})';
-    });
   }
 
   // load user information
