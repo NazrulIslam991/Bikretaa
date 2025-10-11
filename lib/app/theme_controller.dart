@@ -1,5 +1,5 @@
 import 'package:bikretaa/app/app_theme.dart';
-import 'package:bikretaa/app/shared_preferences_helper.dart';
+import 'package:bikretaa/features/shared/presentation/share_preferences_helper/shared_preferences_helper.dart';
 import 'package:get/get.dart';
 
 class ThemeController extends GetxController {
