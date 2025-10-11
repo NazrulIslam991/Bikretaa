@@ -3,6 +3,7 @@ import 'package:bikretaa/app/theme_controller.dart';
 import 'package:bikretaa/features/auth/presentation/database/firestore_user_check.dart';
 import 'package:bikretaa/features/auth/presentation/screens/forgot_password_screen.dart';
 import 'package:bikretaa/features/auth/presentation/screens/sign_up/create_account_screen.dart';
+import 'package:bikretaa/features/auth/presentation/widgets/auth_botto_text.dart';
 import 'package:bikretaa/features/shared/presentation/screens/main_nav_bar_screen.dart';
 import 'package:bikretaa/features/shared/presentation/share_preferences_helper/shared_preferences_helper.dart';
 import 'package:bikretaa/features/shared/presentation/widgets/auth_user_input_feild/email_feild_controller.dart';
@@ -10,7 +11,6 @@ import 'package:bikretaa/features/shared/presentation/widgets/auth_user_input_fe
 import 'package:bikretaa/features/shared/presentation/widgets/circular_progress/circular_progress_indicatior.dart';
 import 'package:bikretaa/features/shared/presentation/widgets/snack_bar_messege/snackbar_messege.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -114,29 +114,10 @@ class _SigninScreenState extends State<SigninScreen> {
 
                     SizedBox(height: 20.h),
                     Center(
-                      child: RichText(
-                        text: TextSpan(
-                          text: "Don't have an account? ",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            color: theme.colorScheme.primary,
-                            letterSpacing: 0.4,
-                            fontSize: 10.h,
-                          ),
-                          children: [
-                            TextSpan(
-                              text: 'Sign Up',
-                              style: TextStyle(
-                                fontStyle: FontStyle.italic,
-                                color: Colors.blueAccent,
-                                fontWeight: FontWeight.w700,
-                                fontSize: 10.h,
-                              ),
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = (() => _onTapSignUp()),
-                            ),
-                          ],
-                        ),
+                      child: AuthBottomText(
+                        normalText: "Don't have an account? ",
+                        actionText: "Sign Up",
+                        onTap: _onTapSignUp,
                       ),
                     ),
                   ],

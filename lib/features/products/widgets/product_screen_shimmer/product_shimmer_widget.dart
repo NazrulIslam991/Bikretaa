@@ -61,7 +61,7 @@ class ProductsShimmerScreen extends StatelessWidget {
                   crossAxisCount: 2,
                   mainAxisSpacing: 10.h,
                   crossAxisSpacing: 5.h,
-                  childAspectRatio: 1.h / 1.4.h,
+                  childAspectRatio: 1.h / 1.5.h,
                 ),
                 itemBuilder: (context, index) {
                   return const ShimmerCard();

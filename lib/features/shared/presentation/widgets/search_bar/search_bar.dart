@@ -25,6 +25,7 @@ class CustomSearchBar extends StatelessWidget {
       child: TextField(
         controller: controller,
         onChanged: onChanged,
+        textInputAction: TextInputAction.search,
         decoration: InputDecoration(
           hintText: hintText,
           hintStyle: TextStyle(

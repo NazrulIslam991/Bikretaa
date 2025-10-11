@@ -3,12 +3,12 @@ import 'package:bikretaa/features/auth/presentation/database/otp_generator.dart'
 import 'package:bikretaa/features/auth/presentation/database/otp_service.dart';
 import 'package:bikretaa/features/auth/presentation/screens/sign_up/create_account_by_information.dart';
 import 'package:bikretaa/features/auth/presentation/screens/signin/signin_screen.dart';
+import 'package:bikretaa/features/auth/presentation/widgets/auth_botto_text.dart';
+import 'package:bikretaa/features/auth/presentation/widgets/custom_pin_code_text_feild.dart';
 import 'package:bikretaa/features/shared/presentation/widgets/circular_progress/circular_progress_indicatior.dart';
 import 'package:bikretaa/features/shared/presentation/widgets/snack_bar_messege/snackbar_messege.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pin_code_fields/pin_code_fields.dart';
 
 class OTPVerificationScreen extends StatefulWidget {
   final String email;
@@ -80,37 +80,11 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                     Container(
                       height: 50.h,
                       width: double.infinity,
-                      child: PinCodeTextField(
-                        length: 6,
-                        obscureText: false,
-                        animationType: AnimationType.fade,
-                        keyboardType: TextInputType.number,
-                        pinTheme: PinTheme(
-                          shape: PinCodeFieldShape.box,
-                          borderRadius: BorderRadius.circular(5),
-                          fieldHeight: 45.h,
-                          fieldWidth: 40.h,
-                          activeColor: Colors.blue,
-                          activeFillColor: Colors.blue.shade100,
-                          selectedColor: Colors.green,
-                          selectedFillColor: Colors.greenAccent.shade100,
-                          inactiveColor: Colors.grey,
-                          inactiveFillColor: Colors.grey.shade200,
-                          disabledColor: Colors.red.shade100,
-                        ),
-                        animationDuration: Duration(milliseconds: 300),
-                        backgroundColor: Colors.transparent,
-                        enableActiveFill: true,
-                        textStyle: TextStyle(
-                          color: theme.colorScheme.onPrimary,
-                          fontSize: 18.sp,
-                          fontWeight: FontWeight.bold,
-                        ),
+                      child: CustomPinCodeField(
                         controller: _otpEController,
-                        onCompleted: (v) {
-                          print("OTP input completed: $v");
+                        onCompleted: (value) {
+                          print("OTP input completed: $value");
                         },
-                        appContext: context,
                       ),
                     ),
 
@@ -158,29 +132,10 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                     SizedBox(height: 20.h),
 
                     Center(
-                      child: RichText(
-                        text: TextSpan(
-                          text: "Have an account? ",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            color: theme.colorScheme.primary,
-                            letterSpacing: 0.4,
-                            fontSize: 10.h,
-                          ),
-                          children: [
-                            TextSpan(
-                              text: 'Sign In',
-                              style: TextStyle(
-                                fontStyle: FontStyle.italic,
-                                color: Colors.blueAccent,
-                                fontWeight: FontWeight.w700,
-                                fontSize: 10.h,
-                              ),
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = _onTapSignIn,
-                            ),
-                          ],
-                        ),
+                      child: AuthBottomText(
+                        normalText: "Have an account? ",
+                        actionText: "Sign In",
+                        onTap: _onTapSignIn,
                       ),
                     ),
                   ],

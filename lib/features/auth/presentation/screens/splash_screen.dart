@@ -1,3 +1,4 @@
+import 'package:bikretaa/assets_path/assets_path.dart';
 import 'package:bikretaa/features/auth/presentation/screens/signin/signin_screen.dart';
 import 'package:bikretaa/features/shared/presentation/screens/main_nav_bar_screen.dart';
 import 'package:bikretaa/features/shared/presentation/widgets/background.dart';
@@ -37,7 +38,7 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Background_image(
         child: Center(
           child: Image.asset(
-            'assets/images/logo.png',
+            AssetPaths.logo,
             height: screenSize.height * 0.4,
             width: screenSize.width * 0.6,
           ),

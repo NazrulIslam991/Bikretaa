@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shimmer/shimmer.dart';
 
 class ShimmerCard extends StatelessWidget {
@@ -12,61 +13,61 @@ class ShimmerCard extends StatelessWidget {
     return Card(
       elevation: 2,
       color: theme.cardColor,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
       child: Shimmer.fromColors(
         baseColor: isDark ? Colors.grey.shade800 : Colors.grey.shade300,
         highlightColor: isDark ? Colors.grey.shade600 : Colors.grey.shade100,
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: EdgeInsets.all(8.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                height: 120,
+                height: 120.h,
                 width: double.infinity,
                 decoration: BoxDecoration(
                   color: theme.cardColor,
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(8.r),
                 ),
               ),
-              const SizedBox(height: 12),
+              SizedBox(height: 7.h),
 
               Container(
-                height: 12,
+                height: 12.h,
                 width: double.infinity,
                 decoration: BoxDecoration(
                   color: theme.cardColor,
-                  borderRadius: BorderRadius.circular(4),
+                  borderRadius: BorderRadius.circular(4.r),
                 ),
               ),
-              const SizedBox(height: 8),
+              SizedBox(height: 5.h),
 
               Container(
-                height: 12,
-                width: MediaQuery.of(context).size.width * 0.6,
+                height: 12.h,
+                width: 120.w,
                 decoration: BoxDecoration(
                   color: theme.cardColor,
-                  borderRadius: BorderRadius.circular(4),
+                  borderRadius: BorderRadius.circular(4.r),
                 ),
               ),
-              const SizedBox(height: 8),
+              SizedBox(height: 5.h),
 
               Container(
-                height: 12,
-                width: MediaQuery.of(context).size.width * 0.4,
+                height: 12.h,
+                width: 90.w,
                 decoration: BoxDecoration(
                   color: theme.cardColor,
-                  borderRadius: BorderRadius.circular(4),
+                  borderRadius: BorderRadius.circular(4.r),
                 ),
               ),
-              const SizedBox(height: 8),
+              SizedBox(height: 5.h),
 
               Container(
-                height: 12,
-                width: MediaQuery.of(context).size.width * 0.3,
+                height: 12.h,
+                width: 70.w,
                 decoration: BoxDecoration(
                   color: theme.cardColor,
-                  borderRadius: BorderRadius.circular(4),
+                  borderRadius: BorderRadius.circular(4.r),
                 ),
               ),
             ],

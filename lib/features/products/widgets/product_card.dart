@@ -1,4 +1,5 @@
 import 'package:bikretaa/features/products/screens/details_product_screen.dart';
+import 'package:bikretaa/features/products/widgets/copyable_text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -105,7 +106,7 @@ class ProductCardWidget extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 10.w),
+              padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 5.w),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -119,14 +120,12 @@ class ProductCardWidget extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  Text(
-                    productId,
-                    style: TextStyle(
-                      fontSize: 10.h,
-                      color: theme.colorScheme.surface,
-                    ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
+                  CopyableText(
+                    text: productId,
+                    fontSize: 9.h,
+                    textColor: Colors.grey,
+                    iconSize: 10.h,
+                    iconColor: Colors.blue,
                   ),
                   SizedBox(height: 5.h),
 
@@ -136,14 +135,11 @@ class ProductCardWidget extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        "${sellingPrice.toStringAsFixed(2)} tk",
-                        style: GoogleFonts.italianno(
-                          textStyle: TextStyle(
-                            color: Colors.red,
-                            letterSpacing: .5,
-                            fontSize: 18.h,
-                          ),
+                      Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Text(
+                          "${sellingPrice.toStringAsFixed(2)} tk",
+                          style: TextStyle(color: Colors.red, fontSize: 12.h),
                         ),
                       ),
                       SizedBox(
