@@ -21,7 +21,7 @@ class SalesSummaryCard extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.r)),
       elevation: 5,
       child: Padding(
-        padding: EdgeInsets.all(15.h),
+        padding: EdgeInsets.all(8.h),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -42,7 +42,7 @@ class SalesSummaryCard extends StatelessWidget {
                   SizedBox(height: 4.h),
                   Text(
                     label,
-                    style: TextStyle(fontSize: 12.sp, color: Colors.white),
+                    style: TextStyle(fontSize: 13.sp, color: Colors.white),
                   ),
                 ],
               ),

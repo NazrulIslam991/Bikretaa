@@ -10,7 +10,7 @@ class AppTheme {
       brightness: Brightness.light,
       primary: Colors.black,
       onPrimary: Colors.white,
-      secondary: Color(0xFF1D9BF0),
+      secondary: Color(0xFF5C9FCC),
       onSecondary: Colors.white,
       surface: Colors.white,
       onSurface: Colors.black,

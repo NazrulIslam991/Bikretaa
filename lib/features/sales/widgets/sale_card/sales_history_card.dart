@@ -1,3 +1,4 @@
+import 'package:bikretaa/features/sales/screens/update_sell_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -16,7 +17,7 @@ class SalesHistoryCard extends StatelessWidget {
   final String date;
   final String salesID;
 
-  SalesHistoryCard({
+  const SalesHistoryCard({
     Key? key,
     required this.customerName,
     required this.customerMobile,
@@ -35,13 +36,13 @@ class SalesHistoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
     return Padding(
       padding: EdgeInsets.only(left: 0.w, right: 0.w, bottom: 10.h),
       child: Container(
         padding: EdgeInsets.all(8.w),
         decoration: BoxDecoration(
           color: theme.colorScheme.secondary,
-
           borderRadius: BorderRadius.circular(12.r),
           boxShadow: [
             BoxShadow(
@@ -54,6 +55,7 @@ class SalesHistoryCard extends StatelessWidget {
         ),
         child: Column(
           children: [
+            // Top section (customer info)
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -117,7 +119,7 @@ class SalesHistoryCard extends StatelessWidget {
                 Text(
                   dueAmount == 0
                       ? 'Paid'
-                      : 'Due:${dueAmount.toStringAsFixed(2)} tk',
+                      : 'Due: ${dueAmount.toStringAsFixed(2)} tk',
                   style: TextStyle(
                     color: theme.colorScheme.onPrimary,
                     fontSize: 10.sp,
@@ -126,149 +128,173 @@ class SalesHistoryCard extends StatelessWidget {
                 ),
               ],
             ),
+
             SizedBox(height: 5.h),
-            Container(
-              padding: EdgeInsets.all(5.w),
-              decoration: BoxDecoration(
-                color: theme.colorScheme.onPrimary,
-                borderRadius: BorderRadius.circular(10.r),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Total Items : ',
-                        style: TextStyle(
-                          color: theme.colorScheme.primary,
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 12.sp,
-                        ),
-                      ),
-                      Text(
-                        totalItems.toString(),
-                        style: TextStyle(
-                          color: theme.colorScheme.onSurface,
-                          fontSize: 10.sp,
-                          fontWeight: FontWeight.normal,
-                          fontStyle: FontStyle.italic,
-                        ),
-                      ),
-                    ],
+
+            // Inner Container (Stack for Edit Button)
+            Stack(
+              children: [
+                // Main Container
+                Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.all(5.w),
+                  decoration: BoxDecoration(
+                    color: theme.colorScheme.onPrimary,
+                    borderRadius: BorderRadius.circular(10.r),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text(
-                        'Total Cost : ',
-                        style: TextStyle(
-                          color: theme.colorScheme.primary,
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 12.sp,
-                        ),
-                      ),
-                      Text(
-                        'BDT ${totalCost.toStringAsFixed(2)} tk',
-                        style: TextStyle(
-                          color: theme.colorScheme.onSurface,
-                          fontSize: 10.sp,
-                          fontWeight: FontWeight.normal,
-                          fontStyle: FontStyle.italic,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Paid Amount : ',
-                        style: TextStyle(
-                          color: theme.colorScheme.primary,
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 12.sp,
-                        ),
-                      ),
-                      Text(
-                        '${paidAmount.toStringAsFixed(2)} tk',
-                        style: TextStyle(
-                          color: theme.colorScheme.onSurface,
-                          fontSize: 10.sp,
-                          fontWeight: FontWeight.normal,
-                          fontStyle: FontStyle.italic,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Due Amount : ',
-                        style: TextStyle(
-                          color: theme.colorScheme.primary,
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 12.sp,
-                        ),
-                      ),
-                      Text(
-                        'BDT ${dueAmount.toStringAsFixed(2)} tk',
-                        style: TextStyle(
-                          color: theme.colorScheme.onSurface,
-                          fontSize: 10.sp,
-                          fontWeight: FontWeight.normal,
-                          fontStyle: FontStyle.italic,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Sell ID : ',
-                        style: TextStyle(
-                          color: theme.colorScheme.primary,
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 12.sp,
-                        ),
-                      ),
-                      Text(
-                        salesID,
-                        style: TextStyle(
-                          color: theme.colorScheme.onSurface,
-                          fontSize: 10.sp,
-                          fontWeight: FontWeight.normal,
-                          fontStyle: FontStyle.italic,
-                        ),
-                      ),
-                      SizedBox(width: 5.w),
-                      GestureDetector(
-                        onTap: () {
-                          Clipboard.setData(ClipboardData(text: salesID));
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text('Sales ID copied to clipboard'),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Total Items : ',
+                            style: TextStyle(
+                              color: theme.colorScheme.primary,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12.sp,
                             ),
-                          );
-                        },
-                        child: Icon(
-                          Icons.copy,
-                          size: 12.h,
-                          color: Colors.blueGrey,
-                        ),
+                          ),
+                          Text(
+                            totalItems.toString(),
+                            style: TextStyle(
+                              color: theme.colorScheme.onSurface,
+                              fontSize: 10.sp,
+                              fontStyle: FontStyle.italic,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Total Cost : ',
+                            style: TextStyle(
+                              color: theme.colorScheme.primary,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12.sp,
+                            ),
+                          ),
+                          Text(
+                            'BDT ${totalCost.toStringAsFixed(2)} tk',
+                            style: TextStyle(
+                              color: theme.colorScheme.onSurface,
+                              fontSize: 10.sp,
+                              fontStyle: FontStyle.italic,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Paid Amount : ',
+                            style: TextStyle(
+                              color: theme.colorScheme.primary,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12.sp,
+                            ),
+                          ),
+                          Text(
+                            '${paidAmount.toStringAsFixed(2)} tk',
+                            style: TextStyle(
+                              color: theme.colorScheme.onSurface,
+                              fontSize: 10.sp,
+                              fontStyle: FontStyle.italic,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Due Amount : ',
+                            style: TextStyle(
+                              color: theme.colorScheme.primary,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12.sp,
+                            ),
+                          ),
+                          Text(
+                            'BDT ${dueAmount.toStringAsFixed(2)} tk',
+                            style: TextStyle(
+                              color: theme.colorScheme.onSurface,
+                              fontSize: 10.sp,
+                              fontStyle: FontStyle.italic,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Sell ID : ',
+                            style: TextStyle(
+                              color: theme.colorScheme.primary,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12.sp,
+                            ),
+                          ),
+                          Text(
+                            salesID,
+                            style: TextStyle(
+                              color: theme.colorScheme.onSurface,
+                              fontSize: 10.sp,
+                              fontStyle: FontStyle.italic,
+                            ),
+                          ),
+                          SizedBox(width: 5.w),
+                          GestureDetector(
+                            onTap: () {
+                              Clipboard.setData(ClipboardData(text: salesID));
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Sales ID copied to clipboard'),
+                                ),
+                              );
+                            },
+                            child: Icon(
+                              Icons.copy,
+                              size: 12.h,
+                              color: Colors.blueGrey,
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
-                ],
-              ),
+                ),
+
+                // Edit button (top-right corner)
+                Positioned(
+                  right: 5.w,
+                  top: 5.h,
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              UpdateSalesScreen(salesID: salesID),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(4.w),
+                      decoration: const BoxDecoration(
+                        color: Colors.blueGrey,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(Icons.edit, color: Colors.white, size: 14.h),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ],
         ),

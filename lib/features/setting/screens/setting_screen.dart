@@ -208,19 +208,22 @@ class _SettingScreenState extends State<SettingScreen> {
                   onChanged: (v) => setState(() => _language = v),
                 ),
               ),
-              SettingsTileWidget(
-                icon: Icons.dark_mode,
-                title: 'Theme',
-                subtitle: 'Switch between light and dark mode',
-                trailing: Obx(() {
-                  return Switch(
-                    value: _themeController.isDarkMode.value,
+              Obx(() {
+                bool isDark = _themeController.isDarkMode.value;
+                return SettingsTileWidget(
+                  icon: isDark ? Icons.dark_mode : Icons.light_mode,
+                  title: 'Theme',
+                  subtitle: isDark
+                      ? 'Dark mode is active'
+                      : 'Light mode is active',
+                  trailing: Switch(
+                    value: isDark,
                     onChanged: (value) {
                       _themeController.toggleTheme();
                     },
-                  );
-                }),
-              ),
+                  ),
+                );
+              }),
             ],
           ),
 

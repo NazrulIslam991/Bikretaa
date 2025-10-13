@@ -7,6 +7,7 @@ import 'package:bikretaa/features/auth/presentation/screens/splash_screen.dart';
 import 'package:bikretaa/features/products/screens/add_product_screen.dart';
 import 'package:bikretaa/features/products/screens/products_screen.dart';
 import 'package:bikretaa/features/sales/screens/add_sales_screen.dart';
+import 'package:bikretaa/features/sales/screens/due_collection_screen.dart';
 import 'package:bikretaa/features/setting/screens/setting_screen.dart';
 import 'package:bikretaa/features/shared/presentation/screens/main_nav_bar_screen.dart';
 import 'package:flutter/material.dart';
@@ -45,6 +46,7 @@ class BikretaaApp extends StatelessWidget {
                 ProductsScreen.name: (context) => ProductsScreen(),
                 AddSalesScreen.name: (context) => AddSalesScreen(),
                 SettingScreen.name: (context) => SettingScreen(),
+                DueCollectionScreen.name: (context) => DueCollectionScreen(),
               },
               debugShowCheckedModeBanner: false,
             );

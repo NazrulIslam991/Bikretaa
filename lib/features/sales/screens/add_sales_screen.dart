@@ -1,8 +1,10 @@
 import 'package:bikretaa/features/sales/database/add_sales_screen_database.dart';
 import 'package:bikretaa/features/sales/model/SalesModel.dart';
+import 'package:bikretaa/features/sales/widgets/products_list_widget.dart';
 import 'package:bikretaa/features/sales/widgets/text_input_feild/customer_address.dart';
 import 'package:bikretaa/features/sales/widgets/text_input_feild/customer_name_controller.dart';
 import 'package:bikretaa/features/shared/presentation/widgets/auth_user_input_feild/mobile_feild_widget.dart';
+import 'package:bikretaa/features/shared/presentation/widgets/snack_bar_messege/snackbar_messege.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,7 +14,7 @@ class AddSalesScreen extends StatefulWidget {
 
   @override
   State<AddSalesScreen> createState() => _AddSalesScreenState();
-  static const name = 'Add_sales';
+  static const name = '/Add_sales';
 }
 
 class _AddSalesScreenState extends State<AddSalesScreen> {
@@ -79,8 +81,14 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                       ),
 
                       // Products list
-                      _buildProductsList(),
-
+                      ProductsListWidget(
+                        products: _addedProducts,
+                        onRemoveProduct: (index) {
+                          setState(() {
+                            _addedProducts.removeAt(index);
+                          });
+                        },
+                      ),
                       SizedBox(height: 20.h),
 
                       Row(
@@ -187,79 +195,6 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
     );
   }
 
-  Widget _buildProductsList() {
-    return Container(
-      height: 230.h,
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey),
-        borderRadius: BorderRadius.circular(12.r),
-      ),
-      child: _addedProducts.isEmpty
-          ? Center(child: Text("No products added"))
-          : Column(
-              children: [
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: _addedProducts.length,
-                    itemBuilder: (context, index) {
-                      return _buildProductCard(index);
-                    },
-                  ),
-                ),
-                Divider(),
-                Padding(
-                  padding: EdgeInsets.all(8.h),
-                  child: Text(
-                    "Grand Total: ${grandTotal.toStringAsFixed(2)} tk",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14.sp,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-    );
-  }
-
-  Widget _buildProductCard(int index) {
-    final item = _addedProducts[index];
-
-    return Card(
-      margin: EdgeInsets.symmetric(vertical: 4.h),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.r)),
-      child: ListTile(
-        contentPadding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
-        leading: CircleAvatar(
-          backgroundColor: Colors.blueGrey.shade50,
-          child: Text(
-            item['quantity'] ?? "0",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.blueGrey,
-            ),
-          ),
-        ),
-        title: Text(
-          item['productName'] ?? "",
-          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14.sp),
-        ),
-        subtitle: Text(
-          "Unit: ${item['unitPrice']} tk\nTotal: ${item['totalPrice']} tk",
-          style: TextStyle(fontSize: 12.sp, color: Colors.black54),
-        ),
-        trailing: IconButton(
-          icon: Icon(Icons.delete, color: Colors.redAccent),
-          onPressed: () {
-            setState(() {
-              _addedProducts.removeAt(index);
-            });
-          },
-        ),
-      ),
-    );
-  }
-
   void _addProductToList(String uid) async {
     if (!_formKey.currentState!.validate()) return;
 
@@ -273,10 +208,9 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
       if (quantity <= 0) return;
 
       if (quantity > product.quantity) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text("Out of stock! Only ${product.quantity} available."),
-          ),
+        showSnackbarMessage(
+          context,
+          "Out of stock! Only ${product.quantity} available.",
         );
         return;
       }
@@ -307,9 +241,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
       _productIdController.clear();
       _quantityController.clear();
     } else {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text("Product not found")));
+      showSnackbarMessage(context, "Product not found");
     }
   }
 
@@ -334,14 +266,10 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
         sale: sale,
         addedProducts: _addedProducts,
       );
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text("Sale saved successfully!")));
+      showSnackbarMessage(context, "Sale saved successfully!");
       _resetForm();
     } catch (e) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(e.toString())));
+      showSnackbarMessage(context, "e.toString()");
     } finally {
       setState(() => _loading = false);
     }

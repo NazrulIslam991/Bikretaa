@@ -21,32 +21,42 @@ class AddSalesScreen_database {
       final newSaleDoc = salesRef.doc();
       final salesID = newSaleDoc.id;
 
-      // Save Sale
+      //  Save Sale
       await newSaleDoc.set(sale.toMap());
 
-      // Save Paid
+      //  Save Paid
       if (sale.paidAmount > 0) {
         final paidRef = _db
             .collection('Paid')
             .doc(uid)
             .collection('paid_list')
             .doc();
+
         final paidData = PaidModel(salesID: salesID, amount: sale.paidAmount);
+
         await paidRef.set(paidData.toMap());
       }
 
-      // Save Due
+      //  Save Due (with customer info)
       if (sale.dueAmount > 0) {
         final dueRef = _db
             .collection('Due')
             .doc(uid)
             .collection('due_list')
             .doc();
-        final dueData = DueModel(salesID: salesID, amount: sale.dueAmount);
+
+        final dueData = DueModel(
+          salesID: salesID,
+          amount: sale.dueAmount,
+          customerName: sale.customerName,
+          customerMobile: sale.customerMobile,
+          customerAddress: sale.customerAddress,
+        );
+
         await dueRef.set(dueData.toMap());
       }
 
-      // Save Revenue & Update Stock
+      //  Save Revenue & Update Stock
       for (var item in addedProducts) {
         final productId = item['productId']!;
         final quantitySold = int.tryParse(item['quantity'] ?? "0") ?? 0;
@@ -67,7 +77,7 @@ class AddSalesScreen_database {
           double purchasePrice = (snapshot.get('purchasePrice') as num)
               .toDouble();
 
-          // Update stock
+          //  Update stock
           transaction.update(productRef, {
             'quantity': currentQuantity - quantitySold,
           });
@@ -78,6 +88,7 @@ class AddSalesScreen_database {
               .doc(uid)
               .collection("revenue_list")
               .doc();
+
           final revenueData = RevenueModel(
             salesID: salesID,
             productId: productId,
@@ -86,6 +97,7 @@ class AddSalesScreen_database {
             totalRevenue: quantitySold * (sellingPrice - purchasePrice),
             totalSellAmount: quantitySold * sellingPrice,
           );
+
           transaction.set(revenueRef, revenueData.toMap());
         });
       }
@@ -94,7 +106,7 @@ class AddSalesScreen_database {
     }
   }
 
-  //Fetch Product by ID
+  //  Fetch Product by ID
   Future<Product?> fetchProductById(String uid, String productId) async {
     try {
       final docRef = _db
@@ -102,6 +114,7 @@ class AddSalesScreen_database {
           .doc(uid)
           .collection("products_list")
           .doc(productId);
+
       final docSnap = await docRef.get();
       if (docSnap.exists) {
         return Product.fromMap(docSnap.data()!);

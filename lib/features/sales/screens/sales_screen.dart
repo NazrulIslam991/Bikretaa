@@ -1,7 +1,7 @@
 import 'package:bikretaa/assets_path/assets_path.dart';
 import 'package:bikretaa/features/sales/database/sales_screen_database.dart';
-import 'package:bikretaa/features/sales/screens/add_sales_screen.dart';
 import 'package:bikretaa/features/sales/widgets/bottom_filter_sheet_for_sales.dart';
+import 'package:bikretaa/features/sales/widgets/floating_menu_fab.dart';
 import 'package:bikretaa/features/sales/widgets/sale_card/sales_history_card.dart';
 import 'package:bikretaa/features/sales/widgets/sale_card/sales_summary_card.dart';
 import 'package:bikretaa/features/sales/widgets/sale_screen_shimmer/sales_history_shimmer.dart';
@@ -46,7 +46,7 @@ class _SalesScreenState extends State<SalesScreen> {
     final theme = Theme.of(context);
     final uid = FirebaseAuth.instance.currentUser?.uid;
     if (uid == null) {
-      return Scaffold(body: Center(child: CircularProgressIndicator()));
+      return Scaffold(body: Center(child: Text("User not logged in")));
     }
 
     return Scaffold(
@@ -250,12 +250,7 @@ class _SalesScreenState extends State<SalesScreen> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.pushNamed(context, AddSalesScreen.name),
-        backgroundColor: Colors.blueGrey.shade50,
-        foregroundColor: Colors.blueGrey,
-        child: Icon(Icons.add_box_outlined, size: 20.h),
-      ),
+      floatingActionButton: FloatingMenuFAB(),
     );
   }
 
