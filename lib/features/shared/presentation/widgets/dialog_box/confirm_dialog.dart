@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 Future<bool> showConfirmDialog({
   required BuildContext context,
@@ -53,7 +54,7 @@ Future<bool> showConfirmDialog({
                       padding: EdgeInsets.symmetric(vertical: 14),
                     ),
                     child: Text(
-                      cancelText,
+                      'cancelText_bn'.tr,
                       style: TextStyle(
                         color: theme.colorScheme.primary,
                         fontSize: 16,

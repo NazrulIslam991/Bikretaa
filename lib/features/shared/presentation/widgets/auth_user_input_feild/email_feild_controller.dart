@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class EmailFeildWidget extends StatelessWidget {
   final TextEditingController _emailEcontroller;
@@ -28,8 +29,8 @@ class EmailFeildWidget extends StatelessWidget {
               initialValue: emailText,
               readOnly: true,
               decoration: InputDecoration(
-                labelText: "Email",
-                hintText: "Email",
+                labelText: 'Email'.tr,
+                hintText: 'Email'.tr,
                 labelStyle: TextStyle(
                   fontWeight: FontWeight.normal,
                   color: theme.colorScheme.primary,
@@ -48,8 +49,8 @@ class EmailFeildWidget extends StatelessWidget {
           : TextFormField(
               controller: _emailEcontroller,
               decoration: InputDecoration(
-                labelText: "Email",
-                hintText: "Email",
+                labelText: 'Email'.tr,
+                hintText: 'Email'.tr,
                 labelStyle: TextStyle(
                   fontWeight: FontWeight.normal,
                   color: theme.colorScheme.primary,
@@ -68,9 +69,9 @@ class EmailFeildWidget extends StatelessWidget {
               autovalidateMode: AutovalidateMode.onUserInteraction,
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Please enter an email address';
+                  return 'Please_enter_an_email_address'.tr;
                 } else if (!validateEmail(value)) {
-                  return 'Please enter a valid email address';
+                  return 'Please_enter_a_valid_email_address'.tr;
                 }
                 return null;
               },

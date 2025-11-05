@@ -8,6 +8,7 @@ import 'package:bikretaa/features/shared/presentation/widgets/snack_bar_messege/
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class AddSalesScreen extends StatefulWidget {
   const AddSalesScreen({super.key});
@@ -48,11 +49,11 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Product sales", style: TextStyle(fontSize: 22.sp)),
+        title: Text("product_sales".tr, style: TextStyle(fontSize: 22.sp)),
         centerTitle: true,
       ),
       body: uid == null
-          ? Center(child: Text("User not logged in"))
+          ? Center(child: Text("user_not_logged_in".tr))
           : SingleChildScrollView(
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 15.w),
@@ -97,7 +98,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                             child: TextField(
                               controller: _productIdController,
                               decoration: InputDecoration(
-                                labelText: "Product ID",
+                                labelText: "product_id".tr,
                               ),
                             ),
                           ),
@@ -107,7 +108,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                               controller: _quantityController,
                               keyboardType: TextInputType.number,
                               decoration: InputDecoration(
-                                labelText: "Quantity",
+                                labelText: "quantity".tr,
                               ),
                             ),
                           ),
@@ -133,7 +134,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                               controller: _paidController,
                               keyboardType: TextInputType.number,
                               decoration: InputDecoration(
-                                labelText: "Paid",
+                                labelText: "paid".tr,
                                 labelStyle: TextStyle(
                                   color: theme.colorScheme.onSurface,
                                 ),
@@ -150,14 +151,14 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                               ),
                               child: due < 0
                                   ? Text(
-                                      "Please check your paid amount!",
+                                      "due_check".tr,
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         color: Colors.red,
                                       ),
                                     )
                                   : Text(
-                                      "Due: ${due.toStringAsFixed(2)} tk",
+                                      "${'due'.tr}: ${due.toStringAsFixed(2)} tk",
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         color: theme.colorScheme.onSurface,
@@ -188,7 +189,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
               final uid = FirebaseAuth.instance.currentUser?.uid;
               if (uid != null) _confirmSale(uid);
             },
-            child: Text("Confirm", style: TextStyle(fontSize: 16.sp)),
+            child: Text("confirm".tr, style: TextStyle(fontSize: 16.sp)),
           ),
         ),
       ),
@@ -241,7 +242,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
       _productIdController.clear();
       _quantityController.clear();
     } else {
-      showSnackbarMessage(context, "Product not found");
+      showSnackbarMessage(context, "product_not_found".tr);
     }
   }
 
@@ -266,7 +267,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
         sale: sale,
         addedProducts: _addedProducts,
       );
-      showSnackbarMessage(context, "Sale saved successfully!");
+      showSnackbarMessage(context, "sale_saved".tr);
       _resetForm();
     } catch (e) {
       showSnackbarMessage(context, "e.toString()");

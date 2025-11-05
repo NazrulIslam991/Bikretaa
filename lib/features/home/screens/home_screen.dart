@@ -5,6 +5,7 @@ import 'package:bikretaa/features/home/widgets/summary_card.dart';
 import 'package:bikretaa/features/shared/presentation/share_preferences_helper/shared_preferences_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -16,7 +17,7 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Home",
+          'Home'.tr,
           style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
@@ -44,9 +45,9 @@ class HomeScreen extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
-            return Center(child: Text("Error loading user data"));
+            return Center(child: Text('Error_loading_user_data'.tr));
           } else if (!snapshot.hasData || snapshot.data == null) {
-            return Center(child: Text("No user data found"));
+            return Center(child: Text('No_user_data_found'.tr));
           }
 
           final user = snapshot.data!;
@@ -59,7 +60,7 @@ class HomeScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Welcome,",
+                  'Welcome,'.tr,
                   style: TextStyle(
                     color: theme.textTheme.bodyLarge?.color,
                     fontWeight: FontWeight.bold,
@@ -88,7 +89,7 @@ class HomeScreen extends StatelessWidget {
                     itemBuilder: (context, index) {
                       return home_summary_card(
                         totalProducts: 1000,
-                        CardTitle: 'Total Product',
+                        CardTitle: 'Total_Product'.tr,
                       );
                     },
                     itemCount: 6,
@@ -101,7 +102,7 @@ class HomeScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Most Sold Products",
+                        'Most_Sold_Products'.tr,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 14.h,
@@ -110,7 +111,7 @@ class HomeScreen extends StatelessWidget {
                       TextButton(
                         onPressed: () {},
                         child: Text(
-                          "Show Details...",
+                          'Show_Details'.tr,
                           style: TextStyle(
                             color: Colors.blue,
                             fontSize: 10.h,
@@ -146,7 +147,7 @@ class HomeScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Sales and Due Report",
+                        'Sales_and_Due_Report'.tr,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 14.h,
@@ -155,7 +156,7 @@ class HomeScreen extends StatelessWidget {
                       TextButton(
                         onPressed: () {},
                         child: Text(
-                          "Show Details...",
+                          'Show_Details'.tr,
                           style: TextStyle(
                             color: Colors.blue,
                             fontSize: 10.h,

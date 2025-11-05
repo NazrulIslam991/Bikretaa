@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 typedef OnRemoveProduct = void Function(int index);
 
@@ -22,7 +23,7 @@ class ProductsListWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(12.r),
       ),
       child: products.isEmpty
-          ? const Center(child: Text("No products added"))
+          ? Center(child: Text("no_products_added".tr))
           : Padding(
               padding: const EdgeInsets.only(
                 right: 10,
@@ -43,7 +44,7 @@ class ProductsListWidget extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.all(8.h),
                     child: Text(
-                      "Grand Total: ${_grandTotal().toStringAsFixed(2)} tk",
+                      "${"grand_total".tr}: ${_grandTotal().toStringAsFixed(2)} tk",
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 14,
@@ -88,7 +89,7 @@ class ProductsListWidget extends StatelessWidget {
           ),
         ),
         subtitle: Text(
-          "Unit: ${item['unitPrice']} tk\nTotal: ${item['totalPrice']} tk",
+          "${"unit_price".tr}: ${item['unitPrice']} tk\n${"total".tr}: ${item['totalPrice']} tk",
           style: TextStyle(fontSize: 12, color: theme.colorScheme.primary),
         ),
         trailing: IconButton(

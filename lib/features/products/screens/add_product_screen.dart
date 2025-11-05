@@ -19,6 +19,7 @@ import 'package:bikretaa/features/shared/presentation/widgets/snack_bar_messege/
 import 'package:bikretaa/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class AddProductScreen extends StatefulWidget {
   const AddProductScreen({super.key});
@@ -86,7 +87,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Add Product", style: TextStyle(fontSize: 22.h)),
+        title: Text("add_product_title".tr, style: TextStyle(fontSize: 22.h)),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -189,7 +190,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
             replacement: CenterCircularProgressIndiacator(),
             child: ElevatedButton(
               onPressed: _onTapAddProduct,
-              child: Text("Add Product"),
+              child: Text("add_product_btn".tr),
             ),
           ),
         ),
@@ -202,7 +203,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
     _formKey.currentState!.save();
 
     if (_selectedImage == null) {
-      showSnackbarMessage(context, "Please select a product image!");
+      showSnackbarMessage(context, "select_product_image".tr);
       return;
     }
 
@@ -211,7 +212,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
     try {
       final imageUrl = await cloudinaryService.uploadImage(_selectedImage!);
       if (imageUrl == null) {
-        showSnackbarMessage(context, "Image upload failed!");
+        showSnackbarMessage(context, "image_upload_failed".tr);
         setState(() => _addProductProgressIndicator = false);
         return;
       }
@@ -236,14 +237,14 @@ class _AddProductScreenState extends State<AddProductScreen> {
 
       final added = await _addProductDatabase.addProduct(product);
       if (added) {
-        showSnackbarMessage(context, 'Product added successfully!');
+        showSnackbarMessage(context, "product_added_success".tr);
         _clearControllers();
         Navigator.pop(context);
       } else {
-        showSnackbarMessage(context, 'Product ID already exists!');
+        showSnackbarMessage(context, "product_id_exists".tr);
       }
     } catch (e) {
-      showSnackbarMessage(context, 'Error adding product: $e');
+      showSnackbarMessage(context, "error_adding_product".tr);
     } finally {
       setState(() => _addProductProgressIndicator = false);
     }

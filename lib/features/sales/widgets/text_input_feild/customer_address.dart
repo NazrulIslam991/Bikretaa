@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class CustomerAddressController extends StatelessWidget {
   const CustomerAddressController({
@@ -17,8 +18,8 @@ class CustomerAddressController extends StatelessWidget {
       child: TextFormField(
         controller: _CustomerAddressController,
         decoration: InputDecoration(
-          hintText: "Address",
-          labelText: "Address",
+          hintText: "customer_address_hint".tr,
+          labelText: "customer_address_label".tr,
           prefixIcon: Icon(Icons.location_on_outlined, color: Colors.blue),
           labelStyle: TextStyle(
             fontWeight: FontWeight.normal,
@@ -39,7 +40,7 @@ class CustomerAddressController extends StatelessWidget {
         validator: (value) {
           String shop_name = value ?? '';
           if (shop_name.isEmpty) {
-            return 'Address is required';
+            return "customer_address_required".tr;
           }
           return null;
         },

@@ -2,6 +2,7 @@ import 'package:bikretaa/features/sales/screens/add_sales_screen.dart';
 import 'package:bikretaa/features/sales/screens/due_collection_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class FloatingMenuFAB extends StatefulWidget {
   const FloatingMenuFAB({super.key});
@@ -66,7 +67,7 @@ class _FloatingMenuFABState extends State<FloatingMenuFAB>
                     ],
                   ),
                   child: Text(
-                    'Due Collection',
+                    'due_collection'.tr,
                     style: TextStyle(
                       fontSize: 12.sp,
                       color: theme.colorScheme.background,
@@ -110,7 +111,7 @@ class _FloatingMenuFABState extends State<FloatingMenuFAB>
                     ],
                   ),
                   child: Text(
-                    'Product Sale',
+                    'product_sale'.tr,
                     style: TextStyle(
                       fontSize: 12.sp,
                       color: theme.colorScheme.background,

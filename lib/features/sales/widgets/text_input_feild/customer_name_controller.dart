@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class CustomerNameController extends StatelessWidget {
   const CustomerNameController({
@@ -17,8 +18,8 @@ class CustomerNameController extends StatelessWidget {
       child: TextFormField(
         controller: _CustomerNameController,
         decoration: InputDecoration(
-          hintText: "Customer Name",
-          labelText: "Customer Name",
+          hintText: "customer_name_hint".tr,
+          labelText: "customer_name_label".tr,
           prefixIcon: Icon(Icons.person, color: Colors.blue),
           labelStyle: TextStyle(
             fontWeight: FontWeight.normal,
@@ -39,7 +40,7 @@ class CustomerNameController extends StatelessWidget {
         validator: (value) {
           String shop_name = value ?? '';
           if (shop_name.isEmpty) {
-            return 'Customer Name is required';
+            return "customer_name_required".tr;
           }
           return null;
         },

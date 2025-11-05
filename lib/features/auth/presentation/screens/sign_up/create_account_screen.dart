@@ -10,6 +10,7 @@ import 'package:bikretaa/features/shared/presentation/widgets/circular_progress/
 import 'package:bikretaa/features/shared/presentation/widgets/snack_bar_messege/snackbar_messege.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class CreateAccountScreen extends StatefulWidget {
   const CreateAccountScreen({super.key});
@@ -40,14 +41,14 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                   children: [
                     Center(
                       child: Text(
-                        "Create Account",
+                        'SignUp_Headline'.tr,
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
                     ),
                     SizedBox(height: 5.h),
                     Center(
                       child: Text(
-                        "We'll send a one-time password to your email address",
+                        'SignUp_subHeadLine'.tr,
                         style: TextStyle(
                           fontWeight: FontWeight.normal,
                           color: theme.colorScheme.primary,
@@ -71,7 +72,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                       child: ElevatedButton(
                         onPressed: () => _onTapVerifyEmail(),
                         child: Text(
-                          'Next',
+                          'Next'.tr,
                           style: TextStyle(
                             fontStyle: FontStyle.italic,
                             fontWeight: FontWeight.bold,
@@ -84,8 +85,8 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                     SizedBox(height: 20),
                     Center(
                       child: AuthBottomText(
-                        normalText: "Have an account? ",
-                        actionText: "Sign In",
+                        normalText: 'Sign_up_bottom_text_1'.tr,
+                        actionText: 'Sign_up_bottom_text_2'.tr,
                         onTap: _onTapSignIn,
                       ),
                     ),
@@ -117,7 +118,10 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
       bool userExists = await FirestoreUtils.checkUserExists(email);
 
       if (userExists) {
-        showSnackbarMessage(context, "Account already exists with this email.");
+        showSnackbarMessage(
+          context,
+          'Account_already_exists_with_this_email'.tr,
+        );
         setState(() {
           _verificationCodeProgressIndicator = false;
         });

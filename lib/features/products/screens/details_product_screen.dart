@@ -5,8 +5,10 @@ import 'package:bikretaa/features/products/widgets/copyable_text_widget.dart';
 import 'package:bikretaa/features/setting/widgets/divider.dart';
 import 'package:bikretaa/features/shared/presentation/widgets/circular_progress/circular_progress_indicatior_2.dart';
 import 'package:bikretaa/features/shared/presentation/widgets/dialog_box/confirm_dialog.dart';
+import 'package:bikretaa/features/shared/presentation/widgets/snack_bar_messege/snackbar_messege.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class DetailsProductScreen extends StatelessWidget {
@@ -48,7 +50,7 @@ class DetailsProductScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Product Details", style: TextStyle(fontSize: 22.h)),
+        title: Text("product_details".tr, style: TextStyle(fontSize: 22.h)),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -105,7 +107,7 @@ class DetailsProductScreen extends StatelessWidget {
             Padding(
               padding: EdgeInsets.symmetric(vertical: 0.h, horizontal: 10.w),
               child: Text(
-                "Brand Name : $brandName",
+                "${"brand_name".tr} : $brandName",
                 style: GoogleFonts.aBeeZee(
                   textStyle: TextStyle(
                     color: theme.colorScheme.primary,
@@ -124,7 +126,7 @@ class DetailsProductScreen extends StatelessWidget {
                 bottom: 10.h,
               ),
               child: Text(
-                "Product information",
+                "product_information".tr,
                 style: TextStyle(fontSize: 16.h, fontWeight: FontWeight.bold),
               ),
             ),
@@ -144,7 +146,7 @@ class DetailsProductScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        "Quantity in Stock",
+                        "quantity_in_stock".tr,
                         style: TextStyle(
                           fontSize: 14.h,
                           color: Colors.grey.shade700,
@@ -166,7 +168,7 @@ class DetailsProductScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        "Product Code",
+                        "product_code".tr,
                         style: TextStyle(
                           fontSize: 14.h,
                           color: Colors.grey.shade700,
@@ -202,7 +204,7 @@ class DetailsProductScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        "Suppier Name",
+                        "upplier_name".tr,
                         style: TextStyle(
                           fontSize: 14.h,
                           color: Colors.grey.shade700,
@@ -224,7 +226,7 @@ class DetailsProductScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        "Discount",
+                        "discount".tr,
                         style: TextStyle(
                           fontSize: 14.h,
                           color: Colors.grey.shade700,
@@ -261,7 +263,7 @@ class DetailsProductScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        "Purchase Price",
+                        "purchase_price".tr,
                         style: TextStyle(
                           fontSize: 14.h,
                           color: Colors.grey.shade700,
@@ -283,7 +285,7 @@ class DetailsProductScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        "Selling Price",
+                        "selling_price".tr,
                         style: TextStyle(
                           fontSize: 14.h,
                           color: Colors.grey.shade700,
@@ -320,7 +322,7 @@ class DetailsProductScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        "Manufacture Date",
+                        "manufacture_date".tr,
                         style: TextStyle(
                           fontSize: 14.h,
                           color: Colors.grey.shade700,
@@ -342,7 +344,7 @@ class DetailsProductScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        "Expiry Date",
+                        "expiry_date".tr,
                         style: TextStyle(
                           fontSize: 14.h,
                           color: Colors.grey.shade700,
@@ -371,7 +373,7 @@ class DetailsProductScreen extends StatelessWidget {
                 bottom: 10.h,
               ),
               child: Text(
-                "Product Description",
+                "product_description".tr,
                 style: TextStyle(fontSize: 16.h, fontWeight: FontWeight.bold),
               ),
             ),
@@ -409,7 +411,7 @@ class DetailsProductScreen extends StatelessWidget {
                 onPressed: () {
                   _onTapEdit(context);
                 },
-                child: const Text("Edit"),
+                child: Text("edit".tr),
               ),
             ),
 
@@ -421,7 +423,7 @@ class DetailsProductScreen extends StatelessWidget {
                 onPressed: () {
                   _onTapDelete(context);
                 },
-                child: const Text("Delete"),
+                child: Text("delete".tr),
               ),
             ),
           ],
@@ -435,9 +437,9 @@ class DetailsProductScreen extends StatelessWidget {
 
     final confirm = await showConfirmDialog(
       context: context,
-      title: "Delete Product",
-      content: "Are you sure you want to delete this product?",
-      confirmText: "Delete",
+      title: "delete_product".tr,
+      content: "delete_confirmation".tr,
+      confirmText: "delete".tr,
       confirmColor: Colors.red,
     );
 
@@ -453,15 +455,11 @@ class DetailsProductScreen extends StatelessWidget {
 
         Navigator.pop(context);
 
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Product deleted successfully")),
-        );
+        showSnackbarMessage(context, "product_deleted_success".tr);
         Navigator.pop(context);
       } catch (e) {
         Navigator.pop(context);
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text("Failed to delete: $e")));
+        showSnackbarMessage(context, "Failed to delete: $e");
       }
     }
   }

@@ -131,10 +131,9 @@ class SalesHistoryCard extends StatelessWidget {
 
             SizedBox(height: 5.h),
 
-            // Inner Container (Stack for Edit Button)
+            // Inner Container
             Stack(
               children: [
-                // Main Container
                 Container(
                   width: double.infinity,
                   padding: EdgeInsets.all(5.w),

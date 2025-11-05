@@ -14,6 +14,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class CreateAccountByInformation extends StatefulWidget {
   final String email;
@@ -52,7 +53,7 @@ class _CreateAccountByInformationState
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      "Shop Information",
+                      'Shop_HeadLine'.tr,
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
 
@@ -119,7 +120,7 @@ class _CreateAccountByInformationState
                       child: ElevatedButton(
                         onPressed: SignUpComplete,
                         child: Text(
-                          'Done',
+                          'Done'.tr,
                           style: TextStyle(
                             fontStyle: FontStyle.italic,
                             fontWeight: FontWeight.bold,
@@ -132,8 +133,8 @@ class _CreateAccountByInformationState
                     SizedBox(height: 20.h),
                     Center(
                       child: AuthBottomText(
-                        normalText: "Have an account? ",
-                        actionText: "Sign In",
+                        normalText: 'Sign_up_bottom_text_1'.tr,
+                        actionText: 'Sign_up_bottom_text_2'.tr,
                         onTap: _onTapSignIn,
                       ),
                     ),
@@ -185,7 +186,7 @@ class _CreateAccountByInformationState
           .doc(uid)
           .set(userModel.toMap());
 
-      showSnackbarMessage(context, "Sign Up Successful!");
+      showSnackbarMessage(context, 'Sign_Up_Successful'.tr);
       Navigator.pushNamedAndRemoveUntil(
         context,
         SigninScreen.name,
@@ -196,14 +197,13 @@ class _CreateAccountByInformationState
 
       switch (e.code) {
         case 'weak-password':
-          errorMessage =
-              'Your password is too weak. Please use at least 6 characters.';
+          errorMessage = 'Your_password_is_too_weak_Please_use_at.....'.tr;
           break;
         case 'email-already-in-use':
-          errorMessage = 'This email is already registered. Try signing in.';
+          errorMessage = 'This_email_is_already_registered'.tr;
           break;
         case 'invalid-email':
-          errorMessage = 'The email address is not valid.';
+          errorMessage = 'The_email_address_is_not_valid'.tr;
           break;
         default:
           errorMessage =
@@ -212,7 +212,7 @@ class _CreateAccountByInformationState
 
       showSnackbarMessage(context, errorMessage);
     } catch (e) {
-      showSnackbarMessage(context, 'Something went wrong. Please try again.');
+      showSnackbarMessage(context, 'Something_went_wrong'.tr);
     } finally {
       setState(() {
         _SignupInProgress = false;

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class PasswordFeildWidget extends StatefulWidget {
   const PasswordFeildWidget({
@@ -31,14 +32,14 @@ class _PasswordFeildWidgetState extends State<PasswordFeildWidget> {
         obscureText: _obscureText,
         autovalidateMode: AutovalidateMode.onUserInteraction,
         decoration: InputDecoration(
-          hintText: "Password",
+          hintText: 'Password'.tr,
           hintStyle: TextStyle(
             fontWeight: FontWeight.normal,
             color: theme.colorScheme.primary,
             letterSpacing: 0.4,
             fontSize: 12.h,
           ),
-          labelText: "Password",
+          labelText: 'Password'.tr,
           labelStyle: TextStyle(
             fontWeight: FontWeight.normal,
             color: theme.colorScheme.primary,
@@ -58,9 +59,9 @@ class _PasswordFeildWidgetState extends State<PasswordFeildWidget> {
         textInputAction: TextInputAction.done,
         validator: (value) {
           if (value == null || value.isEmpty) {
-            return 'Please enter Password';
+            return 'Please_enter_Password'.tr;
           } else if (!validatePassword(value)) {
-            return "Password must be 8+ chars with uppercase, lowercase & special char.";
+            return 'Password_hints'.tr;
           }
           return null;
         },

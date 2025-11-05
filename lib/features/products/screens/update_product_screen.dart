@@ -19,6 +19,7 @@ import 'package:bikretaa/features/shared/presentation/widgets/snack_bar_messege/
 import 'package:bikretaa/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class UpdateProductScreen extends StatefulWidget {
   final Product product;
@@ -99,7 +100,7 @@ class _UpdateProductScreenState extends State<UpdateProductScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Update Product", style: TextStyle(fontSize: 22.h)),
+        title: Text("update_product".tr, style: TextStyle(fontSize: 22.h)),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -201,7 +202,7 @@ class _UpdateProductScreenState extends State<UpdateProductScreen> {
             replacement: CenterCircularProgressIndiacator(),
             child: ElevatedButton(
               onPressed: _onTapUpdateProduct,
-              child: Text("Update Product"),
+              child: Text("update_product_btn".tr),
             ),
           ),
         ),

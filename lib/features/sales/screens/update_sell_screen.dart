@@ -2,6 +2,7 @@ import 'package:bikretaa/features/sales/database/add_sales_screen_database.dart'
 import 'package:bikretaa/features/sales/database/update_screen_database.dart';
 import 'package:bikretaa/features/sales/model/SalesModel.dart';
 import 'package:bikretaa/features/sales/widgets/products_list_widget.dart';
+import 'package:bikretaa/features/sales/widgets/sale_screen_shimmer/update_sales_screen_shimmer.dart';
 import 'package:bikretaa/features/sales/widgets/text_input_feild/customer_address.dart';
 import 'package:bikretaa/features/sales/widgets/text_input_feild/customer_name_controller.dart';
 import 'package:bikretaa/features/shared/presentation/widgets/auth_user_input_feild/mobile_feild_widget.dart';
@@ -9,6 +10,7 @@ import 'package:bikretaa/features/shared/presentation/widgets/snack_bar_messege/
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class UpdateSalesScreen extends StatefulWidget {
   final String salesID;
@@ -58,7 +60,7 @@ class _UpdateSalesScreenState extends State<UpdateSalesScreen> {
       final data = await _updateService.fetchSale(uid, widget.salesID);
       if (data != null) {
         String mobile = data['customerMobile'] ?? '';
-        mobile = mobile.replaceFirst(RegExp(r'^\+880'), '');
+        mobile = mobile.replaceFirst(RegExp(r'^\+8801'), '');
         _mobileEcontroller.text = mobile;
 
         _customerNameController.text = data['customerName'] ?? '';
@@ -77,7 +79,7 @@ class _UpdateSalesScreenState extends State<UpdateSalesScreen> {
         });
       } else {
         setState(() => _fetching = false);
-        showSnackbarMessage(context, "Sale not found");
+        showSnackbarMessage(context, "sale_not_found".tr);
       }
     } catch (e) {
       setState(() => _fetching = false);
@@ -87,14 +89,13 @@ class _UpdateSalesScreenState extends State<UpdateSalesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    if (_fetching)
-      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    if (_fetching) return const Scaffold(body: UpdateSalesShimmerScreen());
 
     final uid = _auth.currentUser?.uid;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Update Sales", style: TextStyle(fontSize: 22.sp)),
+        title: Text("update_sale".tr, style: TextStyle(fontSize: 22.sp)),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -105,16 +106,24 @@ class _UpdateSalesScreenState extends State<UpdateSalesScreen> {
             child: Column(
               children: [
                 SizedBox(height: 10.h),
-                CustomerNameController(
-                  CustomerNameController: _customerNameController,
+                Container(
+                  height: 60.h,
+                  child: CustomerNameController(
+                    CustomerNameController: _customerNameController,
+                  ),
                 ),
-                SizedBox(height: 5.h),
-                MobileFeildWidget(mobileEcontroller: _mobileEcontroller),
-                SizedBox(height: 5.h),
-                CustomerAddressController(
-                  CustomerAddressController: _customerAddressController,
+                Container(
+                  height: 60.h,
+                  child: MobileFeildWidget(
+                    mobileEcontroller: _mobileEcontroller,
+                  ),
                 ),
-                SizedBox(height: 10.h),
+                Container(
+                  height: 60.h,
+                  child: CustomerAddressController(
+                    CustomerAddressController: _customerAddressController,
+                  ),
+                ),
                 ProductsListWidget(
                   products: _addedProducts,
                   onRemoveProduct: (index) {
@@ -129,9 +138,7 @@ class _UpdateSalesScreenState extends State<UpdateSalesScreen> {
                     Expanded(
                       child: TextField(
                         controller: _productIdController,
-                        decoration: const InputDecoration(
-                          labelText: "Product ID",
-                        ),
+                        decoration: InputDecoration(labelText: "product_id".tr),
                       ),
                     ),
                     SizedBox(width: 10.w),
@@ -139,9 +146,7 @@ class _UpdateSalesScreenState extends State<UpdateSalesScreen> {
                       child: TextField(
                         controller: _quantityController,
                         keyboardType: TextInputType.number,
-                        decoration: const InputDecoration(
-                          labelText: "Quantity",
-                        ),
+                        decoration: InputDecoration(labelText: "quantity".tr),
                       ),
                     ),
                     IconButton(
@@ -163,7 +168,7 @@ class _UpdateSalesScreenState extends State<UpdateSalesScreen> {
                       child: TextField(
                         controller: _paidController,
                         keyboardType: TextInputType.number,
-                        decoration: const InputDecoration(labelText: "Paid"),
+                        decoration: InputDecoration(labelText: "paid".tr),
                       ),
                     ),
                     SizedBox(width: 10.w),
@@ -175,15 +180,15 @@ class _UpdateSalesScreenState extends State<UpdateSalesScreen> {
                           borderRadius: BorderRadius.circular(8.r),
                         ),
                         child: due < 0
-                            ? const Text(
-                                "Please check your paid amount!",
+                            ? Text(
+                                "check_paid_amount".tr,
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.red,
                                 ),
                               )
                             : Text(
-                                "Due: ${due.toStringAsFixed(2)} tk",
+                                "${"due".tr}: ${due.toStringAsFixed(2)} tk",
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -203,7 +208,7 @@ class _UpdateSalesScreenState extends State<UpdateSalesScreen> {
           onPressed: (_loading || uid == null) ? null : _confirmUpdate,
           child: _loading
               ? const CircularProgressIndicator(color: Colors.white)
-              : Text("Update Sale", style: TextStyle(fontSize: 16.sp)),
+              : Text("update_sale_btn".tr, style: TextStyle(fontSize: 16.sp)),
         ),
       ),
     );
@@ -251,7 +256,7 @@ class _UpdateSalesScreenState extends State<UpdateSalesScreen> {
       _productIdController.clear();
       _quantityController.clear();
     } else {
-      showSnackbarMessage(context, "Product not found");
+      showSnackbarMessage(context, "product_not_found".tr);
     }
   }
 
@@ -280,10 +285,10 @@ class _UpdateSalesScreenState extends State<UpdateSalesScreen> {
         newProducts: _addedProducts,
       );
 
-      showSnackbarMessage(context, "Sale updated successfully!");
+      showSnackbarMessage(context, "sale_updated_success".tr);
       Navigator.pop(context);
     } catch (e) {
-      showSnackbarMessage(context, "Failed to update sale: $e");
+      showSnackbarMessage(context, "failed_update_sale".tr);
     } finally {
       setState(() => _loading = false);
     }

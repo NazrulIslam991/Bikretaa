@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class ProductIdController extends StatelessWidget {
   const ProductIdController({
@@ -20,8 +21,8 @@ class ProductIdController extends StatelessWidget {
         controller: _productIdController,
         readOnly: readOnly,
         decoration: InputDecoration(
-          hintText: "Enter product id",
-          labelText: "Product id",
+          hintText: "enter_product_id".tr,
+          labelText: "product_id".tr,
           labelStyle: TextStyle(
             fontWeight: FontWeight.normal,
             color: theme.colorScheme.primary,
@@ -40,7 +41,7 @@ class ProductIdController extends StatelessWidget {
         validator: (value) {
           String productId = value ?? '';
           if (productId.isEmpty) {
-            return 'Product id is required';
+            return 'product_id_required'.tr;
           }
           return null;
         },

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 enum ProductFilter { all, lowStock, expired, expireSoon, aToZ, zToA }
 
@@ -35,7 +36,7 @@ class ProductFilterSheet extends StatelessWidget {
                 SizedBox(height: 10.h),
                 Center(
                   child: Text(
-                    "Filter Products",
+                    "filter_products".tr,
                     style: TextStyle(
                       fontSize: 18.sp,
                       fontWeight: FontWeight.bold,
@@ -53,32 +54,32 @@ class ProductFilterSheet extends StatelessWidget {
 
                     switch (filter) {
                       case ProductFilter.all:
-                        title = "All Products";
+                        title = "all_products".tr;
                         icon = Icons.all_inbox;
                         color = Colors.blue;
                         break;
                       case ProductFilter.lowStock:
-                        title = "Low Stock";
+                        title = "low_stock".tr;
                         icon = Icons.warning;
                         color = Colors.orange;
                         break;
                       case ProductFilter.expired:
-                        title = "Expired";
+                        title = "expired".tr;
                         icon = Icons.block;
                         color = Colors.red;
                         break;
                       case ProductFilter.expireSoon:
-                        title = "Expire Soon";
+                        title = "expire_soon".tr;
                         icon = Icons.timer;
                         color = Colors.purple;
                         break;
                       case ProductFilter.aToZ:
-                        title = "A → Z";
+                        title = "a_to_z".tr;
                         icon = Icons.sort_by_alpha;
                         color = Colors.green;
                         break;
                       case ProductFilter.zToA:
-                        title = "Z → A";
+                        title = "z_to_a".tr;
                         icon = Icons.sort_by_alpha;
                         color = Colors.indigo;
                         break;

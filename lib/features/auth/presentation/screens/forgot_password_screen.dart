@@ -8,13 +8,14 @@ import 'package:bikretaa/features/shared/presentation/widgets/snack_bar_messege/
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
 
   @override
   State<ForgotPasswordScreen> createState() => _ForgotPasswordScreenState();
-  static const name = 'Forgot_password';
+  static const name = '/Forgot_password';
 }
 
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
@@ -37,7 +38,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   children: [
                     Center(
                       child: Text(
-                        "Forget Password",
+                        'Forgot_password'.tr,
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
                     ),
@@ -46,7 +47,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
                     Center(
                       child: Text(
-                        "Please enter email address to reset the password",
+                        'Please_enter_email_address_to_reset_the_password'.tr,
                         style: TextStyle(
                           fontWeight: FontWeight.normal,
                           color: theme.colorScheme.primary,
@@ -74,7 +75,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       child: ElevatedButton(
                         onPressed: () => _OnTapResetLinkSend(),
                         child: Text(
-                          'Reset Link',
+                          'Reset_Link'.tr,
                           style: TextStyle(
                             fontStyle: FontStyle.italic,
                             fontWeight: FontWeight.bold,
@@ -88,8 +89,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     SizedBox(height: 20),
                     Center(
                       child: AuthBottomText(
-                        normalText: "Have an account? ",
-                        actionText: "Sign In",
+                        normalText: 'Sign_up_bottom_text_1'.tr,
+                        actionText: 'Sign_up_bottom_text_2'.tr,
                         onTap: _onTapSignIn,
                       ),
                     ),
@@ -121,7 +122,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     bool userExists = await FirestoreUtils.checkUserExists(email);
 
     if (!userExists) {
-      showSnackbarMessage(context, "No user found for that email.");
+      showSnackbarMessage(context, 'No_account_found_for_that_email'.tr);
       setState(() {
         _forgotPassword_ProgressIndicator = false;
       });
@@ -136,7 +137,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
       showSnackbarMessage(
         context,
-        "Password Reset Link sent successfully! Check your email.",
+        'Password_Reset_Link_sent_successfully_Check_your_email'.tr,
       );
 
       Navigator.pushNamedAndRemoveUntil(
@@ -149,10 +150,10 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
       switch (e.code) {
         case 'invalid-email':
-          errorMessage = "The email address is not valid.";
+          errorMessage = 'The_email_address_is_not_valid'.tr;
           break;
         case 'too-many-requests':
-          errorMessage = "Too many requests. Please try again later.";
+          errorMessage = 'Too_many_requests_Please_try_again_later'.tr;
           break;
         default:
           errorMessage = e.message ?? "An error occurred. Please try again.";

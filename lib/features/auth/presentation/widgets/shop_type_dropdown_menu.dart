@@ -1,6 +1,7 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class ShopTypeDropdownWidget extends StatefulWidget {
   final void Function(String?)? onSaved;
@@ -41,7 +42,7 @@ class _ShopTypeDropdownWidgetState extends State<ShopTypeDropdownWidget> {
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
       ),
       hint: Text(
-        'Select Shop Type',
+        'Select_shop_type'.tr,
         style: TextStyle(
           fontWeight: FontWeight.normal,
           color: theme.colorScheme.primary,
@@ -59,7 +60,7 @@ class _ShopTypeDropdownWidgetState extends State<ShopTypeDropdownWidget> {
           .toList(),
       validator: (value) {
         if (value == null) {
-          return 'Please select shop type.';
+          return 'Please_select_shop_type'.tr;
         }
         return null;
       },

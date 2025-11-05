@@ -4,7 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'app/theme_controller.dart';
+import 'app/controller/theme_controller.dart';
 import 'features/products/database/cloudinary_database.dart';
 
 final cloudinaryService = CloudinaryService(

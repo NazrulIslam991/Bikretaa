@@ -44,7 +44,7 @@ class ProductCardWidget extends StatelessWidget {
 
     return Card(
       color: theme.cardColor,
-      elevation: 8,
+      elevation: 3,
       shadowColor: Colors.blueAccent,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.h)),
       child: SizedBox(

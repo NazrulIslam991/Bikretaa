@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class ProductExpireDateController extends StatelessWidget {
@@ -19,8 +20,8 @@ class ProductExpireDateController extends StatelessWidget {
         controller: _ProductExpireDateController,
         readOnly: true,
         decoration: InputDecoration(
-          hintText: "Expire Date",
-          labelText: "Expire Date",
+          hintText: "enter_expire_date".tr,
+          labelText: "expire_date".tr,
           labelStyle: TextStyle(
             fontWeight: FontWeight.normal,
             color: theme.colorScheme.primary,
@@ -69,7 +70,7 @@ class ProductExpireDateController extends StatelessWidget {
         },
         validator: (value) {
           if (value == null || value.isEmpty) {
-            return 'Expire date is required';
+            return 'expire_date_required'.tr;
           }
           return null;
         },

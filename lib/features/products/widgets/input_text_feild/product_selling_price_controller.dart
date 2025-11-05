@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class ProductSellingPriceController extends StatelessWidget {
   const ProductSellingPriceController({
@@ -17,8 +18,8 @@ class ProductSellingPriceController extends StatelessWidget {
       child: TextFormField(
         controller: _ProductSellingPriceController,
         decoration: InputDecoration(
-          hintText: "Enter selling price",
-          labelText: "Selling Price",
+          hintText: "enter_selling_price".tr,
+          labelText: "selling_price".tr,
           labelStyle: TextStyle(
             fontWeight: FontWeight.normal,
             color: theme.colorScheme.primary,
@@ -38,7 +39,7 @@ class ProductSellingPriceController extends StatelessWidget {
         validator: (value) {
           String shop_name = value ?? '';
           if (shop_name.isEmpty) {
-            return 'Selling Price is required';
+            return 'selling_price_required'.tr;
           }
           return null;
         },

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class ProductQuantityController extends StatelessWidget {
   const ProductQuantityController({
@@ -17,8 +18,8 @@ class ProductQuantityController extends StatelessWidget {
       child: TextFormField(
         controller: _productQuantityController,
         decoration: InputDecoration(
-          hintText: "Enter product quantity",
-          labelText: "Product Quantity",
+          hintText: "enter_product_quantity".tr,
+          labelText: "product_quantity".tr,
           labelStyle: TextStyle(
             fontWeight: FontWeight.normal,
             color: theme.colorScheme.primary,
@@ -38,7 +39,7 @@ class ProductQuantityController extends StatelessWidget {
         validator: (value) {
           String shop_name = value ?? '';
           if (shop_name.isEmpty) {
-            return 'Product Quantity is required';
+            return 'product_quantity_required'.tr;
           }
           return null;
         },

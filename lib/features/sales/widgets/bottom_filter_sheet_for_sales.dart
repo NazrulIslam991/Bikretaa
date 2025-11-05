@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 enum SalesFilter { fixedDate, lastWeek, lastMonth, lastYear }
 
@@ -85,7 +86,7 @@ class SalesFilterSheet extends StatelessWidget {
           children: [
             Center(
               child: Text(
-                "Filter Sales",
+                "filter_sales".tr,
                 style: TextStyle(
                   fontSize: 20.sp,
                   fontWeight: FontWeight.bold,
@@ -103,22 +104,22 @@ class SalesFilterSheet extends StatelessWidget {
                 Color color;
                 switch (filter) {
                   case SalesFilter.fixedDate:
-                    title = "Fixed Date";
+                    title = "fixed_date".tr;
                     icon = Icons.date_range;
                     color = Colors.blue;
                     break;
                   case SalesFilter.lastWeek:
-                    title = "Last Week";
+                    title = "last_week".tr;
                     icon = Icons.calendar_view_week;
                     color = Colors.green;
                     break;
                   case SalesFilter.lastMonth:
-                    title = "Last Month";
+                    title = "last_month".tr;
                     icon = Icons.calendar_month;
                     color = Colors.orange;
                     break;
                   case SalesFilter.lastYear:
-                    title = "Last Year";
+                    title = "last_year".tr;
                     icon = Icons.calendar_today;
                     color = Colors.red;
                     break;

@@ -1,6 +1,7 @@
 import 'package:bikretaa/assets_path/assets_path.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class AboutScreen extends StatelessWidget {
   const AboutScreen({super.key});
@@ -10,7 +11,7 @@ class AboutScreen extends StatelessWidget {
     final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text("About Bikretaa", style: TextStyle(fontSize: 22.sp)),
+        title: Text("about_bikretaa".tr, style: TextStyle(fontSize: 22.sp)),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -40,7 +41,7 @@ class AboutScreen extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 6.w),
                     child: Text(
-                      "Bikretaa is a modern shop management app. It is designed specifically for shop owners to easily add products, track stock and expiry dates, manage due payments, and view detailed sales reports in one place.",
+                      "bikretaa_description".tr,
                       textAlign: TextAlign.justify,
                       style: TextStyle(
                         fontSize: 13.sp,
@@ -58,7 +59,7 @@ class AboutScreen extends StatelessWidget {
             Padding(
               padding: EdgeInsets.only(left: 4.w),
               child: Text(
-                "Why Bikretaa?",
+                "why_bikretaa".tr,
                 style: TextStyle(
                   fontSize: 16.sp,
                   fontWeight: FontWeight.bold,
@@ -71,7 +72,7 @@ class AboutScreen extends StatelessWidget {
               contentPadding: EdgeInsets.zero,
               leading: Icon(Icons.speed, color: Colors.blue),
               title: Text(
-                "Fast product management",
+                "fast_product_management".tr,
                 style: TextStyle(
                   fontSize: 13.sp,
                   color: theme.colorScheme.primary,
@@ -83,7 +84,7 @@ class AboutScreen extends StatelessWidget {
               contentPadding: EdgeInsets.zero,
               leading: Icon(Icons.inventory, color: Colors.blue),
               title: Text(
-                "Stock and expiry date tracking",
+                "stock_and_expiry_tracking".tr,
                 style: TextStyle(
                   fontSize: 13.sp,
                   color: theme.colorScheme.primary,
@@ -95,7 +96,7 @@ class AboutScreen extends StatelessWidget {
               contentPadding: EdgeInsets.zero,
               leading: Icon(Icons.notifications_active, color: Colors.blue),
               title: Text(
-                "Low stock & expiry alerts",
+                "low_stock_alerts".tr,
                 style: TextStyle(
                   fontSize: 13.sp,
                   color: theme.colorScheme.primary,
@@ -107,7 +108,7 @@ class AboutScreen extends StatelessWidget {
               contentPadding: EdgeInsets.zero,
               leading: Icon(Icons.bar_chart, color: Colors.blue),
               title: Text(
-                "Sales reports & analytics",
+                "sales_reports".tr,
                 style: TextStyle(
                   fontSize: 13.sp,
                   color: theme.colorScheme.primary,
@@ -119,7 +120,7 @@ class AboutScreen extends StatelessWidget {
               contentPadding: EdgeInsets.zero,
               leading: Icon(Icons.security, color: Colors.blue),
               title: Text(
-                "Secure login & account management",
+                "secure_login".tr,
                 style: TextStyle(
                   fontSize: 13.sp,
                   color: theme.colorScheme.primary,
@@ -133,7 +134,7 @@ class AboutScreen extends StatelessWidget {
             Padding(
               padding: EdgeInsets.only(left: 4.w),
               child: Text(
-                "Developed by:",
+                "developed_by".tr,
                 style: TextStyle(
                   fontSize: 16.sp,
                   fontWeight: FontWeight.bold,
@@ -156,7 +157,7 @@ class AboutScreen extends StatelessWidget {
             // Footer
             Center(
               child: Text(
-                "© 2025 Bikretaa Team. All Rights Reserved.",
+                "footer_text".tr,
                 style: TextStyle(
                   fontSize: 11.sp,
                   color: theme.colorScheme.primary,

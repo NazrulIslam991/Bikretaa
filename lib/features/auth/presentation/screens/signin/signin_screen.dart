@@ -1,5 +1,5 @@
 import 'package:bikretaa/app/body_background.dart';
-import 'package:bikretaa/app/theme_controller.dart';
+import 'package:bikretaa/app/controller/theme_controller.dart';
 import 'package:bikretaa/features/auth/presentation/database/firestore_user_check.dart';
 import 'package:bikretaa/features/auth/presentation/screens/forgot_password_screen.dart';
 import 'package:bikretaa/features/auth/presentation/screens/sign_up/create_account_screen.dart';
@@ -46,7 +46,7 @@ class _SigninScreenState extends State<SigninScreen> {
                   children: [
                     Center(
                       child: Text(
-                        "Wellcome To Bikretaa",
+                        'Login_Headline'.tr,
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
                     ),
@@ -78,7 +78,7 @@ class _SigninScreenState extends State<SigninScreen> {
                             child: TextButton(
                               onPressed: () => _onTapForgetPassword(),
                               child: Text(
-                                'Forgot Password?',
+                                'Forgot_password'.tr,
                                 style: TextStyle(
                                   color: Colors.lightBlue,
                                   fontStyle: FontStyle.italic,
@@ -101,7 +101,7 @@ class _SigninScreenState extends State<SigninScreen> {
                       child: ElevatedButton(
                         onPressed: () => _onTapSignin(),
                         child: Text(
-                          'Done',
+                          'Done'.tr,
                           style: TextStyle(
                             fontStyle: FontStyle.italic,
                             fontWeight: FontWeight.bold,
@@ -115,8 +115,8 @@ class _SigninScreenState extends State<SigninScreen> {
                     SizedBox(height: 20.h),
                     Center(
                       child: AuthBottomText(
-                        normalText: "Don't have an account? ",
-                        actionText: "Sign Up",
+                        normalText: 'Sign_in_bottom_text_1'.tr,
+                        actionText: 'Sign_in_bottom_text_2'.tr,
                         onTap: _onTapSignUp,
                       ),
                     ),
@@ -149,7 +149,7 @@ class _SigninScreenState extends State<SigninScreen> {
 
     bool userExists = await FirestoreUtils.checkUserExists(email);
     if (!userExists) {
-      showSnackbarMessage(context, 'No account found');
+      showSnackbarMessage(context, 'No_account_found'.tr);
       setState(() {
         _signinProgressIndicator = false;
       });
@@ -173,18 +173,18 @@ class _SigninScreenState extends State<SigninScreen> {
         (predicate) => false,
       );
 
-      showSnackbarMessage(context, "Login successful!");
+      showSnackbarMessage(context, 'Login_successful!'.tr);
     } on FirebaseAuthException catch (e) {
       String errorMessage;
 
       if (e.code == 'user-not-found') {
-        errorMessage = 'No account found for that email.';
+        errorMessage = 'No_account_found_for_that_email'.tr;
       } else if (e.code == 'wrong-password') {
-        errorMessage = 'Incorrect password. Please try again.';
+        errorMessage = 'Incorrect_password_Please_try_again'.tr;
       } else if (e.code == 'invalid-email') {
-        errorMessage = 'The email address is not valid.';
+        errorMessage = 'The_email_address_is_not_valid'.tr;
       } else {
-        errorMessage = 'Login failed. Please try again.';
+        errorMessage = 'Login_failed_Please_try_again'.tr;
       }
 
       showSnackbarMessage(context, errorMessage);

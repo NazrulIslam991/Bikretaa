@@ -9,6 +9,7 @@ import 'package:bikretaa/features/shared/presentation/widgets/circular_progress/
 import 'package:bikretaa/features/shared/presentation/widgets/snack_bar_messege/snackbar_messege.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class OTPVerificationScreen extends StatefulWidget {
   final String email;
@@ -22,7 +23,7 @@ class OTPVerificationScreen extends StatefulWidget {
 
   @override
   State<OTPVerificationScreen> createState() => _OTPVerificationScreenState();
-  static const name = 'Verification_Email';
+  static const name = '/Verification_Email';
 }
 
 class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
@@ -60,12 +61,12 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      "OTP Verification",
+                      'OTP_Headline'.tr,
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
                     SizedBox(height: 5),
                     Text(
-                      "Enter verification code sent to your email address",
+                      'OTP_subHeadLine'.tr,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontWeight: FontWeight.normal,
@@ -92,7 +93,7 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Text(
-                          "Didn't receive a code? ",
+                          'Didnt_receive_a_code'.tr,
                           style: TextStyle(
                             color: theme.colorScheme.primary,
                             fontStyle: FontStyle.italic,
@@ -103,7 +104,7 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                         TextButton(
                           onPressed: _onTapResendCode,
                           child: Text(
-                            'Resend',
+                            'Resend'.tr,
                             style: TextStyle(
                               color: Colors.lightBlue,
                               fontStyle: FontStyle.italic,
@@ -123,7 +124,7 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                       child: ElevatedButton(
                         onPressed: _onTapVerify,
                         child: Text(
-                          "Verify",
+                          'Verify'.tr,
                           style: TextStyle(color: theme.colorScheme.primary),
                         ),
                       ),
@@ -133,8 +134,8 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
 
                     Center(
                       child: AuthBottomText(
-                        normalText: "Have an account? ",
-                        actionText: "Sign In",
+                        normalText: 'Sign_up_bottom_text_1'.tr,
+                        actionText: 'Sign_up_bottom_text_2'.tr,
                         onTap: _onTapSignIn,
                       ),
                     ),
@@ -167,7 +168,7 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
     await Future.delayed(Duration(seconds: 3));
 
     if (enteredOtp == currentOtp) {
-      showSnackbarMessage(context, "OTP Verified Successfully!");
+      showSnackbarMessage(context, 'OTP_Verified_Successfully'.tr);
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -175,7 +176,7 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
         ),
       );
     } else {
-      showSnackbarMessage(context, "Invalid OTP! Please try again.");
+      showSnackbarMessage(context, 'Invalid_OTP_Please_try_again'.tr);
     }
 
     setState(() {

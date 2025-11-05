@@ -2,6 +2,7 @@ import 'package:bikretaa/features/auth/presentation/model/user_model.dart';
 import 'package:bikretaa/features/shared/presentation/share_preferences_helper/shared_preferences_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -24,7 +25,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Profile', style: TextStyle(fontSize: 24.sp)),
+        title: Text('profile'.tr, style: TextStyle(fontSize: 24.sp)),
         centerTitle: true,
       ),
       body: FutureBuilder<UserModel?>(
@@ -35,16 +36,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
           } else if (snapshot.hasError) {
             return Center(
               child: Text(
-                "Error loading user data",
+                "error_loading_user".tr,
                 style: TextStyle(fontSize: 16.sp, color: Colors.red),
               ),
             );
           } else if (!snapshot.hasData || snapshot.data == null) {
             return Center(
-              child: Text(
-                "No user data found",
-                style: TextStyle(fontSize: 16.sp),
-              ),
+              child: Text("no_user_data".tr, style: TextStyle(fontSize: 16.sp)),
             );
           }
 
@@ -126,7 +124,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Contact Information",
+                        "contact_information".tr,
                         style: TextStyle(
                           fontSize: 16.sp,
                           fontWeight: FontWeight.bold,
@@ -200,7 +198,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ListTile(
                       leading: Icon(Icons.edit_outlined),
                       title: Text(
-                        "Edit Profile",
+                        "edit_profile".tr,
                         style: TextStyle(color: theme.colorScheme.primary),
                       ),
                       trailing: Icon(Icons.chevron_right),
@@ -212,7 +210,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ListTile(
                       leading: Icon(Icons.lock_outline),
                       title: Text(
-                        "Change Password",
+                        "change_password".tr,
                         style: TextStyle(color: theme.colorScheme.primary),
                       ),
                       trailing: Icon(Icons.chevron_right),

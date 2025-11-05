@@ -8,6 +8,7 @@ import 'package:bikretaa/features/products/widgets/product_screen_shimmer/produc
 import 'package:bikretaa/features/shared/presentation/widgets/search_bar/search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ProductsScreen extends StatefulWidget {
@@ -40,7 +41,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
           controller: searchController,
           onChanged: (value) =>
               setState(() => searchText = value.toLowerCase()),
-          hintText: 'Search product',
+          hintText: 'search_product'.tr,
           prefixIcon: Icons.search,
           fontSize: 12,
         ),
@@ -57,7 +58,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
             if (!snapshot.hasData || snapshot.data!.isEmpty) {
               return Center(
                 child: Text(
-                  "No products found",
+                  "no_products_found".tr,
                   style: TextStyle(color: theme.colorScheme.primary),
                 ),
               );
@@ -76,18 +77,18 @@ class _ProductsScreenState extends State<ProductsScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Products",
+                            "products".tr,
                             style: TextStyle(
-                              fontSize: 25.h,
+                              fontSize: 21.h,
                               fontWeight: FontWeight.bold,
                               color: theme.textTheme.bodyLarge?.color,
                             ),
                           ),
                           Text(
-                            "${products.length} products found",
+                            "${products.length} ${"products_found".tr}",
                             style: GoogleFonts.abhayaLibre(
                               textStyle: TextStyle(
-                                fontSize: 16.h,
+                                fontSize: 15.h,
                                 color: theme.textTheme.bodyLarge?.color,
                               ),
                             ),

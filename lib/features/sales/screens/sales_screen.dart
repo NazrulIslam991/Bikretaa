@@ -11,6 +11,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class SalesScreen extends StatefulWidget {
@@ -46,7 +47,7 @@ class _SalesScreenState extends State<SalesScreen> {
     final theme = Theme.of(context);
     final uid = FirebaseAuth.instance.currentUser?.uid;
     if (uid == null) {
-      return Scaffold(body: Center(child: Text("User not logged in")));
+      return Scaffold(body: Center(child: Text("user_not_logged_in".tr)));
     }
 
     return Scaffold(
@@ -56,7 +57,7 @@ class _SalesScreenState extends State<SalesScreen> {
           controller: searchController,
           onChanged: (value) =>
               setState(() => searchText = value.toLowerCase()),
-          hintText: 'Search sales by ID or customer',
+          hintText: 'search_sales'.tr,
           prefixIcon: Icons.search,
           fontSize: 12,
         ),
@@ -74,17 +75,17 @@ class _SalesScreenState extends State<SalesScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Sales Products",
+                        "sales_products".tr,
                         style: TextStyle(
-                          fontSize: 25.h,
+                          fontSize: 21.h,
                           fontWeight: FontWeight.bold,
                           color: theme.textTheme.bodyLarge?.color,
                         ),
                       ),
                       Text(
-                        "Sales summary",
+                        "sales_summary".tr,
                         style: GoogleFonts.abhayaLibre(
-                          fontSize: 16.h,
+                          fontSize: 15.h,
                           color: theme.textTheme.bodyLarge?.color,
                         ),
                       ),
@@ -102,7 +103,7 @@ class _SalesScreenState extends State<SalesScreen> {
               ),
               SizedBox(height: 15.h),
 
-              /// Sales Summary
+              // Sales Summary
               StreamBuilder<QuerySnapshot>(
                 stream: _salesScreenDatabase.getSalesFiltered(
                   startDate,
@@ -149,7 +150,7 @@ class _SalesScreenState extends State<SalesScreen> {
                               Expanded(
                                 child: buildSummaryCard(
                                   value: totals["totalSales"] ?? 0.00,
-                                  label: "Sales",
+                                  label: "sales".tr,
                                   bgColor: Color(0xFFFFC727),
                                 ),
                               ),
@@ -157,7 +158,7 @@ class _SalesScreenState extends State<SalesScreen> {
                               Expanded(
                                 child: buildSummaryCard(
                                   value: totals["totalRevenue"] ?? 0.00,
-                                  label: "Revenue",
+                                  label: "revenue".tr,
                                   bgColor: Color(0xFF10B981),
                                 ),
                               ),
@@ -169,7 +170,7 @@ class _SalesScreenState extends State<SalesScreen> {
                               Expanded(
                                 child: buildSummaryCard(
                                   value: totals["totalDue"] ?? 0.00,
-                                  label: "Due",
+                                  label: "due".tr,
                                   bgColor: Color(0xFFFFC727),
                                   isPaidText: true,
                                 ),
@@ -178,7 +179,7 @@ class _SalesScreenState extends State<SalesScreen> {
                               Expanded(
                                 child: buildSummaryCard(
                                   value: totals["totalPaid"] ?? 0.00,
-                                  label: "Paid",
+                                  label: "paid".tr,
                                   bgColor: Color(0xFF10B981),
                                 ),
                               ),
@@ -193,8 +194,8 @@ class _SalesScreenState extends State<SalesScreen> {
 
               SizedBox(height: 15.h),
               Text(
-                "Sales history",
-                style: GoogleFonts.abhayaLibre(fontSize: 16.h),
+                "sales_history".tr,
+                style: GoogleFonts.abhayaLibre(fontSize: 15.h),
               ),
               SizedBox(height: 10.h),
 
@@ -221,13 +222,16 @@ class _SalesScreenState extends State<SalesScreen> {
                   }).toList();
 
                   if (salesDocs.isEmpty) {
-                    return Center(
-                      child: Text(
-                        "No sales found",
-                        style: TextStyle(
-                          fontSize: 14.h,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.blue,
+                    return SizedBox(
+                      height: 0.4.sh,
+                      child: Center(
+                        child: Text(
+                          "no_sales_found".tr,
+                          style: TextStyle(
+                            fontSize: 12.h,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.blue,
+                          ),
                         ),
                       ),
                     );

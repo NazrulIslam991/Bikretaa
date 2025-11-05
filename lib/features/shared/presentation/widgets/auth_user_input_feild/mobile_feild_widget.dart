@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class MobileFeildWidget extends StatelessWidget {
   const MobileFeildWidget({
@@ -44,7 +45,7 @@ class MobileFeildWidget extends StatelessWidget {
             letterSpacing: 0.4,
             fontSize: 12.h,
           ),
-          labelText: "Phone Number",
+          labelText: 'Phone_Number'.tr,
           prefixText: '+8801 ',
           prefixStyle: TextStyle(
             color: theme.colorScheme.primary,
@@ -60,7 +61,7 @@ class MobileFeildWidget extends StatelessWidget {
                   borderSide: BorderSide(color: Colors.blue, width: 2),
                 )
               : baseBorder,
-          errorBorder: baseBorder,
+          //errorBorder: Colors.red,
           focusedErrorBorder: baseBorder,
         ),
         textInputAction: TextInputAction.next,
@@ -70,9 +71,9 @@ class MobileFeildWidget extends StatelessWidget {
             return null;
           }
           if (value == null || value.isEmpty) {
-            return 'Please enter phone number';
+            return 'Please_enter_phone_number'.tr;
           } else if (!validatePhone(value)) {
-            return 'Please enter a valid phone number';
+            return 'Please_enter_a_valid_phone_number'.tr;
           }
           return null;
         },

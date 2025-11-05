@@ -1,4 +1,4 @@
-import 'package:bikretaa/app/theme_controller.dart';
+import 'package:bikretaa/app/controller/theme_controller.dart';
 import 'package:bikretaa/features/products/widgets/product_screen_shimmer/ShimmerCard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

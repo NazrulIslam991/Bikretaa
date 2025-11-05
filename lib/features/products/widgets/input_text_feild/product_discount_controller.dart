@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class ProductDiscountController extends StatelessWidget {
   const ProductDiscountController({
@@ -17,8 +18,8 @@ class ProductDiscountController extends StatelessWidget {
       child: TextFormField(
         controller: _productDiscountController,
         decoration: InputDecoration(
-          hintText: "Enter discount amount",
-          labelText: "Discount",
+          hintText: "enter_discount".tr,
+          labelText: "discount".tr,
           labelStyle: TextStyle(
             fontWeight: FontWeight.normal,
             color: theme.colorScheme.primary,
@@ -38,7 +39,7 @@ class ProductDiscountController extends StatelessWidget {
         validator: (value) {
           String shop_name = value ?? '';
           if (shop_name.isEmpty) {
-            return 'Discount is required';
+            return 'discount_required'.tr;
           }
           return null;
         },

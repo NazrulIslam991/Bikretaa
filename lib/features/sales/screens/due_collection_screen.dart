@@ -4,6 +4,7 @@ import 'package:bikretaa/features/sales/widgets/text_input_feild/customer_name_c
 import 'package:bikretaa/features/shared/presentation/widgets/auth_user_input_feild/mobile_feild_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class DueCollectionScreen extends StatefulWidget {
   const DueCollectionScreen({super.key});
@@ -18,8 +19,8 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
   final TextEditingController _mobileEcontroller = TextEditingController();
   final TextEditingController _customerAddressController =
       TextEditingController();
-  final TextEditingController _productIdController = TextEditingController();
-  final TextEditingController _quantityController = TextEditingController();
+  //final TextEditingController _productIdController = TextEditingController();
+  //final TextEditingController _quantityController = TextEditingController();
   final TextEditingController _paidController = TextEditingController();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -41,7 +42,7 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Due Collection", style: TextStyle(fontSize: 22.sp)),
+        title: Text("due_collection".tr, style: TextStyle(fontSize: 22.sp)),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -71,7 +72,7 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
                   ),
                 ),
 
-                ElevatedButton(onPressed: () {}, child: Text("Search")),
+                ElevatedButton(onPressed: () {}, child: Text("Search".tr)),
                 SizedBox(height: 20.h),
 
                 // Products list
@@ -93,7 +94,7 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
                         controller: _paidController,
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
-                          labelText: "Paid",
+                          labelText: "paid".tr,
                           labelStyle: TextStyle(
                             color: theme.colorScheme.onSurface,
                           ),
@@ -110,14 +111,14 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
                         ),
                         child: due < 0
                             ? Text(
-                                "Check your paid amount!",
+                                "due_check".tr,
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.red,
                                 ),
                               )
                             : Text(
-                                "Due: ${due.toStringAsFixed(2)} tk",
+                                "${'due'.tr}: ${due.toStringAsFixed(2)} tk",
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: theme.colorScheme.onSurface,
@@ -142,7 +143,7 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
           ),
           child: ElevatedButton(
             onPressed: () {},
-            child: Text("Confirm", style: TextStyle(fontSize: 16.sp)),
+            child: Text("confirm".tr, style: TextStyle(fontSize: 16.sp)),
           ),
         ),
       ),
@@ -159,13 +160,13 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
     return grandTotal - paid;
   }
 
-  void _resetForm() {
-    _addedProducts.clear();
-    _productIdController.clear();
-    _quantityController.clear();
-    _paidController.clear();
-    _customerNameController.clear();
-    _mobileEcontroller.clear();
-    _customerAddressController.clear();
-  }
+  // void _resetForm() {
+  //   _addedProducts.clear();
+  //   _productIdController.clear();
+  //   _quantityController.clear();
+  //   _paidController.clear();
+  //   _customerNameController.clear();
+  //   _mobileEcontroller.clear();
+  //   _customerAddressController.clear();
+  // }
 }

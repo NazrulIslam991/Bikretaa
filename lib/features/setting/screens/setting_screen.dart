@@ -1,4 +1,4 @@
-import 'package:bikretaa/app/theme_controller.dart';
+import 'package:bikretaa/app/controller/theme_controller.dart';
 import 'package:bikretaa/features/about_us/screens/about_screen.dart';
 import 'package:bikretaa/features/auth/presentation/model/user_model.dart';
 import 'package:bikretaa/features/auth/presentation/screens/signin/signin_screen.dart';
@@ -18,6 +18,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+
+import '../../../app/controller/language_controller.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({super.key});
@@ -49,7 +51,7 @@ class _SettingScreenState extends State<SettingScreen> {
     final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Settings', style: TextStyle(fontSize: 24.sp)),
+        title: Text('Settings'.tr, style: TextStyle(fontSize: 24.sp)),
         centerTitle: true,
       ),
       body: ListView(
@@ -125,20 +127,23 @@ class _SettingScreenState extends State<SettingScreen> {
                             ),
                           );
                         },
-                        child: Text('Edit', style: TextStyle(fontSize: 10.sp)),
+                        child: Text(
+                          'Edit'.tr,
+                          style: TextStyle(fontSize: 10.sp),
+                        ),
                       ),
                     ],
                   ),
           ),
 
           // ACCOUNT
-          SectionTitleWidget(title: 'Account'),
+          SectionTitleWidget(title: 'Account'.tr),
           SectionBoxWidget(
             children: [
               SettingsTileWidget(
                 icon: Icons.person_outline,
-                title: 'Profile',
-                subtitle: 'Name, phone, address',
+                title: 'Profile'.tr,
+                subtitle: 'Name_phone_address'.tr,
                 onTap: () {
                   Navigator.push(
                     context,
@@ -150,13 +155,13 @@ class _SettingScreenState extends State<SettingScreen> {
           ),
 
           // NOTIFICATIONS
-          SectionTitleWidget(title: 'Notifications'),
+          SectionTitleWidget(title: 'Notifications'.tr),
           SectionBoxWidget(
             children: [
               SettingsTileWidget(
                 icon: Icons.notifications_active_outlined,
-                title: 'Push Notifications',
-                subtitle: 'Enable all notifications',
+                title: 'Push_Notifications'.tr,
+                subtitle: 'Enable_all_notifications'.tr,
                 trailing: Switch(
                   value: _pushNotifications,
                   onChanged: (v) => setState(() => _pushNotifications = v),
@@ -164,8 +169,8 @@ class _SettingScreenState extends State<SettingScreen> {
               ),
               SettingsTileWidget(
                 icon: Icons.shopping_bag_outlined,
-                title: 'Expire date Alerts',
-                subtitle: 'Get notified before items expire',
+                title: 'Expire_date_Alerts'.tr,
+                subtitle: 'Get_notified_before_items_expire'.tr,
                 trailing: Switch(
                   value: _orderAlerts,
                   onChanged: (v) => setState(() => _orderAlerts = v),
@@ -173,8 +178,8 @@ class _SettingScreenState extends State<SettingScreen> {
               ),
               SettingsTileWidget(
                 icon: Icons.inventory_2_outlined,
-                title: 'Low Stock Alerts',
-                subtitle: 'Get notified when stock is low',
+                title: 'Low_Stock_Alerts'.tr,
+                subtitle: 'Get_notified_when_stock_is_low'.tr,
                 trailing: Switch(
                   value: _lowStockAlerts,
                   onChanged: (v) => setState(() => _lowStockAlerts = v),
@@ -184,38 +189,53 @@ class _SettingScreenState extends State<SettingScreen> {
           ),
 
           // SECURITY
-          SectionTitleWidget(title: 'Security'),
+          SectionTitleWidget(title: 'Security'.tr),
           SectionBoxWidget(
             children: [
               SettingsTileWidget(
                 icon: Icons.lock_outline,
-                title: 'Change Password',
-                subtitle: 'Update your account password',
+                title: 'Change_Password'.tr,
+                subtitle: 'Update_your_account_password'.tr,
                 onTap: () => _onTapChangePassword(),
               ),
             ],
           ),
 
-          SectionTitleWidget(title: 'Language & Theme'),
+          // LANGUAGE & THEME
+          SectionTitleWidget(title: 'Language_Theme'.tr),
           SectionBoxWidget(
             children: [
-              SettingsTileWidget(
-                icon: Icons.language,
-                title: 'Language',
-                subtitle: 'Select your preferred app language',
-                trailing: Switch(
-                  value: _language,
-                  onChanged: (v) => setState(() => _language = v),
-                ),
+              GetBuilder<LanguageController>(
+                builder: (langController) {
+                  bool isBangla =
+                      langController.currentLocale.languageCode == 'bn';
+                  return SettingsTileWidget(
+                    icon: Icons.language,
+                    title: 'Language'.tr,
+                    subtitle: isBangla ? 'বাংলা' : 'English',
+                    trailing: Switch(
+                      value: isBangla,
+                      onChanged: (v) {
+                        langController.changeLocale(
+                          v
+                              ? const Locale('bn', 'BD')
+                              : const Locale('en', 'US'),
+                        );
+                      },
+                    ),
+                  );
+                },
               ),
+
+              // THEME SWITCH
               Obx(() {
                 bool isDark = _themeController.isDarkMode.value;
                 return SettingsTileWidget(
                   icon: isDark ? Icons.dark_mode : Icons.light_mode,
-                  title: 'Theme',
+                  title: 'Theme'.tr,
                   subtitle: isDark
-                      ? 'Dark mode is active'
-                      : 'Light mode is active',
+                      ? 'Dark_mode_is_active'.tr
+                      : 'Light_mode_is_active'.tr,
                   trailing: Switch(
                     value: isDark,
                     onChanged: (value) {
@@ -230,13 +250,13 @@ class _SettingScreenState extends State<SettingScreen> {
           SizedBox(height: 15.h),
 
           // ABOUT & HELP
-          SectionTitleWidget(title: 'About & Help'),
+          SectionTitleWidget(title: 'About_Help'.tr),
           SectionBoxWidget(
             children: [
               SettingsTileWidget(
                 icon: Icons.support_agent,
-                title: 'Support & FAQs',
-                subtitle: 'Get help or contact support',
+                title: 'Support_FAQs'.tr,
+                subtitle: 'Get_help_or_contact_support'.tr,
                 onTap: () {
                   Navigator.push(
                     context,
@@ -246,8 +266,8 @@ class _SettingScreenState extends State<SettingScreen> {
               ),
               SettingsTileWidget(
                 icon: Icons.info,
-                title: 'About Us',
-                subtitle: 'Learn more about Bikretaa',
+                title: 'About_Us'.tr,
+                subtitle: 'Learn_more_about_Bikretaa'.tr,
                 onTap: () {
                   Navigator.push(
                     context,
@@ -257,8 +277,9 @@ class _SettingScreenState extends State<SettingScreen> {
               ),
               SettingsTileWidget(
                 icon: Icons.info_outline,
-                title: 'App Version',
-                subtitle: 'version: ${AppVersionServces.currentAppVersion}',
+                title: 'App_Version'.tr,
+                subtitle:
+                    "${'version'.tr}: ${AppVersionServces.currentAppVersion}",
                 onTap: () {},
               ),
             ],
@@ -268,7 +289,7 @@ class _SettingScreenState extends State<SettingScreen> {
 
           // DANGER ZONE
           Text(
-            'DANGER ZONE',
+            'DANGER_ZONE'.tr,
             style: TextStyle(
               fontSize: 10.sp,
               fontWeight: FontWeight.w700,
@@ -281,7 +302,7 @@ class _SettingScreenState extends State<SettingScreen> {
             children: [
               SettingsTileWidget(
                 icon: Icons.logout,
-                title: 'Log out',
+                title: 'Log_out'.tr,
                 onTap: () async {
                   setState(() => _loading = true);
                   await _logout(context);
@@ -299,9 +320,9 @@ class _SettingScreenState extends State<SettingScreen> {
   Future<void> _logout(BuildContext context) async {
     final ok = await showConfirmDialog(
       context: context,
-      title: "Logout",
-      content: "Are you sure you want to Logout?",
-      confirmText: "Logout",
+      title: "Logout".tr,
+      content: 'Are_you_sure_you_want_to_Logout'.tr,
+      confirmText: "Logout".tr,
       confirmColor: Colors.red,
     );
 
@@ -342,9 +363,9 @@ class _SettingScreenState extends State<SettingScreen> {
 
     final ok = await showConfirmDialog(
       context: context,
-      title: "Reset Password",
-      content: "Do you want to send a password reset link to ${user.email}?",
-      confirmText: "Send",
+      title: "Reset_Password".tr,
+      content: "${'Reset_Password_Message'.tr} ${user.email}?",
+      confirmText: 'Send'.tr,
       confirmColor: Colors.blue,
     );
 
@@ -355,7 +376,7 @@ class _SettingScreenState extends State<SettingScreen> {
         if (mounted) {
           showSnackbarMessage(
             context,
-            "Password reset link sent to ${user.email}",
+            "${"Password_Reset_Success".tr} ${user.email}",
           );
         }
       } on FirebaseAuthException catch (e) {

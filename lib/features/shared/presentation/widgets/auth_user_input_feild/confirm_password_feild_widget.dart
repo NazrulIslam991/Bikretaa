@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class ConfirmPasswordFeildWidget extends StatefulWidget {
   const ConfirmPasswordFeildWidget({
@@ -37,8 +38,8 @@ class _ConfirmPasswordFeildWidgetState
         obscureText: _obscureText,
         autovalidateMode: AutovalidateMode.onUserInteraction,
         decoration: InputDecoration(
-          hintText: "Confirm Password",
-          labelText: "Confirm Password",
+          hintText: 'Confirm_Password'.tr,
+          labelText: 'Confirm_Password'.tr,
           hintStyle: TextStyle(
             fontWeight: FontWeight.normal,
             color: theme.colorScheme.primary,
@@ -64,11 +65,11 @@ class _ConfirmPasswordFeildWidgetState
         textInputAction: TextInputAction.done,
         validator: (value) {
           if (value == null || value.isEmpty) {
-            return 'Please enter Password';
+            return 'Please_enter_Password'.tr;
           } else if (value != widget._passwordEcontroller.text) {
-            return 'Passwords do not match';
+            return 'Passwords_do_not_match'.tr;
           } else if (!validateCPassword(value)) {
-            return "Password must be 8+ chars with uppercase, lowercase & special char.";
+            return 'Password_hints'.tr;
           }
           return null;
         },

@@ -9,6 +9,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class UpdateProfileScreen extends StatefulWidget {
   const UpdateProfileScreen({super.key});
@@ -35,72 +36,68 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
     final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Update Profile', style: TextStyle(fontSize: 24.sp)),
+        title: Text('update_profile'.tr, style: TextStyle(fontSize: 24.sp)),
         centerTitle: true,
       ),
-      body: Center(
-        child: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 15.w),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                Container(
-                  height: 65.h,
-                  child: ShopNameWidget(
-                    shopNameEcontroller: _shopNameEcontroller,
-                  ),
+      body: SingleChildScrollView(
+        padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 15.w),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              Container(
+                height: 65.h,
+                child: ShopNameWidget(
+                  shopNameEcontroller: _shopNameEcontroller,
                 ),
-                Container(
-                  height: 45.h,
-                  padding: EdgeInsets.symmetric(horizontal: 12.w),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: theme.colorScheme.primary),
-                    borderRadius: BorderRadius.circular(8.r),
-                    color: theme.colorScheme.onPrimary,
-                  ),
-                  alignment: Alignment.centerLeft,
-                  child: Row(
-                    children: [
-                      Icon(Icons.email, color: Colors.blue, size: 20.sp),
-                      SizedBox(width: 8.w),
-                      Expanded(
-                        child: Text(
-                          _emailEcontroller.text,
-                          style: TextStyle(
-                            fontSize: 13.sp,
-                            color: theme.colorScheme.primary,
-                            fontWeight: FontWeight.w500,
-                          ),
+              ),
+              Container(
+                height: 45.h,
+                padding: EdgeInsets.symmetric(horizontal: 12.w),
+                decoration: BoxDecoration(
+                  border: Border.all(color: theme.colorScheme.primary),
+                  borderRadius: BorderRadius.circular(8.r),
+                  color: theme.colorScheme.onPrimary,
+                ),
+                alignment: Alignment.centerLeft,
+                child: Row(
+                  children: [
+                    Icon(Icons.email, color: Colors.blue, size: 20.sp),
+                    SizedBox(width: 8.w),
+                    Expanded(
+                      child: Text(
+                        _emailEcontroller.text,
+                        style: TextStyle(
+                          fontSize: 13.sp,
+                          color: theme.colorScheme.primary,
+                          fontWeight: FontWeight.w500,
                         ),
                       ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 25.h),
-                Container(
-                  height: 65.h,
-                  child: MobileFeildWidget(
-                    mobileEcontroller: _mobileEcontroller,
-                  ),
-                ),
-                ShopTypeDropdownWidget(
-                  initialValue: selectedShopType,
-                  onSaved: (value) => setState(() => selectedShopType = value),
-                ),
-                SizedBox(height: 20.h),
-                FilledButton(
-                  onPressed: _updateProfile,
-                  child: Text(
-                    'Update Profile',
-                    style: TextStyle(
-                      fontSize: 14.sp,
-                      color: theme.colorScheme.onPrimary,
                     ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 25.h),
+              Container(
+                height: 65.h,
+                child: MobileFeildWidget(mobileEcontroller: _mobileEcontroller),
+              ),
+              ShopTypeDropdownWidget(
+                initialValue: selectedShopType,
+                onSaved: (value) => setState(() => selectedShopType = value),
+              ),
+              SizedBox(height: 20.h),
+              FilledButton(
+                onPressed: _updateProfile,
+                child: Text(
+                  'update_profile_btn'.tr,
+                  style: TextStyle(
+                    fontSize: 14.sp,
+                    color: theme.colorScheme.onPrimary,
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
@@ -139,7 +136,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
 
     if (existingUser == null || firebaseUser == null) {
       if (mounted) Navigator.pop(context);
-      showSnackbarMessage(context, "Error: User data not found");
+      showSnackbarMessage(context, 'user_data_not_found'.tr);
       return;
     }
     String phoneToStore = _mobileEcontroller.text.trim();
@@ -167,12 +164,12 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
       await SharedPreferencesHelper.saveUser(updatedUser);
 
       if (mounted) {
-        showSnackbarMessage(context, "Profile updated successfully!");
+        showSnackbarMessage(context, 'profile_updated_success'.tr);
         Navigator.pop(context);
       }
     } catch (e) {
       if (mounted) Navigator.pop(context);
-      showSnackbarMessage(context, "Error updating profile: $e");
+      showSnackbarMessage(context, '${'error_updating_profile'.tr}: $e');
     }
   }
 }

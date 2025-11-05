@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class ProductSupplierNameController extends StatelessWidget {
   const ProductSupplierNameController({
@@ -17,8 +18,8 @@ class ProductSupplierNameController extends StatelessWidget {
       child: TextFormField(
         controller: _productSupplierNameController,
         decoration: InputDecoration(
-          hintText: "Enter supplier name",
-          labelText: "Supplier Name",
+          hintText: "enter_supplier_name".tr,
+          labelText: "supplier_name".tr,
           labelStyle: TextStyle(
             fontWeight: FontWeight.normal,
             color: theme.colorScheme.primary,
@@ -37,7 +38,7 @@ class ProductSupplierNameController extends StatelessWidget {
         validator: (value) {
           String shop_name = value ?? '';
           if (shop_name.isEmpty) {
-            return 'Supplier name is required';
+            return 'supplier_name_required'.tr;
           }
           return null;
         },

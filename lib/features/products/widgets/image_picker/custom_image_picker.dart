@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:bikretaa/features/shared/presentation/widgets/snack_bar_messege/snackbar_messege.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:palette_generator/palette_generator.dart';
 
@@ -60,7 +61,7 @@ class _CustomImagePickerState extends State<CustomImagePicker> {
         setState(() {});
       }
     } catch (e) {
-      showSnackbarMessage(context, 'Error picking image: $e');
+      showSnackbarMessage(context, 'error_picking_image'.tr + ': $e');
     }
   }
 
@@ -76,7 +77,7 @@ class _CustomImagePickerState extends State<CustomImagePicker> {
       widget.onImageSelected(_selectedImage!);
       setState(() {});
     } else if (response.exception != null) {
-      showSnackbarMessage(context, 'Error retrieving lost image data');
+      showSnackbarMessage(context, 'error_retrieving_image'.tr);
     }
   }
 
@@ -101,7 +102,7 @@ class _CustomImagePickerState extends State<CustomImagePicker> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                "Select Image",
+                "select_image".tr,
                 style: TextStyle(
                   fontSize: 18.sp,
                   fontWeight: FontWeight.bold,
@@ -130,7 +131,7 @@ class _CustomImagePickerState extends State<CustomImagePicker> {
                         ),
                       ),
                       SizedBox(height: 8.h),
-                      Text("Gallery"),
+                      Text("gallery".tr),
                     ],
                   ),
                   Column(
@@ -151,7 +152,7 @@ class _CustomImagePickerState extends State<CustomImagePicker> {
                         ),
                       ),
                       SizedBox(height: 8.h),
-                      Text("Camera"),
+                      Text("camera".tr),
                     ],
                   ),
                 ],
@@ -191,7 +192,7 @@ class _CustomImagePickerState extends State<CustomImagePicker> {
               )
             : Center(
                 child: Text(
-                  "Tap to select image",
+                  "tap_to_select_image".tr,
                   style: TextStyle(color: theme.colorScheme.primary),
                 ),
               ),

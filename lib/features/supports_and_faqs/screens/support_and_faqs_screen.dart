@@ -6,6 +6,7 @@ import 'package:bikretaa/features/supports_and_faqs/database/account_info_delete
 import 'package:bikretaa/features/supports_and_faqs/widgets/expansion_card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class SupportFaqScreen extends StatefulWidget {
   const SupportFaqScreen({super.key});
@@ -22,7 +23,7 @@ class _SupportFaqScreenState extends State<SupportFaqScreen> {
     final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text("Support & FAQs", style: TextStyle(fontSize: 22.sp)),
+        title: Text("support_faqs".tr, style: TextStyle(fontSize: 22.sp)),
         centerTitle: true,
       ),
       body: Stack(
@@ -31,7 +32,7 @@ class _SupportFaqScreenState extends State<SupportFaqScreen> {
             padding: EdgeInsets.all(14.w),
             children: [
               Text(
-                "Welcome to Bikretaa Support! Here you'll find answers to frequently asked questions and guides on using the app.",
+                "support_welcome".tr,
                 textAlign: TextAlign.justify,
                 style: TextStyle(
                   fontSize: 13.sp,
@@ -42,29 +43,20 @@ class _SupportFaqScreenState extends State<SupportFaqScreen> {
 
               // FAQ Cards
               ExpansionCard(
-                title: "How to manage products?",
-                description:
-                    "Go to the Product screen and tap on 'Add Product' to enter new items. "
-                    "You can set purchase price, selling price, stock quantity, expiry date, and discount. "
-                    "All added products will be visible in the product screen.",
+                title: "faq_manage_products_title".tr,
+                description: "faq_manage_products_desc".tr,
               ),
               ExpansionCard(
-                title: "How to track sales?",
-                description:
-                    "Every sale is automatically recorded in the sales section. "
-                    "You can view daily, weekly, and monthly reports with graphical charts for better analysis.",
+                title: "faq_track_sales_title".tr,
+                description: "faq_track_sales_desc".tr,
               ),
               ExpansionCard(
-                title: "How to manage low stock and expiry alerts?",
-                description:
-                    "Enable notifications from the Settings page. "
-                    "The app will alert you whenever stock is low or products are near expiry.",
+                title: "faq_stock_alerts_title".tr,
+                description: "faq_stock_alerts_desc".tr,
               ),
               ExpansionCard(
-                title: "How to reset password?",
-                description:
-                    "Go to Settings > Security > Change Password. "
-                    "A password reset link will be sent to your registered email.",
+                title: "faq_reset_password_title".tr,
+                description: "faq_reset_password_desc".tr,
               ),
 
               SizedBox(height: 5.h),
@@ -79,7 +71,7 @@ class _SupportFaqScreenState extends State<SupportFaqScreen> {
                 color: theme.cardColor,
                 child: ExpansionTile(
                   title: Text(
-                    "Account Deletion",
+                    "account_deletion".tr,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: theme.colorScheme.error,
@@ -95,7 +87,7 @@ class _SupportFaqScreenState extends State<SupportFaqScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Deleting your account will have the following consequences:",
+                            "account_deletion_warning".tr,
                             style: TextStyle(
                               fontSize: 12.sp,
                               fontWeight: FontWeight.bold,
@@ -104,11 +96,7 @@ class _SupportFaqScreenState extends State<SupportFaqScreen> {
                           ),
                           SizedBox(height: 6.h),
                           Text(
-                            "Your personal account information will be permanently removed. "
-                            "All products you added will be deleted. "
-                            "All sales history and payment records will be lost. "
-                            "Due amounts and revenue data will no longer be accessible. "
-                            "This action cannot be undone.",
+                            "account_deletion_desc".tr,
                             style: TextStyle(
                               fontSize: 12.sp,
                               color: theme.colorScheme.primary,
@@ -132,7 +120,7 @@ class _SupportFaqScreenState extends State<SupportFaqScreen> {
                               if (mounted) setState(() => _loading = false);
                             },
                             child: Text(
-                              'Delete Account',
+                              'delete_account'.tr,
                               style: TextStyle(fontSize: 13.sp),
                             ),
                           ),
@@ -147,7 +135,7 @@ class _SupportFaqScreenState extends State<SupportFaqScreen> {
 
               // Help Section
               Text(
-                "Need More Help?",
+                "need_more_help".tr,
                 style: TextStyle(
                   fontSize: 16.sp,
                   fontWeight: FontWeight.bold,
@@ -165,9 +153,8 @@ class _SupportFaqScreenState extends State<SupportFaqScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Title
                       Text(
-                        "Email Support",
+                        "email_support".tr,
                         style: TextStyle(
                           fontSize: 14.sp,
                           fontWeight: FontWeight.bold,
@@ -175,8 +162,6 @@ class _SupportFaqScreenState extends State<SupportFaqScreen> {
                         ),
                       ),
                       SizedBox(height: 4.h),
-
-                      // Email address in blue
                       Text(
                         "support@bikretaa.com",
                         style: TextStyle(
@@ -186,10 +171,8 @@ class _SupportFaqScreenState extends State<SupportFaqScreen> {
                         ),
                       ),
                       SizedBox(height: 6.h),
-
-                      // User message / subtitle
                       Text(
-                        "Send your queries to this email and our team will respond to you promptly.",
+                        "email_support_desc".tr,
                         style: TextStyle(
                           fontSize: 12.sp,
                           color: theme.colorScheme.primary,
@@ -209,9 +192,9 @@ class _SupportFaqScreenState extends State<SupportFaqScreen> {
   Future<void> _deleteAccount(BuildContext context) async {
     final ok = await showConfirmDialog(
       context: context,
-      title: "Delete Account",
-      content: "Are you sure you want to delete your account?",
-      confirmText: "Delete",
+      title: "delete_account".tr,
+      content: "delete_account_confirm".tr,
+      confirmText: "delete_account".tr,
       confirmColor: Colors.red,
     );
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class ProductManufactureDateController extends StatelessWidget {
@@ -19,8 +20,8 @@ class ProductManufactureDateController extends StatelessWidget {
         controller: _productManufactureDateController,
         readOnly: true,
         decoration: InputDecoration(
-          hintText: "Enter manufacture date",
-          labelText: "Manufacture Date",
+          hintText: "enter_manufacture_date".tr,
+          labelText: "manufacture_date".tr,
           labelStyle: TextStyle(
             fontWeight: FontWeight.normal,
             color: theme.colorScheme.primary,
@@ -70,7 +71,7 @@ class ProductManufactureDateController extends StatelessWidget {
         },
         validator: (value) {
           if (value == null || value.isEmpty) {
-            return 'Manufacture date  is required';
+            return 'manufacture_date_required'.tr;
           }
           return null;
         },

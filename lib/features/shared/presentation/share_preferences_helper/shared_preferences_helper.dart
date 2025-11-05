@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class SharedPreferencesHelper {
   static const String _userKey = 'user_info';
   static const String _themeKey = 'is_dark_mode';
+  static const String _languageKey = 'app_language';
 
   // Save UserModel to SharedPreferences
   static Future<void> saveUser(UserModel user) async {
@@ -47,5 +48,17 @@ class SharedPreferencesHelper {
   static Future<bool> getThemeMode() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getBool(_themeKey) ?? false; // default: light
+  }
+
+  // Save selected language ('en' or 'bn')
+  static Future<void> saveLanguage(String languageCode) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_languageKey, languageCode);
+  }
+
+  // Get saved language
+  static Future<String> getLanguage() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString(_languageKey) ?? 'en';
   }
 }
