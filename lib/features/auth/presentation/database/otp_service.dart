@@ -2,7 +2,6 @@ import 'package:bikretaa/app/urls.dart';
 import 'package:bikretaa/features/auth/presentation/database/network_caller.dart';
 
 class OtpApiService {
-  // Sends OTP to the given email using Brevo API
   static Future<NetworkResponse> sendOtp({
     required String email,
     required String otp,

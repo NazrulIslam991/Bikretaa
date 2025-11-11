@@ -34,6 +34,10 @@ Map<String, String> English = {
       'Too many requests. Please try again later.',
   'Account_already_exists_with_this_email':
       'Account already exists with this email.',
+  'Next': 'Next',
+  'Done': 'Done',
+  'Verify': 'Verify',
+  'Reset_Link': 'Reset Link',
 
   // -------------------- SignUp --------------------
   'SignUp_Headline': 'Create Account',
@@ -133,12 +137,28 @@ Map<String, String> English = {
   'footer_text': '© 2025 Bikretaa Team. All Rights Reserved.',
 
   // -------------------- FAQs / Support --------------------
-  'support_faqs': 'Support & FAQs',
+  "support_faqs": "Support & FAQs",
+  "get_help_subtitle": "Get help and find answers to common questions",
+  "welcome_support": "Welcome to Bikretaa Support! 👋",
+  "welcome_desc":
+      "We're here to help you with any questions or issues you may have. Browse through our FAQs or contact our support team for assistance.",
+  "email_support": "Email Support",
+  "email_support_desc":
+      "Can't find what you're looking for? Send us an email and we'll get back to you within 24 hours.",
+  "contact_support": "Contact support@bikretaa.com",
+  "help_feedback": "Help Desk & Feedback",
+  "feedback_desc":
+      "Send us instant feedback or report issues. Our admin team will receive immediate notifications and respond quickly.",
+  "feedback_hint": "Type your message, feedback, or report an issue...",
+  "instant_admin_notif": "Admin gets instant notification",
+  "send_message": "Send Message",
+  "urgent_contact_note":
+      "For urgent issues, please contact us via email. Our support team is available Monday to Friday, 9 AM to 6 PM (EST).",
   'support_welcome':
       "Welcome to Bikretaa Support! Here you'll find answers to frequently asked questions and guides on using the app.",
   'faq_manage_products_title': 'How to manage products?',
   'faq_manage_products_desc':
-      "Go to the Product screen and tap on 'Add Product' to enter new items. You can set purchase price, selling price, stock quantity, expiry date, and discount. All added products will be visible in the product screen.",
+      "Go to the Product screens and tap on 'Add Product' to enter new items. You can set purchase price, selling price, stock quantity, expiry date, and discount. All added products will be visible in the product screens.",
   'faq_track_sales_title': 'How to track sales?',
   'faq_track_sales_desc':
       "Every sale is automatically recorded in the sales section. You can view daily, weekly, and monthly reports with graphical charts for better analysis.",
@@ -158,9 +178,6 @@ Map<String, String> English = {
   'delete_account': 'Delete Account',
   'delete_account_confirm': 'Are you sure you want to delete your account?',
   'need_more_help': 'Need More Help?',
-  'email_support': 'Email Support',
-  'email_support_desc':
-      'Send your queries to this email and our team will respond to you promptly.',
   'user_not_logged_in': 'User not logged in',
 
   // -------------------- Dashboard / Home --------------------

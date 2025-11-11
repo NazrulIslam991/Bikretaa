@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:bikretaa/app/string.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -19,8 +20,7 @@ class NetworkResponse {
 
 class NetworkCaller {
   static const String _defaultErrorMessage = "Something went wrong!";
-  static const String brevoApiKey =
-      "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";
+  static const String brevoApiKey = AppConstants.brevoApiKey;
 
   static Future<NetworkResponse> postRequest({
     required String url,

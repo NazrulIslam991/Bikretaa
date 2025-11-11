@@ -10,11 +10,14 @@ import 'package:bikretaa/features/products/screens/products_screen.dart';
 import 'package:bikretaa/features/sales/screens/add_sales_screen.dart';
 import 'package:bikretaa/features/sales/screens/due_collection_screen.dart';
 import 'package:bikretaa/features/setting/screens/setting_screen.dart';
+import 'package:bikretaa/features/shared/presentation/screens/admin_main_nav_bar_screen.dart';
 import 'package:bikretaa/features/shared/presentation/screens/main_nav_bar_screen.dart';
 import 'package:bikretaa/utils/languages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+
+import '../features/notification_users/screens/notification_screen_user.dart';
 
 class BikretaaApp extends StatelessWidget {
   const BikretaaApp({super.key});
@@ -52,12 +55,16 @@ class BikretaaApp extends StatelessWidget {
                     ForgotPasswordScreen.name: (context) =>
                         ForgotPasswordScreen(),
                     MainNavBarScreen.name: (context) => MainNavBarScreen(),
+                    AdminMainNavBarScreen.name: (context) =>
+                        AdminMainNavBarScreen(),
                     AddProductScreen.name: (context) => AddProductScreen(),
                     ProductsScreen.name: (context) => ProductsScreen(),
                     AddSalesScreen.name: (context) => AddSalesScreen(),
                     SettingScreen.name: (context) => SettingScreen(),
                     DueCollectionScreen.name: (context) =>
                         DueCollectionScreen(),
+                    NotificationScreenUser.name: (context) =>
+                        NotificationScreenUser(),
                   },
                   debugShowCheckedModeBanner: false,
                 );

@@ -1,0 +1,7 @@
+class AppConstants {
+  static const String adminEmail = "rentrover2025@gmail.com";
+  static const String cloudName = "dqntrxknj";
+  static const String uploadPreset = "Bikretaa";
+  static const String brevoApiKey =
+      "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";
+}

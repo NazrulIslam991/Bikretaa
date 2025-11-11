@@ -17,7 +17,7 @@ class ExpansionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Card(
-      margin: EdgeInsets.only(bottom: 10.h),
+      margin: EdgeInsets.only(bottom: 5.h),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
       color: theme.cardColor,
       elevation: 2,

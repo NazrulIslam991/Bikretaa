@@ -3,10 +3,16 @@ import 'package:bikretaa/features/shared/presentation/share_preferences_helper/s
 import 'package:bikretaa/features/shared/presentation/widgets/circular_progress/circular_progress_indicatior_2.dart';
 import 'package:bikretaa/features/shared/presentation/widgets/dialog_box/confirm_dialog.dart';
 import 'package:bikretaa/features/supports_and_faqs/database/account_info_delete.dart';
-import 'package:bikretaa/features/supports_and_faqs/widgets/expansion_card_widget.dart';
+import 'package:bikretaa/features/supports_and_faqs/widgets/account_deletation_card.dart';
+import 'package:bikretaa/features/supports_and_faqs/widgets/email_support_card.dart';
+import 'package:bikretaa/features/supports_and_faqs/widgets/faq_card.dart';
+import 'package:bikretaa/features/supports_and_faqs/widgets/feedback_card.dart';
+import 'package:bikretaa/features/supports_and_faqs/widgets/info_section_widget.dart';
+import 'package:bikretaa/features/supports_and_faqs/widgets/section_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SupportFaqScreen extends StatefulWidget {
   const SupportFaqScreen({super.key});
@@ -17,178 +23,120 @@ class SupportFaqScreen extends StatefulWidget {
 
 class _SupportFaqScreenState extends State<SupportFaqScreen> {
   bool _loading = false;
+  final TextEditingController _feedbackController = TextEditingController();
+  int _charCount = 0;
+
+  final Color blue = const Color(0xFF007BFF);
+  final Color green = const Color(0xFF28A745);
+
+  @override
+  void dispose() {
+    _feedbackController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
     return Scaffold(
       appBar: AppBar(
-        title: Text("support_faqs".tr, style: TextStyle(fontSize: 22.sp)),
         centerTitle: true,
+        elevation: 0.5,
+        title: Text(
+          'support_faqs'.tr,
+          style: TextStyle(
+            fontSize: 20.sp,
+            fontWeight: FontWeight.w700,
+            color: blue,
+          ),
+        ),
       ),
-      body: Stack(
+      body: ListView(
+        padding: EdgeInsets.all(8.w),
         children: [
-          ListView(
-            padding: EdgeInsets.all(14.w),
-            children: [
-              Text(
-                "support_welcome".tr,
-                textAlign: TextAlign.justify,
-                style: TextStyle(
-                  fontSize: 13.sp,
-                  color: theme.colorScheme.primary,
-                ),
-              ),
-              SizedBox(height: 20.h),
+          SectionText(
+            text: 'welcome_support'.tr,
+            fontSize: 16.sp,
+            fontWeight: FontWeight.w800,
+          ),
+          SizedBox(height: 8.h),
+          SectionText(text: 'welcome_desc'.tr, fontSize: 13.sp, opacity: 0.85),
+          SizedBox(height: 20.h),
 
-              // FAQ Cards
-              ExpansionCard(
-                title: "faq_manage_products_title".tr,
-                description: "faq_manage_products_desc".tr,
-              ),
-              ExpansionCard(
-                title: "faq_track_sales_title".tr,
-                description: "faq_track_sales_desc".tr,
-              ),
-              ExpansionCard(
-                title: "faq_stock_alerts_title".tr,
-                description: "faq_stock_alerts_desc".tr,
-              ),
-              ExpansionCard(
-                title: "faq_reset_password_title".tr,
-                description: "faq_reset_password_desc".tr,
-              ),
+          // FAQs
+          FAQCard(
+            title: 'faq_manage_products_title'.tr,
+            description: 'faq_manage_products_desc'.tr,
+          ),
+          FAQCard(
+            title: 'faq_track_sales_title'.tr,
+            description: 'faq_track_sales_desc'.tr,
+          ),
+          FAQCard(
+            title: 'faq_stock_alerts_title'.tr,
+            description: 'faq_stock_alerts_desc'.tr,
+          ),
+          FAQCard(
+            title: 'faq_reset_password_title'.tr,
+            description: 'faq_reset_password_desc'.tr,
+          ),
 
-              SizedBox(height: 5.h),
+          // Account deletion
+          AccountDeletionCard(
+            theme: theme,
+            onDelete: () async {
+              setState(() => _loading = true);
+              await _deleteAccount(context);
+              if (mounted) setState(() => _loading = false);
+            },
+          ),
 
-              // Account Deletion Section
-              Card(
-                margin: EdgeInsets.only(bottom: 10.h),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12.r),
-                ),
-                elevation: 2,
-                color: theme.cardColor,
-                child: ExpansionTile(
-                  title: Text(
-                    "account_deletion".tr,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: theme.colorScheme.error,
-                    ),
-                  ),
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 12.w,
-                        vertical: 10.h,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "account_deletion_warning".tr,
-                            style: TextStyle(
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.bold,
-                              color: theme.colorScheme.error,
-                            ),
-                          ),
-                          SizedBox(height: 6.h),
-                          Text(
-                            "account_deletion_desc".tr,
-                            style: TextStyle(
-                              fontSize: 12.sp,
-                              color: theme.colorScheme.primary,
-                              fontStyle: FontStyle.italic,
-                            ),
-                            textAlign: TextAlign.justify,
-                          ),
-                          SizedBox(height: 10.h),
-                          TextButton(
-                            style: TextButton.styleFrom(
-                              foregroundColor: Colors.white,
-                              backgroundColor: Colors.red.shade700,
-                              minimumSize: Size(double.infinity, 30.h),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.r),
-                              ),
-                            ),
-                            onPressed: () async {
-                              setState(() => _loading = true);
-                              await _deleteAccount(context);
-                              if (mounted) setState(() => _loading = false);
-                            },
-                            child: Text(
-                              'delete_account'.tr,
-                              style: TextStyle(fontSize: 13.sp),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+          SizedBox(height: 20.h),
 
-              SizedBox(height: 20.h),
+          // Email Support
+          InfoSection(
+            icon: Icons.mail_outline,
+            iconColor: blue,
+            title: 'email_support'.tr,
+            child: EmailSupportCard(theme: theme, onPressed: _openGmail),
+          ),
 
-              // Help Section
-              Text(
-                "need_more_help".tr,
-                style: TextStyle(
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.bold,
-                  color: theme.colorScheme.primary,
-                ),
+          SizedBox(height: 20.h),
+
+          // Feedback
+          InfoSection(
+            icon: Icons.chat_bubble_outline,
+            iconColor: green,
+            title: 'help_feedback'.tr,
+            child: FeedbackCard(
+              theme: theme,
+              controller: _feedbackController,
+              charCount: _charCount,
+              onChanged: (v) => setState(() => _charCount = v.length),
+              onSend: _sendFeedback,
+            ),
+          ),
+
+          SizedBox(height: 25.h),
+
+          // Footer
+          Center(
+            child: Text(
+              'urgent_contact_note'.tr,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 10.sp,
+                color: theme.colorScheme.onSurface.withOpacity(0.7),
               ),
-              SizedBox(height: 8.h),
-              Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12.r),
-                ),
-                color: theme.cardColor,
-                child: Padding(
-                  padding: EdgeInsets.all(12.w),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "email_support".tr,
-                        style: TextStyle(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.bold,
-                          color: theme.colorScheme.primary,
-                        ),
-                      ),
-                      SizedBox(height: 4.h),
-                      Text(
-                        "support@bikretaa.com",
-                        style: TextStyle(
-                          fontSize: 13.sp,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.blue,
-                        ),
-                      ),
-                      SizedBox(height: 6.h),
-                      Text(
-                        "email_support_desc".tr,
-                        style: TextStyle(
-                          fontSize: 12.sp,
-                          color: theme.colorScheme.primary,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
+            ),
           ),
         ],
       ),
     );
   }
 
+  // -------------------- FUNCTIONS --------------------
   Future<void> _deleteAccount(BuildContext context) async {
     final ok = await showConfirmDialog(
       context: context,
@@ -206,10 +154,8 @@ class _SupportFaqScreenState extends State<SupportFaqScreen> {
       builder: (context) => const CircularProgressIndicator2(),
     );
 
-    final _deleteAccountInfo = DeleteAccountHelper();
-
     try {
-      await _deleteAccountInfo.deleteAll();
+      await DeleteAccountHelper().deleteAll();
       await SharedPreferencesHelper.removeUser();
 
       if (mounted) Navigator.pop(context);
@@ -221,9 +167,45 @@ class _SupportFaqScreenState extends State<SupportFaqScreen> {
           (predicate) => false,
         );
       }
-    } catch (e) {
-      print("Unexpected error: $e");
+    } catch (_) {
       if (mounted) Navigator.pop(context);
     }
+  }
+
+  Future<void> _openGmail() async {
+    const String to = 'support@bikretaa.com';
+    final Uri gmailAppUri = Uri.parse(
+      'googlegmail://co?to=$to&subject=${Uri.encodeComponent('Bikretaa App Support')}',
+    );
+    final Uri mailUri = Uri(
+      scheme: 'mailto',
+      path: to,
+      queryParameters: {'subject': 'Bikretaa App Support'},
+    );
+
+    if (await canLaunchUrl(gmailAppUri)) {
+      await launchUrl(gmailAppUri);
+    } else if (await canLaunchUrl(mailUri)) {
+      await launchUrl(mailUri);
+    } else {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('could_not_open_email'.tr)));
+    }
+  }
+
+  void _sendFeedback() {
+    final text = _feedbackController.text.trim();
+    if (text.isEmpty) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('please_enter_feedback'.tr)));
+      return;
+    }
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text('feedback_sent'.tr)));
+    _feedbackController.clear();
+    setState(() => _charCount = 0);
   }
 }

@@ -1,196 +1,328 @@
-import 'package:bikretaa/assets_path/assets_path.dart';
+import 'package:bikretaa/features/dashboard_admin/widgets/section_tile_widget_admin.dart';
+import 'package:bikretaa/features/home/widgets/action_card.dart';
 import 'package:bikretaa/features/home/widgets/custom_drawer.dart';
-import 'package:bikretaa/features/home/widgets/most_sold_product_card.dart';
-import 'package:bikretaa/features/home/widgets/summary_card.dart';
-import 'package:bikretaa/features/shared/presentation/share_preferences_helper/shared_preferences_helper.dart';
+import 'package:bikretaa/features/home/widgets/home_banner.dart';
+import 'package:bikretaa/features/home/widgets/kpi_widget_cart.dart';
+import 'package:bikretaa/features/home/widgets/weather_widgets.dart';
+import 'package:bikretaa/features/products/screens/add_product_screen.dart';
+import 'package:bikretaa/features/sales/screens/due_collection_screen.dart';
+import 'package:bikretaa/features/shared/presentation/widgets/notification_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
+
+class HomeSlider {
+  final String assetPath;
+  HomeSlider({required this.assetPath});
+}
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  HomeScreen({Key? key}) : super(key: key);
+
+  // Sample sliders
+  final List<HomeSlider> sliders = [
+    HomeSlider(assetPath: 'assets/images/slider_1.png'),
+  ];
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Home'.tr,
-          style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(
-              Icons.notifications,
-              size: 23.h,
-              //color: theme.colorScheme.onPrimary,
+        elevation: 1,
+        titleSpacing: 16.w,
+        toolbarHeight: 52.h,
+        title: Row(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Bikretaa',
+                    style: TextStyle(
+                      fontSize: 23.sp,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 2.h),
+                  Text(
+                    'Your smart business partner',
+                    style: TextStyle(
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.normal,
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+            WeatherChip(temperature: '29°C'),
+            NotificationIcon(count: 1),
+          ],
+        ),
       ),
+      drawer: SizedBox(width: 240.w, child: CustomDrawer()),
+      body: SingleChildScrollView(
+        padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 5.h),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            HomeBannerSlider(sliders: sliders),
+            SizedBox(height: 8.h),
+            SectionTitle(title: "Today's Summary"),
+            SizedBox(height: 8.h),
 
-      drawer: Container(
-        height: double.infinity,
-        width: 240.w,
-        child: CustomDrawer(),
-      ),
-
-      body: FutureBuilder(
-        future: SharedPreferencesHelper.getUser(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Error_loading_user_data'.tr));
-          } else if (!snapshot.hasData || snapshot.data == null) {
-            return Center(child: Text('No_user_data_found'.tr));
-          }
-
-          final user = snapshot.data!;
-          final shopName = user.shopName;
-
-          return SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            padding: EdgeInsets.symmetric(vertical: 0.h, horizontal: 15.w),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            // KPI Cards
+            Column(
               children: [
-                Text(
-                  'Welcome,'.tr,
-                  style: TextStyle(
-                    color: theme.textTheme.bodyLarge?.color,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 24.h,
-                  ),
-                ),
-                Text(
-                  shopName.isNotEmpty ? shopName : '',
-                  style: GoogleFonts.abhayaLibre(
-                    textStyle: TextStyle(
-                      color: theme.textTheme.bodyMedium?.color,
-                      letterSpacing: .5,
-                      fontSize: 18.h,
+                Row(
+                  children: [
+                    Expanded(
+                      child: KpiCard(
+                        title: 'Sales',
+                        value: '৳45,000',
+                        icon: Icons.trending_up,
+                        color: Colors.green,
+                      ),
                     ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10.h),
-                  child: GridView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
-                      childAspectRatio: 1.h / 1.7.h,
+                    SizedBox(width: 10.w),
+                    Expanded(
+                      child: KpiCard(
+                        title: 'Revenues',
+                        value: '৳5,000',
+                        icon: Icons.attach_money,
+                        color: Colors.blue,
+                      ),
                     ),
-                    itemBuilder: (context, index) {
-                      return home_summary_card(
-                        totalProducts: 1000,
-                        CardTitle: 'Total_Product'.tr,
-                      );
-                    },
-                    itemCount: 6,
-                  ),
+                  ],
                 ),
-
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 5.h),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Most_Sold_Products'.tr,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14.h,
-                        ),
+                SizedBox(height: 10.h),
+                Row(
+                  children: [
+                    Expanded(
+                      child: KpiCard(
+                        title: 'Paid',
+                        value: '৳35,000',
+                        icon: Icons.payment,
+                        color: Colors.red,
                       ),
-                      TextButton(
-                        onPressed: () {},
-                        child: Text(
-                          'Show_Details'.tr,
-                          style: TextStyle(
-                            color: Colors.blue,
-                            fontSize: 10.h,
-                            fontStyle: FontStyle.italic,
-                          ),
-                        ),
+                    ),
+                    SizedBox(width: 10.w),
+                    Expanded(
+                      child: KpiCard(
+                        title: 'Due',
+                        value: '৳10,000',
+                        icon: Icons.account_balance_wallet,
+                        color: Colors.orange,
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-
-                Padding(
-                  padding: const EdgeInsets.only(top: 0),
-                  child: ListView.builder(
-                    itemBuilder: (context, index) {
-                      return Most_Sold_Product_Card(
-                        ProductName: 'Product Name',
-                        soldProductUnit: 199,
-                        totalSoldPrice: 1200,
-                        imagePath: AssetPaths.mostProductSold,
-                      );
-                    },
-                    itemCount: 4,
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                  ),
-                ),
-
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 5.h),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Sales_and_Due_Report'.tr,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14.h,
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () {},
-                        child: Text(
-                          'Show_Details'.tr,
-                          style: TextStyle(
-                            color: Colors.blue,
-                            fontSize: 10.h,
-                            fontStyle: FontStyle.italic,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 5.h),
-
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(15),
-                  child: Image.asset(
-                    AssetPaths.salesReport,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                SizedBox(height: 25.h),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(15),
-                  child: Image.asset(
-                    AssetPaths.dueReport,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                SizedBox(height: 5.h),
               ],
             ),
-          );
-        },
+            SizedBox(height: 12.h),
+
+            // Stock & Inventory Actions
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Section 1: Stock & Inventory
+                SectionTitle(title: "Stock & Inventory Actions"),
+                SizedBox(height: 8.h),
+                Column(
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: ActionCard(
+                            icon: Icons.inventory_2_outlined,
+                            title: "All Products",
+                            onTap: () {},
+                          ),
+                        ),
+                        SizedBox(width: 10.w),
+                        Expanded(
+                          child: ActionCard(
+                            icon: Icons.add_box_outlined,
+                            title: "Add Product",
+                            onTap: () => Navigator.pushNamed(
+                              context,
+                              AddProductScreen.name,
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 10.w),
+                        Expanded(
+                          child: ActionCard(
+                            icon: Icons.shopping_bag_outlined,
+                            title: "Record Sale",
+                            onTap: () {},
+                          ),
+                        ),
+                        SizedBox(width: 10.w),
+                        Expanded(
+                          child: ActionCard(
+                            icon: Icons.money_off,
+                            title: "Due Collection",
+                            onTap: () => Navigator.pushNamed(
+                              context,
+                              DueCollectionScreen.name,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 10.h),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: ActionCard(
+                            icon: Icons.error_outline,
+                            title: "Expired Products",
+                            onTap: () {},
+                          ),
+                        ),
+                        SizedBox(width: 10.w),
+                        Expanded(
+                          child: ActionCard(
+                            icon: Icons.warning_amber_rounded,
+                            title: "Low Stock",
+                            onTap: () {},
+                          ),
+                        ),
+                        SizedBox(width: 10.w),
+                        Expanded(
+                          child: ActionCard(
+                            icon: Icons.schedule,
+                            title: "Expire Soon",
+                            onTap: () {},
+                          ),
+                        ),
+                        SizedBox(width: 10.w),
+                        Expanded(
+                          child: ActionCard(
+                            icon: Icons.adjust,
+                            title: "Stock Adjustment",
+                            onTap: () {},
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+
+                SizedBox(height: 12.h),
+
+                // Section 2: Sales & Product History
+                SectionTitle(title: "Sales & Product History"),
+                SizedBox(height: 8.h),
+                Column(
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: ActionCard(
+                            icon: Icons.history,
+                            title: "Last Week Sales",
+                            onTap: () {},
+                          ),
+                        ),
+                        SizedBox(width: 10.w),
+                        Expanded(
+                          child: ActionCard(
+                            icon: Icons.calendar_month,
+                            title: "Last Month Sales",
+                            onTap: () {},
+                          ),
+                        ),
+                        SizedBox(width: 10.w),
+                        Expanded(
+                          child: ActionCard(
+                            icon: Icons.date_range,
+                            title: "Fixed Date Sales",
+                            onTap: () {},
+                          ),
+                        ),
+                        SizedBox(width: 10.w),
+                        Expanded(
+                          child: ActionCard(
+                            icon: Icons.list_alt,
+                            title: "All Products List",
+                            onTap: () {},
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
+
+            SizedBox(height: 12.h),
+            SectionTitle(title: "Business Tools"),
+            SizedBox(height: 8.h),
+            Column(
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: ActionCard(
+                        icon: Icons.store_mall_directory,
+                        title: "Branch Mgmt",
+                        onTap: () {},
+                      ),
+                    ),
+                    SizedBox(width: 10.w),
+                    Expanded(
+                      child: ActionCard(
+                        icon: Icons.schedule_outlined,
+                        title: "Expiry Track",
+                        onTap: () {},
+                      ),
+                    ),
+                    SizedBox(width: 10.w),
+                    Expanded(
+                      child: ActionCard(
+                        icon: Icons.backup_outlined,
+                        title: "Auto Backup",
+                        onTap: () {},
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 10.h),
+                Row(
+                  children: [
+                    Expanded(
+                      child: ActionCard(
+                        icon: Icons.notifications_active_outlined,
+                        title: "Alerts",
+                        onTap: () {},
+                      ),
+                    ),
+                    SizedBox(width: 10.w),
+                    Expanded(
+                      child: ActionCard(
+                        icon: Icons.support_agent_outlined,
+                        title: "Support",
+                        onTap: () {},
+                      ),
+                    ),
+                    SizedBox(width: 10.w),
+                    Expanded(
+                      child: ActionCard(
+                        icon: Icons.flash_on_outlined,
+                        title: "AI Suggest",
+                        onTap: () {},
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

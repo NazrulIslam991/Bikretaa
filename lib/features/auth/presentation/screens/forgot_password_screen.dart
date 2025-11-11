@@ -1,4 +1,5 @@
 import 'package:bikretaa/app/body_background.dart';
+import 'package:bikretaa/app/string.dart';
 import 'package:bikretaa/features/auth/presentation/database/firestore_user_check.dart';
 import 'package:bikretaa/features/auth/presentation/screens/signin/signin_screen.dart';
 import 'package:bikretaa/features/auth/presentation/widgets/auth_botto_text.dart';
@@ -22,6 +23,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController _emailEcontroller = TextEditingController();
   bool _forgotPassword_ProgressIndicator = false;
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -121,7 +123,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
     bool userExists = await FirestoreUtils.checkUserExists(email);
 
-    if (!userExists) {
+    if (!userExists && email != AppConstants.adminEmail) {
       showSnackbarMessage(context, 'No_account_found_for_that_email'.tr);
       setState(() {
         _forgotPassword_ProgressIndicator = false;

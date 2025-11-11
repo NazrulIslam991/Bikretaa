@@ -1,5 +1,7 @@
+import 'package:bikretaa/app/string.dart';
 import 'package:bikretaa/assets_path/assets_path.dart';
 import 'package:bikretaa/features/auth/presentation/screens/signin/signin_screen.dart';
+import 'package:bikretaa/features/shared/presentation/screens/admin_main_nav_bar_screen.dart';
 import 'package:bikretaa/features/shared/presentation/screens/main_nav_bar_screen.dart';
 import 'package:bikretaa/features/shared/presentation/widgets/background.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -25,7 +27,11 @@ class _SplashScreenState extends State<SplashScreen> {
     User? currentUser = FirebaseAuth.instance.currentUser;
 
     if (currentUser != null) {
-      Navigator.pushReplacementNamed(context, MainNavBarScreen.name);
+      if (currentUser.email == AppConstants.adminEmail) {
+        Navigator.pushReplacementNamed(context, AdminMainNavBarScreen.name);
+      } else {
+        Navigator.pushReplacementNamed(context, MainNavBarScreen.name);
+      }
     } else {
       Navigator.pushReplacementNamed(context, SigninScreen.name);
     }

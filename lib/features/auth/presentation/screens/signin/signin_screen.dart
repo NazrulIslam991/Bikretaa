@@ -1,9 +1,11 @@
 import 'package:bikretaa/app/body_background.dart';
 import 'package:bikretaa/app/controller/theme_controller.dart';
+import 'package:bikretaa/app/string.dart';
 import 'package:bikretaa/features/auth/presentation/database/firestore_user_check.dart';
 import 'package:bikretaa/features/auth/presentation/screens/forgot_password_screen.dart';
 import 'package:bikretaa/features/auth/presentation/screens/sign_up/create_account_screen.dart';
 import 'package:bikretaa/features/auth/presentation/widgets/auth_botto_text.dart';
+import 'package:bikretaa/features/shared/presentation/screens/admin_main_nav_bar_screen.dart';
 import 'package:bikretaa/features/shared/presentation/screens/main_nav_bar_screen.dart';
 import 'package:bikretaa/features/shared/presentation/share_preferences_helper/shared_preferences_helper.dart';
 import 'package:bikretaa/features/shared/presentation/widgets/auth_user_input_feild/email_feild_controller.dart';
@@ -148,7 +150,8 @@ class _SigninScreenState extends State<SigninScreen> {
     });
 
     bool userExists = await FirestoreUtils.checkUserExists(email);
-    if (!userExists) {
+
+    if (!userExists && email != AppConstants.adminEmail) {
       showSnackbarMessage(context, 'No_account_found'.tr);
       setState(() {
         _signinProgressIndicator = false;
@@ -167,11 +170,19 @@ class _SigninScreenState extends State<SigninScreen> {
         await SharedPreferencesHelper.saveUser(userInformation);
       }
 
-      Navigator.pushNamedAndRemoveUntil(
-        context,
-        MainNavBarScreen.name,
-        (predicate) => false,
-      );
+      if (email == AppConstants.adminEmail) {
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          AdminMainNavBarScreen.name,
+          (predicate) => false,
+        );
+      } else {
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          MainNavBarScreen.name,
+          (predicate) => false,
+        );
+      }
 
       showSnackbarMessage(context, 'Login_successful!'.tr);
     } on FirebaseAuthException catch (e) {
