@@ -317,4 +317,11 @@ Map<String, String> Bangla = {
   // -------------------- Drawer / Misc --------------------
   'Edit_Profile': 'প্রোফাইল সম্পাদনা',
   'Are_you_sure_you_want_to_logout?': 'আপনি কি নিশ্চিত লগআউট করতে চান?',
+
+  // -------------------- weather --------------------
+  'permission_denied': 'অনুমতি অস্বীকৃত',
+  'permission_message': 'আবহাওয়ার তথ্য পেতে লোকেশন পারমিশন প্রয়োজন',
+  'could_not_open_location': 'লোকেশন সেটিংস খোলা যায়নি',
+  'temperature_not_available': '--°C',
+  'tap_to_refresh': 'আবহাওয়ার তথ্য রিফ্রেশ করতে ট্যাপ করুন',
 };

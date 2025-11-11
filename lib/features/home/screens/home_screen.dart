@@ -57,7 +57,7 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
             ),
-            WeatherChip(temperature: '29°C'),
+            WeatherChip(),
             NotificationIcon(count: 1),
           ],
         ),

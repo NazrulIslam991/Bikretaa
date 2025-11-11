@@ -154,6 +154,19 @@ class _SettingScreenState extends State<SettingScreen> {
             ],
           ),
 
+          // SECURITY
+          SectionTitleWidget(title: 'Security'.tr),
+          SectionBoxWidget(
+            children: [
+              SettingsTileWidget(
+                icon: Icons.lock_outline,
+                title: 'Change_Password'.tr,
+                subtitle: 'Update_your_account_password'.tr,
+                onTap: () => _onTapChangePassword(),
+              ),
+            ],
+          ),
+
           // NOTIFICATIONS
           SectionTitleWidget(title: 'Notifications'.tr),
           SectionBoxWidget(
@@ -166,37 +179,6 @@ class _SettingScreenState extends State<SettingScreen> {
                   value: _pushNotifications,
                   onChanged: (v) => setState(() => _pushNotifications = v),
                 ),
-              ),
-              SettingsTileWidget(
-                icon: Icons.shopping_bag_outlined,
-                title: 'Expire_date_Alerts'.tr,
-                subtitle: 'Get_notified_before_items_expire'.tr,
-                trailing: Switch(
-                  value: _orderAlerts,
-                  onChanged: (v) => setState(() => _orderAlerts = v),
-                ),
-              ),
-              SettingsTileWidget(
-                icon: Icons.inventory_2_outlined,
-                title: 'Low_Stock_Alerts'.tr,
-                subtitle: 'Get_notified_when_stock_is_low'.tr,
-                trailing: Switch(
-                  value: _lowStockAlerts,
-                  onChanged: (v) => setState(() => _lowStockAlerts = v),
-                ),
-              ),
-            ],
-          ),
-
-          // SECURITY
-          SectionTitleWidget(title: 'Security'.tr),
-          SectionBoxWidget(
-            children: [
-              SettingsTileWidget(
-                icon: Icons.lock_outline,
-                title: 'Change_Password'.tr,
-                subtitle: 'Update_your_account_password'.tr,
-                onTap: () => _onTapChangePassword(),
               ),
             ],
           ),

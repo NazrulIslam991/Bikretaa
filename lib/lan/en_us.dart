@@ -312,4 +312,11 @@ Map<String, String> English = {
   // -------------------- Drawer / Misc --------------------
   'Edit_Profile': 'Edit Profile',
   'Are_you_sure_you_want_to_logout?': 'Are you sure you want to logout?',
+
+  // -------------------- weather --------------------
+  'permission_denied': 'Permission Denied',
+  'permission_message': 'Location permission is required to get weather info',
+  'could_not_open_location': 'Could not open location settings',
+  'temperature_not_available': '--°C',
+  'tap_to_refresh': 'Tap to refresh weather',
 };
