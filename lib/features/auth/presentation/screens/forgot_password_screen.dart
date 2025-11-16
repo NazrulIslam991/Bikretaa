@@ -11,6 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../../../../app/responsive.dart';
+
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
 
@@ -22,17 +24,22 @@ class ForgotPasswordScreen extends StatefulWidget {
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController _emailEcontroller = TextEditingController();
-  bool _forgotPassword_ProgressIndicator = false;
+  bool _forgotPasswordProgressIndicator = false;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final r = Responsive.of(context);
+
     return Scaffold(
       body: BodyBackground(
         child: Center(
           child: SingleChildScrollView(
             child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 15.w),
+              padding: EdgeInsets.symmetric(
+                vertical: r.height(0.02),
+                horizontal: r.width(0.04),
+              ),
               child: Form(
                 key: _formKey,
                 child: Column(
@@ -41,11 +48,13 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     Center(
                       child: Text(
                         'Forgot_password'.tr,
-                        style: Theme.of(context).textTheme.titleLarge,
+                        style: theme.textTheme.titleLarge?.copyWith(
+                          fontSize: r.fontXXXL(),
+                        ),
                       ),
                     ),
 
-                    SizedBox(height: 5.h),
+                    SizedBox(height: r.height(0.005)),
 
                     Center(
                       child: Text(
@@ -55,12 +64,13 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                           color: theme.colorScheme.primary,
                           letterSpacing: 0.4,
                           fontStyle: FontStyle.italic,
-                          fontSize: 12.sp,
+                          fontSize: r.fontSmall(),
                         ),
+                        textAlign: TextAlign.center,
                       ),
                     ),
 
-                    SizedBox(height: 40.h),
+                    SizedBox(height: r.height(0.05)),
 
                     Container(
                       height: 65.h,
@@ -69,26 +79,26 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       ),
                     ),
 
-                    SizedBox(height: 30.h),
-
+                    //SizedBox(height: r.height(0.04)),
                     Visibility(
-                      visible: _forgotPassword_ProgressIndicator == false,
+                      visible: !_forgotPasswordProgressIndicator,
                       replacement: CenterCircularProgressIndiacator(),
                       child: ElevatedButton(
-                        onPressed: () => _OnTapResetLinkSend(),
+                        onPressed: _onTapResetLinkSend,
                         child: Text(
                           'Reset_Link'.tr,
                           style: TextStyle(
                             fontStyle: FontStyle.italic,
                             fontWeight: FontWeight.bold,
-                            color: theme.colorScheme.primary,
-                            fontSize: 12.h,
+                            color: Colors.white,
+                            fontSize: r.fontSmall(),
                           ),
                         ),
                       ),
                     ),
 
-                    SizedBox(height: 20),
+                    SizedBox(height: r.height(0.03)),
+
                     Center(
                       child: AuthBottomText(
                         normalText: 'Sign_up_bottom_text_1'.tr,
@@ -106,19 +116,18 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     );
   }
 
-  //start the send Password reset link
-  void _OnTapResetLinkSend() {
+  // Start the send password reset link
+  void _onTapResetLinkSend() {
     if (_formKey.currentState!.validate()) {
-      sendPasswordResetLinkProcess();
+      _sendPasswordResetLinkProcess();
     }
   }
 
-  //"Database section for the send Password reset link process"
-  Future<void> sendPasswordResetLinkProcess() async {
+  Future<void> _sendPasswordResetLinkProcess() async {
     final email = _emailEcontroller.text.trim();
 
     setState(() {
-      _forgotPassword_ProgressIndicator = true;
+      _forgotPasswordProgressIndicator = true;
     });
 
     bool userExists = await FirestoreUtils.checkUserExists(email);
@@ -126,16 +135,13 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     if (!userExists && email != AppConstants.adminEmail) {
       showSnackbarMessage(context, 'No_account_found_for_that_email'.tr);
       setState(() {
-        _forgotPassword_ProgressIndicator = false;
+        _forgotPasswordProgressIndicator = false;
       });
       return;
     }
 
     try {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
-      setState(() {
-        _forgotPassword_ProgressIndicator = false;
-      });
 
       showSnackbarMessage(
         context,
@@ -165,12 +171,12 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       showSnackbarMessage(context, 'An unexpected error occurred: $e');
     } finally {
       setState(() {
-        _forgotPassword_ProgressIndicator = false;
+        _forgotPasswordProgressIndicator = false;
       });
     }
   }
 
-  //signup button section
+  // Sign-in button
   void _onTapSignIn() {
     Navigator.pushReplacementNamed(context, SigninScreen.name);
   }

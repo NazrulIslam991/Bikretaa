@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../../app/responsive.dart';
 
 class NotificationCardAdmin extends StatelessWidget {
   final Map<String, String> notification;
@@ -8,6 +9,7 @@ class NotificationCardAdmin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final r = Responsive.of(context);
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
 
@@ -24,12 +26,20 @@ class NotificationCardAdmin extends StatelessWidget {
         (isDark ? Colors.white : Colors.black87);
 
     return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(r.radiusMedium()),
+      ),
       color: cardBackground,
-      margin: EdgeInsets.symmetric(vertical: 6.h, horizontal: 4.w),
+      margin: EdgeInsets.symmetric(
+        vertical: r.height(0.007),
+        horizontal: r.width(0.01),
+      ),
       elevation: 3,
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 10.h),
+        padding: EdgeInsets.symmetric(
+          horizontal: r.width(0.03),
+          vertical: r.height(0.015),
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -37,14 +47,18 @@ class NotificationCardAdmin extends StatelessWidget {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Icon(Icons.notifications, color: iconColor, size: 20.sp),
-                SizedBox(width: 8.w),
+                Icon(
+                  Icons.notifications,
+                  color: iconColor,
+                  size: r.iconMedium(),
+                ),
+                SizedBox(width: r.width(0.02)),
                 Expanded(
                   child: Text(
                     notification["title"] ?? "",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 15.sp,
+                      fontSize: r.fontMedium(),
                       color: titleColor,
                     ),
                     maxLines: 1,
@@ -53,50 +67,48 @@ class NotificationCardAdmin extends StatelessWidget {
                 ),
               ],
             ),
-
-            SizedBox(height: 6.h),
+            SizedBox(height: r.height(0.008)),
 
             // Message
             Text(
               notification["message"] ?? "",
               style: TextStyle(
-                fontSize: 13.sp,
+                fontSize: r.fontSmall(),
                 color: titleColor.withAlpha((0.9 * 255).round()),
               ),
               maxLines: 3,
               overflow: TextOverflow.ellipsis,
             ),
-
-            SizedBox(height: 8.h),
+            SizedBox(height: r.height(0.01)),
 
             // Footer Row
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                // Audience label
+                // Audience
                 Container(
                   padding: EdgeInsets.symmetric(
-                    horizontal: 10.w,
-                    vertical: 4.h,
+                    horizontal: r.width(0.03),
+                    vertical: r.height(0.008),
                   ),
                   decoration: BoxDecoration(
                     color: audienceColor.withAlpha((0.12 * 255).round()),
-                    borderRadius: BorderRadius.circular(20.r),
+                    borderRadius: BorderRadius.circular(r.radiusLarge()),
                   ),
                   child: Text(
                     notification["audience"] ?? "",
                     style: TextStyle(
-                      fontSize: 11.sp,
+                      fontSize: r.fontSmall(),
                       color: audienceColor,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
                 ),
 
-                // Time and recipients
+                // Time
                 Text(
                   "${notification["recipients"]} recipients · ${notification["time"]}",
-                  style: TextStyle(fontSize: 11.sp, color: infoColor),
+                  style: TextStyle(fontSize: r.fontSmall(), color: infoColor),
                 ),
               ],
             ),

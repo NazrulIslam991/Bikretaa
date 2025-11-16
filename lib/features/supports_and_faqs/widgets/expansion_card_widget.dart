@@ -1,5 +1,5 @@
+import 'package:bikretaa/app/responsive.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ExpansionCard extends StatelessWidget {
   final String title;
@@ -15,20 +15,31 @@ class ExpansionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final r = Responsive.of(context);
     final theme = Theme.of(context);
+
     return Card(
-      margin: EdgeInsets.only(bottom: 5.h),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
+      margin: EdgeInsets.only(bottom: r.height(0.01)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(r.radiusMedium()),
+      ),
       color: theme.cardColor,
       elevation: 2,
       child: ExpansionTile(
-        tilePadding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 2.h),
-        childrenPadding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 5.h),
+        tilePadding: EdgeInsets.symmetric(
+          horizontal: r.paddingMedium(),
+          vertical: r.height(0.005),
+        ),
+        childrenPadding: EdgeInsets.symmetric(
+          horizontal: r.paddingMedium(),
+          vertical: r.height(0.01),
+        ),
         title: Text(
           title,
           style: TextStyle(
             fontWeight: FontWeight.bold,
-            color: theme.colorScheme.primary,
+            color: titleColor ?? theme.colorScheme.primary,
+            fontSize: r.fontMedium(),
           ),
         ),
         children: description != null
@@ -36,7 +47,7 @@ class ExpansionCard extends StatelessWidget {
                 Text(
                   description!,
                   style: TextStyle(
-                    fontSize: 13.sp,
+                    fontSize: r.fontSmall(),
                     fontStyle: FontStyle.italic,
                     color: theme.colorScheme.primary,
                   ),

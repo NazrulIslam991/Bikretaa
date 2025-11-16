@@ -1,5 +1,5 @@
+import 'package:bikretaa/app/responsive.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class InfoSection extends StatelessWidget {
   final IconData icon;
@@ -17,24 +17,26 @@ class InfoSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final r = Responsive.of(context);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           children: [
-            Icon(icon, color: iconColor, size: 14.h),
-            SizedBox(width: 8.w),
+            Icon(icon, color: iconColor, size: r.iconMedium()),
+            SizedBox(width: r.width(0.02)),
             Text(
               title,
               style: TextStyle(
-                fontSize: 14.sp,
-                fontWeight: FontWeight.w700,
+                fontSize: r.fontMedium(),
+                fontWeight: FontWeight.w500,
                 color: iconColor,
               ),
             ),
           ],
         ),
-        SizedBox(height: 10.h),
+        SizedBox(height: r.height(0.015)),
         child,
       ],
     );

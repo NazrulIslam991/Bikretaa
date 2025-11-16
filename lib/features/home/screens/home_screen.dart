@@ -1,3 +1,4 @@
+import 'package:bikretaa/app/responsive.dart';
 import 'package:bikretaa/features/dashboard_admin/widgets/section_tile_widget_admin.dart';
 import 'package:bikretaa/features/home/widgets/action_card.dart';
 import 'package:bikretaa/features/home/widgets/custom_drawer.dart';
@@ -26,12 +27,13 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final r = Responsive.of(context);
 
     return Scaffold(
       appBar: AppBar(
         elevation: 1,
-        titleSpacing: 16.w,
-        toolbarHeight: 52.h,
+        titleSpacing: r.width(0.04),
+        toolbarHeight: r.height(0.07),
         title: Row(
           children: [
             Expanded(
@@ -42,16 +44,16 @@ class HomeScreen extends StatelessWidget {
                   Text(
                     'Bikretaa',
                     style: TextStyle(
-                      fontSize: 23.sp,
-                      fontWeight: FontWeight.bold,
+                      fontSize: r.fontXL(),
+                      fontWeight: FontWeight.w700,
                     ),
                   ),
                   SizedBox(height: 2.h),
                   Text(
                     'Your smart business partner',
                     style: TextStyle(
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.normal,
+                      fontSize: r.fontMedium(),
+                      fontWeight: FontWeight.w300,
                     ),
                   ),
                 ],
@@ -62,7 +64,7 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
       ),
-      drawer: SizedBox(width: 240.w, child: CustomDrawer()),
+      drawer: CustomDrawer(),
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 5.h),
         child: Column(

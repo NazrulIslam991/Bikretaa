@@ -1,5 +1,5 @@
+import 'package:bikretaa/app/responsive.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SettingsTileWidget extends StatelessWidget {
   final IconData icon;
@@ -22,23 +22,28 @@ class SettingsTileWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final r = Responsive.of(context);
+
     return ListTile(
-      contentPadding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 0.h),
+      contentPadding: EdgeInsets.symmetric(
+        horizontal: r.width(0.035),
+        vertical: r.height(0.001),
+      ),
       leading: Container(
-        width: 28.w,
-        height: 28.h,
+        width: r.width(0.07),
+        height: r.height(0.04),
         decoration: BoxDecoration(
           color: Colors.blue.withOpacity(0.1),
-          borderRadius: BorderRadius.circular(10.r),
+          borderRadius: BorderRadius.circular(r.radiusSmall()),
         ),
         alignment: Alignment.center,
-        child: Icon(icon, color: Colors.blue, size: 16.sp),
+        child: Icon(icon, color: Colors.blue, size: r.fontSmall()),
       ),
       title: Text(
         title,
-        style: TextStyle(
-          fontWeight: FontWeight.w600,
-          fontSize: 14.sp,
+        style: r.textStyle(
+          fontSize: r.fontLarge(),
+          fontWeight: FontWeight.w500,
           color: danger ? Colors.red : theme.colorScheme.primary,
         ),
       ),
@@ -46,12 +51,14 @@ class SettingsTileWidget extends StatelessWidget {
           ? null
           : Text(
               subtitle!,
-              style: TextStyle(
-                fontSize: 10.sp,
+              style: r.textStyle(
+                fontSize: r.fontSmall(),
                 color: theme.colorScheme.primary,
+                fontWeight: FontWeight.w300,
               ),
             ),
-      trailing: trailing ?? Icon(Icons.chevron_right_rounded, size: 18.sp),
+      trailing:
+          trailing ?? Icon(Icons.chevron_right_rounded, size: r.fontSmall()),
       onTap: onTap,
     );
   }

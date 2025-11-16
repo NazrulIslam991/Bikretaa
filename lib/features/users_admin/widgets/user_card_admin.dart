@@ -1,5 +1,5 @@
+import 'package:bikretaa/app/responsive.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class UserCardAdmin extends StatelessWidget {
   final Map<String, dynamic> user;
@@ -8,19 +8,18 @@ class UserCardAdmin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final r = Responsive.of(context); // Use your custom Responsive
     final isDark = theme.brightness == Brightness.dark;
 
     // Colors adapted from the theme
     Color statusColor = user['status'] == "Active"
-        ? (theme.colorScheme.secondary) // use secondary for active
-        : (theme.colorScheme.error); // use error for inactive/deactivated
+        ? theme.colorScheme.secondary
+        : theme.colorScheme.error;
 
     Color cardBackground = theme.cardColor;
-    // theme.shadowColor is non-nullable, use directly
     Color shadowColor = theme.shadowColor;
+    Color avatarBg = theme.colorScheme.primary;
 
-    Color avatarBg =
-        theme.colorScheme.primary; // avatar background uses primary
     Color titleColor =
         theme.textTheme.bodyLarge?.color ??
         (isDark ? Colors.white : Colors.black87);
@@ -33,45 +32,50 @@ class UserCardAdmin extends StatelessWidget {
 
     return Card(
       elevation: 3,
-      margin: EdgeInsets.symmetric(vertical: 4.h),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14.r)),
+      margin: EdgeInsets.symmetric(vertical: r.height(0.005)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(r.radiusMedium()),
+      ),
       shadowColor: shadowColor,
       color: cardBackground,
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 8.w),
+        padding: EdgeInsets.symmetric(
+          vertical: r.height(0.01),
+          horizontal: r.width(0.02),
+        ),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(14.r),
+          borderRadius: BorderRadius.circular(r.radiusMedium()),
           color: cardBackground,
         ),
         child: Row(
           children: [
             // Left colored status bar
             Container(
-              width: 5.w,
-              height: 70.h,
+              width: r.width(0.015),
+              height: r.height(0.08),
               decoration: BoxDecoration(
                 color: statusColor,
                 borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(14.r),
-                  bottomLeft: Radius.circular(14.r),
+                  topLeft: Radius.circular(r.radiusMedium()),
+                  bottomLeft: Radius.circular(r.radiusMedium()),
                 ),
               ),
             ),
-            SizedBox(width: 8.w),
+            r.hSpace(0.02),
             // Avatar
             CircleAvatar(
-              radius: 24.r,
+              radius: r.width(0.06),
               backgroundColor: avatarBg,
               child: Text(
                 (user['name'] as String).isNotEmpty ? user['name'][0] : '?',
                 style: TextStyle(
                   color: theme.colorScheme.onPrimary,
-                  fontSize: 18.sp,
+                  fontSize: r.fontMedium(),
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
-            SizedBox(width: 10.w),
+            r.hSpace(0.02),
             // User details
             Expanded(
               child: Column(
@@ -82,59 +86,69 @@ class UserCardAdmin extends StatelessWidget {
                     user['name'],
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
+                    style: r.textStyle(
+                      fontSize: r.fontMedium(),
                       fontWeight: FontWeight.bold,
-                      fontSize: 14.sp,
                       color: titleColor,
                     ),
                   ),
-                  SizedBox(height: 1.h),
+                  r.vSpace(0.002),
                   Text(
                     user['shop'],
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(fontSize: 12.sp, color: subtitleColor),
+                    style: r.textStyle(
+                      fontSize: r.fontSmall(),
+                      color: subtitleColor,
+                    ),
                   ),
-                  SizedBox(height: 1.h),
+                  r.vSpace(0.002),
                   Text(
                     user['email'],
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(fontSize: 11.sp, color: metaColor),
+                    style: r.textStyle(
+                      fontSize: r.fontSmall() * 0.9,
+                      color: metaColor,
+                    ),
                   ),
-                  SizedBox(height: 1.h),
+                  r.vSpace(0.002),
                   Text(
                     "Last login: ${user['lastLogin']}",
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      fontSize: 10.sp,
+                    style: r.textStyle(
+                      fontSize: r.fontSmall() * 0.85,
                       color: metaColor,
-                      fontStyle: FontStyle.italic,
+                      //fontStyle: FontStyle.italic,
                     ),
                   ),
                 ],
               ),
             ),
+            r.hSpace(0.02),
             // Status chip
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
+              padding: EdgeInsets.symmetric(
+                horizontal: r.width(0.025),
+                vertical: r.height(0.005),
+              ),
               decoration: BoxDecoration(
                 color: statusColor.withAlpha((0.15 * 255).round()),
-                borderRadius: BorderRadius.circular(16.r),
+                borderRadius: BorderRadius.circular(r.radiusLarge()),
               ),
               child: Text(
                 user['status'],
-                style: TextStyle(
-                  color: statusColor,
+                style: r.textStyle(
+                  fontSize: r.fontSmall(),
                   fontWeight: FontWeight.bold,
-                  fontSize: 11.sp,
+                  color: statusColor,
                 ),
               ),
             ),
-            SizedBox(width: 6.w),
-            Icon(Icons.more_vert, size: 20.sp, color: metaColor),
-            SizedBox(width: 6.w),
+            r.hSpace(0.01),
+            Icon(Icons.more_vert, size: r.iconSmall(), color: metaColor),
+            r.hSpace(0.01),
           ],
         ),
       ),

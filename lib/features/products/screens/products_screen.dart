@@ -1,3 +1,4 @@
+import 'package:bikretaa/app/responsive.dart';
 import 'package:bikretaa/assets_path/assets_path.dart';
 import 'package:bikretaa/features/products/database/product_database.dart';
 import 'package:bikretaa/features/products/model/product_model.dart';
@@ -34,21 +35,29 @@ class _ProductsScreenState extends State<ProductsScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final r = Responsive.of(context);
+
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 50.h,
-        title: CustomSearchBar(
-          controller: searchController,
-          onChanged: (value) =>
-              setState(() => searchText = value.toLowerCase()),
-          hintText: 'search_product'.tr,
-          prefixIcon: Icons.search,
-          fontSize: 12,
+        toolbarHeight: r.height(0.09),
+        title: Padding(
+          padding: EdgeInsets.only(top: r.height(0.02)),
+          child: CustomSearchBar(
+            controller: searchController,
+            onChanged: (value) =>
+                setState(() => searchText = value.toLowerCase()),
+            hintText: 'search_product'.tr,
+            prefixIcon: Icons.search,
+            fontSize: r.fontSmall(),
+          ),
         ),
       ),
 
       body: Padding(
-        padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 15.w),
+        padding: EdgeInsets.symmetric(
+          vertical: r.height(0),
+          horizontal: r.width(0.03),
+        ),
         child: StreamBuilder<List<Product>>(
           stream: _productDatabase.getProductsStream(),
           builder: (context, snapshot) {
@@ -59,7 +68,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
               return Center(
                 child: Text(
                   "no_products_found".tr,
-                  style: TextStyle(color: theme.colorScheme.primary),
+                  style: r.textStyle(fontSize: r.fontLarge()),
                 ),
               );
             }
@@ -78,8 +87,8 @@ class _ProductsScreenState extends State<ProductsScreen> {
                         children: [
                           Text(
                             "products".tr,
-                            style: TextStyle(
-                              fontSize: 21.h,
+                            style: r.textStyle(
+                              fontSize: r.fontXXL(),
                               fontWeight: FontWeight.bold,
                               color: theme.textTheme.bodyLarge?.color,
                             ),
@@ -87,8 +96,8 @@ class _ProductsScreenState extends State<ProductsScreen> {
                           Text(
                             "${products.length} ${"products_found".tr}",
                             style: GoogleFonts.abhayaLibre(
-                              textStyle: TextStyle(
-                                fontSize: 15.h,
+                              textStyle: r.textStyle(
+                                fontSize: r.fontLarge(),
                                 color: theme.textTheme.bodyLarge?.color,
                               ),
                             ),
@@ -99,8 +108,8 @@ class _ProductsScreenState extends State<ProductsScreen> {
                         onPressed: _showFilterSheet,
                         icon: Image.asset(
                           AssetPaths.filterIcon,
-                          width: 25.h,
-                          height: 25.h,
+                          width: r.iconXXLarge(),
+                          height: r.iconXXLarge(),
                         ),
                       ),
                     ],
@@ -114,7 +123,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                       crossAxisCount: 2,
                       mainAxisSpacing: 5.h,
                       crossAxisSpacing: 5.w,
-                      childAspectRatio: 1.w / 1.2.h,
+                      childAspectRatio: 1.w / 1.18.h,
                     ),
                     itemCount: products.length,
                     itemBuilder: (context, index) {
@@ -150,7 +159,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
         },
         backgroundColor: Colors.blueGrey,
         foregroundColor: Colors.white,
-        child: Icon(Icons.add_box_outlined, size: 25.h),
+        child: Icon(Icons.add_box_outlined, size: r.iconLarge()),
       ),
     );
   }

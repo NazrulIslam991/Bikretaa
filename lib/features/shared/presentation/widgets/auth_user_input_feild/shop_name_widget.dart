@@ -1,5 +1,5 @@
+import 'package:bikretaa/app/responsive.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class ShopNameWidget extends StatelessWidget {
@@ -13,26 +13,37 @@ class ShopNameWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Container(
-      height: 45.h,
+    final r = Responsive.of(context);
+
+    return SizedBox(
+      height: r.height(0.06), // responsive height
       child: TextFormField(
         controller: _shopNameEcontroller,
+        style: TextStyle(
+          fontSize: r.fontMedium(),
+          color: theme.colorScheme.onBackground,
+        ),
         decoration: InputDecoration(
           hintText: 'Shop_Name'.tr,
           labelText: 'Shop_Name'.tr,
+
           hintStyle: TextStyle(
             fontWeight: FontWeight.normal,
             color: theme.colorScheme.primary,
             letterSpacing: 0.4,
-            fontSize: 12.h,
+            fontSize: r.fontMedium(),
           ),
           labelStyle: TextStyle(
             fontWeight: FontWeight.normal,
             color: theme.colorScheme.primary,
             letterSpacing: 0.4,
-            fontSize: 12.h,
+            fontSize: r.fontMedium(),
           ),
-          prefixIcon: Icon(Icons.shopping_bag, color: Colors.blue, size: 20.sp),
+          prefixIcon: Icon(
+            Icons.shopping_bag,
+            color: Colors.blue,
+            size: r.iconMedium(),
+          ),
         ),
         textInputAction: TextInputAction.next,
         autovalidateMode: AutovalidateMode.onUserInteraction,

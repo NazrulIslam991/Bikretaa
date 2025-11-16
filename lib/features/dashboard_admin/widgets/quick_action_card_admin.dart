@@ -1,5 +1,5 @@
+import 'package:bikretaa/app/responsive.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class QuickActionCard extends StatelessWidget {
   final IconData icon;
@@ -18,29 +18,33 @@ class QuickActionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final r = Responsive.of(context);
 
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: 88.w,
-        height: 38.h,
+        width: r.width(0.22),
+        height: r.height(0.06),
         decoration: BoxDecoration(
           color: color.withAlpha((0.12 * 255).round()),
-          borderRadius: BorderRadius.circular(8.r),
+          borderRadius: BorderRadius.circular(r.radiusMedium()),
         ),
-        padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 4.h),
+        padding: EdgeInsets.symmetric(
+          horizontal: r.width(0.015),
+          vertical: r.height(0.01),
+        ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, size: 14.sp, color: color),
-            SizedBox(height: 2.h),
+            Icon(icon, size: r.iconMedium(), color: color),
+            r.vSpace(0.005),
             Text(
               label,
               textAlign: TextAlign.center,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                fontSize: 8.sp,
+              style: r.textStyle(
+                fontSize: r.fontSmall(),
                 fontWeight: FontWeight.w600,
                 color: theme.textTheme.bodyLarge?.color,
               ),

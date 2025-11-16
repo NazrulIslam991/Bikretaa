@@ -1,6 +1,6 @@
+import 'package:bikretaa/app/responsive.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class ShopTypeDropdownWidget extends StatefulWidget {
@@ -35,11 +35,15 @@ class _ShopTypeDropdownWidgetState extends State<ShopTypeDropdownWidget> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final r = Responsive.of(context);
+
     return DropdownButtonFormField2<String>(
       isExpanded: true,
       decoration: InputDecoration(
-        contentPadding: EdgeInsets.symmetric(vertical: 12.h),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
+        contentPadding: EdgeInsets.symmetric(vertical: r.height(0.015)),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(r.radiusMedium()),
+        ),
       ),
       hint: Text(
         'Select_shop_type'.tr,
@@ -47,14 +51,14 @@ class _ShopTypeDropdownWidgetState extends State<ShopTypeDropdownWidget> {
           fontWeight: FontWeight.normal,
           color: theme.colorScheme.primary,
           letterSpacing: 0.4,
-          fontSize: 12.h,
+          fontSize: r.fontMedium(),
         ),
       ),
       items: shopTypes
           .map(
             (type) => DropdownMenuItem<String>(
               value: type,
-              child: Text(type, style: TextStyle(fontSize: 12.h)),
+              child: Text(type, style: TextStyle(fontSize: r.fontMedium())),
             ),
           )
           .toList(),
@@ -71,18 +75,20 @@ class _ShopTypeDropdownWidgetState extends State<ShopTypeDropdownWidget> {
         });
       },
       onSaved: widget.onSaved,
-      buttonStyleData: const ButtonStyleData(
-        padding: EdgeInsets.only(right: 8),
+      buttonStyleData: ButtonStyleData(
+        padding: EdgeInsets.only(right: r.width(0.02)),
       ),
       iconStyleData: IconStyleData(
         icon: Icon(Icons.arrow_drop_down, color: theme.colorScheme.primary),
-        iconSize: 24,
+        iconSize: r.iconMedium(),
       ),
       dropdownStyleData: DropdownStyleData(
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(r.radiusMedium()),
+        ),
       ),
-      menuItemStyleData: const MenuItemStyleData(
-        padding: EdgeInsets.symmetric(horizontal: 12),
+      menuItemStyleData: MenuItemStyleData(
+        padding: EdgeInsets.symmetric(horizontal: r.width(0.03)),
       ),
     );
   }

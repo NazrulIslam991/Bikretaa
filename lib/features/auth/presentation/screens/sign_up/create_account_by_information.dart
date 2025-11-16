@@ -1,4 +1,5 @@
 import 'package:bikretaa/app/body_background.dart';
+import 'package:bikretaa/app/responsive.dart';
 import 'package:bikretaa/features/auth/presentation/model/user_model.dart';
 import 'package:bikretaa/features/auth/presentation/screens/signin/signin_screen.dart';
 import 'package:bikretaa/features/auth/presentation/widgets/auth_botto_text.dart';
@@ -38,15 +39,21 @@ class _CreateAccountByInformationState
   String? selectedShopType;
 
   bool _SignupInProgress = false;
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final r = Responsive.of(context);
+
     return Scaffold(
       body: BodyBackground(
         child: Center(
           child: SingleChildScrollView(
             child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 15.w),
+              padding: EdgeInsets.symmetric(
+                vertical: r.height(0.02),
+                horizontal: r.width(0.04),
+              ),
               child: Form(
                 key: _formKey,
                 child: Column(
@@ -54,20 +61,20 @@ class _CreateAccountByInformationState
                   children: [
                     Text(
                       'Shop_HeadLine'.tr,
-                      style: Theme.of(context).textTheme.titleLarge,
+                      style: theme.textTheme.titleLarge?.copyWith(
+                        fontSize: r.fontXXXL(),
+                      ),
                     ),
+                    SizedBox(height: r.height(0.04)),
 
-                    SizedBox(height: 20.h),
-
-                    Container(
+                    SizedBox(
                       height: 65.h,
                       child: ShopNameWidget(
                         shopNameEcontroller: _shopNameEcontroller,
                       ),
                     ),
 
-                    SizedBox(height: 5.h),
-                    Container(
+                    SizedBox(
                       height: 65.h,
                       child: EmailFeildWidget(
                         emailEcontroller: _emailEcontroller,
@@ -75,16 +82,14 @@ class _CreateAccountByInformationState
                       ),
                     ),
 
-                    SizedBox(height: 5.h),
-                    Container(
+                    SizedBox(
                       height: 65.h,
                       child: MobileFeildWidget(
                         mobileEcontroller: _mobileEcontroller,
                       ),
                     ),
 
-                    ////SizedBox(height: 20.h),
-                    Container(
+                    SizedBox(
                       height: 65.h,
                       child: ShopTypeDropdownWidget(
                         onSaved: (value) {
@@ -95,24 +100,20 @@ class _CreateAccountByInformationState
                       ),
                     ),
 
-                    //SizedBox(height: 5.h),
-                    Container(
+                    SizedBox(
                       height: 65.h,
                       child: PasswordFeildWidget(
                         passwordEcontroller: _passwordEcontroller,
                       ),
                     ),
 
-                    SizedBox(height: 5.h),
-                    Container(
+                    SizedBox(
                       height: 65.h,
                       child: ConfirmPasswordFeildWidget(
                         confirmpasswordEcontroller: _confirmpasswordEcontroller,
                         passwordEcontroller: _passwordEcontroller,
                       ),
                     ),
-
-                    SizedBox(height: 5.h),
 
                     Visibility(
                       visible: !_SignupInProgress,
@@ -124,13 +125,14 @@ class _CreateAccountByInformationState
                           style: TextStyle(
                             fontStyle: FontStyle.italic,
                             fontWeight: FontWeight.bold,
-                            color: theme.colorScheme.primary,
-                            fontSize: 12.h,
+                            color: Colors.white,
+                            fontSize: r.fontMedium(),
                           ),
                         ),
                       ),
                     ),
-                    SizedBox(height: 20.h),
+                    SizedBox(height: r.height(0.02)),
+
                     Center(
                       child: AuthBottomText(
                         normalText: 'Sign_up_bottom_text_1'.tr,
@@ -148,7 +150,6 @@ class _CreateAccountByInformationState
     );
   }
 
-  //create account button section
   void SignUpComplete() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
@@ -156,7 +157,6 @@ class _CreateAccountByInformationState
     }
   }
 
-  //"Database section for the sign-up process"
   Future<void> signUpProcess() async {
     final email = widget.email;
     final password = _passwordEcontroller.text.trim();
@@ -194,7 +194,6 @@ class _CreateAccountByInformationState
       );
     } on FirebaseAuthException catch (e) {
       String errorMessage;
-
       switch (e.code) {
         case 'weak-password':
           errorMessage = 'Your_password_is_too_weak_Please_use_at.....'.tr;
@@ -209,7 +208,6 @@ class _CreateAccountByInformationState
           errorMessage =
               e.message ?? 'An unexpected error occurred. Please try again.';
       }
-
       showSnackbarMessage(context, errorMessage);
     } catch (e) {
       showSnackbarMessage(context, 'Something_went_wrong'.tr);
@@ -220,7 +218,6 @@ class _CreateAccountByInformationState
     }
   }
 
-  //sign in button section
   void _onTapSignIn() {
     Navigator.pushNamedAndRemoveUntil(
       context,

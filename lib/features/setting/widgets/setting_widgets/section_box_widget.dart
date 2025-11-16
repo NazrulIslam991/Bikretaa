@@ -1,5 +1,5 @@
+import 'package:bikretaa/app/responsive.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SectionBoxWidget extends StatelessWidget {
   final List<Widget> children;
@@ -8,10 +8,12 @@ class SectionBoxWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final r = Responsive.of(context);
+
     return Container(
       decoration: BoxDecoration(
         color: theme.colorScheme.onSecondary,
-        borderRadius: BorderRadius.circular(12.r),
+        borderRadius: BorderRadius.circular(r.radiusMedium()),
         border: Border.all(color: Colors.grey.shade300),
       ),
       child: Column(
@@ -20,9 +22,9 @@ class SectionBoxWidget extends StatelessWidget {
             children[i],
             if (i != children.length - 1)
               Divider(
-                height: 0.8.h,
-                thickness: 0.5.h,
-                indent: 48.w,
+                height: r.height(0.002),
+                thickness: r.height(0.001),
+                indent: r.width(0.06),
                 color: Colors.grey.shade300,
               ),
           ],

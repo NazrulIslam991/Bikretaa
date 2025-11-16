@@ -1,3 +1,4 @@
+import 'package:bikretaa/app/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -20,8 +21,9 @@ class CustomSearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final r = Responsive.of(context);
     return SizedBox(
-      height: 40.h,
+      height: r.height(0.065),
       child: TextField(
         controller: controller,
         onChanged: onChanged,

@@ -1,5 +1,5 @@
+import 'package:bikretaa/app/responsive.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class CustomPinCodeField extends StatelessWidget {
@@ -30,7 +30,9 @@ class CustomPinCodeField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final r = Responsive.of(context);
     final theme = Theme.of(context);
+
     return PinCodeTextField(
       appContext: context,
       controller: controller,
@@ -41,14 +43,14 @@ class CustomPinCodeField extends StatelessWidget {
       enableActiveFill: true,
       textStyle: TextStyle(
         color: theme.colorScheme.onPrimary,
-        fontSize: 18.sp,
+        fontSize: r.fontMedium(),
         fontWeight: FontWeight.bold,
       ),
       pinTheme: PinTheme(
         shape: PinCodeFieldShape.box,
-        borderRadius: BorderRadius.circular(5),
-        fieldHeight: 45.h,
-        fieldWidth: 40.h,
+        borderRadius: BorderRadius.circular(r.radiusSmall()),
+        fieldHeight: r.height(0.07),
+        fieldWidth: r.width(0.12),
         activeColor: activeColor ?? Colors.blue,
         activeFillColor: activeFillColor ?? Colors.blue.shade100,
         selectedColor: selectedColor ?? Colors.green,

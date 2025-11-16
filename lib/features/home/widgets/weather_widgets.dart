@@ -1,5 +1,5 @@
+import 'package:bikretaa/app/responsive.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 
@@ -16,7 +16,6 @@ class WeatherChip extends StatelessWidget {
     }
   }
 
-  // Handle tap → check permission & service, then load weather
   Future<void> _handleTap() async {
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
     LocationPermission permission = await Geolocator.checkPermission();
@@ -47,6 +46,7 @@ class WeatherChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final r = Responsive.of(context);
 
     return Obx(() {
       final temperature = controller.temperature.value;
@@ -56,29 +56,32 @@ class WeatherChip extends StatelessWidget {
       return GestureDetector(
         onTap: _handleTap,
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 6.h),
+          padding: EdgeInsets.symmetric(
+            horizontal: r.width(0.02),
+            vertical: r.height(0.008),
+          ),
           decoration: BoxDecoration(
             color: theme.colorScheme.onPrimary.withAlpha((0.12 * 255).round()),
-            borderRadius: BorderRadius.circular(18.r),
+            borderRadius: BorderRadius.circular(r.radiusMedium()),
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(icon, size: 16.r),
-              SizedBox(width: 6.w),
+              Icon(icon, size: r.iconSmall()),
+              r.hSpace(0.015),
               isLoading
                   ? SizedBox(
-                      width: 12.w,
-                      height: 12.w,
+                      width: r.width(0.03),
+                      height: r.width(0.03),
                       child: CircularProgressIndicator(
-                        strokeWidth: 2.w,
+                        strokeWidth: r.width(0.004),
                         color: theme.colorScheme.primary,
                       ),
                     )
                   : Text(
                       temperature.isNotEmpty ? temperature : '--°C',
                       style: theme.textTheme.bodySmall?.copyWith(
-                        fontSize: 12.sp,
+                        fontSize: r.fontSmall(),
                       ),
                     ),
             ],

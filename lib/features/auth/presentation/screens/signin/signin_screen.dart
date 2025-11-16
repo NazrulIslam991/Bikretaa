@@ -1,5 +1,6 @@
 import 'package:bikretaa/app/body_background.dart';
 import 'package:bikretaa/app/controller/theme_controller.dart';
+import 'package:bikretaa/app/responsive.dart';
 import 'package:bikretaa/app/string.dart';
 import 'package:bikretaa/features/auth/presentation/database/firestore_user_check.dart';
 import 'package:bikretaa/features/auth/presentation/screens/forgot_password_screen.dart';
@@ -27,20 +28,25 @@ class SigninScreen extends StatefulWidget {
 
 class _SigninScreenState extends State<SigninScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  TextEditingController _emailEcontroller = TextEditingController();
-  TextEditingController _passwordEcontroller = TextEditingController();
+  final TextEditingController _emailEcontroller = TextEditingController();
+  final TextEditingController _passwordEcontroller = TextEditingController();
   bool _signinProgressIndicator = false;
   final ThemeController _themeController = Get.find<ThemeController>();
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final r = Responsive.of(context);
+
     return Scaffold(
       body: BodyBackground(
         child: Center(
           child: SingleChildScrollView(
             child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 15.w),
+              padding: EdgeInsets.symmetric(
+                vertical: r.height(0.02),
+                horizontal: r.width(0.04),
+              ),
               child: Form(
                 key: _formKey,
                 child: Column(
@@ -49,11 +55,13 @@ class _SigninScreenState extends State<SigninScreen> {
                     Center(
                       child: Text(
                         'Login_Headline'.tr,
-                        style: Theme.of(context).textTheme.titleLarge,
+                        style: theme.textTheme.titleLarge?.copyWith(
+                          fontSize: r.fontXXXL(),
+                        ),
                       ),
                     ),
 
-                    SizedBox(height: 40.h),
+                    SizedBox(height: r.height(0.05)),
 
                     Container(
                       height: 65.h,
@@ -62,8 +70,7 @@ class _SigninScreenState extends State<SigninScreen> {
                       ),
                     ),
 
-                    SizedBox(height: 5.h),
-
+                    // SizedBox(height: r.height(0.01)),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -76,16 +83,16 @@ class _SigninScreenState extends State<SigninScreen> {
                         Align(
                           alignment: Alignment.centerRight,
                           child: Transform.translate(
-                            offset: Offset(0, -15.h),
+                            offset: Offset(0, -r.height(0.02)),
                             child: TextButton(
-                              onPressed: () => _onTapForgetPassword(),
+                              onPressed: _onTapForgetPassword,
                               child: Text(
                                 'Forgot_password'.tr,
                                 style: TextStyle(
                                   color: Colors.lightBlue,
                                   fontStyle: FontStyle.italic,
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 11.h,
+                                  fontSize: r.fontSmall(),
                                 ),
                               ),
                             ),
@@ -94,32 +101,35 @@ class _SigninScreenState extends State<SigninScreen> {
                       ],
                     ),
 
-                    SizedBox(height: 20.h),
-
+                    //SizedBox(height: r.height(0.01)),
                     Visibility(
                       visible: !_signinProgressIndicator,
-
                       replacement: CenterCircularProgressIndiacator(),
-                      child: ElevatedButton(
-                        onPressed: () => _onTapSignin(),
-                        child: Text(
-                          'Done'.tr,
-                          style: TextStyle(
-                            fontStyle: FontStyle.italic,
-                            fontWeight: FontWeight.bold,
-                            color: theme.colorScheme.primary,
-                            fontSize: 12.h,
+                      child: SizedBox(
+                        //width: double.infinity,
+                        //height: r.height(0.05),
+                        child: ElevatedButton(
+                          onPressed: _onTapSignin,
+                          child: Text(
+                            'Done'.tr,
+                            style: TextStyle(
+                              fontStyle: FontStyle.italic,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontSize: r.fontMedium(),
+                            ),
                           ),
                         ),
                       ),
                     ),
 
-                    SizedBox(height: 20.h),
+                    SizedBox(height: r.height(0.03)),
                     Center(
                       child: AuthBottomText(
                         normalText: 'Sign_in_bottom_text_1'.tr,
                         actionText: 'Sign_in_bottom_text_2'.tr,
                         onTap: _onTapSignUp,
+                        //fontSize: r.fontSmall(),
                       ),
                     ),
                   ],
@@ -132,30 +142,24 @@ class _SigninScreenState extends State<SigninScreen> {
     );
   }
 
-  // start signin process
+  // ------------------ Sign In ------------------
   void _onTapSignin() async {
     if (_formKey.currentState!.validate()) {
       _signInProcess();
     }
   }
 
-  //"Database section for the sign-in process
-
   Future<void> _signInProcess() async {
     final email = _emailEcontroller.text.trim();
     final password = _passwordEcontroller.text.trim();
 
-    setState(() {
-      _signinProgressIndicator = true;
-    });
+    setState(() => _signinProgressIndicator = true);
 
     bool userExists = await FirestoreUtils.checkUserExists(email);
 
     if (!userExists && email != AppConstants.adminEmail) {
       showSnackbarMessage(context, 'No_account_found'.tr);
-      setState(() {
-        _signinProgressIndicator = false;
-      });
+      setState(() => _signinProgressIndicator = false);
       return;
     }
 
@@ -187,7 +191,6 @@ class _SigninScreenState extends State<SigninScreen> {
       showSnackbarMessage(context, 'Login_successful!'.tr);
     } on FirebaseAuthException catch (e) {
       String errorMessage;
-
       if (e.code == 'user-not-found') {
         errorMessage = 'No_account_found_for_that_email'.tr;
       } else if (e.code == 'wrong-password') {
@@ -197,23 +200,20 @@ class _SigninScreenState extends State<SigninScreen> {
       } else {
         errorMessage = 'Login_failed_Please_try_again'.tr;
       }
-
       showSnackbarMessage(context, errorMessage);
     } catch (e) {
       showSnackbarMessage(context, 'An unexpected error occurred: $e');
     } finally {
-      setState(() {
-        _signinProgressIndicator = false;
-      });
+      setState(() => _signinProgressIndicator = false);
     }
   }
 
-  // Forgot password button section
+  // ------------------ Forgot Password ------------------
   void _onTapForgetPassword() {
     Navigator.pushReplacementNamed(context, ForgotPasswordScreen.name);
   }
 
-  //signup button section
+  // ------------------ Sign Up ------------------
   void _onTapSignUp() {
     Navigator.pushReplacementNamed(context, CreateAccountScreen.name);
   }

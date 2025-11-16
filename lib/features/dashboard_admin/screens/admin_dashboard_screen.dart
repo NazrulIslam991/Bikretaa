@@ -1,5 +1,6 @@
 import 'package:bikretaa/app/controller/language_controller.dart';
 import 'package:bikretaa/app/controller/theme_controller.dart';
+import 'package:bikretaa/app/responsive.dart';
 import 'package:bikretaa/features/auth/presentation/screens/signin/signin_screen.dart';
 import 'package:bikretaa/features/dashboard_admin/widgets/activities_card_widget_admin.dart';
 import 'package:bikretaa/features/dashboard_admin/widgets/info_card_admin.dart';
@@ -11,7 +12,6 @@ import 'package:bikretaa/features/shared/presentation/widgets/circular_progress/
 import 'package:bikretaa/features/shared/presentation/widgets/dialog_box/confirm_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class AdminDashboardScreen extends StatelessWidget {
@@ -19,12 +19,12 @@ class AdminDashboardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ScreenUtil.init(context);
     final theme = Theme.of(context);
+    final r = Responsive.of(context);
 
     final ThemeController themeController = Get.find<ThemeController>();
 
-    // Logout helper used by the profile button
+    // Logout helper
     Future<void> _handleLogout() async {
       final confirm = await showConfirmDialog(
         context: context,
@@ -44,10 +44,8 @@ class AdminDashboardScreen extends StatelessWidget {
 
       try {
         await Future.delayed(const Duration(milliseconds: 300));
-
         await SharedPreferencesHelper.removeUser();
         await FirebaseAuth.instance.signOut();
-
         Navigator.pop(context);
 
         Navigator.pushNamedAndRemoveUntil(
@@ -132,9 +130,9 @@ class AdminDashboardScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(55.h),
+        preferredSize: Size.fromHeight(r.height(0.08)),
         child: Padding(
-          padding: const EdgeInsets.only(top: 8.0),
+          padding: EdgeInsets.only(top: r.height(0.01)),
           child: AppBar(
             backgroundColor: theme.scaffoldBackgroundColor,
             elevation: 0,
@@ -142,20 +140,19 @@ class AdminDashboardScreen extends StatelessWidget {
             title: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 4.h),
+                SizedBox(height: r.height(0.01)),
                 Text(
                   "Admin Dashboard",
                   style: TextStyle(
-                    fontSize: 23.sp,
+                    fontSize: r.fontXL(),
                     fontWeight: FontWeight.w700,
                     color: theme.textTheme.titleLarge?.color,
                   ),
                 ),
-                // Optional Subtitle
                 Text(
                   "Overview & insights",
                   style: TextStyle(
-                    fontSize: 12.sp,
+                    fontSize: r.fontSmall(),
                     fontWeight: FontWeight.w400,
                     color: theme.textTheme.bodyMedium?.color,
                   ),
@@ -176,12 +173,12 @@ class AdminDashboardScreen extends StatelessWidget {
                     },
                     child: Container(
                       padding: EdgeInsets.symmetric(
-                        horizontal: 10.w,
-                        vertical: 4.h,
+                        horizontal: r.width(0.02),
+                        vertical: r.height(0.005),
                       ),
                       decoration: BoxDecoration(
                         color: theme.cardColor,
-                        borderRadius: BorderRadius.circular(8.r),
+                        borderRadius: BorderRadius.circular(r.radiusSmall()),
                         border: Border.all(
                           color: theme.dividerColor.withAlpha(
                             (0.2 * 255).round(),
@@ -191,7 +188,7 @@ class AdminDashboardScreen extends StatelessWidget {
                       child: Text(
                         isBn ? 'BN' : 'EN',
                         style: TextStyle(
-                          fontSize: 12.sp,
+                          fontSize: r.fontSmall(),
                           color: theme.textTheme.bodyLarge?.color,
                         ),
                       ),
@@ -199,8 +196,7 @@ class AdminDashboardScreen extends StatelessWidget {
                   );
                 },
               ),
-              SizedBox(width: 6.w),
-
+              //SizedBox(width: r.width(0.01)),
               Obx(() {
                 return IconButton(
                   onPressed: () => themeController.toggleTheme(),
@@ -209,17 +205,16 @@ class AdminDashboardScreen extends StatelessWidget {
                         ? Icons.dark_mode
                         : Icons.light_mode,
                     color: theme.textTheme.bodyLarge?.color,
-                    size: 20.sp,
+                    size: r.iconMedium(),
                   ),
                 );
               }),
-              // Profile / Logout
               IconButton(
                 onPressed: _handleLogout,
                 icon: Icon(
                   Icons.person_outline,
                   color: theme.textTheme.bodyLarge?.color,
-                  size: 20.sp,
+                  size: r.iconMedium(),
                 ),
               ),
             ],
@@ -227,20 +222,23 @@ class AdminDashboardScreen extends StatelessWidget {
         ),
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
+        padding: EdgeInsets.symmetric(
+          horizontal: r.width(0.03),
+          vertical: r.height(0.01),
+        ),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // KPI Section
               SectionTitle(title: "Key Performance Indicators"),
-              SizedBox(height: 8.h),
+              r.vSpace(0.01),
               SizedBox(
-                height: 52.h,
+                height: r.height(0.09),
                 child: ListView.separated(
                   scrollDirection: Axis.horizontal,
                   itemCount: kpiItems.length,
-                  separatorBuilder: (_, __) => SizedBox(width: 10.w),
+                  separatorBuilder: (_, __) => SizedBox(width: r.width(0.02)),
                   itemBuilder: (context, index) {
                     final item = kpiItems[index];
                     return KPIWidget(
@@ -252,17 +250,17 @@ class AdminDashboardScreen extends StatelessWidget {
                   },
                 ),
               ),
-              SizedBox(height: 14.h),
+              r.vSpace(0.02),
 
               // Quick Actions
               SectionTitle(title: "Quick Actions"),
-              SizedBox(height: 8.h),
+              r.vSpace(0.01),
               SizedBox(
-                height: 55.h,
+                height: r.height(0.09),
                 child: ListView.separated(
                   scrollDirection: Axis.horizontal,
                   itemCount: quickActions.length,
-                  separatorBuilder: (_, __) => SizedBox(width: 10.w),
+                  separatorBuilder: (_, __) => SizedBox(width: r.width(0.02)),
                   itemBuilder: (context, index) {
                     final action = quickActions[index];
                     return QuickActionCard(
@@ -274,10 +272,10 @@ class AdminDashboardScreen extends StatelessWidget {
                   },
                 ),
               ),
+              r.vSpace(0.02),
 
-              SizedBox(height: 14.h),
               SectionTitle(title: "Monitoring"),
-              SizedBox(height: 8.h),
+              r.vSpace(0.01),
               Row(
                 children: [
                   Expanded(
@@ -288,7 +286,7 @@ class AdminDashboardScreen extends StatelessWidget {
                       color: theme.colorScheme.primary,
                     ),
                   ),
-                  SizedBox(width: 10.w),
+                  SizedBox(width: r.width(0.03)),
                   Expanded(
                     child: InfoCard(
                       icon: Icons.bug_report,
@@ -299,7 +297,7 @@ class AdminDashboardScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: 10.h),
+              r.vSpace(0.01),
               InfoCard(
                 icon: Icons.insights,
                 title: 'Performance & Activity Analytics',
@@ -308,9 +306,9 @@ class AdminDashboardScreen extends StatelessWidget {
                 isFullWidth: true,
               ),
 
-              SizedBox(height: 14.h),
+              r.vSpace(0.02),
               SectionTitle(title: "Recent Activities"),
-              SizedBox(height: 8.h),
+              r.vSpace(0.01),
               ActivitiesCard(activities: activities),
             ],
           ),

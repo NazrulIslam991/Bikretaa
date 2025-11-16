@@ -1,5 +1,5 @@
+import 'package:bikretaa/app/responsive.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class EmailSupportCard extends StatelessWidget {
@@ -14,17 +14,19 @@ class EmailSupportCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final r = Responsive.of(context);
     final blue = const Color(0xFF007BFF);
+
     return Container(
-      padding: EdgeInsets.all(12.w),
+      padding: EdgeInsets.all(r.paddingMedium()),
       decoration: BoxDecoration(
         color: theme.cardColor,
-        borderRadius: BorderRadius.circular(12.r),
+        borderRadius: BorderRadius.circular(r.radiusMedium()),
         boxShadow: [
           BoxShadow(
             color: Colors.black12,
-            blurRadius: 3,
-            offset: const Offset(0, 1),
+            blurRadius: r.width(0.008),
+            offset: Offset(0, r.height(0.002)),
           ),
         ],
       ),
@@ -33,24 +35,28 @@ class EmailSupportCard extends StatelessWidget {
         children: [
           Text(
             'email_support_desc'.tr,
-            style: TextStyle(
-              fontSize: 13.sp,
+            style: r.textStyle(
+              fontSize: r.fontMedium(),
               color: theme.colorScheme.onSurface.withOpacity(0.85),
             ),
           ),
-          SizedBox(height: 12.h),
+          r.vSpace(0.015),
           ElevatedButton.icon(
             onPressed: onPressed,
-            icon: const Icon(Icons.mail_outline, color: Colors.white),
+            icon: Icon(
+              Icons.mail_outline,
+              color: Colors.white,
+              size: r.iconMedium(),
+            ),
             label: Text(
               'contact_support'.tr,
-              style: TextStyle(fontSize: 14.sp),
+              style: r.textStyle(fontSize: r.fontMedium(), color: Colors.white),
             ),
             style: ElevatedButton.styleFrom(
               backgroundColor: blue,
-              minimumSize: Size(double.infinity, 25.h),
+              minimumSize: Size(double.infinity, r.height(0.04)),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8.r),
+                borderRadius: BorderRadius.circular(r.radiusSmall()),
               ),
             ),
           ),

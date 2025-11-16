@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../../app/responsive.dart';
 
 class MessegeTitleInputField_admin extends StatelessWidget {
   final TextEditingController controller;
@@ -8,6 +9,7 @@ class MessegeTitleInputField_admin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final r = Responsive.of(context);
     final theme = Theme.of(context);
     final fillColor = theme.inputDecorationTheme.fillColor ?? theme.cardColor;
     final labelStyle = theme.textTheme.bodyMedium?.copyWith(
@@ -17,27 +19,25 @@ class MessegeTitleInputField_admin extends StatelessWidget {
       color: theme.hintColor,
     );
 
-    return Container(
-      height: 50.h,
+    return SizedBox(
+      height: r.height(0.065),
       child: TextFormField(
         controller: controller,
         textInputAction: TextInputAction.next,
         autovalidateMode: AutovalidateMode.onUserInteraction,
-        validator: (value) {
-          if ((value ?? '').isEmpty) {
-            return "Title is required";
-          }
-          return null;
-        },
+        validator: (value) =>
+            (value ?? '').isEmpty ? "Title is required" : null,
         decoration: InputDecoration(
           hintText: "Enter notification title...",
           labelText: "Title",
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.r)),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(r.radiusMedium()),
+          ),
           filled: true,
           fillColor: fillColor,
           contentPadding: EdgeInsets.symmetric(
-            horizontal: 14.w,
-            vertical: 14.h,
+            horizontal: r.width(0.035),
+            vertical: r.height(0.02),
           ),
           labelStyle: labelStyle,
           hintStyle: hintStyle,

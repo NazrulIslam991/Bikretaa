@@ -1,5 +1,5 @@
+import 'package:bikretaa/app/responsive.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class AccountDeletionCard extends StatelessWidget {
@@ -14,56 +14,64 @@ class AccountDeletionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final r = Responsive.of(context);
+
     return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(r.radiusMedium()),
+      ),
       color: theme.cardColor,
       child: ExpansionTile(
         title: Text(
           "account_deletion".tr,
-          style: TextStyle(
+          style: r.textStyle(
+            fontSize: r.fontMedium(),
             fontWeight: FontWeight.bold,
             color: theme.colorScheme.error,
-            fontSize: 15.sp,
           ),
         ),
         children: [
           Padding(
-            padding: EdgeInsets.all(5.w),
+            padding: EdgeInsets.all(r.paddingMedium()),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   "account_deletion_warning".tr,
-                  style: TextStyle(
-                    fontSize: 12.sp,
-                    color: theme.colorScheme.error,
+                  style: r.textStyle(
+                    fontSize: r.fontSmall(),
                     fontWeight: FontWeight.bold,
+                    color: theme.colorScheme.error,
                   ),
                 ),
-                SizedBox(height: 8.h),
+                r.vSpace(0.01),
                 Text(
                   "account_deletion_desc".tr,
-                  style: TextStyle(
-                    fontSize: 13.sp,
-                    color: theme.colorScheme.primary,
-                    fontStyle: FontStyle.italic,
-                  ),
+                  style: r
+                      .textStyle(
+                        fontSize: r.fontMedium(),
+                        color: theme.colorScheme.primary,
+                      )
+                      .copyWith(fontStyle: FontStyle.italic),
                   textAlign: TextAlign.justify,
                 ),
-                SizedBox(height: 12.h),
+                r.vSpace(0.015),
                 ElevatedButton.icon(
                   onPressed: onDelete,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.red.shade700,
-                    minimumSize: Size(double.infinity, 22.h),
+                    minimumSize: Size(double.infinity, r.height(0.06)),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.r),
+                      borderRadius: BorderRadius.circular(r.radiusSmall()),
                     ),
                   ),
-                  icon: const Icon(Icons.delete_forever),
+                  icon: Icon(Icons.delete_forever, size: r.iconMedium()),
                   label: Text(
                     'delete_account'.tr,
-                    style: TextStyle(fontSize: 14.sp),
+                    style: r.textStyle(
+                      fontSize: r.fontMedium(),
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ],

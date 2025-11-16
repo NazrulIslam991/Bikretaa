@@ -1,7 +1,7 @@
+import 'package:bikretaa/app/responsive.dart';
 import 'package:bikretaa/features/sales/screens/add_sales_screen.dart';
 import 'package:bikretaa/features/sales/screens/due_collection_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class FloatingMenuFAB extends StatefulWidget {
@@ -41,35 +41,39 @@ class _FloatingMenuFABState extends State<FloatingMenuFAB>
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final r = Responsive.of(context);
+
     return Stack(
       alignment: Alignment.bottomRight,
       children: [
-        // First small FAB - Due Collection
         Positioned(
-          bottom: 60.h,
+          bottom: r.height(0.085),
           right: 0,
           child: ScaleTransition(
             scale: _animation,
             child: Row(
               children: [
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 3.h),
-                  margin: EdgeInsets.only(right: 6.w),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: r.width(0.015),
+                    vertical: r.height(0.005),
+                  ),
+                  margin: EdgeInsets.only(right: r.width(0.015)),
                   decoration: BoxDecoration(
                     color: theme.colorScheme.primary,
-                    borderRadius: BorderRadius.circular(6.r),
+                    borderRadius: BorderRadius.circular(r.radiusSmall()),
                     boxShadow: [
                       BoxShadow(
                         color: Colors.black26,
                         blurRadius: 3,
-                        offset: Offset(1, 1),
+                        offset: const Offset(1, 1),
                       ),
                     ],
                   ),
                   child: Text(
                     'due_collection'.tr,
-                    style: TextStyle(
-                      fontSize: 12.sp,
+                    style: r.textStyle(
+                      fontSize: r.fontSmall(),
                       color: theme.colorScheme.background,
                     ),
                   ),
@@ -81,39 +85,48 @@ class _FloatingMenuFABState extends State<FloatingMenuFAB>
                     toggle();
                   },
                   backgroundColor: Colors.white,
-                  child: Icon(Icons.payments, size: 20.h, color: Colors.black),
+                  child: Icon(
+                    Icons.payments,
+                    size: r.iconMedium(),
+                    color: Colors.black,
+                  ),
                 ),
               ],
             ),
           ),
         ),
 
-        // Second small FAB - Product Sale
+        // -----------------------------
+        // 2️⃣ Product Sale FAB
+        // -----------------------------
         Positioned(
-          bottom: 110.h,
+          bottom: r.height(0.16),
           right: 0,
           child: ScaleTransition(
             scale: _animation,
             child: Row(
               children: [
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 3.h),
-                  margin: EdgeInsets.only(right: 6.w),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: r.width(0.015),
+                    vertical: r.height(0.005),
+                  ),
+                  margin: EdgeInsets.only(right: r.width(0.015)),
                   decoration: BoxDecoration(
                     color: theme.colorScheme.primary,
-                    borderRadius: BorderRadius.circular(6.r),
+                    borderRadius: BorderRadius.circular(r.radiusSmall()),
                     boxShadow: [
                       BoxShadow(
                         color: Colors.black26,
                         blurRadius: 3,
-                        offset: Offset(1, 1),
+                        offset: const Offset(1, 1),
                       ),
                     ],
                   ),
                   child: Text(
                     'product_sale'.tr,
-                    style: TextStyle(
-                      fontSize: 12.sp,
+                    style: r.textStyle(
+                      fontSize: r.fontSmall(),
                       color: theme.colorScheme.background,
                     ),
                   ),
@@ -127,7 +140,7 @@ class _FloatingMenuFABState extends State<FloatingMenuFAB>
                   backgroundColor: Colors.white,
                   child: Icon(
                     Icons.shopping_cart,
-                    size: 20.h,
+                    size: r.iconMedium(),
                     color: Colors.black,
                   ),
                 ),
@@ -136,9 +149,11 @@ class _FloatingMenuFABState extends State<FloatingMenuFAB>
           ),
         ),
 
-        // Main FAB
+        // -----------------------------
+        // 3️⃣ Main FAB
+        // -----------------------------
         Positioned(
-          bottom: 2.h,
+          bottom: r.height(0),
           child: FloatingActionButton(
             onPressed: toggle,
             backgroundColor: Colors.blueGrey,
@@ -148,7 +163,7 @@ class _FloatingMenuFABState extends State<FloatingMenuFAB>
               duration: const Duration(milliseconds: 200),
               child: Icon(
                 Icons.add_box_outlined,
-                size: 25.h,
+                size: r.iconLarge(),
                 color: Colors.white,
               ),
             ),

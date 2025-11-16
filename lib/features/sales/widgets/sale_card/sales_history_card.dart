@@ -1,7 +1,7 @@
+import 'package:bikretaa/app/responsive.dart';
 import 'package:bikretaa/features/sales/screens/update_sell_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SalesHistoryCard extends StatelessWidget {
   final String customerName;
@@ -36,26 +36,27 @@ class SalesHistoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final res = Responsive.of(context);
 
     return Padding(
-      padding: EdgeInsets.only(left: 0.w, right: 0.w, bottom: 10.h),
+      padding: EdgeInsets.only(bottom: res.height(0.01)),
       child: Container(
-        padding: EdgeInsets.all(8.w),
+        padding: EdgeInsets.all(res.width(0.02)),
         decoration: BoxDecoration(
           color: theme.colorScheme.secondary,
-          borderRadius: BorderRadius.circular(12.r),
+          borderRadius: BorderRadius.circular(res.radiusMedium()),
           boxShadow: [
             BoxShadow(
               color: Colors.black.withOpacity(0.1),
-              spreadRadius: 2.r,
-              blurRadius: 5.r,
-              offset: Offset(0, 3.h),
+              spreadRadius: res.width(0.005),
+              blurRadius: res.width(0.01),
+              offset: Offset(0, res.height(0.005)),
             ),
           ],
         ),
         child: Column(
           children: [
-            // Top section (customer info)
+            // Top section
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -64,54 +65,50 @@ class SalesHistoryCard extends StatelessWidget {
                   children: [
                     Text(
                       time,
-                      style: TextStyle(
-                        color: theme.colorScheme.onPrimary,
-                        fontSize: 10.sp,
+                      style: res.textStyle(
+                        fontSize: res.fontSmall(),
                         fontWeight: FontWeight.w500,
+                        color: theme.colorScheme.onPrimary,
                       ),
                     ),
                     Text(
                       date,
-                      style: TextStyle(
+                      style: res.textStyle(
+                        fontSize: res.fontSmall(),
                         color: theme.colorScheme.onPrimary,
-                        fontSize: 10.sp,
                       ),
                     ),
                   ],
                 ),
-                SizedBox(width: 8.w),
+                SizedBox(width: res.width(0.02)),
                 Expanded(
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Center(
-                        child: Text(
-                          customerName,
-                          style: TextStyle(
-                            color: theme.colorScheme.onPrimary,
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.bold,
-                          ),
+                      Text(
+                        customerName,
+                        style: res.textStyle(
+                          fontSize: res.fontMedium(),
+                          fontWeight: FontWeight.bold,
+                          color: theme.colorScheme.onPrimary,
                         ),
+                        textAlign: TextAlign.center,
                       ),
-                      SizedBox(height: 2.h),
-                      Center(
-                        child: Text(
-                          customerMobile,
-                          style: TextStyle(
-                            color: theme.colorScheme.onPrimary,
-                            fontSize: 10.sp,
-                          ),
+                      Text(
+                        customerMobile,
+                        style: res.textStyle(
+                          fontSize: res.fontSmall(),
+                          color: theme.colorScheme.onPrimary,
                         ),
+                        textAlign: TextAlign.center,
                       ),
-                      Center(
-                        child: Text(
-                          "Address: $customerAddress",
-                          style: TextStyle(
-                            color: theme.colorScheme.onPrimary,
-                            fontSize: 10.sp,
-                          ),
+                      Text(
+                        "Address: $customerAddress",
+                        style: res.textStyle(
+                          fontSize: res.fontSmall(),
+                          color: theme.colorScheme.onPrimary,
                         ),
+                        textAlign: TextAlign.center,
                       ),
                     ],
                   ),
@@ -120,134 +117,74 @@ class SalesHistoryCard extends StatelessWidget {
                   dueAmount == 0
                       ? 'Paid'
                       : 'Due: ${dueAmount.toStringAsFixed(2)} tk',
-                  style: TextStyle(
-                    color: theme.colorScheme.onPrimary,
-                    fontSize: 10.sp,
+                  style: res.textStyle(
+                    fontSize: res.fontSmall(),
                     fontWeight: FontWeight.w500,
+                    color: theme.colorScheme.onPrimary,
                   ),
                 ),
               ],
             ),
 
-            SizedBox(height: 5.h),
+            SizedBox(height: res.height(0.01)),
 
             // Inner Container
             Stack(
               children: [
                 Container(
                   width: double.infinity,
-                  padding: EdgeInsets.all(5.w),
+                  padding: EdgeInsets.all(res.width(0.015)),
                   decoration: BoxDecoration(
                     color: theme.colorScheme.onPrimary,
-                    borderRadius: BorderRadius.circular(10.r),
+                    borderRadius: BorderRadius.circular(res.radiusSmall()),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Total Items : ',
-                            style: TextStyle(
-                              color: theme.colorScheme.primary,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 12.sp,
-                            ),
-                          ),
-                          Text(
-                            totalItems.toString(),
-                            style: TextStyle(
-                              color: theme.colorScheme.onSurface,
-                              fontSize: 10.sp,
-                              fontStyle: FontStyle.italic,
-                            ),
-                          ),
-                        ],
+                      _buildInfoRow(
+                        res,
+                        theme,
+                        'Total Items',
+                        totalItems.toString(),
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Total Cost : ',
-                            style: TextStyle(
-                              color: theme.colorScheme.primary,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 12.sp,
-                            ),
-                          ),
-                          Text(
-                            'BDT ${totalCost.toStringAsFixed(2)} tk',
-                            style: TextStyle(
-                              color: theme.colorScheme.onSurface,
-                              fontSize: 10.sp,
-                              fontStyle: FontStyle.italic,
-                            ),
-                          ),
-                        ],
+                      _buildInfoRow(
+                        res,
+                        theme,
+                        'Total Cost',
+                        'BDT ${totalCost.toStringAsFixed(2)} tk',
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Paid Amount : ',
-                            style: TextStyle(
-                              color: theme.colorScheme.primary,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 12.sp,
-                            ),
-                          ),
-                          Text(
-                            '${paidAmount.toStringAsFixed(2)} tk',
-                            style: TextStyle(
-                              color: theme.colorScheme.onSurface,
-                              fontSize: 10.sp,
-                              fontStyle: FontStyle.italic,
-                            ),
-                          ),
-                        ],
+                      _buildInfoRow(
+                        res,
+                        theme,
+                        'Paid Amount',
+                        '${paidAmount.toStringAsFixed(2)} tk',
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Due Amount : ',
-                            style: TextStyle(
-                              color: theme.colorScheme.primary,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 12.sp,
-                            ),
-                          ),
-                          Text(
-                            'BDT ${dueAmount.toStringAsFixed(2)} tk',
-                            style: TextStyle(
-                              color: theme.colorScheme.onSurface,
-                              fontSize: 10.sp,
-                              fontStyle: FontStyle.italic,
-                            ),
-                          ),
-                        ],
+                      _buildInfoRow(
+                        res,
+                        theme,
+                        'Due Amount',
+                        'BDT ${dueAmount.toStringAsFixed(2)} tk',
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
                             'Sell ID : ',
-                            style: TextStyle(
-                              color: theme.colorScheme.primary,
+                            style: res.textStyle(
+                              fontSize: res.fontSmall(),
                               fontWeight: FontWeight.bold,
-                              fontSize: 12.sp,
+                              color: theme.colorScheme.primary,
                             ),
                           ),
                           Text(
                             salesID,
-                            style: TextStyle(
+                            style: res.textStyle(
+                              fontSize: res.fontSmall(),
+                              //fontStyle: FontStyle.italic,
                               color: theme.colorScheme.onSurface,
-                              fontSize: 10.sp,
-                              fontStyle: FontStyle.italic,
                             ),
                           ),
-                          SizedBox(width: 5.w),
+                          SizedBox(width: res.width(0.01)),
                           GestureDetector(
                             onTap: () {
                               Clipboard.setData(ClipboardData(text: salesID));
@@ -259,7 +196,7 @@ class SalesHistoryCard extends StatelessWidget {
                             },
                             child: Icon(
                               Icons.copy,
-                              size: 12.h,
+                              size: res.iconSmall(),
                               color: Colors.blueGrey,
                             ),
                           ),
@@ -269,10 +206,10 @@ class SalesHistoryCard extends StatelessWidget {
                   ),
                 ),
 
-                // Edit button (top-right corner)
+                // Edit button
                 Positioned(
-                  right: 5.w,
-                  top: 5.h,
+                  right: res.width(0.02),
+                  top: res.height(0.005),
                   child: GestureDetector(
                     onTap: () {
                       Navigator.push(
@@ -284,12 +221,16 @@ class SalesHistoryCard extends StatelessWidget {
                       );
                     },
                     child: Container(
-                      padding: EdgeInsets.all(4.w),
+                      padding: EdgeInsets.all(res.width(0.01)),
                       decoration: const BoxDecoration(
                         color: Colors.blueGrey,
                         shape: BoxShape.circle,
                       ),
-                      child: Icon(Icons.edit, color: Colors.white, size: 14.h),
+                      child: Icon(
+                        Icons.edit,
+                        color: Colors.white,
+                        size: res.iconSmall(),
+                      ),
                     ),
                   ),
                 ),
@@ -298,6 +239,35 @@ class SalesHistoryCard extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildInfoRow(
+    Responsive res,
+    ThemeData theme,
+    String label,
+    String value,
+  ) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          '$label : ',
+          style: res.textStyle(
+            fontSize: res.fontSmall(),
+            fontWeight: FontWeight.bold,
+            color: theme.colorScheme.primary,
+          ),
+        ),
+        Text(
+          value,
+          style: res.textStyle(
+            fontSize: res.fontSmall(),
+            //fontStyle: FontStyle.italic,
+            color: theme.colorScheme.onSurface,
+          ),
+        ),
+      ],
     );
   }
 }

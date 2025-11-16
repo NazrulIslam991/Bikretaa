@@ -1,5 +1,5 @@
+import 'package:bikretaa/app/responsive.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 enum ProductFilter { all, lowStock, expired, expireSoon, aToZ, zToA }
@@ -14,39 +14,60 @@ class ProductFilterSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final r = Responsive.of(context);
+
     return SafeArea(
       child: Container(
+        constraints: BoxConstraints(maxHeight: r.height(0.45)),
         decoration: BoxDecoration(
-          color: theme.colorScheme.surface,
+          color: theme.cardColor,
           borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(15.r),
-            topRight: Radius.circular(15.r),
+            topLeft: Radius.circular(r.height(0.01)),
+            topRight: Radius.circular(r.height(0.01)),
           ),
         ),
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 12.w),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Center(
-                  child: Container(width: 40.w, height: 4.h),
-                ),
-                SizedBox(height: 10.h),
-                Center(
-                  child: Text(
-                    "filter_products".tr,
-                    style: TextStyle(
-                      fontSize: 18.sp,
-                      fontWeight: FontWeight.bold,
-                      color: theme.colorScheme.onSurface,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // Header
+            Padding(
+              padding: EdgeInsets.symmetric(
+                vertical: r.paddingMedium(),
+                horizontal: r.paddingMedium(),
+              ),
+              child: Column(
+                children: [
+                  Center(
+                    child: Container(
+                      width: r.width(0.1),
+                      height: r.height(0.008),
+                      decoration: BoxDecoration(
+                        color: Colors.grey[400],
+                        borderRadius: BorderRadius.circular(r.radiusSmall()),
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(height: 8.h),
+                  SizedBox(height: r.height(0.02)),
+                  Center(
+                    child: Text(
+                      "filter_products".tr,
+                      style: TextStyle(
+                        fontSize: r.fontXL(),
+                        fontWeight: FontWeight.bold,
+                        color: theme.colorScheme.onSurface,
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: r.height(0.015)),
+                ],
+              ),
+            ),
 
-                Column(
+            // Filter Options
+            Expanded(
+              child: SingleChildScrollView(
+                padding: EdgeInsets.symmetric(horizontal: r.paddingMedium()),
+                child: Column(
                   children: ProductFilter.values.map((filter) {
                     String title;
                     IconData icon;
@@ -87,32 +108,41 @@ class ProductFilterSheet extends StatelessWidget {
 
                     return Card(
                       color: theme.cardColor,
-                      elevation: 2,
-                      shadowColor: Colors.blueAccent,
+                      elevation: 1,
+                      shadowColor: Colors.blueAccent.withOpacity(0.3),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12.r),
+                        borderRadius: BorderRadius.circular(r.radiusMedium()),
+                        side: BorderSide(
+                          color: theme.brightness == Brightness.dark
+                              ? Colors.white70
+                              : Colors.black54,
+                          width: 1,
+                        ),
                       ),
-                      margin: EdgeInsets.symmetric(vertical: 5.h),
+                      margin: EdgeInsets.symmetric(vertical: r.height(0.008)),
                       child: ListTile(
-                        dense: true,
                         contentPadding: EdgeInsets.symmetric(
-                          vertical: 4.h,
-                          horizontal: 10.w,
+                          vertical: r.height(0.001),
+                          horizontal: r.width(0.02),
                         ),
                         leading: CircleAvatar(
-                          radius: 12.r,
+                          radius: r.iconSmall(),
                           backgroundColor: color.withOpacity(0.15),
-                          child: Icon(icon, color: color, size: 14.sp),
+                          child: Icon(icon, color: color, size: r.iconSmall()),
                         ),
                         title: Text(
                           title,
                           style: TextStyle(
-                            fontSize: 11.sp,
+                            fontSize: r.fontMedium(),
                             fontWeight: FontWeight.w500,
                             color: theme.colorScheme.primary,
                           ),
                         ),
-                        trailing: Icon(Icons.arrow_forward_ios, size: 12.sp),
+                        trailing: Icon(
+                          Icons.arrow_forward_ios,
+                          size: r.iconSmall(),
+                          color: theme.colorScheme.onSurface.withOpacity(0.7),
+                        ),
                         onTap: () {
                           onFilterSelected(filter);
                           Navigator.pop(context);
@@ -121,9 +151,9 @@ class ProductFilterSheet extends StatelessWidget {
                     );
                   }).toList(),
                 ),
-              ],
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );

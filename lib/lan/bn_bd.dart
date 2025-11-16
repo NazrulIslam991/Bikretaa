@@ -324,4 +324,16 @@ Map<String, String> Bangla = {
   'could_not_open_location': 'লোকেশন সেটিংস খোলা যায়নি',
   'temperature_not_available': '--°C',
   'tap_to_refresh': 'আবহাওয়ার তথ্য রিফ্রেশ করতে ট্যাপ করুন',
+
+  'home': 'হোম',
+  'product': 'পণ্য',
+  'sale': 'বিক্রয়',
+  'reports': 'রিপোর্ট',
+  'settings': 'সেটিংস',
+
+  // Exit Dialog
+  'exit_app': 'সতর্কতা',
+  'exit_content': 'আপনি কি প্রস্থান করতে চান?',
+  'cancel': 'না',
+  'exit': 'হ্যাঁ',
 };

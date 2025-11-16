@@ -1,5 +1,5 @@
+import 'package:bikretaa/app/responsive.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shimmer/shimmer.dart';
 
 class SalesHistoryShimmer extends StatelessWidget {
@@ -10,6 +10,7 @@ class SalesHistoryShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final resp = Responsive.of(context); // Use Responsive
     final isDark = theme.brightness == Brightness.dark;
 
     final baseColor = isDark ? Colors.grey.shade800 : Colors.grey.shade300;
@@ -21,17 +22,21 @@ class SalesHistoryShimmer extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
         return Padding(
-          padding: EdgeInsets.only(bottom: 10.h),
+          padding: EdgeInsets.only(
+            bottom: resp.height(0.012),
+          ), // adaptive spacing
           child: Shimmer.fromColors(
             baseColor: baseColor,
             highlightColor: highlightColor,
             child: Container(
-              padding: EdgeInsets.all(8.w),
+              padding: EdgeInsets.all(resp.width(0.02)), // adaptive padding
+              height: resp.height(0.12), // adaptive height
               decoration: BoxDecoration(
                 color: theme.cardColor,
-                borderRadius: BorderRadius.circular(12.r),
+                borderRadius: BorderRadius.circular(
+                  resp.radiusMedium(),
+                ), // adaptive radius
               ),
-              height: 100.h,
             ),
           ),
         );

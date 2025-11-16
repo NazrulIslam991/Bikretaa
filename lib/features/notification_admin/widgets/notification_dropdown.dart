@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../../app/responsive.dart';
 
 class NotificationDropdownField_Admin extends StatelessWidget {
   final String value;
@@ -17,14 +18,15 @@ class NotificationDropdownField_Admin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final r = Responsive.of(context);
     final theme = Theme.of(context);
     final fillColor = theme.inputDecorationTheme.fillColor ?? theme.cardColor;
     final labelStyle = theme.textTheme.bodyMedium?.copyWith(
       color: theme.colorScheme.primary,
     );
 
-    return Container(
-      height: 45.h,
+    return SizedBox(
+      height: r.height(0.06),
       child: DropdownButtonFormField<String>(
         value: value,
         items: options
@@ -36,12 +38,14 @@ class NotificationDropdownField_Admin extends StatelessWidget {
         decoration: InputDecoration(
           labelText: label,
           labelStyle: labelStyle,
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.r)),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(r.radiusMedium()),
+          ),
           filled: true,
           fillColor: fillColor,
           contentPadding: EdgeInsets.symmetric(
-            horizontal: 12.w,
-            vertical: 10.h,
+            horizontal: r.width(0.03),
+            vertical: r.height(0.015),
           ),
         ),
       ),

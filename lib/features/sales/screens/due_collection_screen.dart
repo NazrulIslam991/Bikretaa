@@ -1,9 +1,9 @@
+import 'package:bikretaa/app/responsive.dart';
 import 'package:bikretaa/features/sales/widgets/products_list_widget.dart';
 import 'package:bikretaa/features/sales/widgets/text_input_feild/customer_address.dart';
 import 'package:bikretaa/features/sales/widgets/text_input_feild/customer_name_controller.dart';
 import 'package:bikretaa/features/shared/presentation/widgets/auth_user_input_feild/mobile_feild_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class DueCollectionScreen extends StatefulWidget {
@@ -19,8 +19,6 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
   final TextEditingController _mobileEcontroller = TextEditingController();
   final TextEditingController _customerAddressController =
       TextEditingController();
-  //final TextEditingController _productIdController = TextEditingController();
-  //final TextEditingController _quantityController = TextEditingController();
   final TextEditingController _paidController = TextEditingController();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -31,49 +29,66 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
   @override
   void initState() {
     super.initState();
-    _paidController.addListener(() {
-      setState(() {});
-    });
+    _paidController.addListener(() => setState(() {}));
   }
 
   @override
   Widget build(BuildContext context) {
+    final r = Responsive.of(context);
     final theme = Theme.of(context);
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("due_collection".tr, style: TextStyle(fontSize: 22.sp)),
+        title: Text(
+          "due_collection".tr,
+          style: r.textStyle(fontSize: r.fontXL(), fontWeight: FontWeight.bold),
+        ),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 15.w),
+          padding: EdgeInsets.symmetric(
+            vertical: r.height(0.012),
+            horizontal: r.width(0.04),
+          ),
           child: Form(
             key: _formKey,
             child: Column(
               children: [
-                SizedBox(height: 10.h),
+                SizedBox(height: r.height(0.015)),
                 Container(
-                  height: 65.h,
+                  height: r.height(0.08),
                   child: CustomerNameController(
                     CustomerNameController: _customerNameController,
                   ),
                 ),
+                SizedBox(height: r.height(0.016)),
                 Container(
-                  height: 65.h,
+                  height: r.height(0.08),
                   child: MobileFeildWidget(
                     mobileEcontroller: _mobileEcontroller,
                   ),
                 ),
+                SizedBox(height: r.height(0.016)),
                 Container(
-                  height: 65.h,
+                  height: r.height(0.08),
                   child: CustomerAddressController(
                     CustomerAddressController: _customerAddressController,
                   ),
                 ),
+                SizedBox(height: r.height(0.020)),
 
-                ElevatedButton(onPressed: () {}, child: Text("Search".tr)),
-                SizedBox(height: 20.h),
+                ElevatedButton(
+                  onPressed: () {},
+                  child: Text(
+                    "Search".tr,
+                    style: r.textStyle(
+                      fontSize: r.fontMedium(),
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                r.vSpace(0.025),
 
                 // Products list
                 ProductsListWidget(
@@ -84,9 +99,9 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
                     });
                   },
                 ),
-                SizedBox(height: 20.h),
+                SizedBox(height: r.height(0.020)),
 
-                // Paid & Due
+                // Paid & Due Row
                 Row(
                   children: [
                     Expanded(
@@ -97,32 +112,30 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
                           labelText: "paid".tr,
                           labelStyle: TextStyle(
                             color: theme.colorScheme.onSurface,
+                            fontSize: r.fontMedium(),
                           ),
                         ),
                       ),
                     ),
-                    SizedBox(width: 10.w),
+                    r.hSpace(0.02),
                     Expanded(
                       child: Container(
-                        padding: EdgeInsets.all(12.h),
+                        padding: EdgeInsets.all(r.width(0.048)),
                         decoration: BoxDecoration(
                           border: Border.all(color: Colors.grey),
-                          borderRadius: BorderRadius.circular(8.r),
+                          borderRadius: BorderRadius.circular(r.radiusMedium()),
                         ),
                         child: due < 0
                             ? Text(
                                 "due_check".tr,
-                                style: TextStyle(
+                                style: r.textStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.red,
                                 ),
                               )
                             : Text(
                                 "${'due'.tr}: ${due.toStringAsFixed(2)} tk",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: theme.colorScheme.onSurface,
-                                ),
+                                style: r.textStyle(fontWeight: FontWeight.bold),
                               ),
                       ),
                     ),
@@ -134,7 +147,7 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
         ),
       ),
       bottomNavigationBar: Padding(
-        padding: EdgeInsets.all(12.h),
+        padding: EdgeInsets.all(r.paddingMedium()),
         child: Visibility(
           visible: !_loading,
           replacement: ElevatedButton(
@@ -143,7 +156,10 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
           ),
           child: ElevatedButton(
             onPressed: () {},
-            child: Text("confirm".tr, style: TextStyle(fontSize: 16.sp)),
+            child: Text(
+              "confirm".tr,
+              style: r.textStyle(fontSize: r.fontMedium(), color: Colors.white),
+            ),
           ),
         ),
       ),
@@ -159,14 +175,4 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
     final paid = double.tryParse(_paidController.text.trim()) ?? 0;
     return grandTotal - paid;
   }
-
-  // void _resetForm() {
-  //   _addedProducts.clear();
-  //   _productIdController.clear();
-  //   _quantityController.clear();
-  //   _paidController.clear();
-  //   _customerNameController.clear();
-  //   _mobileEcontroller.clear();
-  //   _customerAddressController.clear();
-  // }
 }

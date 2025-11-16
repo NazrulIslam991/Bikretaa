@@ -1,5 +1,5 @@
+import 'package:bikretaa/app/responsive.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class ConfirmPasswordFeildWidget extends StatefulWidget {
@@ -20,19 +20,21 @@ class ConfirmPasswordFeildWidget extends StatefulWidget {
 
 class _ConfirmPasswordFeildWidgetState
     extends State<ConfirmPasswordFeildWidget> {
+  bool _obscureText = true;
+
   bool validateCPassword(String cPassword) {
     String pattern = r'^(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#\$&*~]).{8,}$';
     RegExp regex = RegExp(pattern);
     return regex.hasMatch(cPassword);
   }
 
-  bool _obscureText = true;
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Container(
-      height: 45.h,
+    final r = Responsive.of(context);
+
+    return SizedBox(
+      height: r.height(0.06),
       child: TextFormField(
         controller: widget._confirmpasswordEcontroller,
         obscureText: _obscureText,
@@ -44,17 +46,24 @@ class _ConfirmPasswordFeildWidgetState
             fontWeight: FontWeight.normal,
             color: theme.colorScheme.primary,
             letterSpacing: 0.4,
-            fontSize: 12.h,
+            fontSize: r.fontMedium(),
           ),
           labelStyle: TextStyle(
             fontWeight: FontWeight.normal,
             color: theme.colorScheme.primary,
             letterSpacing: 0.4,
-            fontSize: 12.h,
+            fontSize: r.fontMedium(),
           ),
-          prefixIcon: Icon(Icons.lock, color: Colors.blue, size: 20.sp),
+          prefixIcon: Icon(
+            Icons.lock,
+            color: Colors.blue,
+            size: r.iconMedium(),
+          ),
           suffixIcon: IconButton(
-            icon: Icon(_obscureText ? Icons.visibility_off : Icons.visibility),
+            icon: Icon(
+              _obscureText ? Icons.visibility_off : Icons.visibility,
+              size: r.iconMedium(),
+            ),
             onPressed: () {
               setState(() {
                 _obscureText = !_obscureText;

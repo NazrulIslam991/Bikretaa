@@ -1,3 +1,4 @@
+import 'package:bikretaa/app/responsive.dart';
 import 'package:bikretaa/features/sales/database/add_sales_screen_database.dart';
 import 'package:bikretaa/features/sales/model/SalesModel.dart';
 import 'package:bikretaa/features/sales/widgets/products_list_widget.dart';
@@ -7,7 +8,6 @@ import 'package:bikretaa/features/shared/presentation/widgets/auth_user_input_fe
 import 'package:bikretaa/features/shared/presentation/widgets/snack_bar_messege/snackbar_messege.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class AddSalesScreen extends StatefulWidget {
@@ -37,49 +37,57 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
   @override
   void initState() {
     super.initState();
-    _paidController.addListener(() {
-      setState(() {});
-    });
+    _paidController.addListener(() => setState(() {}));
   }
 
   @override
   Widget build(BuildContext context) {
+    final r = Responsive.of(context);
     final theme = Theme.of(context);
     final uid = FirebaseAuth.instance.currentUser?.uid;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("product_sales".tr, style: TextStyle(fontSize: 22.sp)),
+        title: Text(
+          "product_sales".tr,
+          style: r.textStyle(fontSize: r.fontXL()),
+        ),
         centerTitle: true,
       ),
       body: uid == null
           ? Center(child: Text("user_not_logged_in".tr))
           : SingleChildScrollView(
               child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 15.w),
+                padding: EdgeInsets.symmetric(
+                  vertical: r.height(0.012),
+                  horizontal: r.width(0.03),
+                ),
                 child: Form(
                   key: _formKey,
                   child: Column(
                     children: [
-                      SizedBox(height: 10.h),
+                      SizedBox(height: r.height(0.015)),
                       Container(
-                        height: 65.h,
+                        height: r.height(0.08),
                         child: CustomerNameController(
                           CustomerNameController: _customerNameController,
                         ),
                       ),
+                      SizedBox(height: r.height(0.016)),
                       Container(
-                        height: 65.h,
+                        height: r.height(0.08),
                         child: MobileFeildWidget(
                           mobileEcontroller: _mobileEcontroller,
                         ),
                       ),
+                      SizedBox(height: r.height(0.016)),
                       Container(
-                        height: 65.h,
+                        height: r.height(0.08),
                         child: CustomerAddressController(
                           CustomerAddressController: _customerAddressController,
                         ),
                       ),
+                      SizedBox(height: r.height(0.016)),
 
                       // Products list
                       ProductsListWidget(
@@ -90,8 +98,9 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                           });
                         },
                       ),
-                      SizedBox(height: 20.h),
+                      SizedBox(height: r.height(0.025)),
 
+                      // Add Product Row
                       Row(
                         children: [
                           Expanded(
@@ -102,7 +111,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                               ),
                             ),
                           ),
-                          SizedBox(width: 10.w),
+                          SizedBox(width: r.width(0.02)),
                           Expanded(
                             child: TextField(
                               controller: _quantityController,
@@ -116,7 +125,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                             icon: Icon(
                               Icons.add_box,
                               color: Colors.green,
-                              size: 25.h,
+                              size: r.iconLarge(),
                             ),
                             onPressed: () {
                               if (uid != null) _addProductToList(uid);
@@ -124,9 +133,9 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                           ),
                         ],
                       ),
+                      SizedBox(height: r.height(0.025)),
 
-                      SizedBox(height: 20.h),
-
+                      // Paid & Due Row
                       Row(
                         children: [
                           Expanded(
@@ -141,13 +150,15 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                               ),
                             ),
                           ),
-                          SizedBox(width: 10.w),
+                          SizedBox(width: r.width(0.02)),
                           Expanded(
                             child: Container(
-                              padding: EdgeInsets.all(12.h),
+                              padding: EdgeInsets.all(r.duefeildPadding()),
                               decoration: BoxDecoration(
                                 border: Border.all(color: Colors.grey),
-                                borderRadius: BorderRadius.circular(8.r),
+                                borderRadius: BorderRadius.circular(
+                                  r.radiusMedium(),
+                                ),
                               ),
                               child: due < 0
                                   ? Text(
@@ -155,13 +166,13 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         color: Colors.red,
+                                        fontSize: r.fontMedium(),
                                       ),
                                     )
                                   : Text(
                                       "${'due'.tr}: ${due.toStringAsFixed(2)} tk",
-                                      style: TextStyle(
+                                      style: r.textStyle(
                                         fontWeight: FontWeight.bold,
-                                        color: theme.colorScheme.onSurface,
                                       ),
                                     ),
                             ),
@@ -175,7 +186,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
             ),
 
       bottomNavigationBar: Padding(
-        padding: EdgeInsets.all(12.h),
+        padding: EdgeInsets.all(r.width(0.03)),
         child: Visibility(
           visible: !_loading,
           replacement: SizedBox(
@@ -189,7 +200,10 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
               final uid = FirebaseAuth.instance.currentUser?.uid;
               if (uid != null) _confirmSale(uid);
             },
-            child: Text("confirm".tr, style: TextStyle(fontSize: 16.sp)),
+            child: Text(
+              "confirm".tr,
+              style: r.textStyle(fontSize: r.fontMedium(), color: Colors.white),
+            ),
           ),
         ),
       ),
@@ -270,7 +284,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
       showSnackbarMessage(context, "sale_saved".tr);
       _resetForm();
     } catch (e) {
-      showSnackbarMessage(context, "e.toString()");
+      showSnackbarMessage(context, e.toString());
     } finally {
       setState(() => _loading = false);
     }

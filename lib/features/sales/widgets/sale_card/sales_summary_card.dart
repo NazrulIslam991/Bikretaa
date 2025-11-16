@@ -1,5 +1,5 @@
+import 'package:bikretaa/app/responsive.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SalesSummaryCard extends StatelessWidget {
   final String amount;
@@ -16,12 +16,16 @@ class SalesSummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final res = Responsive.of(context);
+
     return Card(
       color: bgColor,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.r)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(res.radiusMedium()),
+      ),
       elevation: 5,
       child: Padding(
-        padding: EdgeInsets.all(8.h),
+        padding: EdgeInsets.all(res.paddingMedium()),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -33,16 +37,19 @@ class SalesSummaryCard extends StatelessWidget {
                   Text(
                     amount,
                     style: TextStyle(
-                      fontSize: 16.sp,
+                      fontSize: res.fontMedium(),
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                  SizedBox(height: 4.h),
+                  SizedBox(height: res.height(0.005)),
                   Text(
                     label,
-                    style: TextStyle(fontSize: 13.sp, color: Colors.white),
+                    style: TextStyle(
+                      fontSize: res.fontSmall(),
+                      color: Colors.white,
+                    ),
                   ),
                 ],
               ),

@@ -1,3 +1,4 @@
+import 'package:bikretaa/app/responsive.dart';
 import 'package:bikretaa/features/auth/presentation/screens/signin/signin_screen.dart';
 import 'package:bikretaa/features/shared/presentation/share_preferences_helper/shared_preferences_helper.dart';
 import 'package:bikretaa/features/shared/presentation/widgets/circular_progress/circular_progress_indicatior_2.dart';
@@ -10,7 +11,6 @@ import 'package:bikretaa/features/supports_and_faqs/widgets/feedback_card.dart';
 import 'package:bikretaa/features/supports_and_faqs/widgets/info_section_widget.dart';
 import 'package:bikretaa/features/supports_and_faqs/widgets/section_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -38,6 +38,7 @@ class _SupportFaqScreenState extends State<SupportFaqScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final r = Responsive.of(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -46,23 +47,27 @@ class _SupportFaqScreenState extends State<SupportFaqScreen> {
         title: Text(
           'support_faqs'.tr,
           style: TextStyle(
-            fontSize: 20.sp,
+            fontSize: r.fontXL(),
             fontWeight: FontWeight.w700,
             color: blue,
           ),
         ),
       ),
       body: ListView(
-        padding: EdgeInsets.all(8.w),
+        padding: EdgeInsets.all(r.width(0.02)),
         children: [
           SectionText(
             text: 'welcome_support'.tr,
-            fontSize: 16.sp,
+            fontSize: r.fontLarge(),
             fontWeight: FontWeight.w800,
           ),
-          SizedBox(height: 8.h),
-          SectionText(text: 'welcome_desc'.tr, fontSize: 13.sp, opacity: 0.85),
-          SizedBox(height: 20.h),
+          SizedBox(height: r.height(0.01)),
+          SectionText(
+            text: 'welcome_desc'.tr,
+            fontSize: r.fontMedium(),
+            opacity: 0.85,
+          ),
+          SizedBox(height: r.height(0.025)),
 
           // FAQs
           FAQCard(
@@ -91,8 +96,7 @@ class _SupportFaqScreenState extends State<SupportFaqScreen> {
               if (mounted) setState(() => _loading = false);
             },
           ),
-
-          SizedBox(height: 20.h),
+          SizedBox(height: r.height(0.025)),
 
           // Email Support
           InfoSection(
@@ -101,8 +105,7 @@ class _SupportFaqScreenState extends State<SupportFaqScreen> {
             title: 'email_support'.tr,
             child: EmailSupportCard(theme: theme, onPressed: _openGmail),
           ),
-
-          SizedBox(height: 20.h),
+          SizedBox(height: r.height(0.025)),
 
           // Feedback
           InfoSection(
@@ -117,8 +120,7 @@ class _SupportFaqScreenState extends State<SupportFaqScreen> {
               onSend: _sendFeedback,
             ),
           ),
-
-          SizedBox(height: 25.h),
+          SizedBox(height: r.height(0.03)),
 
           // Footer
           Center(
@@ -126,8 +128,9 @@ class _SupportFaqScreenState extends State<SupportFaqScreen> {
               'urgent_contact_note'.tr,
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 10.sp,
-                color: theme.colorScheme.onSurface.withOpacity(0.7),
+                fontSize: r.fontSmall(),
+                fontWeight: FontWeight.w300,
+                color: theme.colorScheme.onSurface.withOpacity(0.5),
               ),
             ),
           ),

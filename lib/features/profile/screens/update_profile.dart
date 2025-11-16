@@ -1,15 +1,16 @@
+import 'package:bikretaa/app/responsive.dart';
 import 'package:bikretaa/features/auth/presentation/model/user_model.dart';
 import 'package:bikretaa/features/auth/presentation/widgets/shop_type_dropdown_menu.dart';
-import 'package:bikretaa/features/shared/presentation/share_preferences_helper/shared_preferences_helper.dart';
-import 'package:bikretaa/features/shared/presentation/widgets/auth_user_input_feild/mobile_feild_widget.dart';
-import 'package:bikretaa/features/shared/presentation/widgets/auth_user_input_feild/shop_name_widget.dart';
-import 'package:bikretaa/features/shared/presentation/widgets/circular_progress/circular_progress_indicatior_2.dart';
-import 'package:bikretaa/features/shared/presentation/widgets/snack_bar_messege/snackbar_messege.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+
+import '../../shared/presentation/share_preferences_helper/shared_preferences_helper.dart';
+import '../../shared/presentation/widgets/auth_user_input_feild/mobile_feild_widget.dart';
+import '../../shared/presentation/widgets/auth_user_input_feild/shop_name_widget.dart';
+import '../../shared/presentation/widgets/circular_progress/circular_progress_indicatior_2.dart';
+import '../../shared/presentation/widgets/snack_bar_messege/snackbar_messege.dart';
 
 class UpdateProfileScreen extends StatefulWidget {
   const UpdateProfileScreen({super.key});
@@ -34,41 +35,51 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final r = Responsive.of(context);
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('update_profile'.tr, style: TextStyle(fontSize: 24.sp)),
+        toolbarHeight: r.height(0.055),
+        title: Text(
+          'update_profile'.tr,
+          style: TextStyle(fontSize: r.fontXL()),
+        ),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 15.w),
+        padding: EdgeInsets.symmetric(
+          vertical: r.height(0.02),
+          horizontal: r.width(0.02),
+        ),
         child: Form(
           key: _formKey,
           child: Column(
             children: [
-              Container(
-                height: 65.h,
+              SizedBox(
+                //height: r.height(0.08),
                 child: ShopNameWidget(
                   shopNameEcontroller: _shopNameEcontroller,
                 ),
               ),
+              SizedBox(height: r.height(0.01)),
               Container(
-                height: 45.h,
-                padding: EdgeInsets.symmetric(horizontal: 12.w),
+                height: r.height(0.065),
+                padding: EdgeInsets.symmetric(horizontal: r.width(0.03)),
                 decoration: BoxDecoration(
                   border: Border.all(color: theme.colorScheme.primary),
-                  borderRadius: BorderRadius.circular(8.r),
+                  borderRadius: BorderRadius.circular(r.radiusSmall()),
                   color: theme.colorScheme.onPrimary,
                 ),
                 alignment: Alignment.centerLeft,
                 child: Row(
                   children: [
-                    Icon(Icons.email, color: Colors.blue, size: 20.sp),
-                    SizedBox(width: 8.w),
+                    Icon(Icons.email, color: Colors.blue, size: r.fontLarge()),
+                    SizedBox(width: r.width(0.02)),
                     Expanded(
                       child: Text(
                         _emailEcontroller.text,
                         style: TextStyle(
-                          fontSize: 13.sp,
+                          fontSize: r.fontSmall(),
                           color: theme.colorScheme.primary,
                           fontWeight: FontWeight.w500,
                         ),
@@ -77,22 +88,24 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                   ],
                 ),
               ),
-              SizedBox(height: 25.h),
-              Container(
-                height: 65.h,
+              SizedBox(height: r.height(0.02)),
+              SizedBox(
+                height: r.height(0.08),
                 child: MobileFeildWidget(mobileEcontroller: _mobileEcontroller),
               ),
+              SizedBox(height: r.height(0.01)),
+
               ShopTypeDropdownWidget(
                 initialValue: selectedShopType,
                 onSaved: (value) => setState(() => selectedShopType = value),
               ),
-              SizedBox(height: 20.h),
-              FilledButton(
+              SizedBox(height: r.height(0.025)),
+              ElevatedButton(
                 onPressed: _updateProfile,
                 child: Text(
                   'update_profile_btn'.tr,
                   style: TextStyle(
-                    fontSize: 14.sp,
+                    fontSize: r.fontSmall(),
                     color: theme.colorScheme.onPrimary,
                   ),
                 ),
@@ -104,25 +117,19 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
     );
   }
 
-  // load information from SharedPreferencesHelper
   Future<void> _loadUserData() async {
     UserModel? user = await SharedPreferencesHelper.getUser();
     if (user != null) {
       _emailEcontroller.text = user.email;
       _shopNameEcontroller.text = user.shopName;
-
-      if (user.phone.startsWith("+8801")) {
-        _mobileEcontroller.text = user.phone.substring(5);
-      } else {
-        _mobileEcontroller.text = user.phone;
-      }
-
+      _mobileEcontroller.text = user.phone.startsWith("+8801")
+          ? user.phone.substring(5)
+          : user.phone;
       selectedShopType = user.shopType;
       setState(() {});
     }
   }
 
-  // update user information
   Future<void> _updateProfile() async {
     if (!_formKey.currentState!.validate()) return;
     showDialog(
@@ -139,6 +146,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
       showSnackbarMessage(context, 'user_data_not_found'.tr);
       return;
     }
+
     String phoneToStore = _mobileEcontroller.text.trim();
     if (!phoneToStore.startsWith("+8801")) {
       phoneToStore = "+8801$phoneToStore";

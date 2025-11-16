@@ -1,5 +1,5 @@
+import 'package:bikretaa/app/responsive.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class InfoCard extends StatelessWidget {
   final IconData icon;
@@ -20,12 +20,14 @@ class InfoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final r = Responsive.of(context);
+
     return Container(
-      width: isFullWidth ? double.infinity : null,
-      padding: EdgeInsets.all(10.w),
+      width: isFullWidth ? double.infinity : r.width(0.45),
+      padding: EdgeInsets.all(r.paddingMedium()),
       decoration: BoxDecoration(
         color: theme.cardColor,
-        borderRadius: BorderRadius.circular(12.r),
+        borderRadius: BorderRadius.circular(r.radiusMedium()),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -33,31 +35,31 @@ class InfoCard extends StatelessWidget {
           Row(
             children: [
               Container(
-                padding: EdgeInsets.all(8.w),
+                padding: EdgeInsets.all(r.paddingSmall()),
                 decoration: BoxDecoration(
                   color: color.withAlpha((0.12 * 255).round()),
-                  borderRadius: BorderRadius.circular(8.r),
+                  borderRadius: BorderRadius.circular(r.radiusSmall()),
                 ),
-                child: Icon(icon, color: color, size: 20.sp),
+                child: Icon(icon, color: color, size: r.iconMedium()),
               ),
-              SizedBox(width: 10.w),
+              r.hSpace(0.02),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       title,
-                      style: TextStyle(
-                        fontSize: 13.sp,
+                      style: r.textStyle(
+                        fontSize: r.fontMedium(),
                         fontWeight: FontWeight.w700,
                         color: theme.textTheme.bodyLarge?.color,
                       ),
                     ),
-                    SizedBox(height: 4.h),
+                    r.vSpace(0.005),
                     Text(
                       subtitle,
-                      style: TextStyle(
-                        fontSize: 11.sp,
+                      style: r.textStyle(
+                        fontSize: r.fontSmall(),
                         color: theme.textTheme.bodySmall?.color,
                       ),
                     ),
@@ -66,12 +68,12 @@ class InfoCard extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 10.h),
+          r.vSpace(0.01), // vertical spacing
           LinearProgressIndicator(
             value: 0.6,
             color: color,
             backgroundColor: theme.dividerColor.withAlpha((0.08 * 255).round()),
-            minHeight: 6.h,
+            minHeight: r.height(0.008), // responsive height
           ),
         ],
       ),

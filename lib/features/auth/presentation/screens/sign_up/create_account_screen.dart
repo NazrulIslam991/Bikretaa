@@ -1,4 +1,5 @@
 import 'package:bikretaa/app/body_background.dart';
+import 'package:bikretaa/app/responsive.dart';
 import 'package:bikretaa/features/auth/presentation/database/firestore_user_check.dart';
 import 'package:bikretaa/features/auth/presentation/database/otp_generator.dart';
 import 'package:bikretaa/features/auth/presentation/database/otp_service.dart';
@@ -28,12 +29,17 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final r = Responsive.of(context);
+
     return Scaffold(
       body: BodyBackground(
         child: Center(
           child: SingleChildScrollView(
             child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 15.w),
+              padding: EdgeInsets.symmetric(
+                vertical: r.height(0.02),
+                horizontal: r.width(0.04),
+              ),
               child: Form(
                 key: _formKey,
                 child: Column(
@@ -42,10 +48,12 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                     Center(
                       child: Text(
                         'SignUp_Headline'.tr,
-                        style: Theme.of(context).textTheme.titleLarge,
+                        style: theme.textTheme.titleLarge?.copyWith(
+                          fontSize: r.fontXXXL(),
+                        ),
                       ),
                     ),
-                    SizedBox(height: 5.h),
+                    SizedBox(height: r.height(0.005)),
                     Center(
                       child: Text(
                         'SignUp_subHeadLine'.tr,
@@ -54,35 +62,36 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                           color: theme.colorScheme.primary,
                           letterSpacing: 0.4,
                           fontStyle: FontStyle.italic,
-                          fontSize: 12.sp,
+                          fontSize: r.fontSmall(),
                         ),
+                        textAlign: TextAlign.center,
                       ),
                     ),
-                    SizedBox(height: 40.h),
+                    SizedBox(height: r.height(0.05)),
                     SizedBox(
                       height: 65.h,
                       child: EmailFeildWidget(
                         emailEcontroller: _emailEcontroller,
                       ),
                     ),
-                    SizedBox(height: 30.h),
+                    //SizedBox(height: r.height(0.04)),
                     Visibility(
                       visible: !_verificationCodeProgressIndicator,
                       replacement: CenterCircularProgressIndiacator(),
                       child: ElevatedButton(
-                        onPressed: () => _onTapVerifyEmail(),
+                        onPressed: _onTapVerifyEmail,
                         child: Text(
                           'Next'.tr,
                           style: TextStyle(
                             fontStyle: FontStyle.italic,
                             fontWeight: FontWeight.bold,
-                            color: theme.colorScheme.primary,
-                            fontSize: 12.h,
+                            color: Colors.white,
+                            fontSize: r.fontSmall(),
                           ),
                         ),
                       ),
                     ),
-                    SizedBox(height: 20),
+                    SizedBox(height: r.height(0.03)),
                     Center(
                       child: AuthBottomText(
                         normalText: 'Sign_up_bottom_text_1'.tr,
@@ -100,7 +109,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
     );
   }
 
-  //signup button section
+  // Navigate to SignIn screen
   void _onTapSignIn() {
     Navigator.pushNamedAndRemoveUntil(
       context,
@@ -109,7 +118,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
     );
   }
 
-  //"Database section for verify email process"
+  // Verify email process
   void _onTapVerifyEmail() async {
     if (_formKey.currentState!.validate()) {
       final email = _emailEcontroller.text.trim();
@@ -130,7 +139,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
 
       final otp = OtpGenerator.generate(length: 6);
 
-      // api call and send otp
+      // API call to send OTP
       final response = await OtpApiService.sendOtp(email: email, otp: otp);
 
       setState(() => _verificationCodeProgressIndicator = false);

@@ -319,4 +319,17 @@ Map<String, String> English = {
   'could_not_open_location': 'Could not open location settings',
   'temperature_not_available': '--°C',
   'tap_to_refresh': 'Tap to refresh weather',
+
+  // Bottom Navigation Labels
+  'home': 'Home',
+  'product': 'Products',
+  'sale': 'Sales',
+  'reports': 'Reports',
+  'settings': 'Settings',
+
+  // Exit Dialog
+  'exit_app': 'Warning',
+  'exit_content': 'Do you want to exit?',
+  'cancel': 'No',
+  'exit': 'Yes',
 };

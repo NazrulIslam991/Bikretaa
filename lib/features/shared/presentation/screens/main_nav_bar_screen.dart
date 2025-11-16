@@ -1,11 +1,13 @@
+import 'package:bikretaa/app/responsive.dart';
 import 'package:bikretaa/assets_path/assets_path.dart';
 import 'package:bikretaa/features/home/screens/home_screen.dart';
 import 'package:bikretaa/features/products/screens/products_screen.dart';
 import 'package:bikretaa/features/reports/screens/reports_screen.dart';
 import 'package:bikretaa/features/sales/screens/sales_screen.dart';
 import 'package:bikretaa/features/setting/screens/setting_screen.dart';
+import 'package:bikretaa/features/shared/presentation/widgets/dialog_box/confirm_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class MainNavBarScreen extends StatefulWidget {
   const MainNavBarScreen({super.key});
@@ -16,92 +18,171 @@ class MainNavBarScreen extends StatefulWidget {
 }
 
 class _MainNavBarScreenState extends State<MainNavBarScreen> {
-  final List<Widget> _navigation_screen = [
+  final List<Widget> _navigationScreen = [
     HomeScreen(),
     ProductsScreen(),
     SalesScreen(),
     ReportsScreen(),
     SettingScreen(),
   ];
-  int _selected_sceen = 0;
+
+  int _selectedScreen = 0;
+  final List<int> _navStack = [];
+
+  Future<bool> _onBackPressed() async {
+    if (_navStack.isNotEmpty) {
+      setState(() {
+        _selectedScreen = _navStack.removeLast();
+      });
+      return false;
+    }
+
+    if (_selectedScreen == 0) {
+      // 🔹 Use showConfirmDialog
+      return await showConfirmDialog(
+        context: context,
+        title: "exit_app".tr,
+        content: "exit_content".tr,
+        cancelText: "cancel".tr,
+        confirmText: "exit".tr,
+        confirmColor: Colors.red,
+      );
+    }
+
+    return false;
+  }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Scaffold(
-      body: _navigation_screen[_selected_sceen],
-      bottomNavigationBar: Container(
-        height: 55.h,
-        child: NavigationBar(
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          indicatorColor: theme.colorScheme.primary.withOpacity(0.4),
-          selectedIndex: _selected_sceen,
-          onDestinationSelected: (int index) {
-            _selected_sceen = index;
-            setState(() {});
+    final r = Responsive.of(context);
+
+    return WillPopScope(
+      onWillPop: _onBackPressed,
+      child: Scaffold(
+        body: _navigationScreen[_selectedScreen],
+
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _selectedScreen,
+          onTap: (index) {
+            if (index != _selectedScreen) {
+              if (index == 0) {
+                _navStack.clear();
+              } else {
+                _navStack.remove(index);
+                _navStack.add(_selectedScreen);
+              }
+            }
+            setState(() => _selectedScreen = index);
           },
-          labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
-          destinations: [
-            NavigationDestination(
-              icon: Icon(Icons.home, color: theme.iconTheme.color),
-              selectedIcon: Icon(Icons.home, color: theme.colorScheme.primary),
-              label: 'Home',
+          type: BottomNavigationBarType.fixed,
+          backgroundColor:
+              theme.bottomNavigationBarTheme.backgroundColor ??
+              theme.scaffoldBackgroundColor,
+          selectedItemColor: theme.colorScheme.primary,
+          unselectedItemColor: theme.iconTheme.color,
+          showSelectedLabels: true,
+          showUnselectedLabels: true,
+          elevation: 8,
+
+          items: [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home, size: r.iconMedium()),
+              activeIcon: Container(
+                decoration: BoxDecoration(
+                  color: theme.colorScheme.primary.withOpacity(0.20),
+                  borderRadius: BorderRadius.circular(r.radiusMedium()),
+                ),
+                padding: EdgeInsets.all(r.width(0.015)),
+                child: Icon(
+                  Icons.home,
+                  size: r.iconMedium(),
+                  color: theme.colorScheme.primary,
+                ),
+              ),
+              label: 'home'.tr,
             ),
-            NavigationDestination(
+            BottomNavigationBarItem(
               icon: Image.asset(
                 AssetPaths.product,
-                width: 20.h,
-                height: 20.h,
+                width: r.iconMedium(),
+                height: r.iconMedium(),
                 color: theme.iconTheme.color,
               ),
-              selectedIcon: Image.asset(
-                AssetPaths.product,
-                width: 20.h,
-                height: 20.h,
-                color: theme.colorScheme.primary,
+              activeIcon: Container(
+                decoration: BoxDecoration(
+                  color: theme.colorScheme.primary.withOpacity(0.15),
+                  borderRadius: BorderRadius.circular(r.radiusMedium()),
+                ),
+                padding: EdgeInsets.all(r.width(0.015)),
+                child: Image.asset(
+                  AssetPaths.product,
+                  width: r.iconMedium(),
+                  height: r.iconMedium(),
+                  color: theme.colorScheme.primary,
+                ),
               ),
-              label: 'Products',
+              label: 'product'.tr,
             ),
-
-            NavigationDestination(
+            BottomNavigationBarItem(
               icon: Image.asset(
                 AssetPaths.doller,
-                width: 20.h,
-                height: 20.h,
+                width: r.iconMedium(),
+                height: r.iconMedium(),
                 color: theme.iconTheme.color,
               ),
-              selectedIcon: Image.asset(
-                AssetPaths.doller,
-                width: 20.h,
-                height: 20.h,
-                color: theme.colorScheme.primary,
+              activeIcon: Container(
+                decoration: BoxDecoration(
+                  color: theme.colorScheme.primary.withOpacity(0.15),
+                  borderRadius: BorderRadius.circular(r.radiusMedium()),
+                ),
+                padding: EdgeInsets.all(r.width(0.015)),
+                child: Image.asset(
+                  AssetPaths.doller,
+                  width: r.iconMedium(),
+                  height: r.iconMedium(),
+                  color: theme.colorScheme.primary,
+                ),
               ),
-              label: 'Sales',
+              label: 'sale'.tr,
             ),
-
-            NavigationDestination(
+            BottomNavigationBarItem(
               icon: Image.asset(
                 AssetPaths.report,
-                width: 20.h,
-                height: 20.h,
+                width: r.iconMedium(),
+                height: r.iconMedium(),
                 color: theme.iconTheme.color,
               ),
-              selectedIcon: Image.asset(
-                AssetPaths.report,
-                width: 20.h,
-                height: 20.h,
-                color: theme.colorScheme.primary,
+              activeIcon: Container(
+                decoration: BoxDecoration(
+                  color: theme.colorScheme.primary.withOpacity(0.15),
+                  borderRadius: BorderRadius.circular(r.radiusMedium()),
+                ),
+                padding: EdgeInsets.all(r.width(0.015)),
+                child: Image.asset(
+                  AssetPaths.report,
+                  width: r.iconMedium(),
+                  height: r.iconMedium(),
+                  color: theme.colorScheme.primary,
+                ),
               ),
-              label: 'Reports',
+              label: 'reports'.tr,
             ),
-
-            NavigationDestination(
-              icon: Icon(Icons.settings, color: theme.iconTheme.color),
-              selectedIcon: Icon(
-                Icons.settings,
-                color: theme.colorScheme.primary,
+            BottomNavigationBarItem(
+              icon: Icon(Icons.settings, size: r.iconMedium()),
+              activeIcon: Container(
+                decoration: BoxDecoration(
+                  color: theme.colorScheme.primary.withOpacity(0.15),
+                  borderRadius: BorderRadius.circular(r.radiusMedium()),
+                ),
+                padding: EdgeInsets.all(r.width(0.015)),
+                child: Icon(
+                  Icons.settings,
+                  size: r.iconMedium(),
+                  color: theme.colorScheme.primary,
+                ),
               ),
-              label: 'Setting',
+              label: 'settings'.tr,
             ),
           ],
         ),

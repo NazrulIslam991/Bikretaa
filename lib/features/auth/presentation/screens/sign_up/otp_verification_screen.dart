@@ -1,4 +1,5 @@
 import 'package:bikretaa/app/body_background.dart';
+import 'package:bikretaa/app/responsive.dart';
 import 'package:bikretaa/features/auth/presentation/database/otp_generator.dart';
 import 'package:bikretaa/features/auth/presentation/database/otp_service.dart';
 import 'package:bikretaa/features/auth/presentation/screens/sign_up/create_account_by_information.dart';
@@ -49,12 +50,17 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final r = Responsive.of(context);
+
     return Scaffold(
       body: BodyBackground(
         child: Center(
           child: SingleChildScrollView(
             child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 15.w),
+              padding: EdgeInsets.symmetric(
+                vertical: r.height(0.02),
+                horizontal: r.width(0.04),
+              ),
               child: Form(
                 key: _formKey,
                 child: Column(
@@ -62,9 +68,12 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                   children: [
                     Text(
                       'OTP_Headline'.tr,
-                      style: Theme.of(context).textTheme.titleLarge,
+                      style: theme.textTheme.titleLarge?.copyWith(
+                        fontSize: r.fontXXXL(),
+                      ),
+                      textAlign: TextAlign.center,
                     ),
-                    SizedBox(height: 5),
+                    SizedBox(height: r.height(0.005)),
                     Text(
                       'OTP_subHeadLine'.tr,
                       textAlign: TextAlign.center,
@@ -73,13 +82,12 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                         color: theme.colorScheme.primary,
                         letterSpacing: 0.4,
                         fontStyle: FontStyle.italic,
-                        fontSize: 12.sp,
+                        fontSize: r.fontSmall(),
                       ),
                     ),
-                    SizedBox(height: 50),
-
-                    Container(
-                      height: 50.h,
+                    SizedBox(height: r.height(0.06)),
+                    SizedBox(
+                      height: 55.h,
                       width: double.infinity,
                       child: CustomPinCodeField(
                         controller: _otpEController,
@@ -88,7 +96,7 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                         },
                       ),
                     ),
-
+                    //SizedBox(height: r.height(0.02)),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
@@ -98,7 +106,7 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                             color: theme.colorScheme.primary,
                             fontStyle: FontStyle.italic,
                             fontWeight: FontWeight.normal,
-                            fontSize: 11.h,
+                            fontSize: r.fontSmall(),
                           ),
                         ),
                         TextButton(
@@ -109,15 +117,13 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                               color: Colors.lightBlue,
                               fontStyle: FontStyle.italic,
                               fontWeight: FontWeight.bold,
-                              fontSize: 11.h,
+                              fontSize: r.fontSmall(),
                             ),
                           ),
                         ),
                       ],
                     ),
-
-                    SizedBox(height: 30.h),
-
+                    //SizedBox(height: r.height(0.04)),
                     Visibility(
                       visible: !_otpVerificationProgress,
                       replacement: CenterCircularProgressIndiacator(),
@@ -125,13 +131,14 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                         onPressed: _onTapVerify,
                         child: Text(
                           'Verify'.tr,
-                          style: TextStyle(color: theme.colorScheme.primary),
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: r.fontSmall(),
+                          ),
                         ),
                       ),
                     ),
-
-                    SizedBox(height: 20.h),
-
+                    SizedBox(height: r.height(0.03)),
                     Center(
                       child: AuthBottomText(
                         normalText: 'Sign_up_bottom_text_1'.tr,
@@ -149,7 +156,7 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
     );
   }
 
-  //signip button section
+  // Navigate to SignIn screen
   void _onTapSignIn() {
     Navigator.pushNamedAndRemoveUntil(
       context,
@@ -158,12 +165,10 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
     );
   }
 
-  //verify otp process"
+  // Verify OTP
   void _onTapVerify() async {
     final enteredOtp = _otpEController.text.trim();
-    setState(() {
-      _otpVerificationProgress = true;
-    });
+    setState(() => _otpVerificationProgress = true);
 
     await Future.delayed(Duration(seconds: 3));
 
@@ -179,23 +184,18 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
       showSnackbarMessage(context, 'Invalid_OTP_Please_try_again'.tr);
     }
 
-    setState(() {
-      _otpVerificationProgress = false;
-    });
+    setState(() => _otpVerificationProgress = false);
   }
 
-  //"Database section for resend otp process"
+  // Resend OTP
   void _onTapResendCode() async {
     final email = widget.email;
-
     final otp = OtpGenerator.generate(length: 6);
 
     final response = await OtpApiService.sendOtp(email: email, otp: otp);
 
     if (response.isSuccess) {
-      setState(() {
-        currentOtp = otp;
-      });
+      setState(() => currentOtp = otp);
       showSnackbarMessage(context, "OTP resent to $email");
     } else {
       showSnackbarMessage(

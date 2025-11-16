@@ -1,5 +1,5 @@
+import 'package:bikretaa/app/responsive.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class FeedbackCard extends StatelessWidget {
@@ -20,17 +20,19 @@ class FeedbackCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final r = Responsive.of(context);
     final green = const Color(0xFF28A745);
+
     return Container(
-      padding: EdgeInsets.all(12.w),
+      padding: EdgeInsets.all(r.paddingMedium()),
       decoration: BoxDecoration(
         color: theme.cardColor,
-        borderRadius: BorderRadius.circular(12.r),
+        borderRadius: BorderRadius.circular(r.radiusMedium()),
         boxShadow: [
           BoxShadow(
             color: Colors.black12,
             blurRadius: 3,
-            offset: const Offset(0, 1),
+            offset: Offset(0, r.height(0.002)),
           ),
         ],
       ),
@@ -39,11 +41,11 @@ class FeedbackCard extends StatelessWidget {
           Text(
             'feedback_desc'.tr,
             style: TextStyle(
-              fontSize: 13.sp,
+              fontSize: r.fontSmall(),
               color: theme.colorScheme.onSurface.withOpacity(0.85),
             ),
           ),
-          SizedBox(height: 12.h),
+          SizedBox(height: r.height(0.015)),
           TextField(
             controller: controller,
             maxLines: 5,
@@ -55,37 +57,41 @@ class FeedbackCard extends StatelessWidget {
                 fontWeight: FontWeight.normal,
                 color: theme.colorScheme.primary,
                 letterSpacing: 0.4,
-                fontSize: 11.h,
+                fontSize: r.fontSmall(),
               ),
               counterText: "",
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8.r),
+                borderRadius: BorderRadius.circular(r.radiusSmall()),
               ),
               contentPadding: EdgeInsets.symmetric(
-                horizontal: 12.w,
-                vertical: 12.h,
+                horizontal: r.paddingMedium(),
+                vertical: r.height(0.015),
               ),
             ),
           ),
-          SizedBox(height: 8.h),
+          SizedBox(height: r.height(0.01)),
           Row(
             children: [
               Text(
                 '$charCount/500',
                 style: TextStyle(
-                  fontSize: 10.sp,
+                  fontSize: r.fontSmall() * 0.8,
                   color: theme.colorScheme.onSurface.withOpacity(0.6),
                 ),
               ),
-              const Spacer(),
+              Spacer(),
               Row(
                 children: [
-                  Icon(Icons.check_circle_outline, color: green, size: 12.sp),
-                  SizedBox(width: 6.w),
+                  Icon(
+                    Icons.check_circle_outline,
+                    color: green,
+                    size: r.fontSmall(),
+                  ),
+                  SizedBox(width: r.width(0.015)),
                   Text(
                     'instant_admin_notif'.tr,
                     style: TextStyle(
-                      fontSize: 10.sp,
+                      fontSize: r.fontSmall() * 0.85,
                       color: green,
                       fontWeight: FontWeight.w600,
                     ),
@@ -94,16 +100,19 @@ class FeedbackCard extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 12.h),
+          SizedBox(height: r.height(0.015)),
           ElevatedButton.icon(
             onPressed: onSend,
-            icon: const Icon(Icons.send),
-            label: Text('send_message'.tr, style: TextStyle(fontSize: 15.sp)),
+            icon: Icon(Icons.send, size: r.fontMedium()),
+            label: Text(
+              'send_message'.tr,
+              style: TextStyle(fontSize: r.fontMedium()),
+            ),
             style: ElevatedButton.styleFrom(
               backgroundColor: green,
-              minimumSize: Size(double.infinity, 25.h),
+              minimumSize: Size(double.infinity, r.height(0.035)),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8.r),
+                borderRadius: BorderRadius.circular(r.radiusSmall()),
               ),
             ),
           ),

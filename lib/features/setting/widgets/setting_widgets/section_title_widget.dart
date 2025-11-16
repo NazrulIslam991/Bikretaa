@@ -1,5 +1,5 @@
+import 'package:bikretaa/app/responsive.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SectionTitleWidget extends StatelessWidget {
   final String title;
@@ -8,15 +8,22 @@ class SectionTitleWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final r = Responsive.of(context);
+
     return Padding(
-      padding: EdgeInsets.only(right: 4.w, top: 15.h, left: 4.w, bottom: 10.h),
+      padding: EdgeInsets.only(
+        right: r.width(0.01),
+        left: r.width(0.01),
+        top: r.height(0.02),
+        bottom: r.height(0.015),
+      ),
       child: Text(
         title.toUpperCase(),
-        style: TextStyle(
-          fontSize: 10.sp,
-          fontWeight: FontWeight.w700,
+        style: r.textStyle(
+          fontSize: r.fontSmall(),
+          fontWeight: FontWeight.normal,
           color: theme.colorScheme.primary,
-          letterSpacing: 0.8,
+          height: 1.2,
         ),
       ),
     );

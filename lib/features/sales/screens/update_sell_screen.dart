@@ -1,3 +1,4 @@
+import 'package:bikretaa/app/responsive.dart';
 import 'package:bikretaa/features/sales/database/add_sales_screen_database.dart';
 import 'package:bikretaa/features/sales/database/update_screen_database.dart';
 import 'package:bikretaa/features/sales/model/SalesModel.dart';
@@ -9,7 +10,6 @@ import 'package:bikretaa/features/shared/presentation/widgets/auth_user_input_fe
 import 'package:bikretaa/features/shared/presentation/widgets/snack_bar_messege/snackbar_messege.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class UpdateSalesScreen extends StatefulWidget {
@@ -89,41 +89,52 @@ class _UpdateSalesScreenState extends State<UpdateSalesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final r = Responsive.of(context);
+
     if (_fetching) return const Scaffold(body: UpdateSalesShimmerScreen());
 
     final uid = _auth.currentUser?.uid;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("update_sale".tr, style: TextStyle(fontSize: 22.sp)),
+        title: Text(
+          "update_sale".tr,
+          style: r.textStyle(fontSize: r.fontXXL()),
+        ),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 15.w),
+          padding: EdgeInsets.symmetric(
+            vertical: r.height(0.012),
+            horizontal: r.width(0.03),
+          ),
           child: Form(
             key: _formKey,
             child: Column(
               children: [
-                SizedBox(height: 10.h),
+                SizedBox(height: r.height(0.015)),
                 Container(
-                  height: 60.h,
+                  height: r.height(0.08),
                   child: CustomerNameController(
                     CustomerNameController: _customerNameController,
                   ),
                 ),
+                SizedBox(height: r.height(0.016)),
                 Container(
-                  height: 60.h,
+                  height: r.height(0.08),
                   child: MobileFeildWidget(
                     mobileEcontroller: _mobileEcontroller,
                   ),
                 ),
+                SizedBox(height: r.height(0.016)),
                 Container(
-                  height: 60.h,
+                  height: r.height(0.08),
                   child: CustomerAddressController(
                     CustomerAddressController: _customerAddressController,
                   ),
                 ),
+                SizedBox(height: r.height(0.016)),
                 ProductsListWidget(
                   products: _addedProducts,
                   onRemoveProduct: (index) {
@@ -132,7 +143,7 @@ class _UpdateSalesScreenState extends State<UpdateSalesScreen> {
                     });
                   },
                 ),
-                SizedBox(height: 20.h),
+                SizedBox(height: r.height(0.025)),
                 Row(
                   children: [
                     Expanded(
@@ -141,7 +152,7 @@ class _UpdateSalesScreenState extends State<UpdateSalesScreen> {
                         decoration: InputDecoration(labelText: "product_id".tr),
                       ),
                     ),
-                    SizedBox(width: 10.w),
+                    SizedBox(width: r.width(0.02)),
                     Expanded(
                       child: TextField(
                         controller: _quantityController,
@@ -153,7 +164,7 @@ class _UpdateSalesScreenState extends State<UpdateSalesScreen> {
                       icon: Icon(
                         Icons.add_box,
                         color: Colors.green,
-                        size: 25.h,
+                        size: r.iconLarge(),
                       ),
                       onPressed: () async {
                         if (uid != null) await _addProductToList(uid);
@@ -161,7 +172,7 @@ class _UpdateSalesScreenState extends State<UpdateSalesScreen> {
                     ),
                   ],
                 ),
-                SizedBox(height: 20.h),
+                SizedBox(height: r.height(0.025)),
                 Row(
                   children: [
                     Expanded(
@@ -171,13 +182,13 @@ class _UpdateSalesScreenState extends State<UpdateSalesScreen> {
                         decoration: InputDecoration(labelText: "paid".tr),
                       ),
                     ),
-                    SizedBox(width: 10.w),
+                    SizedBox(width: r.width(0.02)),
                     Expanded(
                       child: Container(
-                        padding: EdgeInsets.all(12.h),
+                        padding: EdgeInsets.all(r.duefeildPadding()),
                         decoration: BoxDecoration(
                           border: Border.all(color: Colors.grey),
-                          borderRadius: BorderRadius.circular(8.r),
+                          borderRadius: BorderRadius.circular(r.radiusMedium()),
                         ),
                         child: due < 0
                             ? Text(
@@ -185,13 +196,12 @@ class _UpdateSalesScreenState extends State<UpdateSalesScreen> {
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.red,
+                                  fontSize: r.fontMedium(),
                                 ),
                               )
                             : Text(
                                 "${"due".tr}: ${due.toStringAsFixed(2)} tk",
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                ),
+                                style: r.textStyle(fontWeight: FontWeight.bold),
                               ),
                       ),
                     ),
@@ -203,12 +213,18 @@ class _UpdateSalesScreenState extends State<UpdateSalesScreen> {
         ),
       ),
       bottomNavigationBar: Padding(
-        padding: EdgeInsets.all(12.h),
+        padding: EdgeInsets.all(r.width(0.03)),
         child: ElevatedButton(
           onPressed: (_loading || uid == null) ? null : _confirmUpdate,
           child: _loading
               ? const CircularProgressIndicator(color: Colors.white)
-              : Text("update_sale_btn".tr, style: TextStyle(fontSize: 16.sp)),
+              : Text(
+                  "update_sale_btn".tr,
+                  style: r.textStyle(
+                    fontSize: r.fontMedium(),
+                    color: Colors.white,
+                  ),
+                ),
         ),
       ),
     );

@@ -1,5 +1,5 @@
+import 'package:bikretaa/app/responsive.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ActivitiesCard extends StatelessWidget {
   final List<Map<String, dynamic>> activities;
@@ -8,41 +8,48 @@ class ActivitiesCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final r = Responsive.of(context);
+
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.all(10.w),
+      padding: EdgeInsets.all(r.paddingMedium()),
       decoration: BoxDecoration(
         color: theme.cardColor,
-        borderRadius: BorderRadius.circular(12.r),
+        borderRadius: BorderRadius.circular(r.radiusMedium()), //
       ),
       child: ListView.separated(
         shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         itemCount: activities.length,
-        separatorBuilder: (_, __) => Divider(color: theme.dividerColor),
+        separatorBuilder: (_, __) =>
+            Divider(color: theme.dividerColor, height: r.height(0.02)),
         itemBuilder: (context, index) {
           final a = activities[index];
           final Color aColor = a['color'] as Color;
           return ListTile(
             dense: true,
-            minLeadingWidth: 28.w,
+            minLeadingWidth: r.width(0.07),
             contentPadding: EdgeInsets.zero,
             leading: CircleAvatar(
-              radius: 16.r,
+              radius: r.iconMedium(),
               backgroundColor: aColor.withAlpha(40),
-              child: Icon(a['icon'] as IconData, color: aColor, size: 16.sp),
+              child: Icon(
+                a['icon'] as IconData,
+                color: aColor,
+                size: r.iconMedium(),
+              ),
             ),
             title: Text(
               a['text'] as String,
-              style: TextStyle(
-                fontSize: 13.sp,
+              style: r.textStyle(
+                fontSize: r.fontMedium(),
                 color: theme.textTheme.bodyLarge?.color,
               ),
             ),
             subtitle: Text(
               a['time'] as String,
-              style: TextStyle(
-                fontSize: 11.sp,
+              style: r.textStyle(
+                fontSize: r.fontSmall(),
                 color: theme.textTheme.bodySmall?.color,
               ),
             ),

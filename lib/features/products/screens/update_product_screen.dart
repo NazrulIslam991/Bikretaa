@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:bikretaa/app/responsive.dart';
 import 'package:bikretaa/features/products/database/product_database.dart';
 import 'package:bikretaa/features/products/model/product_model.dart';
 import 'package:bikretaa/features/products/widgets/image_picker/custom_image_picker.dart';
@@ -98,20 +99,28 @@ class _UpdateProductScreenState extends State<UpdateProductScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final r = Responsive.of(context);
+
     return Scaffold(
       appBar: AppBar(
-        title: Text("update_product".tr, style: TextStyle(fontSize: 22.h)),
+        title: Text(
+          "update_product".tr,
+          style: r.textStyle(fontSize: r.fontXL()),
+        ),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 15.w),
+          padding: EdgeInsets.symmetric(
+            vertical: r.paddingSmall(),
+            horizontal: r.paddingMedium(),
+          ),
           child: Form(
             key: _formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(height: 10.h),
+                r.vSpace(0.01),
                 Container(
                   height: 65.h,
                   child: ProductNameController(
@@ -177,32 +186,36 @@ class _UpdateProductScreenState extends State<UpdateProductScreen> {
                 ProductDescriptionController(
                   productDescriptionController: _descriptionController,
                 ),
-                SizedBox(height: 15.h),
-
+                r.vSpace(0.02),
                 // Image Picker
                 CustomImagePicker(
-                  height: 150.h,
+                  height: r.height(0.20),
                   width: double.infinity,
                   onImageSelected: (File file) {
                     _selectedImage = file;
                   },
                 ),
-                SizedBox(height: 15.h),
+                r.vSpace(0.01),
               ],
             ),
           ),
         ),
       ),
       bottomNavigationBar: Padding(
-        padding: EdgeInsets.only(bottom: 15, left: 16, right: 16),
-        child: SizedBox(
-          height: 40.h,
-          child: Visibility(
-            visible: !_updateProductProgressIndicator,
-            replacement: CenterCircularProgressIndiacator(),
-            child: ElevatedButton(
-              onPressed: _onTapUpdateProduct,
-              child: Text("update_product_btn".tr),
+        padding: EdgeInsets.only(
+          bottom: r.height(0.02),
+          left: r.width(0.04),
+          right: r.width(0.04),
+          top: r.height(0.01),
+        ),
+        child: Visibility(
+          visible: !_updateProductProgressIndicator,
+          replacement: CenterCircularProgressIndiacator(),
+          child: ElevatedButton(
+            onPressed: _onTapUpdateProduct,
+            child: Text(
+              "update_product_btn".tr,
+              style: r.textStyle(fontSize: r.fontMedium()),
             ),
           ),
         ),

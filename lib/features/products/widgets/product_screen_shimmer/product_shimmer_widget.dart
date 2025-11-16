@@ -16,59 +16,72 @@ class ProductsShimmerScreen extends StatelessWidget {
       body: Obx(() {
         final isDark = themeController.isDarkMode.value;
 
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Shimmer.fromColors(
-              baseColor: isDark ? Colors.grey.shade800 : Colors.grey.shade300,
-              highlightColor: isDark
-                  ? Colors.grey.shade600
-                  : Colors.grey.shade100,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        height: 30.h,
-                        width: 160.w,
-                        color: Colors.white,
-                      ),
-                      SizedBox(height: 8.h),
-                      Container(height: 20.h, width: 80.w, color: Colors.white),
-                    ],
-                  ),
-                  Container(
-                    height: 35.h,
-                    width: 35.h,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(8),
+        return Padding(
+          padding: EdgeInsets.only(top: 8.h),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Shimmer.fromColors(
+                baseColor: isDark ? Colors.grey.shade800 : Colors.grey.shade300,
+                highlightColor: isDark
+                    ? Colors.grey.shade600
+                    : Colors.grey.shade100,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          height: 20.h,
+                          width: 160.w,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                        ),
+                        SizedBox(height: 4.h),
+                        Container(
+                          height: 20.h,
+                          width: 80.w,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 10.h),
-
-            Expanded(
-              child: GridView.builder(
-                padding: EdgeInsets.zero,
-                itemCount: 6,
-                physics: const NeverScrollableScrollPhysics(),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 10.h,
-                  crossAxisSpacing: 5.h,
-                  childAspectRatio: 1.h / 1.5.h,
+                    Container(
+                      height: 25.h,
+                      width: 25.h,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                  ],
                 ),
-                itemBuilder: (context, index) {
-                  return const ShimmerCard();
-                },
               ),
-            ),
-          ],
+              SizedBox(height: 10.h),
+
+              Expanded(
+                child: GridView.builder(
+                  padding: EdgeInsets.zero,
+                  itemCount: 6,
+                  physics: const NeverScrollableScrollPhysics(),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 10.h,
+                    crossAxisSpacing: 5.h,
+                    childAspectRatio: 1.h / 1.2.h,
+                  ),
+                  itemBuilder: (context, index) {
+                    return const ShimmerCard();
+                  },
+                ),
+              ),
+            ],
+          ),
         );
       }),
     );

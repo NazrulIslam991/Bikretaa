@@ -1,5 +1,5 @@
+import 'package:bikretaa/app/responsive.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class MobileFeildWidget extends StatelessWidget {
@@ -25,51 +25,57 @@ class MobileFeildWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final r = Responsive.of(context);
+
     final baseBorder = OutlineInputBorder(
-      borderRadius: BorderRadius.circular(8.r),
+      borderRadius: BorderRadius.circular(r.radiusSmall()),
       borderSide: BorderSide(color: Colors.grey.shade400, width: 1.5),
     );
 
-    return Container(
-      height: 45.h,
+    return SizedBox(
+      height: r.height(0.06),
       child: TextFormField(
         controller: mobileEcontroller,
         keyboardType: TextInputType.number,
         maxLength: 9,
         readOnly: !isEditable,
+        style: TextStyle(
+          fontSize: r.fontMedium(),
+          color: theme.colorScheme.onBackground,
+        ),
         autovalidateMode: AutovalidateMode.onUserInteraction,
         decoration: InputDecoration(
           labelStyle: TextStyle(
             fontWeight: FontWeight.normal,
             color: theme.colorScheme.primary,
             letterSpacing: 0.4,
-            fontSize: 12.h,
+            fontSize: r.fontMedium(),
           ),
           labelText: 'Phone_Number'.tr,
           prefixText: '+8801 ',
           prefixStyle: TextStyle(
             color: theme.colorScheme.primary,
-            fontSize: 12.h,
+            fontSize: r.fontMedium(),
             fontWeight: FontWeight.normal,
           ),
-          prefixIcon: Icon(Icons.phone, color: Colors.blue, size: 20.sp),
+          prefixIcon: Icon(
+            Icons.phone,
+            color: Colors.blue,
+            size: r.iconMedium(),
+          ),
           counterText: '',
           enabledBorder: baseBorder,
           focusedBorder: isEditable
               ? OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8.r),
+                  borderRadius: BorderRadius.circular(r.radiusSmall()),
                   borderSide: BorderSide(color: Colors.blue, width: 2),
                 )
               : baseBorder,
-          //errorBorder: Colors.red,
           focusedErrorBorder: baseBorder,
         ),
         textInputAction: TextInputAction.next,
         validator: (value) {
-          if (!isEditable) {
-            // When readOnly, no error shown
-            return null;
-          }
+          if (!isEditable) return null;
           if (value == null || value.isEmpty) {
             return 'Please_enter_phone_number'.tr;
           } else if (!validatePhone(value)) {

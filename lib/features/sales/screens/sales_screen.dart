@@ -1,3 +1,4 @@
+import 'package:bikretaa/app/responsive.dart';
 import 'package:bikretaa/assets_path/assets_path.dart';
 import 'package:bikretaa/features/sales/database/sales_screen_database.dart';
 import 'package:bikretaa/features/sales/widgets/bottom_filter_sheet_for_sales.dart';
@@ -10,7 +11,6 @@ import 'package:bikretaa/features/shared/presentation/widgets/search_bar/search_
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -23,7 +23,7 @@ class SalesScreen extends StatefulWidget {
 
 class _SalesScreenState extends State<SalesScreen> {
   final SalesScreenDatabase _salesScreenDatabase = SalesScreenDatabase();
-  TextEditingController searchController = TextEditingController();
+  final TextEditingController searchController = TextEditingController();
   String searchText = "";
   DateTime? startDate;
   DateTime? endDate;
@@ -45,6 +45,8 @@ class _SalesScreenState extends State<SalesScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final r = Responsive.of(context);
+
     final uid = FirebaseAuth.instance.currentUser?.uid;
     if (uid == null) {
       return Scaffold(body: Center(child: Text("user_not_logged_in".tr)));
@@ -52,22 +54,29 @@ class _SalesScreenState extends State<SalesScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 50.h,
-        title: CustomSearchBar(
-          controller: searchController,
-          onChanged: (value) =>
-              setState(() => searchText = value.toLowerCase()),
-          hintText: 'search_sales'.tr,
-          prefixIcon: Icons.search,
-          fontSize: 12,
+        toolbarHeight: r.height(0.09),
+        title: Padding(
+          padding: EdgeInsets.only(top: r.height(0.02)),
+          child: CustomSearchBar(
+            controller: searchController,
+            onChanged: (value) =>
+                setState(() => searchText = value.toLowerCase()),
+            hintText: 'search_sales'.tr,
+            prefixIcon: Icons.search,
+            fontSize: r.fontSmall(),
+          ),
         ),
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 15.w),
+        padding: EdgeInsets.symmetric(
+          vertical: r.height(0),
+          horizontal: r.width(0.03),
+        ),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Header Row
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -76,8 +85,8 @@ class _SalesScreenState extends State<SalesScreen> {
                     children: [
                       Text(
                         "sales_products".tr,
-                        style: TextStyle(
-                          fontSize: 21.h,
+                        style: r.textStyle(
+                          fontSize: r.fontXXL(),
                           fontWeight: FontWeight.bold,
                           color: theme.textTheme.bodyLarge?.color,
                         ),
@@ -85,8 +94,10 @@ class _SalesScreenState extends State<SalesScreen> {
                       Text(
                         "sales_summary".tr,
                         style: GoogleFonts.abhayaLibre(
-                          fontSize: 15.h,
-                          color: theme.textTheme.bodyLarge?.color,
+                          textStyle: r.textStyle(
+                            fontSize: r.fontLarge(),
+                            color: theme.textTheme.bodyLarge?.color,
+                          ),
                         ),
                       ),
                     ],
@@ -95,13 +106,13 @@ class _SalesScreenState extends State<SalesScreen> {
                     onPressed: _showFilterSheet,
                     icon: Image.asset(
                       AssetPaths.filterIcon,
-                      width: 25.h,
-                      height: 25.h,
+                      width: r.iconXXLarge(),
+                      height: r.iconXXLarge(),
                     ),
                   ),
                 ],
               ),
-              SizedBox(height: 15.h),
+              SizedBox(height: r.height(0.02)),
 
               // Sales Summary
               StreamBuilder<QuerySnapshot>(
@@ -151,36 +162,36 @@ class _SalesScreenState extends State<SalesScreen> {
                                 child: buildSummaryCard(
                                   value: totals["totalSales"] ?? 0.00,
                                   label: "sales".tr,
-                                  bgColor: Color(0xFFFFC727),
+                                  bgColor: const Color(0xFFFFC727),
                                 ),
                               ),
-                              SizedBox(width: 5.w),
+                              SizedBox(width: r.width(0.015)),
                               Expanded(
                                 child: buildSummaryCard(
                                   value: totals["totalRevenue"] ?? 0.00,
                                   label: "revenue".tr,
-                                  bgColor: Color(0xFF10B981),
+                                  bgColor: const Color(0xFF10B981),
                                 ),
                               ),
                             ],
                           ),
-                          SizedBox(height: 5.h),
+                          SizedBox(height: r.height(0.012)),
                           Row(
                             children: [
                               Expanded(
                                 child: buildSummaryCard(
                                   value: totals["totalDue"] ?? 0.00,
                                   label: "due".tr,
-                                  bgColor: Color(0xFFFFC727),
+                                  bgColor: const Color(0xFFFFC727),
                                   isPaidText: true,
                                 ),
                               ),
-                              SizedBox(width: 5.w),
+                              SizedBox(width: r.width(0.015)),
                               Expanded(
                                 child: buildSummaryCard(
                                   value: totals["totalPaid"] ?? 0.00,
                                   label: "paid".tr,
-                                  bgColor: Color(0xFF10B981),
+                                  bgColor: const Color(0xFF10B981),
                                 ),
                               ),
                             ],
@@ -192,14 +203,17 @@ class _SalesScreenState extends State<SalesScreen> {
                 },
               ),
 
-              SizedBox(height: 15.h),
+              SizedBox(height: r.height(0.02)),
+
               Text(
                 "sales_history".tr,
-                style: GoogleFonts.abhayaLibre(fontSize: 15.h),
+                style: GoogleFonts.abhayaLibre(
+                  textStyle: r.textStyle(fontSize: r.fontLarge()),
+                ),
               ),
-              SizedBox(height: 10.h),
+              SizedBox(height: r.height(0.015)),
 
-              /// Sales History
+              // Sales History
               StreamBuilder<QuerySnapshot>(
                 stream: _salesScreenDatabase.getSalesFiltered(
                   startDate,
@@ -223,12 +237,12 @@ class _SalesScreenState extends State<SalesScreen> {
 
                   if (salesDocs.isEmpty) {
                     return SizedBox(
-                      height: 0.4.sh,
+                      height: r.height(0.4),
                       child: Center(
                         child: Text(
                           "no_sales_found".tr,
-                          style: TextStyle(
-                            fontSize: 12.h,
+                          style: r.textStyle(
+                            fontSize: r.fontMedium(),
                             fontWeight: FontWeight.bold,
                             color: Colors.blue,
                           ),
@@ -240,7 +254,7 @@ class _SalesScreenState extends State<SalesScreen> {
                   return ListView.builder(
                     itemCount: salesDocs.length,
                     shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) {
                       final sale =
                           salesDocs[index].data() as Map<String, dynamic>;
@@ -259,22 +273,23 @@ class _SalesScreenState extends State<SalesScreen> {
   }
 
   void _showFilterSheet() {
+    final r = Responsive.of(context);
     showModalBottomSheet(
       context: context,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(15.r)),
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(r.radiusMedium()),
+        ),
       ),
       backgroundColor: Colors.white,
-      builder: (context) {
-        return SalesFilterSheet(
-          onFilterSelected: (start, end) {
-            setState(() {
-              startDate = start;
-              endDate = end;
-            });
-          },
-        );
-      },
+      builder: (context) => SalesFilterSheet(
+        onFilterSelected: (start, end) {
+          setState(() {
+            startDate = start;
+            endDate = end;
+          });
+        },
+      ),
     );
   }
 
@@ -282,7 +297,6 @@ class _SalesScreenState extends State<SalesScreen> {
     required double value,
     required String label,
     Color bgColor = Colors.blue,
-    String iconPath = AssetPaths.pie,
     bool isPaidText = false,
   }) {
     return SalesSummaryCard(

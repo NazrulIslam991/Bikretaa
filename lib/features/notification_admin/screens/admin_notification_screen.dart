@@ -3,8 +3,9 @@ import 'package:bikretaa/features/notification_admin/widgets/messege_title_input
 import 'package:bikretaa/features/notification_admin/widgets/notification_card_admin.dart';
 import 'package:bikretaa/features/notification_admin/widgets/notification_dropdown.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+
+import '../../../app/responsive.dart';
 
 class AdminNotificationScreen extends StatefulWidget {
   const AdminNotificationScreen({Key? key}) : super(key: key);
@@ -34,6 +35,20 @@ class _AdminNotificationScreenState extends State<AdminNotificationScreen> {
       "time": "2024-11-06 10:15",
       "recipients": "1500",
     },
+    {
+      "title": "New Shop Verification Process",
+      "message": "We have updated our shop verification process",
+      "audience": "All Users",
+      "time": "2024-11-06 10:15",
+      "recipients": "1500",
+    },
+    {
+      "title": "New Shop Verification Process",
+      "message": "We have updated our shop verification process",
+      "audience": "All Users",
+      "time": "2024-11-06 10:15",
+      "recipients": "1500",
+    },
   ];
 
   final _formKey = GlobalKey<FormState>();
@@ -47,6 +62,7 @@ class _AdminNotificationScreenState extends State<AdminNotificationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final r = Responsive.of(context);
     final theme = Theme.of(context);
     final primaryColor = theme.colorScheme.primary;
     final textColor = theme.textTheme.bodyLarge?.color ?? Colors.black87;
@@ -55,13 +71,18 @@ class _AdminNotificationScreenState extends State<AdminNotificationScreen> {
       appBar: AppBar(
         title: Text(
           "Notifications".tr,
-          style: TextStyle(fontSize: 22.sp, fontWeight: FontWeight.bold),
+          style: TextStyle(fontSize: r.fontXL(), fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
         elevation: 0,
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 10.h),
+        padding: EdgeInsets.only(
+          top: r.height(0.015),
+          left: r.width(0.025),
+          right: r.width(0.025),
+          bottom: r.height(0.008),
+        ),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -70,23 +91,25 @@ class _AdminNotificationScreenState extends State<AdminNotificationScreen> {
                 "Send New Notification".tr,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 18.sp,
+                  fontSize: r.fontLarge(),
                   color: primaryColor,
                 ),
               ),
-              SizedBox(height: 12.h),
+              SizedBox(height: r.height(0.015)),
 
               Form(
                 key: _formKey,
                 child: Column(
                   children: [
                     // Title Input
-                    Container(
-                      height: 65.h,
+                    SizedBox(
+                      height: r.height(0.065),
                       child: MessegeTitleInputField_admin(
                         controller: _titleController,
                       ),
                     ),
+
+                    SizedBox(height: r.height(0.015)),
 
                     // Message Input
                     SizedBox(
@@ -95,10 +118,12 @@ class _AdminNotificationScreenState extends State<AdminNotificationScreen> {
                         controller: _messageController,
                       ),
                     ),
-                    SizedBox(height: 15.h),
 
-                    Container(
-                      height: 60.h,
+                    SizedBox(height: r.height(0.02)),
+
+                    // Audience Dropdown
+                    SizedBox(
+                      height: r.height(0.06),
                       child: NotificationDropdownField_Admin(
                         value: _selectedAudience,
                         options: [
@@ -115,25 +140,27 @@ class _AdminNotificationScreenState extends State<AdminNotificationScreen> {
                       ),
                     ),
 
+                    SizedBox(height: r.height(0.02)),
+
+                    // Send Button
                     SizedBox(
                       width: double.infinity,
-                      height: 44.h,
-                      child: ElevatedButton.icon(
+                      height: r.height(0.055),
+                      child: ElevatedButton(
                         onPressed: _sendNotification,
-                        icon: Icon(Icons.send, size: 18.sp),
-                        label: Text(
-                          "Send Notification".tr,
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: primaryColor,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12.r),
-                          ),
-                          elevation: 2,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.send, size: r.iconMedium()),
+                            SizedBox(width: r.width(0.02)),
+                            Text(
+                              "Send Notification".tr,
+                              style: TextStyle(
+                                fontSize: r.fontMedium(),
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -141,22 +168,22 @@ class _AdminNotificationScreenState extends State<AdminNotificationScreen> {
                 ),
               ),
 
-              SizedBox(height: 18.h),
+              SizedBox(height: r.height(0.025)),
 
               Text(
                 "Recent Notifications".tr,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 16.sp,
+                  fontSize: r.fontMedium(),
                   color: textColor,
                 ),
               ),
-              SizedBox(height: 10.h),
+              SizedBox(height: r.height(0.012)),
 
               // Notification List
               if (_recentNotifications.isEmpty)
                 Padding(
-                  padding: EdgeInsets.symmetric(vertical: 20.h),
+                  padding: EdgeInsets.symmetric(vertical: r.height(0.02)),
                   child: Center(
                     child: Text(
                       "No notifications yet".tr,

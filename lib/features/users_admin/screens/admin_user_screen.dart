@@ -1,7 +1,7 @@
+import 'package:bikretaa/app/responsive.dart';
 import 'package:bikretaa/features/shared/presentation/widgets/search_bar/search_bar.dart';
 import 'package:bikretaa/features/users_admin/widgets/user_card_admin.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AdminUserScreen extends StatefulWidget {
   const AdminUserScreen({super.key});
@@ -46,38 +46,6 @@ class _AdminUserScreenState extends State<AdminUserScreen> {
       "joined": "2024-03-10",
       "lastLogin": "3 hours ago",
     },
-    {
-      "name": "Ahmed Hassan",
-      "email": "ahmed@techparadise.com",
-      "shop": "Tech Paradise",
-      "status": "Active",
-      "joined": "2024-01-15",
-      "lastLogin": "2 hours ago",
-    },
-    {
-      "name": "Fatima Ali",
-      "email": "fatima@fashionhub.com",
-      "shop": "Fashion Hub",
-      "status": "Active",
-      "joined": "2024-02-20",
-      "lastLogin": "1 day ago",
-    },
-    {
-      "name": "Omar Mahmoud",
-      "email": "omar@electronicsworld.com",
-      "shop": "Electronics World",
-      "status": "Deactivated",
-      "joined": "2024-01-08",
-      "lastLogin": "5 days ago",
-    },
-    {
-      "name": "Layla Ibrahim",
-      "email": "layla@bookcorner.com",
-      "shop": "Book Corner",
-      "status": "Active",
-      "joined": "2024-03-10",
-      "lastLogin": "3 hours ago",
-    },
   ];
 
   String searchQuery = "";
@@ -90,6 +58,7 @@ class _AdminUserScreenState extends State<AdminUserScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final r = Responsive.of(context);
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
     final scaffoldBg = theme.scaffoldBackgroundColor;
@@ -105,6 +74,7 @@ class _AdminUserScreenState extends State<AdminUserScreen> {
         theme.textTheme.bodyMedium?.color ?? Colors.grey;
     final noDataColor = theme.hintColor;
 
+    // Filter active/inactive users
     List<Map<String, dynamic>> activeUsers = users
         .where((u) => u['status'] == "Active")
         .toList();
@@ -129,8 +99,8 @@ class _AdminUserScreenState extends State<AdminUserScreen> {
         appBar: AppBar(
           title: Text(
             "User Management",
-            style: TextStyle(
-              fontSize: 25.sp,
+            style: r.textStyle(
+              fontSize: r.fontXL(),
               fontWeight: FontWeight.bold,
               color: appBarFore,
             ),
@@ -154,25 +124,25 @@ class _AdminUserScreenState extends State<AdminUserScreen> {
           children: [
             Padding(
               padding: EdgeInsets.only(
-                top: 10.h,
-                left: 10.w,
-                right: 10.w,
-                bottom: 4.h,
+                top: r.height(0.012),
+                left: r.width(0.025),
+                right: r.width(0.025),
+                bottom: r.height(0.008),
               ),
               child: CustomSearchBar(
                 controller: _searchController,
                 onChanged: (value) => setState(() => searchQuery = value),
                 hintText: "Search by name, email, or shop...",
                 prefixIcon: Icons.search,
-                fontSize: 14,
+                fontSize: r.fontSmall(),
               ),
             ),
             Expanded(
               child: TabBarView(
                 children: [
-                  _buildUserList(filteredTotal, noDataColor),
-                  _buildUserList(filteredActive, noDataColor),
-                  _buildUserList(filteredInactive, noDataColor),
+                  _buildUserList(filteredTotal, noDataColor, r),
+                  _buildUserList(filteredActive, noDataColor, r),
+                  _buildUserList(filteredInactive, noDataColor, r),
                 ],
               ),
             ),
@@ -192,14 +162,15 @@ class _AdminUserScreenState extends State<AdminUserScreen> {
   Widget _buildUserList(
     List<Map<String, dynamic>> usersList,
     Color noDataColor,
+    Responsive r,
   ) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 10.w),
+      padding: EdgeInsets.symmetric(horizontal: r.width(0.025)),
       child: usersList.isEmpty
           ? Center(
               child: Text(
                 "No users found",
-                style: TextStyle(fontSize: 14.sp, color: noDataColor),
+                style: r.textStyle(fontSize: r.fontSmall(), color: noDataColor),
               ),
             )
           : ListView.builder(

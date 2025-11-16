@@ -1,4 +1,5 @@
 import 'package:bikretaa/app/controller/theme_controller.dart';
+import 'package:bikretaa/app/responsive.dart';
 import 'package:bikretaa/features/about_us/screens/about_screen.dart';
 import 'package:bikretaa/features/auth/presentation/model/user_model.dart';
 import 'package:bikretaa/features/auth/presentation/screens/signin/signin_screen.dart';
@@ -16,7 +17,6 @@ import 'package:bikretaa/features/supports_and_faqs/screens/support_and_faqs_scr
 import 'package:bikretaa/utils/app_version_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../app/controller/language_controller.dart';
@@ -49,67 +49,77 @@ class _SettingScreenState extends State<SettingScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final r = Responsive.of(context);
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('Settings'.tr, style: TextStyle(fontSize: 24.sp)),
+        toolbarHeight: r.height(0.055),
+        title: Text(
+          'Settings'.tr,
+          style: r.textStyle(fontSize: r.fontXL(), fontWeight: FontWeight.bold),
+        ),
         centerTitle: true,
       ),
       body: ListView(
-        padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 10.h),
+        padding: EdgeInsets.symmetric(
+          horizontal: r.width(0.025),
+          vertical: r.height(0.01),
+        ),
         children: [
           // User Info Box
           Container(
             decoration: BoxDecoration(
               color: theme.colorScheme.onSecondary,
-              borderRadius: BorderRadius.circular(12.r),
+              borderRadius: BorderRadius.circular(r.radiusMedium()),
               border: Border.all(color: Colors.grey.shade300),
             ),
-            padding: EdgeInsets.all(12.w),
+            padding: EdgeInsets.all(r.width(0.03)),
             child: _userLoading
                 ? Center(
                     child: SizedBox(
-                      height: 24.h,
-                      width: 24.h,
-                      child: CenterCircularProgressIndiacator(),
+                      height: r.height(0.03),
+                      width: r.height(0.03),
+                      child: const CenterCircularProgressIndiacator(),
                     ),
                   )
                 : Row(
                     children: [
                       CircleAvatar(
-                        radius: 18.r,
+                        radius: r.width(0.05),
                         backgroundColor: theme.colorScheme.secondary,
                         child: Text(
                           _user?.shopName.isNotEmpty == true
                               ? _user!.shopName[0].toUpperCase()
                               : 'S',
-                          style: TextStyle(
-                            fontSize: 14.sp,
+                          style: r.textStyle(
+                            fontSize: r.fontMedium(),
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
                           ),
                         ),
                       ),
-                      SizedBox(width: 12.w),
+                      SizedBox(width: r.width(0.03)),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               _user?.shopName ?? 'Shop Name',
-                              style: TextStyle(
-                                fontSize: 14.sp,
+                              style: r.textStyle(
+                                fontSize: r.fontLarge(),
                                 fontWeight: FontWeight.w700,
                                 color: theme.colorScheme.primary,
                               ),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
-                            SizedBox(height: 2.h),
+                            SizedBox(height: r.height(0.005)),
                             Text(
                               _user?.email ?? 'Email',
-                              style: TextStyle(
-                                fontSize: 10.sp,
+                              style: r.textStyle(
+                                fontSize: r.fontSmall(),
                                 color: theme.colorScheme.primary,
+                                fontWeight: FontWeight.w300,
                               ),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
@@ -117,7 +127,7 @@ class _SettingScreenState extends State<SettingScreen> {
                           ],
                         ),
                       ),
-                      SizedBox(width: 6.w),
+                      SizedBox(width: r.width(0.015)),
                       FilledButton.tonal(
                         onPressed: () {
                           Navigator.push(
@@ -129,12 +139,14 @@ class _SettingScreenState extends State<SettingScreen> {
                         },
                         child: Text(
                           'Edit'.tr,
-                          style: TextStyle(fontSize: 10.sp),
+                          style: r.textStyle(fontSize: r.fontSmall()),
                         ),
                       ),
                     ],
                   ),
           ),
+
+          //SizedBox(height: r.height(0)),
 
           // ACCOUNT
           SectionTitleWidget(title: 'Account'.tr),
@@ -208,7 +220,6 @@ class _SettingScreenState extends State<SettingScreen> {
                   );
                 },
               ),
-
               // THEME SWITCH
               Obx(() {
                 bool isDark = _themeController.isDarkMode.value;
@@ -229,7 +240,7 @@ class _SettingScreenState extends State<SettingScreen> {
             ],
           ),
 
-          SizedBox(height: 15.h),
+          //SizedBox(height: r.height(0.02)),
 
           // ABOUT & HELP
           SectionTitleWidget(title: 'About_Help'.tr),
@@ -267,19 +278,19 @@ class _SettingScreenState extends State<SettingScreen> {
             ],
           ),
 
-          SizedBox(height: 15.h),
+          SizedBox(height: r.height(0.02)),
 
           // DANGER ZONE
           Text(
             'DANGER_ZONE'.tr,
-            style: TextStyle(
-              fontSize: 10.sp,
+            style: r.textStyle(
+              fontSize: r.fontSmall(),
               fontWeight: FontWeight.w700,
               color: Colors.red,
-              letterSpacing: 0.8,
+              height: 1.2,
             ),
           ),
-          SizedBox(height: 6.h),
+          SizedBox(height: r.height(0.01)),
           SectionBoxWidget(
             children: [
               SettingsTileWidget(

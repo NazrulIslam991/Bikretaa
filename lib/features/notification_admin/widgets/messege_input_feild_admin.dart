@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../../app/responsive.dart';
 
 class MessageInputField_Admin extends StatelessWidget {
   final TextEditingController controller;
@@ -8,6 +9,7 @@ class MessageInputField_Admin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final r = Responsive.of(context);
     final theme = Theme.of(context);
     final fillColor = theme.inputDecorationTheme.fillColor ?? theme.cardColor;
     final labelStyle = theme.textTheme.bodyMedium?.copyWith(
@@ -18,27 +20,25 @@ class MessageInputField_Admin extends StatelessWidget {
     );
 
     return SizedBox(
-      height: 120.h, // Fixed height
+      height: r.height(0.12),
       child: TextFormField(
         controller: controller,
-        maxLines: 5, // Adjust to fill height
+        maxLines: 5,
         textInputAction: TextInputAction.newline,
         autovalidateMode: AutovalidateMode.onUserInteraction,
-        validator: (value) {
-          if ((value ?? '').isEmpty) {
-            return "Message is required";
-          }
-          return null;
-        },
+        validator: (value) =>
+            (value ?? '').isEmpty ? "Message is required" : null,
         decoration: InputDecoration(
           hintText: "Enter your message...",
           labelText: "Message",
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.r)),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(r.radiusMedium()),
+          ),
           filled: true,
           fillColor: fillColor,
           contentPadding: EdgeInsets.symmetric(
-            horizontal: 14.w,
-            vertical: 14.h,
+            horizontal: r.width(0.035),
+            vertical: r.height(0.02),
           ),
           labelStyle: labelStyle,
           hintStyle: hintStyle,

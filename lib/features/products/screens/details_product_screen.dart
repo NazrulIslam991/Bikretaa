@@ -1,3 +1,4 @@
+import 'package:bikretaa/app/responsive.dart';
 import 'package:bikretaa/features/products/database/product_database.dart';
 import 'package:bikretaa/features/products/model/product_model.dart';
 import 'package:bikretaa/features/products/screens/update_product_screen.dart';
@@ -7,9 +8,7 @@ import 'package:bikretaa/features/shared/presentation/widgets/circular_progress/
 import 'package:bikretaa/features/shared/presentation/widgets/dialog_box/confirm_dialog.dart';
 import 'package:bikretaa/features/shared/presentation/widgets/snack_bar_messege/snackbar_messege.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class DetailsProductScreen extends StatelessWidget {
   final String productId;
@@ -45,12 +44,16 @@ class DetailsProductScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ProductDatabase _deleteProduct = ProductDatabase();
+    //final ProductDatabase _deleteProduct = ProductDatabase();
     final theme = Theme.of(context);
+    final responsive = Responsive.of(context);
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("product_details".tr, style: TextStyle(fontSize: 22.h)),
+        title: Text(
+          "product_details".tr,
+          style: responsive.textStyle(fontSize: responsive.fontXL()),
+        ),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -58,17 +61,17 @@ class DetailsProductScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.circular(0.h),
+              borderRadius: BorderRadius.circular(responsive.radiusSmall()),
               child: Image.network(
                 imagePath,
                 width: double.infinity,
-                height: 170.h,
+                height: responsive.height(0.22),
                 fit: BoxFit.fill,
                 loadingBuilder: (context, child, loadingProgress) {
                   if (loadingProgress == null) return child;
                   return Container(
                     width: double.infinity,
-                    height: 170.h,
+                    height: responsive.height(0.22),
                     alignment: Alignment.center,
                     child: CircularProgressIndicator(
                       value: loadingProgress.expectedTotalBytes != null
@@ -81,12 +84,12 @@ class DetailsProductScreen extends StatelessWidget {
                 errorBuilder: (context, error, stackTrace) {
                   return Container(
                     width: double.infinity,
-                    height: 170.h,
+                    height: responsive.height(0.22),
                     color: Colors.grey[300],
                     alignment: Alignment.center,
                     child: Icon(
                       Icons.broken_image,
-                      size: 50.h,
+                      size: responsive.iconLarge(),
                       color: Colors.grey,
                     ),
                   );
@@ -94,305 +97,113 @@ class DetailsProductScreen extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 10.w),
+              padding: EdgeInsets.symmetric(
+                vertical: responsive.height(0.01),
+                horizontal: responsive.width(0.03),
+              ),
               child: Text(
                 productName,
-                style: TextStyle(
-                  fontSize: 18.h,
+                style: responsive.textStyle(
+                  fontSize: responsive.fontLarge(),
                   fontWeight: FontWeight.bold,
                   color: theme.colorScheme.primary,
                 ),
               ),
             ),
             Padding(
-              padding: EdgeInsets.symmetric(vertical: 0.h, horizontal: 10.w),
+              padding: EdgeInsets.symmetric(
+                vertical: 0,
+                horizontal: responsive.width(0.03),
+              ),
               child: Text(
                 "${"brand_name".tr} : $brandName",
-                style: GoogleFonts.aBeeZee(
-                  textStyle: TextStyle(
-                    color: theme.colorScheme.primary,
-                    letterSpacing: .5,
-                    fontSize: 12.h,
-                    fontStyle: FontStyle.italic,
-                  ),
+                style: responsive.textStyle(
+                  fontSize: responsive.fontSmall(),
+                  color: theme.colorScheme.primary,
+                  //fontStyle: FontStyle.italic,
+                  //letterSpacing: 0.5,
                 ),
               ),
             ),
             Padding(
               padding: EdgeInsets.only(
-                right: 25.h,
-                left: 25.h,
-                top: 25.h,
-                bottom: 10.h,
+                right: responsive.width(0.05),
+                left: responsive.width(0.05),
+                top: responsive.height(0.03),
+                bottom: responsive.height(0.015),
               ),
               child: Text(
                 "product_information".tr,
-                style: TextStyle(fontSize: 16.h, fontWeight: FontWeight.bold),
+                style: responsive.textStyle(
+                  fontSize: responsive.fontMedium(),
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
             Divider_widget(),
-            Padding(
-              padding: EdgeInsets.only(
-                right: 20.h,
-                left: 20.h,
-                top: 10.h,
-                bottom: 10.h,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        "quantity_in_stock".tr,
-                        style: TextStyle(
-                          fontSize: 14.h,
-                          color: Colors.grey.shade700,
-                        ),
-                      ),
-                      SizedBox(height: 10.h),
-                      Text(
-                        "$quantity unit",
-                        style: TextStyle(
-                          fontSize: 12.h,
-                          color: Colors.blue,
-                          fontStyle: FontStyle.italic,
-                          fontWeight: FontWeight.normal,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        "product_code".tr,
-                        style: TextStyle(
-                          fontSize: 14.h,
-                          color: Colors.grey.shade700,
-                        ),
-                      ),
-                      SizedBox(height: 10.h),
-                      CopyableText(
-                        text: productId,
-                        fontSize: 12.h,
-                        textColor: Colors.blue,
-                        iconSize: 18.h,
-                        iconColor: Colors.blueGrey,
-                        showSnackBar: true,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+            _buildInfoRow(
+              context,
+              responsive,
+              "quantity_in_stock".tr,
+              "$quantity unit",
+              "product_code".tr,
+              productId,
             ),
             Divider_widget(),
-            Padding(
-              padding: EdgeInsets.only(
-                right: 20.h,
-                left: 20.h,
-                top: 10.h,
-                bottom: 10.h,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        "upplier_name".tr,
-                        style: TextStyle(
-                          fontSize: 14.h,
-                          color: Colors.grey.shade700,
-                        ),
-                      ),
-                      SizedBox(height: 10.h),
-                      Text(
-                        supplierName,
-                        style: TextStyle(
-                          fontSize: 12.h,
-                          color: Colors.blue,
-                          fontStyle: FontStyle.italic,
-                          fontWeight: FontWeight.normal,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        "discount".tr,
-                        style: TextStyle(
-                          fontSize: 14.h,
-                          color: Colors.grey.shade700,
-                        ),
-                      ),
-                      SizedBox(height: 10),
-                      Text(
-                        '$discountPrice tk',
-                        style: TextStyle(
-                          fontSize: 12.h,
-                          color: Colors.blue,
-                          fontWeight: FontWeight.normal,
-                          fontStyle: FontStyle.italic,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+            _buildInfoRow(
+              context,
+              responsive,
+              "purchase_price".tr,
+              "$purchasePrice tk",
+              "selling_price".tr,
+              '$sellingPrice tk',
             ),
             Divider_widget(),
-            Padding(
-              padding: EdgeInsets.only(
-                right: 20.h,
-                left: 20.h,
-                top: 10.h,
-                bottom: 10.h,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        "purchase_price".tr,
-                        style: TextStyle(
-                          fontSize: 14.h,
-                          color: Colors.grey.shade700,
-                        ),
-                      ),
-                      SizedBox(height: 10.h),
-                      Text(
-                        "$purchasePrice tk",
-                        style: TextStyle(
-                          fontSize: 12.h,
-                          color: Colors.blue,
-                          fontStyle: FontStyle.italic,
-                          fontWeight: FontWeight.normal,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        "selling_price".tr,
-                        style: TextStyle(
-                          fontSize: 14.h,
-                          color: Colors.grey.shade700,
-                        ),
-                      ),
-                      SizedBox(height: 10),
-                      Text(
-                        '$sellingPrice tk',
-                        style: TextStyle(
-                          fontSize: 12.h,
-                          color: Colors.blue,
-                          fontWeight: FontWeight.normal,
-                          fontStyle: FontStyle.italic,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+
+            _buildInfoRow(
+              context,
+              responsive,
+              "supplier_name".tr,
+              supplierName,
+              "discount".tr,
+              '$discountPrice tk',
             ),
             Divider_widget(),
-            Padding(
-              padding: EdgeInsets.only(
-                right: 20.h,
-                left: 20.h,
-                top: 10.h,
-                bottom: 10.h,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        "manufacture_date".tr,
-                        style: TextStyle(
-                          fontSize: 14.h,
-                          color: Colors.grey.shade700,
-                        ),
-                      ),
-                      SizedBox(height: 10),
-                      Text(
-                        manufactureDate,
-                        style: TextStyle(
-                          fontSize: 12.h,
-                          color: Colors.blue,
-                          fontStyle: FontStyle.italic,
-                          fontWeight: FontWeight.normal,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        "expiry_date".tr,
-                        style: TextStyle(
-                          fontSize: 14.h,
-                          color: Colors.grey.shade700,
-                        ),
-                      ),
-                      SizedBox(height: 10),
-                      Text(
-                        expireDate,
-                        style: TextStyle(
-                          fontSize: 12.h,
-                          color: Colors.blue,
-                          fontWeight: FontWeight.normal,
-                          fontStyle: FontStyle.italic,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+            _buildInfoRow(
+              context,
+              responsive,
+              "manufacture_date".tr,
+              manufactureDate,
+              "expiry_date".tr,
+              expireDate,
             ),
             Padding(
               padding: EdgeInsets.only(
-                right: 20.h,
-                left: 20.h,
-                top: 15.h,
-                bottom: 10.h,
+                right: responsive.width(0.05),
+                left: responsive.width(0.05),
+                top: responsive.height(0.02),
+                bottom: responsive.height(0.01),
               ),
               child: Text(
                 "product_description".tr,
-                style: TextStyle(fontSize: 16.h, fontWeight: FontWeight.bold),
+                style: responsive.textStyle(
+                  fontSize: responsive.fontMedium(),
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(
-                right: 20.h,
-                left: 20.h,
-                top: 0.h,
-                bottom: 10.h,
+              padding: EdgeInsets.symmetric(
+                horizontal: responsive.width(0.05),
+                vertical: responsive.height(0.005),
               ),
               child: Text(
                 description,
                 textAlign: TextAlign.justify,
-                style: GoogleFonts.ibarraRealNova(
-                  textStyle: TextStyle(
-                    color: theme.colorScheme.primary,
-                    letterSpacing: .5,
-                    fontSize: 14.h,
-                  ),
+                style: responsive.textStyle(
+                  fontSize: responsive.fontSmall(),
+                  color: theme.colorScheme.primary,
+                  // letterSpacing: 0.5,
                 ),
               ),
             ),
@@ -400,34 +211,123 @@ class DetailsProductScreen extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: Padding(
-        padding: EdgeInsets.all(10.h),
+        padding: EdgeInsets.all(responsive.width(0.03)),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             SizedBox(
-              height: 40.h,
-              width: 90.w,
+              //height: responsive.height(0.06),
+              width: responsive.width(0.25),
               child: ElevatedButton(
                 onPressed: () {
                   _onTapEdit(context);
                 },
-                child: Text("edit".tr),
+                child: Text(
+                  "edit".tr,
+                  style: responsive.textStyle(
+                    fontSize: responsive.fontMedium(),
+                  ),
+                ),
               ),
             ),
-
             SizedBox(
-              height: 40.h,
-              width: 90.w,
+              //height: responsive.height(0.06),
+              width: responsive.width(0.25),
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
                 onPressed: () {
                   _onTapDelete(context);
                 },
-                child: Text("delete".tr),
+                child: Text(
+                  "delete".tr,
+                  style: responsive.textStyle(
+                    fontSize: responsive.fontMedium(),
+                  ),
+                ),
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildInfoRow(
+    BuildContext context,
+    Responsive responsive,
+    String title1,
+    String value1,
+    String title2,
+    String value2,
+  ) {
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: responsive.width(0.05),
+        vertical: responsive.height(0.012),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Left side info
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  title1,
+                  style: responsive.textStyle(
+                    fontSize: responsive.fontSmall(),
+                    color: Colors.grey.shade700,
+                  ),
+                ),
+                SizedBox(height: responsive.height(0.008)),
+                title1 == "product_code".tr
+                    ? CopyableText(
+                        text: value1,
+                        fontSize: responsive.fontSmall(),
+                        textColor: Colors.blue,
+                        iconSize: responsive.iconSmall(),
+                        iconColor: Colors.blueGrey,
+                        showSnackBar: true,
+                      )
+                    : Text(
+                        value1,
+                        style: responsive.textStyle(
+                          fontSize: responsive.fontSmall(),
+                          color: Colors.blue,
+                        ),
+                      ),
+              ],
+            ),
+          ),
+
+          // Vertical divider between the two sides
+          SizedBox(width: responsive.width(0.05)),
+
+          // Right side info
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  title2,
+                  style: responsive.textStyle(
+                    fontSize: responsive.fontSmall(),
+                    color: Colors.grey.shade700,
+                  ),
+                ),
+                SizedBox(height: responsive.height(0.008)),
+                Text(
+                  value2,
+                  style: responsive.textStyle(
+                    fontSize: responsive.fontSmall(),
+                    color: Colors.blue,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -1,6 +1,6 @@
+import 'package:bikretaa/app/responsive.dart';
 import 'package:bikretaa/features/notification_users/screens/notification_screen_user.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class NotificationIcon extends StatelessWidget {
   final int count;
@@ -9,21 +9,25 @@ class NotificationIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final r = Responsive.of(context); // Responsive instance
 
     return Stack(
       children: [
         IconButton(
-          icon: Icon(Icons.notifications_none, size: 24.r),
+          icon: Icon(Icons.notifications_none, size: r.iconMedium()),
           onPressed: () =>
               Navigator.pushNamed(context, NotificationScreenUser.name),
         ),
         if (count > 0)
           Positioned(
-            right: 2.w,
-            top: 2.h,
+            right: r.width(0.017),
+            top: r.height(0.006),
             child: Container(
-              padding: EdgeInsets.all(2.r),
-              constraints: BoxConstraints(minWidth: 16.w, minHeight: 16.h),
+              padding: EdgeInsets.all(r.width(0.005)),
+              constraints: BoxConstraints(
+                minWidth: r.width(0.01),
+                minHeight: r.height(0.01),
+              ),
               decoration: BoxDecoration(
                 color: Colors.blueAccent,
                 shape: BoxShape.circle,
@@ -38,7 +42,7 @@ class NotificationIcon extends StatelessWidget {
                 count.toString(),
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 10.sp,
+                  fontSize: r.fontSmall(),
                   fontWeight: FontWeight.bold,
                 ),
               ),

@@ -1,5 +1,5 @@
+import 'package:bikretaa/app/responsive.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class PasswordFeildWidget extends StatefulWidget {
@@ -26,7 +26,10 @@ class _PasswordFeildWidgetState extends State<PasswordFeildWidget> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final r = Responsive.of(context); // Responsive instance
+
     return Container(
+      height: r.height(0.06),
       child: TextFormField(
         controller: widget._passwordEcontroller,
         obscureText: _obscureText,
@@ -37,18 +40,25 @@ class _PasswordFeildWidgetState extends State<PasswordFeildWidget> {
             fontWeight: FontWeight.normal,
             color: theme.colorScheme.primary,
             letterSpacing: 0.4,
-            fontSize: 12.h,
+            fontSize: r.fontMedium(),
           ),
           labelText: 'Password'.tr,
           labelStyle: TextStyle(
             fontWeight: FontWeight.normal,
             color: theme.colorScheme.primary,
             letterSpacing: 0.4,
-            fontSize: 12.h,
+            fontSize: r.fontMedium(),
           ),
-          prefixIcon: Icon(Icons.lock, color: Colors.blue, size: 20.sp),
+          prefixIcon: Icon(
+            Icons.lock,
+            color: Colors.blue,
+            size: r.iconMedium(),
+          ),
           suffixIcon: IconButton(
-            icon: Icon(_obscureText ? Icons.visibility_off : Icons.visibility),
+            icon: Icon(
+              _obscureText ? Icons.visibility_off : Icons.visibility,
+              size: r.iconMedium(),
+            ),
             onPressed: () {
               setState(() {
                 _obscureText = !_obscureText;

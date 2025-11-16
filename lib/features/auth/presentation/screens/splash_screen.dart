@@ -1,3 +1,4 @@
+import 'package:bikretaa/app/responsive.dart';
 import 'package:bikretaa/app/string.dart';
 import 'package:bikretaa/assets_path/assets_path.dart';
 import 'package:bikretaa/features/auth/presentation/screens/signin/signin_screen.dart';
@@ -39,16 +40,15 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final Size screenSize = MediaQuery.of(
-      context,
-    ).size; ////////////////////////////////////
+    final r = Responsive.of(context);
+
     return Scaffold(
       body: Background_image(
         child: Center(
           child: Image.asset(
             AssetPaths.logo,
-            height: screenSize.height * 0.4,
-            width: screenSize.width * 0.6,
+            height: r.height(0.4),
+            width: r.width(0.6),
           ),
         ),
       ),
