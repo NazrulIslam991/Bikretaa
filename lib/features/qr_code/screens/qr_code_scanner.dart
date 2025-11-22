@@ -1,4 +1,5 @@
 import 'package:bikretaa/app/responsive.dart';
+import 'package:bikretaa/features/qr_code/screens/qr_product_info_page.dart';
 import 'package:bikretaa/features/qr_code/widgets/qr_scanner_frame.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -16,6 +17,7 @@ class _QRScannerScreenState extends State<QRScannerScreen>
     with SingleTickerProviderStateMixin {
   String? scannedUrl;
   bool isScanning = true;
+  bool _hasDetected = false;
 
   late AnimationController _animationController;
 
@@ -37,6 +39,8 @@ class _QRScannerScreenState extends State<QRScannerScreen>
   bool _isValidUrl(String text) =>
       text.startsWith("http://") || text.startsWith("https://");
 
+  bool _isProductInfoQR(String text) => text.startsWith("productinfo://");
+
   Future<void> _openUrl(String urlText) async {
     final url = Uri.parse(urlText);
     if (await canLaunchUrl(url)) {
@@ -55,19 +59,51 @@ class _QRScannerScreenState extends State<QRScannerScreen>
     ).showSnackBar(const SnackBar(content: Text("Copied URL")));
   }
 
+  void _handleDetectedQR(String raw) {
+    if (_hasDetected) return;
+
+    if (_isProductInfoQR(raw)) {
+      final decoded = Uri.decodeComponent(
+        raw.replaceFirst("productinfo://", ""),
+      );
+      _hasDetected = true;
+
+      setState(() {
+        isScanning = false;
+      });
+      _animationController.stop();
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => ProductInfoPage(productInfo: decoded),
+        ),
+      ).then((_) {
+        _hasDetected = false;
+        setState(() {
+          isScanning = true;
+          scannedUrl = null;
+        });
+        _animationController.repeat(reverse: true);
+      });
+    } else if (_isValidUrl(raw)) {
+      _hasDetected = true;
+      setState(() {
+        scannedUrl = raw;
+        isScanning = false;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final r = Responsive.of(context);
     final theme = Theme.of(context);
-
     final double frameSize = r.width(0.55);
 
     final backgroundColor = theme.scaffoldBackgroundColor;
     final textColor = theme.textTheme.titleSmall?.color ?? Colors.black;
     final cardColor = theme.cardColor;
-    final buttonColor =
-        theme.elevatedButtonTheme.style?.backgroundColor?.resolve({}) ??
-        Colors.redAccent;
 
     return Scaffold(
       backgroundColor: backgroundColor,
@@ -91,21 +127,13 @@ class _QRScannerScreenState extends State<QRScannerScreen>
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                // Reusable QR Scanner Frame
                 QRScannerFrame(
                   frameSize: frameSize,
                   radius: r.radiusLarge(),
                   animationController: _animationController,
-                  onDetect: (raw) {
-                    if (_isValidUrl(raw)) {
-                      setState(() {
-                        scannedUrl = raw;
-                        isScanning = false;
-                      });
-                    }
-                  },
+                  isScanning: isScanning,
+                  onDetect: _handleDetectedQR,
                 ),
-
                 SizedBox(height: r.height(0.05)),
 
                 // Scanned URL Card
@@ -158,7 +186,6 @@ class _QRScannerScreenState extends State<QRScannerScreen>
 
                 SizedBox(height: r.height(0.01)),
 
-                // Scan Again Button
                 ElevatedButton(
                   onPressed: () {
                     setState(() {

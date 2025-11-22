@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 
-class QRScannerFrame extends StatelessWidget {
+class QRScannerFrame extends StatefulWidget {
   final double frameSize;
   final double radius;
   final AnimationController animationController;
   final void Function(String raw) onDetect;
+  final bool isScanning;
 
   const QRScannerFrame({
     super.key,
@@ -13,7 +14,39 @@ class QRScannerFrame extends StatelessWidget {
     required this.radius,
     required this.animationController,
     required this.onDetect,
+    required this.isScanning,
   });
+
+  @override
+  State<QRScannerFrame> createState() => _QRScannerFrameState();
+}
+
+class _QRScannerFrameState extends State<QRScannerFrame> {
+  late MobileScannerController _scannerController;
+
+  @override
+  void initState() {
+    super.initState();
+    _scannerController = MobileScannerController(
+      detectionSpeed: DetectionSpeed.normal,
+    );
+  }
+
+  @override
+  void dispose() {
+    _scannerController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void didUpdateWidget(covariant QRScannerFrame oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.isScanning) {
+      _scannerController.start();
+    } else {
+      _scannerController.stop();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,36 +54,34 @@ class QRScannerFrame extends StatelessWidget {
       alignment: Alignment.center,
       children: [
         ClipRRect(
-          borderRadius: BorderRadius.circular(radius),
+          borderRadius: BorderRadius.circular(widget.radius),
           child: SizedBox(
-            width: frameSize,
-            height: frameSize,
+            width: widget.frameSize,
+            height: widget.frameSize,
             child: MobileScanner(
-              controller: MobileScannerController(
-                detectionSpeed: DetectionSpeed.normal,
-              ),
+              controller: _scannerController,
               onDetect: (capture) {
                 final barcodes = capture.barcodes;
                 for (final barcode in barcodes) {
                   String? raw = barcode.rawValue;
                   if (raw == null) return;
-                  onDetect(raw);
+                  if (widget.isScanning) widget.onDetect(raw);
                 }
               },
             ),
           ),
         ),
         // Red corners
-        ..._buildCorners(frameSize),
+        ..._buildCorners(widget.frameSize),
         // Laser line
         AnimatedBuilder(
-          animation: animationController,
+          animation: widget.animationController,
           builder: (_, child) {
             return Positioned(
-              top: frameSize * animationController.value,
+              top: widget.frameSize * widget.animationController.value,
               left: 0,
               child: Container(
-                width: frameSize,
+                width: widget.frameSize,
                 height: 3,
                 color: Colors.redAccent.withOpacity(0.8),
               ),

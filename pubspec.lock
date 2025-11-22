@@ -501,6 +501,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.5.4"
+  image_gallery_saver_plus:
+    dependency: "direct main"
+    description:
+      name: image_gallery_saver_plus
+      sha256: "199b9e24f8d85e98f11e3d35571ab68ae50626ad40e2bb85c84383f69a6950ad"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.0.1"
   image_picker:
     dependency: "direct main"
     description:
@@ -702,7 +710,7 @@ packages:
     source: hosted
     version: "1.9.1"
   path_provider:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: path_provider
       sha256: "50c5dd5b6e1aaf6fb3a78b33f6aa3afca52bf903a8a5298f53101fdaee55bbcd"
@@ -797,6 +805,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.1.5+1"
+  qr:
+    dependency: transitive
+    description:
+      name: qr
+      sha256: "5a1d2586170e172b8a8c8470bbbffd5eb0cd38a66c0d77155ea138d3af3a4445"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.2"
+  qr_flutter:
+    dependency: "direct main"
+    description:
+      name: qr_flutter
+      sha256: "5095f0fc6e3f71d08adef8feccc8cea4f12eec18a2e31c2e8d82cb6019f4b097"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.1.0"
+  screenshot:
+    dependency: "direct main"
+    description:
+      name: screenshot
+      sha256: "63817697a7835e6ce82add4228e15d233b74d42975c143ad8cfe07009fab866b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.0"
   shared_preferences:
     dependency: "direct main"
     description:

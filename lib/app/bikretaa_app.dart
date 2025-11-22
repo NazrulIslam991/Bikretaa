@@ -9,7 +9,9 @@ import 'package:bikretaa/features/calculator/screens/calculator.dart';
 import 'package:bikretaa/features/calender/screen/calender_screen.dart';
 import 'package:bikretaa/features/products/screens/add_product_screen.dart';
 import 'package:bikretaa/features/products/screens/products_screen.dart';
+import 'package:bikretaa/features/qr_code/screens/qr_code_generator.dart';
 import 'package:bikretaa/features/qr_code/screens/qr_code_scanner.dart';
+import 'package:bikretaa/features/qr_code/screens/qr_product_info_page.dart';
 import 'package:bikretaa/features/sales/screens/add_sales_screen.dart';
 import 'package:bikretaa/features/sales/screens/due_collection_screen.dart';
 import 'package:bikretaa/features/setting/screens/setting_screen.dart';
@@ -71,6 +73,9 @@ class BikretaaApp extends StatelessWidget {
                     Calculator.name: (context) => Calculator(),
                     CalendarScreen.name: (context) => CalendarScreen(),
                     QRScannerScreen.name: (context) => QRScannerScreen(),
+                    QRGeneratorScreen.name: (context) => QRGeneratorScreen(),
+                    ProductInfoPage.name: (context) =>
+                        ProductInfoPage(productInfo: ''),
                   },
                   debugShowCheckedModeBanner: false,
                 );

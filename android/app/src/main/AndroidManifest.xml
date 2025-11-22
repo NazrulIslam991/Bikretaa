@@ -8,7 +8,6 @@
 
 
 
-
     <application
         android:label="bikretaa"
         android:name="${applicationName}"
