@@ -17,6 +17,7 @@ class Responsive {
   double height(double fraction) => size.height * fraction;
 
   // Font Scale (adaptive to system text scale)
+  double fontextraSmall() => adaptiveFont(0.02);
   double fontSmall() => adaptiveFont(0.03);
   double fontMedium() => adaptiveFont(0.032);
   double fontLarge() => adaptiveFont(0.038);
@@ -33,9 +34,11 @@ class Responsive {
   }
 
   // Padding
+  double paddingextraSmall() => width(0.01);
   double paddingSmall() => width(0.02);
   double paddingMedium() => width(0.03);
   double paddingLarge() => width(0.05);
+  double paddingXLarge() => width(0.06);
   double duefeildPadding() => width(0.04);
 
   // Radius
@@ -79,4 +82,6 @@ class Responsive {
     if (isTablet) return 3;
     return 2;
   }
+
+  ///this section only for calculator
 }

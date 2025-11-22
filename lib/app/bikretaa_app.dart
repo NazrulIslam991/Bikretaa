@@ -5,6 +5,8 @@ import 'package:bikretaa/features/auth/presentation/screens/forgot_password_scre
 import 'package:bikretaa/features/auth/presentation/screens/sign_up/create_account_screen.dart';
 import 'package:bikretaa/features/auth/presentation/screens/signin/signin_screen.dart';
 import 'package:bikretaa/features/auth/presentation/screens/splash_screen.dart';
+import 'package:bikretaa/features/calculator/screens/calculator.dart';
+import 'package:bikretaa/features/calender/screen/calender_screen.dart';
 import 'package:bikretaa/features/products/screens/add_product_screen.dart';
 import 'package:bikretaa/features/products/screens/products_screen.dart';
 import 'package:bikretaa/features/sales/screens/add_sales_screen.dart';
@@ -65,6 +67,8 @@ class BikretaaApp extends StatelessWidget {
                         DueCollectionScreen(),
                     NotificationScreenUser.name: (context) =>
                         NotificationScreenUser(),
+                    Calculator.name: (context) => Calculator(),
+                    CalendarScreen.name: (context) => CalendarScreen(),
                   },
                   debugShowCheckedModeBanner: false,
                 );

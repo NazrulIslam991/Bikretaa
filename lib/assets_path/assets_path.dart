@@ -3,7 +3,7 @@ class AssetPaths {
 
   static const String nayon = '$_imagePath/nayon.jpg';
   static const String fardin = '$_imagePath/fardin.jpg';
-  static const String logo = '$_imagePath/logo.png';
+  static const String logo = '$_imagePath/bikretaa_logo.png';
   static const String background = '$_imagePath/Background.jpg';
   static const String doller = '$_imagePath/doller.png';
   static const String dueReport = '$_imagePath/due_report.png';

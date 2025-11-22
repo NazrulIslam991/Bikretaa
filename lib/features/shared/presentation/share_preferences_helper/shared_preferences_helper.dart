@@ -7,6 +7,8 @@ class SharedPreferencesHelper {
   static const String _userKey = 'user_info';
   static const String _themeKey = 'is_dark_mode';
   static const String _languageKey = 'app_language';
+  static const String keyQuickActions = "quick_actions";
+  static const String _calcHistoryKey = "calc_history";
 
   // Save UserModel to SharedPreferences
   static Future<void> saveUser(UserModel user) async {
@@ -60,5 +62,44 @@ class SharedPreferencesHelper {
   static Future<String> getLanguage() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getString(_languageKey) ?? 'en';
+  }
+
+  // Save selected quick actions indexes
+  static Future<void> saveQuickActions(List<int> indexes) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setStringList(
+      keyQuickActions,
+      indexes.map((e) => e.toString()).toList(),
+    );
+  }
+
+  // Get saved quick actions indexes
+  static Future<List<int>?> getQuickActions() async {
+    final prefs = await SharedPreferences.getInstance();
+    List<String>? saved = prefs.getStringList(keyQuickActions);
+    if (saved != null) {
+      return saved.map((e) => int.parse(e)).toList();
+    }
+    return null;
+  }
+
+  // Save calculation history list
+  static Future<void> saveCalcHistory(List<String> historyList) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setStringList(_calcHistoryKey, historyList);
+  }
+
+  // Load calculation history list
+  static Future<List<String>> loadCalcHistory() async {
+    final prefs = await SharedPreferences.getInstance();
+    List<String>? saved = prefs.getStringList(_calcHistoryKey);
+    if (saved != null) return saved;
+    return [];
+  }
+
+  // Clear calculation history
+  static Future<void> clearCalcHistory() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove(_calcHistoryKey);
   }
 }

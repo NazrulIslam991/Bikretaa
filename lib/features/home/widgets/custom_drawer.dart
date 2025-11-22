@@ -20,13 +20,23 @@ class _CustomDrawerState extends State<CustomDrawer> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
     final r = Responsive.of(context);
+
+    // Dynamic colors
+    final drawerBgColor = isDark ? Colors.grey.shade900 : Colors.white;
+    final headerBgColor = isDark
+        ? Colors.grey.shade800
+        : theme.colorScheme.surface;
+    final textColor = isDark ? Colors.white : Colors.black;
+    final subTextColor = isDark ? Colors.grey[300] : Colors.grey[700];
+    final iconColor = isDark ? Colors.white : Colors.black;
 
     return Stack(
       children: [
         Drawer(
-          width: r.height(0.3),
-
+          backgroundColor: drawerBgColor,
+          width: r.height(0.26),
           child: FutureBuilder(
             future: SharedPreferencesHelper.getUser(),
             builder: (context, snapshot) {
@@ -35,89 +45,161 @@ class _CustomDrawerState extends State<CustomDrawer> {
               }
 
               if (!snapshot.hasData || snapshot.data == null) {
-                return Center(child: Text("No user data found".tr));
+                return Center(
+                  child: Text(
+                    "No user data found".tr,
+                    style: TextStyle(color: textColor),
+                  ),
+                );
               }
 
               final user = snapshot.data!;
               final shopName = user.shopName;
               final email = user.email;
 
-              return ListView(
-                padding: EdgeInsets.zero,
+              return Column(
                 children: [
+                  // Drawer Header
                   Container(
                     height: r.height(0.25),
+                    width: r.height(0.26),
                     child: DrawerHeader(
-                      decoration: BoxDecoration(
-                        color: theme.colorScheme.surface,
-                      ),
+                      decoration: BoxDecoration(color: headerBgColor),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          CircleAvatar(
-                            backgroundColor: theme.colorScheme.primary,
-                            radius: r.height(0.04),
-                            child: Text(
-                              shopName.isNotEmpty ? shopName[0] : "S",
-                              style: TextStyle(
-                                fontSize: r.fontXL(),
-                                color: theme.colorScheme.surface,
-                                fontWeight: FontWeight.bold,
+                          Center(
+                            child: CircleAvatar(
+                              backgroundColor: theme.colorScheme.primary,
+                              radius: r.height(0.04),
+                              child: Text(
+                                shopName.isNotEmpty ? shopName[0] : "S",
+                                style: TextStyle(
+                                  fontSize: r.fontXL(),
+                                  color: headerBgColor,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
                           ),
                           r.vSpace(0.015),
-                          Text(
-                            shopName,
-                            style: TextStyle(
-                              fontSize: r.fontSmall(),
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
+                          Center(
+                            child: Text(
+                              shopName,
+                              style: TextStyle(
+                                fontSize: r.fontSmall(),
+                                color: textColor,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
-                          Text(
-                            email,
-                            style: TextStyle(
-                              color: theme.colorScheme.primary,
-                              fontSize: r.fontSmall() * 0.85,
+                          Center(
+                            child: Text(
+                              email,
+                              style: TextStyle(
+                                color: subTextColor,
+                                fontSize: r.fontSmall() * 0.85,
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             ),
                           ),
                         ],
                       ),
                     ),
                   ),
-                  _drawerItem(
-                    icon: Icons.home,
-                    title: 'Home'.tr,
-                    onTap: () => Navigator.pop(context),
-                    r: r,
-                  ),
-                  _drawerItem(
-                    icon: Icons.edit,
-                    title: 'Edit_Profile'.tr,
-                    onTap: () => Navigator.pop(context),
-                    r: r,
-                  ),
-                  _drawerItem(
-                    icon: Icons.logout,
-                    title: 'Logout'.tr,
-                    onTap: () async {
-                      final confirm = await showConfirmDialog(
-                        context: context,
-                        title: "Logout".tr,
-                        content: "Are_you_sure_you_want_to_logout?".tr,
-                        confirmText: "Logout".tr,
-                        confirmColor: Colors.red,
-                      );
+                  //Divider(color: isDark ? Colors.grey : Colors.black12),
 
-                      if (confirm) {
-                        setState(() => _loading = true);
-                        await Future.delayed(const Duration(milliseconds: 300));
-                        await _logout(context);
-                        if (mounted) setState(() => _loading = false);
-                      }
-                    },
-                    r: r,
+                  // Drawer Menu Items (top)
+                  Expanded(
+                    child: ListView(
+                      padding: EdgeInsets.zero,
+                      children: [
+                        _drawerItem(
+                          icon: Icons.home,
+                          title: 'Home'.tr,
+                          onTap: () => Navigator.pop(context),
+                          r: r,
+                          textColor: textColor,
+                          iconColor: iconColor,
+                        ),
+                        _drawerItem(
+                          icon: Icons.notifications,
+                          title: 'Notification'.tr,
+                          onTap: () => Navigator.pop(context),
+                          r: r,
+                          textColor: textColor,
+                          iconColor: iconColor,
+                        ),
+                        _drawerItem(
+                          icon: Icons.settings,
+                          title: 'Setting'.tr,
+                          onTap: () => Navigator.pop(context),
+                          r: r,
+                          textColor: textColor,
+                          iconColor: iconColor,
+                        ),
+                        _drawerItem(
+                          icon: Icons.help,
+                          title: 'Help'.tr,
+                          onTap: () => Navigator.pop(context),
+                          r: r,
+                          textColor: textColor,
+                          iconColor: iconColor,
+                        ),
+                        _drawerItem(
+                          icon: Icons.privacy_tip,
+                          title: 'Privacy Policy'.tr,
+                          onTap: () => Navigator.pop(context),
+                          r: r,
+                          textColor: textColor,
+                          iconColor: iconColor,
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  // Drawer Bottom Items
+                  Column(
+                    children: [
+                      Divider(color: isDark ? Colors.grey : Colors.black12),
+                      _drawerItem(
+                        icon: Icons.lock,
+                        title: 'Change Password'.tr,
+                        onTap: () => Navigator.pop(context),
+                        r: r,
+                        textColor: textColor,
+                        iconColor: iconColor,
+                      ),
+                      Divider(color: isDark ? Colors.grey : Colors.black12),
+
+                      _drawerItem(
+                        icon: Icons.logout,
+                        title: 'Logout'.tr,
+                        onTap: () async {
+                          final confirm = await showConfirmDialog(
+                            context: context,
+                            title: "Logout".tr,
+                            content: "Are_you_sure_you_want_to_logout?".tr,
+                            confirmText: "Logout".tr,
+                            confirmColor: Colors.red,
+                          );
+
+                          if (confirm) {
+                            setState(() => _loading = true);
+                            await Future.delayed(
+                              const Duration(milliseconds: 300),
+                            );
+                            await _logout(context);
+                            if (mounted) setState(() => _loading = false);
+                          }
+                        },
+                        r: r,
+                        textColor: textColor,
+                        iconColor: iconColor,
+                      ),
+
+                      SizedBox(height: r.height(0.01)),
+                    ],
                   ),
                 ],
               );
@@ -134,12 +216,15 @@ class _CustomDrawerState extends State<CustomDrawer> {
     required String title,
     required VoidCallback onTap,
     required Responsive r,
+    required Color textColor,
+    required Color iconColor,
   }) {
     return ListTile(
-      leading: Icon(icon, size: r.iconMedium(), color: Colors.black),
+      dense: true,
+      leading: Icon(icon, size: r.iconMedium(), color: iconColor),
       title: Text(
         title,
-        style: TextStyle(color: Colors.black, fontSize: r.fontSmall()),
+        style: TextStyle(color: textColor, fontSize: r.fontSmall()),
       ),
       onTap: onTap,
     );

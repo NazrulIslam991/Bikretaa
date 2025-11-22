@@ -36,6 +36,9 @@ dependencies:
   geocoding: ^4.0.0
   device_preview: ^1.3.1
   get: ^4.7.2
+  math_expressions: ^2.4.0
+  table_calendar: ^3.2.0
+
 
 
 
@@ -47,6 +50,14 @@ dev_dependencies:
 
 
   flutter_lints: ^5.0.0
+  flutter_launcher_icons: ^0.14.4
+
+flutter_icons:
+    android: true
+    ios: true
+    image_path: "assets/images/app_logo.png"
+    adaptive_icon_background: "assets/images/white.png"
+    adaptive_icon_foreground: "assets/images/app_icon_B.png"
 
 
 
