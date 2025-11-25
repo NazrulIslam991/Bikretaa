@@ -1,5 +1,6 @@
 import 'package:bikretaa/features/calculator/screens/calculator.dart';
 import 'package:bikretaa/features/calender/screen/calender_screen.dart';
+import 'package:bikretaa/features/notes/screens/notes_screen.dart';
 import 'package:bikretaa/features/qr_code/screens/qr_code_generator.dart';
 import 'package:bikretaa/features/qr_code/screens/qr_code_scanner.dart';
 import 'package:bikretaa/features/supports_and_faqs/screens/support_and_faqs_screen.dart';
@@ -17,7 +18,8 @@ Widget getBusinessToolScreenByTitle(String title) {
       return QRScannerScreen();
     case "QR Generator":
       return QRGeneratorScreen();
-    // case "Notes": return NotesScreen();
+    case "Notes":
+      return NotesScreen();
     default:
       return Scaffold(body: Center(child: Text("Screen not found")));
   }

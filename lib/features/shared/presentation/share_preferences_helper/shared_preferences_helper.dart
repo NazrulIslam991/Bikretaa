@@ -9,6 +9,7 @@ class SharedPreferencesHelper {
   static const String _languageKey = 'app_language';
   static const String keyQuickActions = "quick_actions";
   static const String _calcHistoryKey = "calc_history";
+  static const String _notesKey = "notes_data";
 
   // Save UserModel to SharedPreferences
   static Future<void> saveUser(UserModel user) async {
@@ -101,5 +102,30 @@ class SharedPreferencesHelper {
   static Future<void> clearCalcHistory() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove(_calcHistoryKey);
+  }
+
+  // Save notes
+  static Future<void> saveNotes(List<Map<String, String>> notes) async {
+    final prefs = await SharedPreferences.getInstance();
+    List<String> encoded = notes.map((e) => json.encode(e)).toList();
+    await prefs.setStringList(_notesKey, encoded);
+  }
+
+  // Load notes
+  static Future<List<Map<String, String>>> loadNotes() async {
+    final prefs = await SharedPreferences.getInstance();
+    List<String>? saved = prefs.getStringList(_notesKey);
+    if (saved != null) {
+      return saved
+          .map((e) => Map<String, String>.from(json.decode(e)))
+          .toList();
+    }
+    return [];
+  }
+
+  // Clear notes
+  static Future<void> clearNotes() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove(_notesKey);
   }
 }

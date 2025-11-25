@@ -7,6 +7,7 @@ import 'package:bikretaa/features/auth/presentation/screens/signin/signin_screen
 import 'package:bikretaa/features/auth/presentation/screens/splash_screen.dart';
 import 'package:bikretaa/features/calculator/screens/calculator.dart';
 import 'package:bikretaa/features/calender/screen/calender_screen.dart';
+import 'package:bikretaa/features/notes/screens/notes_screen.dart';
 import 'package:bikretaa/features/products/screens/add_product_screen.dart';
 import 'package:bikretaa/features/products/screens/products_screen.dart';
 import 'package:bikretaa/features/qr_code/screens/qr_code_generator.dart';
@@ -74,6 +75,7 @@ class BikretaaApp extends StatelessWidget {
                     CalendarScreen.name: (context) => CalendarScreen(),
                     QRScannerScreen.name: (context) => QRScannerScreen(),
                     QRGeneratorScreen.name: (context) => QRGeneratorScreen(),
+                    NotesScreen.name: (context) => NotesScreen(),
                     ProductInfoPage.name: (context) =>
                         ProductInfoPage(productInfo: ''),
                   },
