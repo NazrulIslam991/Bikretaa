@@ -228,7 +228,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                                 child: Text(
                                   date.day.toString(),
                                   style: TextStyle(
-                                    color: selectedColor,
+                                    color: Colors.white,
                                     fontWeight: FontWeight.bold,
                                     fontSize: r.fontMedium(),
                                   ),
