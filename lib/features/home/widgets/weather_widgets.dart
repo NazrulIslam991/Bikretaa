@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 
-import '../../../app/controller/weather_controller.dart';
+import '../../../app/controller/weather_controller/weather_controller.dart';
 
 class WeatherChip extends StatelessWidget {
   WeatherChip({super.key});

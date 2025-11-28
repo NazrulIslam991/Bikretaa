@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:bikretaa/app/controller/notes_controller.dart';
+import 'package:bikretaa/app/controller/notes_controller/notes_controller.dart';
 import 'package:bikretaa/app/responsive.dart';
 import 'package:bikretaa/features/notes/widgets/add_note_dialog.dart';
 import 'package:bikretaa/features/notes/widgets/note_item_widgets.dart';

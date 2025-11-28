@@ -1,6 +1,6 @@
 import 'package:bikretaa/app/app_theme.dart';
-import 'package:bikretaa/app/controller/language_controller.dart';
-import 'package:bikretaa/app/controller/theme_controller.dart';
+import 'package:bikretaa/app/controller/language_controller/language_controller.dart';
+import 'package:bikretaa/app/controller/theme_controller/theme_controller.dart';
 import 'package:bikretaa/features/auth/presentation/screens/forgot_password_screen.dart';
 import 'package:bikretaa/features/auth/presentation/screens/sign_up/create_account_screen.dart';
 import 'package:bikretaa/features/auth/presentation/screens/signin/signin_screen.dart';

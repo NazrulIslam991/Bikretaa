@@ -1,5 +1,6 @@
-import 'package:bikretaa/app/controller/quick_action_controller.dart';
-import 'package:bikretaa/app/controller/sales_summary_controller.dart';
+import 'package:bikretaa/app/controller/product_controller/product_controller.dart';
+import 'package:bikretaa/app/controller/quick_action_controller/quick_action_controller.dart';
+import 'package:bikretaa/app/controller/sales_controller/sales_controller.dart';
 import 'package:bikretaa/app/responsive.dart';
 import 'package:bikretaa/features/dashboard_admin/widgets/section_tile_widget_admin.dart';
 import 'package:bikretaa/features/home/widgets/action_button.dart';
@@ -11,6 +12,7 @@ import 'package:bikretaa/features/shared/presentation/widgets/notification_widge
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../products/screens/homepage_product_list.dart';
 import '../widgets/get_business_tools_action_screen.dart';
 import '../widgets/get_quick_action_screen.dart';
 import '../widgets/home_banner.dart' show HomeBannerSlider;
@@ -36,15 +38,18 @@ class _HomeScreenState extends State<HomeScreen> {
   final QuickActionController quickActionController = Get.put(
     QuickActionController(),
   );
+  final ProductController productController = Get.put(ProductController());
 
   final List<Map<String, dynamic>> quickActions = [
     {"icon": Icons.add_box, "title": "Add Product"},
     {"icon": Icons.inventory_2, "title": "All Products"},
+    {"icon": Icons.inventory_2, "title": "Customer Lists"},
     {"icon": Icons.event_busy, "title": "Expired Date"},
     {"icon": Icons.access_time_filled, "title": "Expire Soon"},
     {"icon": Icons.point_of_sale, "title": "Record Sale"},
     {"icon": Icons.warning_amber_rounded, "title": "Low Stock"},
     {"icon": Icons.stacked_line_chart, "title": "Last Month Sales"},
+    {"icon": Icons.stacked_line_chart, "title": "Out of Stock"},
     {"icon": Icons.bar_chart, "title": "Last Week Sales"},
     {"icon": Icons.build_circle_outlined, "title": "Stock Adjust"},
     {"icon": Icons.account_balance_wallet, "title": "Due Collection"},
@@ -68,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final r = Responsive.of(context);
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
-    final summary = Get.find<SalesSummaryController>();
+    final summary = Get.find<SalesController>();
 
     Color containerBg(Color light, Color dark) => isDark ? dark : light;
 
@@ -189,8 +194,17 @@ class _HomeScreenState extends State<HomeScreen> {
               /// -------- Expiry Notice --------
               ExpiryNotice(
                 r: r,
-                message: "৫টি পণ্য মেয়াদ উত্তীর্ণ হয়েছে! এখনই দেখুন",
-                onViewTap: () {},
+                message:
+                    "${productController.expiredProducts.length} products have expired! Check now.",
+                onViewTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          ProductsFilterScreen(title: "Expired Date"),
+                    ),
+                  );
+                },
               ),
               SizedBox(height: r.height(0.02)),
 

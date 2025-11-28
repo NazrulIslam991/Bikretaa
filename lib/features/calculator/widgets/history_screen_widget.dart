@@ -1,4 +1,4 @@
-import 'package:bikretaa/app/controller/calculator_controller.dart';
+import 'package:bikretaa/app/controller/calculate_controller/calculator_controller.dart';
 import 'package:bikretaa/app/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

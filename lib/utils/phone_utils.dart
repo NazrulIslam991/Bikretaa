@@ -1,13 +1,13 @@
 class PhoneUtils {
-  /// Removes +880 prefix if exists
+  /// Removes +8801 prefix if exists
   static String removeBdPrefix(String mobile) {
-    return mobile.replaceFirst(RegExp(r'^\+880'), '');
+    return mobile.replaceFirst(RegExp(r'^\+8801'), '');
   }
 
-  /// Adds +880 prefix if missing
+  /// Adds +8801 prefix if missing
   static String addBdPrefix(String mobile) {
-    if (!mobile.startsWith('+880')) {
-      return '+880$mobile';
+    if (!mobile.startsWith('+8801')) {
+      return '+8801$mobile';
     }
     return mobile;
   }

@@ -1,4 +1,4 @@
-import 'package:bikretaa/app/controller/notes_controller.dart';
+import 'package:bikretaa/app/controller/notes_controller/notes_controller.dart';
 import 'package:bikretaa/app/responsive.dart';
 import 'package:flutter/material.dart';
 

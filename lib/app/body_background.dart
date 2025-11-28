@@ -1,4 +1,4 @@
-import 'package:bikretaa/app/controller/theme_controller.dart';
+import 'package:bikretaa/app/controller/theme_controller/theme_controller.dart';
 import 'package:bikretaa/assets_path/assets_path.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

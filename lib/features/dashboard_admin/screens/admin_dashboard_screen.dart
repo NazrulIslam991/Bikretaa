@@ -1,5 +1,5 @@
-import 'package:bikretaa/app/controller/language_controller.dart';
-import 'package:bikretaa/app/controller/theme_controller.dart';
+import 'package:bikretaa/app/controller/language_controller/language_controller.dart';
+import 'package:bikretaa/app/controller/theme_controller/theme_controller.dart';
 import 'package:bikretaa/app/responsive.dart';
 import 'package:bikretaa/features/auth/presentation/screens/signin/signin_screen.dart';
 import 'package:bikretaa/features/dashboard_admin/widgets/activities_card_widget_admin.dart';

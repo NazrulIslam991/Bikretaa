@@ -1,5 +1,5 @@
 import 'package:bikretaa/app/body_background.dart';
-import 'package:bikretaa/app/controller/theme_controller.dart';
+import 'package:bikretaa/app/controller/theme_controller/theme_controller.dart';
 import 'package:bikretaa/app/responsive.dart';
 import 'package:bikretaa/app/string.dart';
 import 'package:bikretaa/features/auth/presentation/database/firestore_user_check.dart';

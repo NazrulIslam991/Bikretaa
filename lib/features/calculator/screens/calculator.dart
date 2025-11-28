@@ -1,4 +1,4 @@
-import 'package:bikretaa/app/controller/calculator_controller.dart';
+import 'package:bikretaa/app/controller/calculate_controller/calculator_controller.dart';
 import 'package:bikretaa/app/responsive.dart';
 import 'package:bikretaa/features/calculator/widgets/calculator_btn_grid.dart';
 import 'package:bikretaa/features/calculator/widgets/history_screen_widget.dart';

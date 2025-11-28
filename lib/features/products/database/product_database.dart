@@ -19,7 +19,8 @@ class ProductDatabase {
         .snapshots()
         .map(
           (snapshot) => snapshot.docs
-              .map((doc) => Product.fromMap(doc.data() as Map<String, dynamic>))
+              //.map((doc) => Product.fromMap(doc.data() as Map<String, dynamic>))
+              .map((doc) => Product.fromMap(doc.data()))
               .toList(),
         );
   }

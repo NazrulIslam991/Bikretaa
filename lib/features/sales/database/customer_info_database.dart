@@ -112,4 +112,18 @@ class CustomerDatabase {
     await newDocRef.set(newCustomer.toMap());
     return newCustomer;
   }
+
+  // /////////////////////////Fetch all customers for list screen////////////////////////////////////////////
+  Future<List<CustomerModel>> fetchAllCustomers(String shopUID) async {
+    final snapshot = await _db
+        .collection('Customers')
+        .doc(shopUID)
+        .collection('customers_list')
+        .orderBy('createdAt', descending: true)
+        .get();
+
+    return snapshot.docs
+        .map((doc) => CustomerModel.fromMap(doc.data(), doc.id))
+        .toList();
+  }
 }

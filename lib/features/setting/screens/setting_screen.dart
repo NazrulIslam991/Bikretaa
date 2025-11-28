@@ -1,4 +1,4 @@
-import 'package:bikretaa/app/controller/theme_controller.dart';
+import 'package:bikretaa/app/controller/theme_controller/theme_controller.dart';
 import 'package:bikretaa/app/responsive.dart';
 import 'package:bikretaa/features/about_us/screens/about_screen.dart';
 import 'package:bikretaa/features/auth/presentation/model/user_model.dart';
@@ -19,7 +19,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../app/controller/language_controller.dart';
+import '../../../app/controller/language_controller/language_controller.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({super.key});
