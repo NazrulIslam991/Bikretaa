@@ -1,3 +1,4 @@
+import 'package:bikretaa/features/sales/database/customer_info_database.dart';
 import 'package:bikretaa/features/sales/model/DueModel.dart';
 import 'package:bikretaa/features/sales/model/PaidModel.dart';
 import 'package:bikretaa/features/sales/model/RevenueModel.dart';
@@ -5,18 +6,18 @@ import 'package:bikretaa/features/sales/model/SalesModel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UpdateSalesDatabase {
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseFirestore _db = FirebaseFirestore.instance;
+  final CustomerDatabase _customerDb = CustomerDatabase();
 
-  // Fetch sale by salesID
+  // Fetch sale by ID
   Future<Map<String, dynamic>?> fetchSale(String uid, String salesID) async {
     try {
-      final doc = await _firestore
+      final doc = await _db
           .collection('Sales')
           .doc(uid)
           .collection('sales_list')
           .doc(salesID)
           .get();
-
       if (doc.exists) return doc.data();
       return null;
     } catch (e) {
@@ -24,76 +25,59 @@ class UpdateSalesDatabase {
     }
   }
 
-  //Fetch product by ID
-  Future<Map<String, dynamic>?> fetchProduct(
-    String uid,
-    String productId,
-  ) async {
-    try {
-      final doc = await _firestore
-          .collection('Products')
-          .doc(uid)
-          .collection('products_list')
-          .doc(productId)
-          .get();
-      if (doc.exists) return doc.data();
-      return null;
-    } catch (e) {
-      rethrow;
-    }
-  }
-
-  // Update the sale, paid, due, stock, and revenue
+  // Update sale
   Future<void> updateSale({
     required String uid,
     required String salesID,
     required SalesModel updatedSale,
     required List<Map<String, String>> oldProducts,
     required List<Map<String, String>> newProducts,
+    required String customerName,
+    required String customerMobile,
+    required String customerAddress,
+    String? existingCustomerUID,
   }) async {
-    final saleRef = _firestore
+    final saleRef = _db
         .collection('Sales')
         .doc(uid)
         .collection('sales_list')
         .doc(salesID);
 
-    //  If no products remain, delete sale and restore old stock
+    //  If no products remain, delete sale and restore stock
     if (newProducts.isEmpty) {
-      //  Add old products' quantities back to stock
+      // Restore stock for old products
       for (var oldItem in oldProducts) {
-        final productId = oldItem['productId']!;
-        final quantityToReturn = int.tryParse(oldItem['quantity'] ?? '0') ?? 0;
-
-        final productRef = _firestore
-            .collection('Products')
+        final productRef = _db
+            .collection("Products")
             .doc(uid)
-            .collection('products_list')
-            .doc(productId);
-
-        await _firestore.runTransaction((transaction) async {
-          final snapshot = await transaction.get(productRef);
-          if (!snapshot.exists) return;
-
-          int currentQuantity = (snapshot.get('quantity') as num).toInt();
-          transaction.update(productRef, {
-            'quantity': currentQuantity + quantityToReturn,
-          });
-        });
+            .collection("products_list")
+            .doc(oldItem['productId']);
+        final qty = int.tryParse(oldItem['quantity'] ?? '0') ?? 0;
+        await productRef.update({'quantity': FieldValue.increment(qty)});
       }
 
-      //  Delete sale record
       await saleRef.delete();
-
-      //  Delete all related Paid, Due, and Revenue data
       await _deletePaidDueRevenue(uid, salesID);
-      return;
+      return; //Skip customer creation
     }
 
-    //  Update Sale
-    await saleRef.update(updatedSale.toMap());
+    //Get or create customer ONLY if sale is not being deleted
+    final customer = await _customerDb.getOrUpdateOrCreateCustomer(
+      shopUID: uid,
+      existingCustomerUID: existingCustomerUID,
+      customerName: customerName,
+      customerMobile: customerMobile,
+      customerAddress: customerAddress,
+    );
 
-    // Update Paid
-    final paidQuery = await _firestore
+    // Update Sale document
+    await saleRef.update({
+      ...updatedSale.toMap(),
+      'customerUID': customer.customerId,
+    });
+
+    //  Update Paid
+    final paidQuery = await _db
         .collection('Paid')
         .doc(uid)
         .collection('paid_list')
@@ -105,7 +89,7 @@ class UpdateSalesDatabase {
         'amount': updatedSale.paidAmount,
       });
     } else if (updatedSale.paidAmount > 0) {
-      final paidRef = _firestore
+      final paidRef = _db
           .collection('Paid')
           .doc(uid)
           .collection('paid_list')
@@ -115,8 +99,8 @@ class UpdateSalesDatabase {
       );
     }
 
-    // Update Due (with customer info)
-    final dueQuery = await _firestore
+    //  Update Due
+    final dueQuery = await _db
         .collection('Due')
         .doc(uid)
         .collection('due_list')
@@ -126,12 +110,9 @@ class UpdateSalesDatabase {
     if (dueQuery.docs.isNotEmpty) {
       await dueQuery.docs.first.reference.update({
         'amount': updatedSale.dueAmount,
-        'customerName': updatedSale.customerName,
-        'customerMobile': updatedSale.customerMobile,
-        'customerAddress': updatedSale.customerAddress,
       });
     } else if (updatedSale.dueAmount > 0) {
-      final dueRef = _firestore
+      final dueRef = _db
           .collection('Due')
           .doc(uid)
           .collection('due_list')
@@ -140,9 +121,7 @@ class UpdateSalesDatabase {
         DueModel(
           salesID: salesID,
           amount: updatedSale.dueAmount,
-          customerName: updatedSale.customerName,
-          customerMobile: updatedSale.customerMobile,
-          customerAddress: updatedSale.customerAddress,
+          customerUID: customer.customerId,
         ).toMap(),
       );
     }
@@ -153,38 +132,20 @@ class UpdateSalesDatabase {
 
   // Delete Paid, Due, Revenue of a sale
   Future<void> _deletePaidDueRevenue(String uid, String salesID) async {
-    final paidQuery = await _firestore
-        .collection('Paid')
-        .doc(uid)
-        .collection('paid_list')
-        .where('salesID', isEqualTo: salesID)
-        .get();
-    for (var doc in paidQuery.docs) {
-      await doc.reference.delete();
-    }
-
-    final dueQuery = await _firestore
-        .collection('Due')
-        .doc(uid)
-        .collection('due_list')
-        .where('salesID', isEqualTo: salesID)
-        .get();
-    for (var doc in dueQuery.docs) {
-      await doc.reference.delete();
-    }
-
-    final revQuery = await _firestore
-        .collection('Revenue')
-        .doc(uid)
-        .collection('revenue_list')
-        .where('salesID', isEqualTo: salesID)
-        .get();
-    for (var doc in revQuery.docs) {
-      await doc.reference.delete();
+    for (var col in ['Paid', 'Due', 'Revenue']) {
+      final query = await _db
+          .collection(col)
+          .doc(uid)
+          .collection('${col.toLowerCase()}_list')
+          .where('salesID', isEqualTo: salesID)
+          .get();
+      for (var doc in query.docs) {
+        await doc.reference.delete();
+      }
     }
   }
 
-  // Update stock & revenue for products
+  //Stock & Revenue update logic remains unchanged
   Future<void> _updateStockAndRevenue(
     String uid,
     String salesID,
@@ -194,68 +155,55 @@ class UpdateSalesDatabase {
     final oldMap = {for (var e in oldProducts) e['productId']!: e};
     final newMap = {for (var e in newProducts) e['productId']!: e};
 
-    //  deleted products
+    // Deleted products
     for (var oldEntry in oldMap.entries) {
       if (!newMap.containsKey(oldEntry.key)) {
-        final productRef = _firestore
+        final productRef = _db
             .collection("Products")
             .doc(uid)
             .collection("products_list")
             .doc(oldEntry.key);
+        final qty = int.tryParse(oldEntry.value['quantity'] ?? '0') ?? 0;
+        await productRef.update({'quantity': FieldValue.increment(qty)});
 
-        final quantityToReturn =
-            int.tryParse(oldEntry.value['quantity'] ?? "0") ?? 0;
-
-        await productRef.update({
-          'quantity': FieldValue.increment(quantityToReturn),
-        });
-
-        // Delete revenue for removed product
-        final revQuery = await _firestore
+        final revQuery = await _db
             .collection("Revenue")
             .doc(uid)
             .collection("revenue_list")
             .where('salesID', isEqualTo: salesID)
             .where('productId', isEqualTo: oldEntry.key)
             .get();
-
-        for (var doc in revQuery.docs) {
-          await doc.reference.delete();
-        }
+        for (var doc in revQuery.docs) await doc.reference.delete();
       }
     }
 
-    // Update or add products and revenue
+    // Add or update products
     for (var newEntry in newMap.entries) {
-      final productId = newEntry.key;
-      final quantitySoldNew =
-          int.tryParse(newEntry.value['quantity'] ?? "0") ?? 0;
-      final oldQuantity =
-          int.tryParse(oldMap[productId]?['quantity'] ?? "0") ?? 0;
-      final difference = quantitySoldNew - oldQuantity;
-
-      final productRef = _firestore
+      final productRef = _db
           .collection("Products")
           .doc(uid)
           .collection("products_list")
-          .doc(productId);
+          .doc(newEntry.key);
+      final quantitySoldNew =
+          int.tryParse(newEntry.value['quantity'] ?? '0') ?? 0;
+      final oldQuantity =
+          int.tryParse(oldMap[newEntry.key]?['quantity'] ?? '0') ?? 0;
+      final diff = quantitySoldNew - oldQuantity;
 
-      await _firestore.runTransaction((transaction) async {
+      await _db.runTransaction((transaction) async {
         final snapshot = await transaction.get(productRef);
         if (!snapshot.exists) return;
 
-        int currentQuantity = (snapshot.get('quantity') as num).toInt();
-        transaction.update(productRef, {
-          'quantity': currentQuantity - difference,
-        });
+        final currentQuantity = (snapshot.get('quantity') as num).toInt();
+        transaction.update(productRef, {'quantity': currentQuantity - diff});
 
-        // Revenue handling
-        final revQuery = await _firestore
+        // Revenue
+        final revQuery = await _db
             .collection("Revenue")
             .doc(uid)
             .collection("revenue_list")
             .where('salesID', isEqualTo: salesID)
-            .where('productId', isEqualTo: productId)
+            .where('productId', isEqualTo: newEntry.key)
             .get();
 
         if (revQuery.docs.isNotEmpty) {
@@ -264,24 +212,22 @@ class UpdateSalesDatabase {
             'quantitySold': quantitySoldNew,
             'totalRevenue':
                 quantitySoldNew *
-                ((snapshot.get('sellingPrice') as num).toDouble() -
-                    (snapshot.get('purchasePrice') as num).toDouble()),
+                ((snapshot.get('sellingPrice') as num) -
+                    (snapshot.get('purchasePrice') as num)),
             'totalSellAmount':
-                quantitySoldNew *
-                (snapshot.get('sellingPrice') as num).toDouble(),
+                quantitySoldNew * (snapshot.get('sellingPrice') as num),
           });
         } else {
-          final revenueRef = _firestore
+          final revenueRef = _db
               .collection("Revenue")
               .doc(uid)
               .collection("revenue_list")
               .doc();
-
           transaction.set(
             revenueRef,
             RevenueModel(
               salesID: salesID,
-              productId: productId,
+              productId: newEntry.key,
               productName: snapshot.get('productName'),
               quantitySold: quantitySoldNew,
               totalRevenue:

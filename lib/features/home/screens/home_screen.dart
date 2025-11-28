@@ -1,4 +1,5 @@
 import 'package:bikretaa/app/controller/quick_action_controller.dart';
+import 'package:bikretaa/app/controller/sales_summary_controller.dart';
 import 'package:bikretaa/app/responsive.dart';
 import 'package:bikretaa/features/dashboard_admin/widgets/section_tile_widget_admin.dart';
 import 'package:bikretaa/features/home/widgets/action_button.dart';
@@ -67,6 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final r = Responsive.of(context);
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
+    final summary = Get.find<SalesSummaryController>();
 
     Color containerBg(Color light, Color dark) => isDark ? dark : light;
 
@@ -125,22 +127,28 @@ class _HomeScreenState extends State<HomeScreen> {
               Row(
                 children: [
                   Expanded(
-                    child: SummaryCard(
-                      r: r,
-                      icon: Icons.trending_up,
-                      color: Color(0xff2DBE79),
-                      title: "Sales",
-                      value: "৳10,000",
+                    child: Obx(
+                      () => SummaryCard(
+                        r: r,
+                        icon: Icons.trending_up,
+                        color: Color(0xff2DBE79),
+                        title: "Sales",
+                        value:
+                            "৳${summary.todaySales.value.toStringAsFixed(2)}",
+                      ),
                     ),
                   ),
                   SizedBox(width: r.width(0.03)),
                   Expanded(
-                    child: SummaryCard(
-                      r: r,
-                      icon: Icons.trending_down,
-                      color: Colors.red,
-                      title: "Revenue",
-                      value: "৳100.00",
+                    child: Obx(
+                      () => SummaryCard(
+                        r: r,
+                        icon: Icons.trending_down,
+                        color: Colors.red,
+                        title: "Revenue",
+                        value:
+                            "৳${summary.todayRevenue.value.toStringAsFixed(2)}",
+                      ),
                     ),
                   ),
                 ],
@@ -149,22 +157,26 @@ class _HomeScreenState extends State<HomeScreen> {
               Row(
                 children: [
                   Expanded(
-                    child: SummaryCard(
-                      r: r,
-                      icon: Icons.bar_chart,
-                      color: Color(0xff5CC0FF),
-                      title: "Paid",
-                      value: "৳45,000",
+                    child: Obx(
+                      () => SummaryCard(
+                        r: r,
+                        icon: Icons.bar_chart,
+                        color: Color(0xff5CC0FF),
+                        title: "Paid",
+                        value: "৳${summary.todayPaid.value.toStringAsFixed(2)}",
+                      ),
                     ),
                   ),
                   SizedBox(width: r.width(0.03)),
                   Expanded(
-                    child: SummaryCard(
-                      r: r,
-                      icon: Icons.attach_money,
-                      color: Color(0xff66D0FF),
-                      title: "Due",
-                      value: "৳5,000",
+                    child: Obx(
+                      () => SummaryCard(
+                        r: r,
+                        icon: Icons.attach_money,
+                        color: Color(0xff66D0FF),
+                        title: "Due",
+                        value: "৳${summary.todayDue.value.toStringAsFixed(2)}",
+                      ),
                     ),
                   ),
                 ],

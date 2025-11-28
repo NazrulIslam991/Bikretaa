@@ -37,38 +37,66 @@ class _ShopTypeDropdownWidgetState extends State<ShopTypeDropdownWidget> {
     final theme = Theme.of(context);
     final r = Responsive.of(context);
 
+    final textColor = theme.brightness == Brightness.dark
+        ? Colors.white
+        : Colors.black87;
+    final hintColor = theme.brightness == Brightness.dark
+        ? Colors.white54
+        : Colors.black54;
+    final borderColor = theme.colorScheme.primary;
+    final backgroundColor = theme.colorScheme.onPrimary;
+
     return DropdownButtonFormField2<String>(
       isExpanded: true,
       decoration: InputDecoration(
-        contentPadding: EdgeInsets.symmetric(vertical: r.height(0.015)),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(r.radiusMedium()),
-        ),
+        border: InputBorder.none,
+        contentPadding: EdgeInsets.zero,
       ),
       hint: Text(
-        'Select_shop_type'.tr,
+        'Select Shop Type',
         style: TextStyle(
           fontWeight: FontWeight.normal,
           color: theme.colorScheme.primary,
-          letterSpacing: 0.4,
           fontSize: r.fontMedium(),
         ),
       ),
+      value: selectedValue,
       items: shopTypes
           .map(
             (type) => DropdownMenuItem<String>(
               value: type,
-              child: Text(type, style: TextStyle(fontSize: r.fontMedium())),
+              child: Row(
+                children: [
+                  Container(
+                    width: 6,
+                    height: 6,
+                    margin: EdgeInsets.only(right: r.width(0.02)),
+                    decoration: BoxDecoration(
+                      color: textColor,
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                  Flexible(
+                    child: Text(
+                      type,
+                      style: TextStyle(
+                        fontSize: r.fontMedium(),
+                        color: textColor,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ],
+              ),
             ),
           )
           .toList(),
       validator: (value) {
         if (value == null) {
-          return 'Please_select_shop_type'.tr;
+          return 'Please select shop type'.tr;
         }
         return null;
       },
-      value: selectedValue,
       onChanged: (value) {
         setState(() {
           selectedValue = value;
@@ -76,18 +104,37 @@ class _ShopTypeDropdownWidgetState extends State<ShopTypeDropdownWidget> {
       },
       onSaved: widget.onSaved,
       buttonStyleData: ButtonStyleData(
-        padding: EdgeInsets.only(right: r.width(0.02)),
+        height: r.height(0.065),
+        padding: EdgeInsets.symmetric(horizontal: r.width(0.03)),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(r.radiusSmall()),
+          border: Border.all(color: borderColor),
+          color: backgroundColor,
+        ),
+        elevation: 2,
       ),
       iconStyleData: IconStyleData(
-        icon: Icon(Icons.arrow_drop_down, color: theme.colorScheme.primary),
-        iconSize: r.iconMedium(),
+        icon: Icon(Icons.arrow_forward_ios_outlined, size: r.iconMedium()),
+        iconEnabledColor: hintColor,
+        iconDisabledColor: Colors.grey,
       ),
       dropdownStyleData: DropdownStyleData(
+        maxHeight: r.height(0.25),
+        width: r.width(0.96),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(r.radiusMedium()),
+          color: backgroundColor,
+          border: Border.all(color: borderColor),
+        ),
+        offset: const Offset(0, 0),
+        scrollbarTheme: ScrollbarThemeData(
+          radius: const Radius.circular(40),
+          thickness: MaterialStateProperty.all(6),
+          thumbVisibility: MaterialStateProperty.all(true),
         ),
       ),
       menuItemStyleData: MenuItemStyleData(
+        height: r.height(0.05),
         padding: EdgeInsets.symmetric(horizontal: r.width(0.03)),
       ),
     );

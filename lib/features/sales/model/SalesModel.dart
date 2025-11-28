@@ -1,9 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SalesModel {
-  final String customerName;
-  final String customerMobile;
-  final String customerAddress;
+  final String customerUID;
   final double grandTotal;
   final double paidAmount;
   final double dueAmount;
@@ -11,9 +9,7 @@ class SalesModel {
   final DateTime? timestamp;
 
   SalesModel({
-    required this.customerName,
-    required this.customerMobile,
-    required this.customerAddress,
+    required this.customerUID,
     required this.grandTotal,
     required this.paidAmount,
     required this.dueAmount,
@@ -21,11 +17,10 @@ class SalesModel {
     this.timestamp,
   });
 
+  // Convert SalesModel to Map for Firestore
   Map<String, dynamic> toMap() {
     return {
-      'customerName': customerName,
-      'customerMobile': customerMobile,
-      'customerAddress': customerAddress,
+      'customerUID': customerUID,
       'grandTotal': grandTotal,
       'paidAmount': paidAmount,
       'dueAmount': dueAmount,

@@ -1,6 +1,8 @@
 import 'package:bikretaa/app/responsive.dart';
 import 'package:bikretaa/assets_path/assets_path.dart';
+import 'package:bikretaa/features/sales/database/customer_info_database.dart';
 import 'package:bikretaa/features/sales/database/sales_screen_database.dart';
+import 'package:bikretaa/features/sales/model/customer_model.dart';
 import 'package:bikretaa/features/sales/widgets/bottom_filter_sheet_for_sales.dart';
 import 'package:bikretaa/features/sales/widgets/floating_menu_fab.dart';
 import 'package:bikretaa/features/sales/widgets/sale_card/sales_history_card.dart';
@@ -24,6 +26,8 @@ class SalesScreen extends StatefulWidget {
 class _SalesScreenState extends State<SalesScreen> {
   final SalesScreenDatabase _salesScreenDatabase = SalesScreenDatabase();
   final TextEditingController searchController = TextEditingController();
+  final CustomerDatabase _customerDb = CustomerDatabase();
+
   String searchText = "";
   DateTime? startDate;
   DateTime? endDate;
@@ -46,7 +50,6 @@ class _SalesScreenState extends State<SalesScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final r = Responsive.of(context);
-
     final uid = FirebaseAuth.instance.currentUser?.uid;
     if (uid == null) {
       return Scaffold(body: Center(child: Text("user_not_logged_in".tr)));
@@ -129,12 +132,10 @@ class _SalesScreenState extends State<SalesScreen> {
 
                   final salesDocs = salesSnapshot.data!.docs.where((doc) {
                     final sale = doc.data() as Map<String, dynamic>;
-                    final customerName = sale['customerName']
+                    return (sale['customerUID'] ?? "")
                         .toString()
-                        .toLowerCase();
-                    final salesID = doc.id.toLowerCase();
-                    return customerName.contains(searchText) ||
-                        salesID.contains(searchText);
+                        .toLowerCase()
+                        .contains(searchText);
                   }).toList();
 
                   return StreamBuilder<QuerySnapshot>(
@@ -225,15 +226,7 @@ class _SalesScreenState extends State<SalesScreen> {
                     return Center(child: SalesHistoryShimmer());
                   }
 
-                  final salesDocs = snapshot.data!.docs.where((doc) {
-                    final sale = doc.data() as Map<String, dynamic>;
-                    final customerName = sale['customerName']
-                        .toString()
-                        .toLowerCase();
-                    final salesID = doc.id.toLowerCase();
-                    return customerName.contains(searchText) ||
-                        salesID.contains(searchText);
-                  }).toList();
+                  final salesDocs = snapshot.data!.docs.toList();
 
                   if (salesDocs.isEmpty) {
                     return SizedBox(
@@ -256,10 +249,27 @@ class _SalesScreenState extends State<SalesScreen> {
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) {
-                      final sale =
-                          salesDocs[index].data() as Map<String, dynamic>;
-                      final saleID = salesDocs[index].id;
-                      return buildSalesHistoryCard(sale, saleID);
+                      final saleDoc = salesDocs[index];
+                      final saleData = saleDoc.data() as Map<String, dynamic>;
+                      final saleID = saleDoc.id;
+                      final customerUID = saleData['customerUID'] ?? "";
+
+                      return FutureBuilder<CustomerModel?>(
+                        future: _customerDb.fetchCustomer(uid, customerUID),
+                        builder: (context, customerSnapshot) {
+                          if (customerSnapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return SalesHistoryShimmer();
+                          }
+                          final customer = customerSnapshot.data;
+                          return buildSalesHistoryCard(
+                            saleData,
+                            saleID,
+                            customer,
+                            customerUID,
+                          );
+                        },
+                      );
                     },
                   );
                 },
@@ -308,7 +318,12 @@ class _SalesScreenState extends State<SalesScreen> {
     );
   }
 
-  Widget buildSalesHistoryCard(Map<String, dynamic> sale, String saleID) {
+  Widget buildSalesHistoryCard(
+    Map<String, dynamic> sale,
+    String saleID,
+    CustomerModel? customer,
+    String customerUID,
+  ) {
     int totalItems = (sale['products'] as List).length;
     double totalCost = (sale['products'] as List).fold(
       0.0,
@@ -318,9 +333,9 @@ class _SalesScreenState extends State<SalesScreen> {
     DateTime saleDate = (sale['timestamp'] as Timestamp).toDate();
 
     return SalesHistoryCard(
-      customerName: sale['customerName'],
-      customerMobile: sale['customerMobile'],
-      customerAddress: sale['customerAddress'],
+      customerName: customer?.name ?? "Unknown",
+      customerMobile: customer?.mobile ?? "-",
+      customerAddress: customer?.address ?? "-",
       paymentType: sale['dueAmount'].toDouble() == 0 ? 'Paid' : 'Due',
       totalItems: totalItems,
       totalCost: totalCost,
@@ -328,6 +343,7 @@ class _SalesScreenState extends State<SalesScreen> {
       paidAmount: sale['paidAmount'].toDouble(),
       dueAmount: sale['dueAmount'].toDouble(),
       salesID: saleID,
+      customerUID: customerUID,
       time:
           "${saleDate.hour.toString().padLeft(2, '0')}:${saleDate.minute.toString().padLeft(2, '0')}:${saleDate.second.toString().padLeft(2, '0')}",
       date:

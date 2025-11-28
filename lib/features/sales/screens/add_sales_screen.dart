@@ -6,9 +6,12 @@ import 'package:bikretaa/features/sales/widgets/text_input_feild/customer_addres
 import 'package:bikretaa/features/sales/widgets/text_input_feild/customer_name_controller.dart';
 import 'package:bikretaa/features/shared/presentation/widgets/auth_user_input_feild/mobile_feild_widget.dart';
 import 'package:bikretaa/features/shared/presentation/widgets/snack_bar_messege/snackbar_messege.dart';
+import 'package:bikretaa/utils/string_utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../../utils/phone_utils.dart';
 
 class AddSalesScreen extends StatefulWidget {
   const AddSalesScreen({super.key});
@@ -19,7 +22,7 @@ class AddSalesScreen extends StatefulWidget {
 }
 
 class _AddSalesScreenState extends State<AddSalesScreen> {
-  final AddSalesScreen_database _salesService = AddSalesScreen_database();
+  final AddSalesScreenDatabase _salesService = AddSalesScreenDatabase();
 
   final TextEditingController _customerNameController = TextEditingController();
   final TextEditingController _mobileEcontroller = TextEditingController();
@@ -263,14 +266,25 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
   Future<void> _confirmSale(String uid) async {
     if (!_formKey.currentState!.validate()) return;
 
+    final customerName = StringUtils.sanitize(
+      _customerNameController.text.trim(),
+    );
+
+    // Use PhoneUtils to add +880 prefix safely
+    final rawMobile = _mobileEcontroller.text.trim();
+    final customerMobile = PhoneUtils.addBdPrefix(rawMobile);
+
+    // Use StringUtils
+    final customerAddress = StringUtils.sanitize(
+      _customerAddressController.text.trim(),
+    );
+
     final sale = SalesModel(
-      customerName: _customerNameController.text.trim(),
-      customerMobile: '+8801' + _mobileEcontroller.text.trim(),
-      customerAddress: _customerAddressController.text.trim(),
       grandTotal: grandTotal,
       paidAmount: double.tryParse(_paidController.text) ?? 0,
       dueAmount: due,
       products: _addedProducts,
+      customerUID: '',
     );
 
     setState(() => _loading = true);
@@ -280,6 +294,9 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
         uid: uid,
         sale: sale,
         addedProducts: _addedProducts,
+        customerName: customerName,
+        customerMobile: customerMobile,
+        customerAddress: customerAddress,
       );
       showSnackbarMessage(context, "sale_saved".tr);
       _resetForm();

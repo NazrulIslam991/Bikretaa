@@ -7,6 +7,7 @@ class PaidModel {
 
   PaidModel({required this.salesID, required this.amount, this.timestamp});
 
+  // Convert PaidModel to Map for Firestore
   Map<String, dynamic> toMap() {
     return {
       'salesID': salesID,

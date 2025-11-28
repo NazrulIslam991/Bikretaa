@@ -1,19 +1,33 @@
 import 'package:bikretaa/features/products/model/product_model.dart';
+import 'package:bikretaa/features/sales/database/customer_info_database.dart';
 import 'package:bikretaa/features/sales/model/DueModel.dart';
 import 'package:bikretaa/features/sales/model/PaidModel.dart';
 import 'package:bikretaa/features/sales/model/RevenueModel.dart';
 import 'package:bikretaa/features/sales/model/SalesModel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class AddSalesScreen_database {
+class AddSalesScreenDatabase {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
+  final CustomerDatabase _customerDb = CustomerDatabase();
 
   Future<void> saveSale({
     required String uid,
     required SalesModel sale,
     required List<Map<String, String>> addedProducts,
+    required String customerName,
+    required String customerMobile,
+    required String customerAddress,
   }) async {
     try {
+      //Get or create customer
+      final customer = await _customerDb.getOrCreateCustomer(
+        shopUID: uid,
+        customerName: customerName,
+        customerMobile: customerMobile,
+        customerAddress: customerAddress,
+      );
+
+      //Save Sale with customerUID
       final salesRef = _db
           .collection('Sales')
           .doc(uid)
@@ -21,42 +35,38 @@ class AddSalesScreen_database {
       final newSaleDoc = salesRef.doc();
       final salesID = newSaleDoc.id;
 
-      //  Save Sale
-      await newSaleDoc.set(sale.toMap());
+      await newSaleDoc.set({
+        ...sale.toMap(),
+        'customerUID': customer.customerId,
+      });
 
-      //  Save Paid
+      //Save Paid
       if (sale.paidAmount > 0) {
         final paidRef = _db
             .collection('Paid')
             .doc(uid)
             .collection('paid_list')
             .doc();
-
         final paidData = PaidModel(salesID: salesID, amount: sale.paidAmount);
-
         await paidRef.set(paidData.toMap());
       }
 
-      //  Save Due (with customer info)
+      //Save Due
       if (sale.dueAmount > 0) {
         final dueRef = _db
             .collection('Due')
             .doc(uid)
             .collection('due_list')
             .doc();
-
         final dueData = DueModel(
           salesID: salesID,
           amount: sale.dueAmount,
-          customerName: sale.customerName,
-          customerMobile: sale.customerMobile,
-          customerAddress: sale.customerAddress,
+          customerUID: customer.customerId,
         );
-
         await dueRef.set(dueData.toMap());
       }
 
-      //  Save Revenue & Update Stock
+      //Save Revenue & Update Stock (same as before)
       for (var item in addedProducts) {
         final productId = item['productId']!;
         final quantitySold = int.tryParse(item['quantity'] ?? "0") ?? 0;
@@ -77,7 +87,7 @@ class AddSalesScreen_database {
           double purchasePrice = (snapshot.get('purchasePrice') as num)
               .toDouble();
 
-          //  Update stock
+          // Update stock
           transaction.update(productRef, {
             'quantity': currentQuantity - quantitySold,
           });
@@ -88,7 +98,6 @@ class AddSalesScreen_database {
               .doc(uid)
               .collection("revenue_list")
               .doc();
-
           final revenueData = RevenueModel(
             salesID: salesID,
             productId: productId,
@@ -97,7 +106,6 @@ class AddSalesScreen_database {
             totalRevenue: quantitySold * (sellingPrice - purchasePrice),
             totalSellAmount: quantitySold * sellingPrice,
           );
-
           transaction.set(revenueRef, revenueData.toMap());
         });
       }
@@ -106,7 +114,7 @@ class AddSalesScreen_database {
     }
   }
 
-  //  Fetch Product by ID
+  // Fetch Product by ID
   Future<Product?> fetchProductById(String uid, String productId) async {
     try {
       final docRef = _db
@@ -114,7 +122,6 @@ class AddSalesScreen_database {
           .doc(uid)
           .collection("products_list")
           .doc(productId);
-
       final docSnap = await docRef.get();
       if (docSnap.exists) {
         return Product.fromMap(docSnap.data()!);

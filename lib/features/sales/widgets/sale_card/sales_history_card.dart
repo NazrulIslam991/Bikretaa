@@ -16,6 +16,7 @@ class SalesHistoryCard extends StatelessWidget {
   final String time;
   final String date;
   final String salesID;
+  final String customerUID;
 
   const SalesHistoryCard({
     Key? key,
@@ -31,6 +32,7 @@ class SalesHistoryCard extends StatelessWidget {
     required this.time,
     required this.date,
     required this.salesID,
+    required this.customerUID,
   }) : super(key: key);
 
   @override
@@ -215,8 +217,10 @@ class SalesHistoryCard extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) =>
-                              UpdateSalesScreen(salesID: salesID),
+                          builder: (context) => UpdateSalesScreen(
+                            salesID: salesID,
+                            customerUID: customerUID,
+                          ),
                         ),
                       );
                     },

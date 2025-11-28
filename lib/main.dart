@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
+import 'app/controller/sales_summary_controller.dart'
+    show SalesSummaryController;
 import 'app/controller/theme_controller.dart';
 import 'app/string.dart';
 import 'features/products/database/cloudinary_database.dart';
@@ -23,6 +25,8 @@ Future<void> main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
+  Get.put(SalesSummaryController());
+
   runApp(BikretaaApp());
   // runApp(
   //   DevicePreview(enabled: !kReleaseMode, builder: (context) => BikretaaApp()),

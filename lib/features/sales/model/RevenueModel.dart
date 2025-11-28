@@ -19,6 +19,7 @@ class RevenueModel {
     this.timestamp,
   });
 
+  // Convert RevenueModel to Map for Firestore
   Map<String, dynamic> toMap() {
     return {
       'salesID': salesID,

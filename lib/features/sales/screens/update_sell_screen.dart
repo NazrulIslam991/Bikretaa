@@ -1,7 +1,9 @@
 import 'package:bikretaa/app/responsive.dart';
 import 'package:bikretaa/features/sales/database/add_sales_screen_database.dart';
+import 'package:bikretaa/features/sales/database/customer_info_database.dart';
 import 'package:bikretaa/features/sales/database/update_screen_database.dart';
 import 'package:bikretaa/features/sales/model/SalesModel.dart';
+import 'package:bikretaa/features/sales/model/customer_model.dart';
 import 'package:bikretaa/features/sales/widgets/products_list_widget.dart';
 import 'package:bikretaa/features/sales/widgets/sale_screen_shimmer/update_sales_screen_shimmer.dart';
 import 'package:bikretaa/features/sales/widgets/text_input_feild/customer_address.dart';
@@ -12,10 +14,17 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../utils/phone_utils.dart';
+import '../../../utils/string_utils.dart';
+
 class UpdateSalesScreen extends StatefulWidget {
   final String salesID;
 
-  const UpdateSalesScreen({Key? key, required this.salesID}) : super(key: key);
+  const UpdateSalesScreen({
+    super.key,
+    required this.salesID,
+    required String customerUID,
+  });
 
   @override
   State<UpdateSalesScreen> createState() => _UpdateSalesScreenState();
@@ -23,7 +32,7 @@ class UpdateSalesScreen extends StatefulWidget {
 
 class _UpdateSalesScreenState extends State<UpdateSalesScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final AddSalesScreen_database _salesService = AddSalesScreen_database();
+  final AddSalesScreenDatabase _salesService = AddSalesScreenDatabase();
   final UpdateSalesDatabase _updateService = UpdateSalesDatabase();
 
   late TextEditingController _customerNameController;
@@ -32,6 +41,7 @@ class _UpdateSalesScreenState extends State<UpdateSalesScreen> {
   late TextEditingController _paidController;
   final TextEditingController _productIdController = TextEditingController();
   final TextEditingController _quantityController = TextEditingController();
+  final CustomerDatabase _customerDb = CustomerDatabase();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _loading = false;
@@ -39,6 +49,7 @@ class _UpdateSalesScreenState extends State<UpdateSalesScreen> {
 
   List<Map<String, String>> _addedProducts = [];
   List<Map<String, String>> _oldProducts = [];
+  String? _existingCustomerUID;
 
   @override
   void initState() {
@@ -50,41 +61,6 @@ class _UpdateSalesScreenState extends State<UpdateSalesScreen> {
 
     _paidController.addListener(() => setState(() {}));
     _loadAndFetchSale();
-  }
-
-  Future<void> _loadAndFetchSale() async {
-    final uid = _auth.currentUser?.uid;
-    if (uid == null) return;
-
-    try {
-      final data = await _updateService.fetchSale(uid, widget.salesID);
-      if (data != null) {
-        String mobile = data['customerMobile'] ?? '';
-        mobile = mobile.replaceFirst(RegExp(r'^\+8801'), '');
-        _mobileEcontroller.text = mobile;
-
-        _customerNameController.text = data['customerName'] ?? '';
-        _customerAddressController.text = data['customerAddress'] ?? '';
-        _paidController.text =
-            (data['paidAmount'] as num?)?.toStringAsFixed(2) ?? '0.0';
-
-        final products = List<Map<String, String>>.from(
-          (data['products'] ?? []).map((e) => Map<String, String>.from(e)),
-        );
-
-        setState(() {
-          _addedProducts = products;
-          _oldProducts = List<Map<String, String>>.from(products);
-          _fetching = false;
-        });
-      } else {
-        setState(() => _fetching = false);
-        showSnackbarMessage(context, "sale_not_found".tr);
-      }
-    } catch (e) {
-      setState(() => _fetching = false);
-      showSnackbarMessage(context, "Failed to fetch sale: $e");
-    }
   }
 
   @override
@@ -282,14 +258,22 @@ class _UpdateSalesScreenState extends State<UpdateSalesScreen> {
 
     setState(() => _loading = true);
 
+    final rawMobile = _mobileEcontroller.text.trim();
+    String mobileToSave = PhoneUtils.addBdPrefix(rawMobile);
+
+    final customerName = StringUtils.sanitize(
+      _customerNameController.text.trim(),
+    );
+    final customerAddress = StringUtils.sanitize(
+      _customerAddressController.text.trim(),
+    );
+
     final updatedSale = SalesModel(
-      customerName: _customerNameController.text.trim(),
-      customerMobile: '+880' + _mobileEcontroller.text.trim(),
-      customerAddress: _customerAddressController.text.trim(),
       grandTotal: grandTotal,
       paidAmount: double.tryParse(_paidController.text.trim()) ?? 0,
       dueAmount: due,
       products: _addedProducts,
+      customerUID: '',
     );
 
     try {
@@ -299,6 +283,10 @@ class _UpdateSalesScreenState extends State<UpdateSalesScreen> {
         updatedSale: updatedSale,
         oldProducts: _oldProducts,
         newProducts: _addedProducts,
+        customerName: customerName,
+        customerMobile: mobileToSave,
+        customerAddress: customerAddress,
+        existingCustomerUID: _existingCustomerUID,
       );
 
       showSnackbarMessage(context, "sale_updated_success".tr);
@@ -307,6 +295,55 @@ class _UpdateSalesScreenState extends State<UpdateSalesScreen> {
       showSnackbarMessage(context, "failed_update_sale".tr);
     } finally {
       setState(() => _loading = false);
+    }
+  }
+
+  Future<void> _loadAndFetchSale() async {
+    final uid = _auth.currentUser?.uid;
+    if (uid == null) return;
+
+    try {
+      final data = await _updateService.fetchSale(uid, widget.salesID);
+      if (data != null) {
+        final customerUID = data['customerUID'] ?? '';
+        _existingCustomerUID = data['customerUID'];
+
+        CustomerModel? customer;
+        if (customerUID.isNotEmpty) {
+          customer = await _customerDb.fetchCustomer(uid, customerUID);
+        }
+
+        String mobile = customer?.mobile ?? data['customerMobile'] ?? '';
+        mobile = PhoneUtils.removeBdPrefix(mobile);
+        _mobileEcontroller.text = mobile;
+
+        // Name & Address
+        _customerNameController.text =
+            customer?.name ?? data['customerName'] ?? '';
+        _customerAddressController.text =
+            customer?.address ?? data['customerAddress'] ?? '';
+
+        // Paid amount
+        _paidController.text =
+            (data['paidAmount'] as num?)?.toStringAsFixed(2) ?? '0.0';
+
+        // Products
+        final products = List<Map<String, String>>.from(
+          (data['products'] ?? []).map((e) => Map<String, String>.from(e)),
+        );
+
+        setState(() {
+          _addedProducts = products;
+          _oldProducts = List<Map<String, String>>.from(products);
+          _fetching = false;
+        });
+      } else {
+        setState(() => _fetching = false);
+        showSnackbarMessage(context, "sale_not_found".tr);
+      }
+    } catch (e) {
+      setState(() => _fetching = false);
+      showSnackbarMessage(context, "Failed to fetch sale: $e");
     }
   }
 
