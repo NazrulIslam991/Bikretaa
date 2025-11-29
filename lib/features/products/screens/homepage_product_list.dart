@@ -176,20 +176,31 @@ class _ProductsFilterScreenState extends State<ProductsFilterScreen> {
     required double height,
   }) {
     final r = Responsive.of(context);
+    final theme = Theme.of(context);
+
     return Container(
       height: height,
       child: TextField(
         controller: controller,
         autofocus: true,
+        style: TextStyle(
+          color: theme.textTheme.bodyMedium?.color ?? Colors.black,
+        ),
         decoration: InputDecoration(
           hintText: 'Search product...',
           filled: true,
-          fillColor: Colors.white,
-          prefixIcon: Icon(Icons.search),
-          suffixIcon: IconButton(icon: Icon(Icons.close), onPressed: onCancel),
+          fillColor: theme.inputDecorationTheme.fillColor,
+          prefixIcon: Icon(Icons.search, color: theme.iconTheme.color),
+          suffixIcon: IconButton(
+            icon: Icon(Icons.close, color: theme.iconTheme.color),
+            onPressed: onCancel,
+          ),
+          hintStyle: TextStyle(
+            color: theme.inputDecorationTheme.hintStyle?.color ?? Colors.grey,
+          ),
           contentPadding: EdgeInsets.symmetric(vertical: r.height(0.015)),
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10.r),
+            borderRadius: BorderRadius.circular(12.r),
             borderSide: BorderSide.none,
           ),
         ),

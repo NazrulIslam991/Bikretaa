@@ -1,6 +1,5 @@
 import 'package:bikretaa/app/status_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppTheme {
   // Light Theme
@@ -28,12 +27,12 @@ class AppTheme {
     ),
     textTheme: TextTheme(
       titleLarge: TextStyle(
-        fontSize: 33.sp,
+        fontSize: 33,
         fontWeight: FontWeight.w700,
         color: Colors.blue,
       ),
       titleSmall: TextStyle(
-        fontSize: 15.sp,
+        fontSize: 15,
         fontWeight: FontWeight.normal,
         color: Colors.grey,
       ),
@@ -104,12 +103,12 @@ class AppTheme {
     ),
     textTheme: TextTheme(
       titleLarge: TextStyle(
-        fontSize: 33.sp,
+        fontSize: 33,
         fontWeight: FontWeight.w700,
         color: Colors.lightBlueAccent,
       ),
       titleSmall: TextStyle(
-        fontSize: 15.sp,
+        fontSize: 15,
         fontWeight: FontWeight.normal,
         color: Colors.grey,
       ),

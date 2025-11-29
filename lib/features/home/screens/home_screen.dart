@@ -38,12 +38,12 @@ class _HomeScreenState extends State<HomeScreen> {
   final QuickActionController quickActionController = Get.put(
     QuickActionController(),
   );
-  final ProductController productController = Get.put(ProductController());
+  final ProductController productController = Get.find<ProductController>();
 
   final List<Map<String, dynamic>> quickActions = [
     {"icon": Icons.add_box, "title": "Add Product"},
     {"icon": Icons.inventory_2, "title": "All Products"},
-    {"icon": Icons.inventory_2, "title": "Customer Lists"},
+    {"icon": Icons.people, "title": "Customer Lists"},
     {"icon": Icons.event_busy, "title": "Expired Date"},
     {"icon": Icons.access_time_filled, "title": "Expire Soon"},
     {"icon": Icons.point_of_sale, "title": "Record Sale"},

@@ -18,6 +18,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../../../../../app/controller/customer_controller/customer_controller.dart';
+import '../../../../../app/controller/product_controller/product_controller.dart';
+import '../../../../../app/controller/sales_controller/sales_controller.dart';
+
 class SigninScreen extends StatefulWidget {
   const SigninScreen({super.key});
 
@@ -173,6 +177,11 @@ class _SigninScreenState extends State<SigninScreen> {
       if (userInformation != null) {
         await SharedPreferencesHelper.saveUser(userInformation);
       }
+      // >>>>>>>>>> Controllers Initialized AFTER LOGIN <<<<<<<<<<
+      Get.put(ProductController(), permanent: true);
+      Get.put(CustomerController(), permanent: true);
+      Get.put(SalesController(), permanent: true);
+      // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
       if (email == AppConstants.adminEmail) {
         Navigator.pushNamedAndRemoveUntil(
