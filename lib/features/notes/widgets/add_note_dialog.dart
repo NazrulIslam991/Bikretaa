@@ -1,6 +1,7 @@
 import 'package:bikretaa/app/controller/notes_controller/notes_controller.dart';
 import 'package:bikretaa/app/responsive.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class AddNoteWidget extends StatefulWidget {
   final NotesController controller;
@@ -21,7 +22,7 @@ class AddNoteWidget extends StatefulWidget {
 class _AddNoteWidgetState extends State<AddNoteWidget> {
   final _headlineController = TextEditingController();
   final _noteController = TextEditingController();
-  final _formKey = GlobalKey<FormState>(); // Form key
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
@@ -48,7 +49,7 @@ class _AddNoteWidgetState extends State<AddNoteWidget> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              "Add New Note",
+              "add_new_note".tr,
               style: r.textStyle(
                 fontSize: r.fontLarge(),
                 color: theme.colorScheme.onBackground,
@@ -58,8 +59,9 @@ class _AddNoteWidgetState extends State<AddNoteWidget> {
             SizedBox(height: r.paddingMedium()),
             TextFormField(
               controller: _headlineController,
+              textInputAction: TextInputAction.next,
               decoration: InputDecoration(
-                hintText: "Headline",
+                hintText: "headline_hint".tr,
                 hintStyle: TextStyle(color: theme.hintColor),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(r.radiusSmall()),
@@ -67,7 +69,7 @@ class _AddNoteWidgetState extends State<AddNoteWidget> {
               ),
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
-                  return "Headline cannot be empty";
+                  return "headline_empty".tr;
                 }
                 return null;
               },
@@ -75,9 +77,10 @@ class _AddNoteWidgetState extends State<AddNoteWidget> {
             SizedBox(height: r.paddingMedium()),
             TextFormField(
               controller: _noteController,
+              textInputAction: TextInputAction.done,
               maxLines: 3,
               decoration: InputDecoration(
-                hintText: "Write your note",
+                hintText: "note_hint".tr,
                 hintStyle: TextStyle(color: theme.hintColor),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(r.radiusSmall()),
@@ -85,7 +88,7 @@ class _AddNoteWidgetState extends State<AddNoteWidget> {
               ),
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
-                  return "Note cannot be empty";
+                  return "note_empty".tr; // localized
                 }
                 return null;
               },
@@ -102,7 +105,7 @@ class _AddNoteWidgetState extends State<AddNoteWidget> {
                 }
               },
               child: Text(
-                "Add",
+                "add".tr,
                 style: r.textStyle(
                   fontSize: r.fontMedium(),
                   color: theme.colorScheme.onSecondary,

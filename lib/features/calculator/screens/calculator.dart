@@ -85,7 +85,7 @@ class _CalculatorState extends State<Calculator> {
         if (!isResultShown) {
           try {
             if (RegExp(r'[×÷+\-]$').hasMatch(history)) {
-              result = 'error';
+              result = 'error'.tr;
               return;
             }
             String finalExpression = history
@@ -99,7 +99,7 @@ class _CalculatorState extends State<Calculator> {
             controller.addHistory('$history = $result');
             isResultShown = true;
           } catch (e) {
-            result = 'error';
+            result = 'error'.tr;
           }
         } else {
           history = result;
@@ -108,18 +108,18 @@ class _CalculatorState extends State<Calculator> {
         }
       } else {
         if (history.isEmpty && isOperator(buttonText)) {
-          result = 'error';
+          result = 'error'.tr;
           return;
         }
         if (history.isNotEmpty &&
             isOperator(buttonText) &&
             isOperator(history[history.length - 1])) {
-          result = 'error';
+          result = 'error'.tr;
           return;
         }
         if (buttonText == '00' &&
             (history.isEmpty || isOperator(history[history.length - 1]))) {
-          result = 'error';
+          result = 'error'.tr;
           return;
         }
         if (isResultShown) {
@@ -141,7 +141,7 @@ class _CalculatorState extends State<Calculator> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Calculator',
+          'calculator'.tr,
           style: TextStyle(
             fontSize: r.fontXL(),
             fontWeight: FontWeight.bold,
@@ -175,7 +175,7 @@ class _CalculatorState extends State<Calculator> {
                 child: Text(
                   history,
                   style: TextStyle(
-                    color: theme.textTheme.titleSmall?.color ?? Colors.grey,
+                    color: theme.textTheme.titleMedium?.color ?? Colors.grey,
                     fontSize: r.fontLarge(),
                   ),
                 ),

@@ -2,6 +2,7 @@ import 'package:bikretaa/app/responsive.dart';
 import 'package:bikretaa/features/calender/database/calender_api.dart';
 import 'package:bikretaa/features/calender/model/event_model.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class CalendarScreen extends StatefulWidget {
@@ -90,7 +91,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Calendar Events",
+          'calendar_events'.tr,
           style: TextStyle(
             fontSize: r.fontXL(),
             fontWeight: FontWeight.bold,
@@ -191,7 +192,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                 : monthEvents.isEmpty
                 ? Center(
                     child: Text(
-                      "No events this month",
+                      'no_events_month'.tr,
                       style: TextStyle(
                         fontSize: r.fontMedium(),
                         color: theme.textTheme.bodyMedium?.color,

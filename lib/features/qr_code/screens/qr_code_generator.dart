@@ -15,6 +15,7 @@ import 'package:bikretaa/features/products/widgets/input_text_feild/product_supp
 import 'package:bikretaa/features/qr_code/services/qr_code_services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:screenshot/screenshot.dart';
 
@@ -81,7 +82,7 @@ class _QRGeneratorScreenState extends State<QRGeneratorScreen> {
     if (productInfo.values.any((v) => v.isEmpty)) {
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(const SnackBar(content: Text("Please fill all fields")));
+      ).showSnackBar(SnackBar(content: Text("please_fill_all_fields".tr)));
       return;
     }
 
@@ -94,7 +95,7 @@ class _QRGeneratorScreenState extends State<QRGeneratorScreen> {
     if (qrData == null) {
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(const SnackBar(content: Text("Generate QR code first")));
+      ).showSnackBar(SnackBar(content: Text("generate_qr_first".tr)));
       return;
     }
 
@@ -104,9 +105,7 @@ class _QRGeneratorScreenState extends State<QRGeneratorScreen> {
     final success = await QRService.saveQRCode(imageBytes);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(
-          success ? "QR Code saved to gallery" : "Failed to save QR Code",
-        ),
+        content: Text(success ? "qr_saved_success".tr : "qr_saved_failed".tr),
       ),
     );
   }
@@ -118,7 +117,7 @@ class _QRGeneratorScreenState extends State<QRGeneratorScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "QR Code Generator",
+          "qr_code_generator".tr,
           style: TextStyle(
             fontSize: r.fontXL(),
             fontWeight: FontWeight.bold,
@@ -200,7 +199,7 @@ class _QRGeneratorScreenState extends State<QRGeneratorScreen> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: _generateQRCode,
-              child: const Text("Generate QR Code"),
+              child: Text("generate_qr_code".tr),
             ),
             const SizedBox(height: 20),
             if (qrData != null)
@@ -221,7 +220,7 @@ class _QRGeneratorScreenState extends State<QRGeneratorScreen> {
               ElevatedButton.icon(
                 onPressed: _downloadQRCode,
                 icon: const Icon(Icons.download),
-                label: const Text("Download QR Code"),
+                label: Text("download_qr_code".tr),
               ),
           ],
         ),

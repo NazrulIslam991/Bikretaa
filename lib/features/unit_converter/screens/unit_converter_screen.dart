@@ -4,6 +4,7 @@ import 'package:bikretaa/features/unit_converter/widgets/converter_input_feild.d
 import 'package:bikretaa/features/unit_converter/widgets/white_card_converter.dart';
 import 'package:converter/converter.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class UnitConverterScreen extends StatefulWidget {
   const UnitConverterScreen({super.key});
@@ -82,7 +83,7 @@ class _UnitConverterScreenState extends State<UnitConverterScreen> {
           break;
       }
     } catch (e) {
-      resultText = "Conversion Error!";
+      resultText = "conversion_error".tr;
     }
 
     setState(() {
@@ -108,7 +109,7 @@ class _UnitConverterScreenState extends State<UnitConverterScreen> {
         backgroundColor: theme.appBarTheme.backgroundColor,
         elevation: theme.appBarTheme.elevation,
         title: Text(
-          "Unit Converter",
+          "unit_converter".tr,
           style: TextStyle(
             fontSize: r.fontXL(),
             fontWeight: FontWeight.bold,
@@ -116,7 +117,6 @@ class _UnitConverterScreenState extends State<UnitConverterScreen> {
           ),
         ),
         centerTitle: true,
-        foregroundColor: theme.appBarTheme.foregroundColor,
       ),
       body: SafeArea(
         child: Padding(
@@ -128,7 +128,7 @@ class _UnitConverterScreenState extends State<UnitConverterScreen> {
                 // Category Dropdown
                 WhiteCard(
                   child: Custom_Dropdown(
-                    label: "Category",
+                    label: "category".tr, // Category / ধরন
                     value: _selectedType,
                     items: _unitTypes.keys.toList(),
                     onChanged: (v) {
@@ -148,7 +148,7 @@ class _UnitConverterScreenState extends State<UnitConverterScreen> {
                 WhiteCard(
                   child: ConverterInputFeild(
                     controller: _inputController,
-                    label: "Enter Value",
+                    label: "enter_value".tr, // Enter Value / মান লিখুন
                     onClear: clearInput,
                   ),
                 ),
@@ -161,7 +161,7 @@ class _UnitConverterScreenState extends State<UnitConverterScreen> {
                     Expanded(
                       child: WhiteCard(
                         child: Custom_Dropdown(
-                          label: "From",
+                          label: "from".tr, // From / থেকে
                           value: _fromUnit,
                           items: _unitTypes[_selectedType]!,
                           onChanged: (v) => setState(() => _fromUnit = v!),
@@ -169,7 +169,6 @@ class _UnitConverterScreenState extends State<UnitConverterScreen> {
                       ),
                     ),
                     SizedBox(width: r.width(0.02)),
-                    // Arrow sign
                     Text(
                       "→",
                       style: TextStyle(
@@ -184,7 +183,7 @@ class _UnitConverterScreenState extends State<UnitConverterScreen> {
                     Expanded(
                       child: WhiteCard(
                         child: Custom_Dropdown(
-                          label: "To",
+                          label: "to".tr, // To / এ
                           value: _toUnit,
                           items: _unitTypes[_selectedType]!,
                           onChanged: (v) => setState(() => _toUnit = v!),
@@ -212,7 +211,7 @@ class _UnitConverterScreenState extends State<UnitConverterScreen> {
                           Colors.white,
                     ),
                     child: Text(
-                      "Convert",
+                      "convert".tr, // Convert / রূপান্তর
                       style: theme.textTheme.titleSmall?.copyWith(
                         color:
                             theme.elevatedButtonTheme.style?.foregroundColor

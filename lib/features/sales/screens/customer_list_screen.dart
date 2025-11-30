@@ -93,62 +93,71 @@ class _CustomerListScreenState extends State<CustomerListScreen> {
       ),
       body: customerFuture == null
           ? const Center(child: CircularProgressIndicator())
-          : FutureBuilder<List<CustomerModel>>(
-              future: customerFuture,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
-                }
+          : Padding(
+              padding: EdgeInsets.only(
+                top: r.height(0.01),
+                bottom: r.height(0.02),
+                left: r.width(0.03),
+                right: r.width(0.03),
+              ),
+              child: FutureBuilder<List<CustomerModel>>(
+                future: customerFuture,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
 
-                if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                  return Center(
-                    child: Text(
-                      "No customers found",
-                      style: TextStyle(
-                        fontSize: r.fontMedium(),
-                        color: theme.textTheme.titleSmall?.color ?? Colors.grey,
+                  if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    return Center(
+                      child: Text(
+                        "No customers found",
+                        style: TextStyle(
+                          fontSize: r.fontMedium(),
+                          color:
+                              theme.textTheme.titleSmall?.color ?? Colors.grey,
+                        ),
                       ),
-                    ),
-                  );
-                }
-
-                // Filter customers based on search
-                final customers = snapshot.data!
-                    .where(
-                      (c) =>
-                          c.name.toLowerCase().contains(searchText) ||
-                          c.mobile.toLowerCase().contains(searchText) ||
-                          c.address.toLowerCase().contains(searchText),
-                    )
-                    .toList();
-
-                if (customers.isEmpty) {
-                  return Center(
-                    child: Text(
-                      "No customers found",
-                      style: TextStyle(
-                        fontSize: r.fontMedium(),
-                        color: theme.textTheme.titleSmall?.color ?? Colors.grey,
-                      ),
-                    ),
-                  );
-                }
-
-                return ListView.separated(
-                  padding: EdgeInsets.all(r.paddingMedium()),
-                  itemCount: customers.length,
-                  separatorBuilder: (_, __) =>
-                      SizedBox(height: r.height(0.015)),
-                  itemBuilder: (context, index) {
-                    final customer = customers[index];
-                    return CustomerInformationCard(
-                      customer: customer,
-                      r: r,
-                      theme: theme,
                     );
-                  },
-                );
-              },
+                  }
+
+                  // Filter customers based on search
+                  final customers = snapshot.data!
+                      .where(
+                        (c) =>
+                            c.name.toLowerCase().contains(searchText) ||
+                            c.mobile.toLowerCase().contains(searchText) ||
+                            c.address.toLowerCase().contains(searchText),
+                      )
+                      .toList();
+
+                  if (customers.isEmpty) {
+                    return Center(
+                      child: Text(
+                        "No customers found",
+                        style: TextStyle(
+                          fontSize: r.fontMedium(),
+                          color:
+                              theme.textTheme.titleSmall?.color ?? Colors.grey,
+                        ),
+                      ),
+                    );
+                  }
+
+                  return ListView.separated(
+                    itemCount: customers.length,
+                    separatorBuilder: (_, __) =>
+                        SizedBox(height: r.height(0.003)),
+                    itemBuilder: (context, index) {
+                      final customer = customers[index];
+                      return CustomerInformationCard(
+                        customer: customer,
+                        r: r,
+                        theme: theme,
+                      );
+                    },
+                  );
+                },
+              ),
             ),
     );
   }
@@ -220,12 +229,12 @@ class CustomerInformationCard extends StatelessWidget {
         child: Row(
           children: [
             CircleAvatar(
-              radius: r.width(0.06),
+              radius: r.width(0.05),
               backgroundColor: theme.colorScheme.secondary,
               child: Text(
                 customer.name.isNotEmpty ? customer.name[0].toUpperCase() : "?",
                 style: TextStyle(
-                  fontSize: r.fontLarge(),
+                  fontSize: r.fontMedium(),
                   color: theme.colorScheme.onSecondary,
                   fontWeight: FontWeight.bold,
                 ),
@@ -239,7 +248,7 @@ class CustomerInformationCard extends StatelessWidget {
                   Text(
                     customer.name,
                     style: TextStyle(
-                      fontSize: r.fontLarge(),
+                      fontSize: r.fontMedium(),
                       fontWeight: FontWeight.bold,
                       color: theme.textTheme.titleLarge?.color ?? Colors.black,
                     ),
@@ -248,7 +257,7 @@ class CustomerInformationCard extends StatelessWidget {
                   Text(
                     "Mobile: ${customer.mobile}",
                     style: TextStyle(
-                      fontSize: r.fontSmall(),
+                      fontSize: r.fontmediumSmall(),
                       color: theme.textTheme.titleSmall?.color ?? Colors.grey,
                     ),
                   ),
@@ -256,7 +265,7 @@ class CustomerInformationCard extends StatelessWidget {
                   Text(
                     "Address: ${customer.address}",
                     style: TextStyle(
-                      fontSize: r.fontSmall(),
+                      fontSize: r.fontmediumSmall(),
                       color: theme.textTheme.titleSmall?.color ?? Colors.grey,
                     ),
                   ),

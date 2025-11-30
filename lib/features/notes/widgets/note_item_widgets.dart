@@ -99,23 +99,23 @@ class NoteItem extends StatelessWidget {
                             color: theme.colorScheme.onSurface,
                           ),
                         ),
-                        SizedBox(height: responsive.paddingSmall()),
+                        SizedBox(height: responsive.paddingextraSmall()),
                         Text(
                           note["note"] ?? "",
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: responsive.textStyle(
-                            fontSize: responsive.fontMedium(),
+                            fontSize: responsive.fontSmall(),
                             color: theme.colorScheme.onSurface,
                           ),
                         ),
-                        SizedBox(height: responsive.paddingSmall()),
+                        SizedBox(height: responsive.paddingextraSmall()),
                         Text(
                           DateFormat(
                             'dd MMM yyyy, hh:mm a',
                           ).format(DateTime.parse(note["date"]!)),
                           style: responsive.textStyle(
-                            fontSize: responsive.fontSmall(),
+                            fontSize: responsive.fontmediumSmall(),
                             color: theme.colorScheme.onSurface.withOpacity(0.7),
                           ),
                         ),

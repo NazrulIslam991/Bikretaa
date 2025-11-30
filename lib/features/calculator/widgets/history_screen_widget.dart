@@ -15,7 +15,7 @@ class HistoryScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'History',
+          'history'.tr,
           style: TextStyle(
             fontSize: r.fontXL(),
             fontWeight: FontWeight.bold,
@@ -41,7 +41,7 @@ class HistoryScreen extends StatelessWidget {
         if (controller.historyList.isEmpty) {
           return Center(
             child: Text(
-              'No history yet',
+              'history_empty'.tr,
               style: TextStyle(
                 color: theme.textTheme.titleSmall?.color ?? Colors.grey,
                 fontSize: r.fontLarge(),

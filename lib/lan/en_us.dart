@@ -312,6 +312,14 @@ Map<String, String> English = {
   // -------------------- Drawer / Misc --------------------
   'Edit_Profile': 'Edit Profile',
   'Are_you_sure_you_want_to_logout?': 'Are you sure you want to logout?',
+  "no_user_data_found": "No user data found",
+  "home": "Home",
+  "notification": "Notification",
+  "setting": "Setting",
+  "help": "Help",
+  "privacy_policy": "Privacy Policy",
+  "logout": "Logout",
+  "are_you_sure_you_want_to_logout?": "Are you sure you want to logout?",
 
   // -------------------- weather --------------------
   'permission_denied': 'Permission Denied',
@@ -332,4 +340,60 @@ Map<String, String> English = {
   'exit_content': 'Do you want to exit?',
   'cancel': 'No',
   'exit': 'Yes',
+  //////////////Home page///////////////////
+  "app_name": "Bikretaa",
+  "tagline": "Your smart business partner",
+  "todays_summary": "Today's Summary",
+  "expiration_alerts": "Expiration Alerts",
+  "expired_msg": " products have expired! Check now.",
+  "quick_actions": "Quick Actions",
+  "business_tools": "Business Tools",
+
+  /////////////////////////////
+  "generate_qr_code": "Generate QR Code",
+  "download_qr_code": "Download QR Code",
+  "qr_code_generator": "QR Code Generator",
+  "please_fill_all_fields": "Please fill all fields",
+  "generate_qr_first": "Generate QR code first",
+  "qr_saved_success": "QR Code saved to gallery",
+  "qr_saved_failed": "Failed to save QR Code",
+
+  /////////////////
+  "unit_converter": "Unit Converter",
+  "category": "Category",
+  "enter_value": "Enter Value",
+  "from": "From",
+  "to": "To",
+  "convert": "Convert",
+  "conversion_error": "Conversion Error!",
+
+  ////////////////////
+  "qr_code_scanner": "QR Code Scanner",
+  "invalid_url": "Invalid URL",
+  "copied_url": "Copied URL",
+  "open_url": "Open URL",
+  "scan_again": "Scan Again",
+
+  ///////////////////////////
+  "calculator": "Calculator",
+  "history": "History",
+  "history_empty": "No history",
+  "error": "Error",
+  "clear_history": "Clear History",
+  //////////////////////
+  "calendar_events": "Calendar",
+  "no_events_month": "No events this month",
+
+  ////////////////////////
+  "my_notes": "My Notes",
+  "no_notes_yet": "No notes yet. Tap to add!",
+  "delete_notes": "Delete Notes",
+  "are_you_sure": "Are you sure?",
+  "undo": "Undo",
+  "add_new_note": "Add New Note",
+  "headline_hint": "Headline",
+  "note_hint": "Write your note",
+  "headline_empty": "Headline cannot be empty",
+  "note_empty": "Note cannot be empty",
+  "add": "Add",
 };

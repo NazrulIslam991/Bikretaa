@@ -1,11 +1,16 @@
 import 'package:bikretaa/app/responsive.dart';
 import 'package:bikretaa/features/auth/presentation/screens/signin/signin_screen.dart';
+import 'package:bikretaa/features/notification_users/screens/notification_screen_user.dart';
+import 'package:bikretaa/features/setting/screens/setting_screen.dart';
 import 'package:bikretaa/features/shared/presentation/share_preferences_helper/shared_preferences_helper.dart';
 import 'package:bikretaa/features/shared/presentation/widgets/circular_progress/circular_progress_indicatior_2.dart';
 import 'package:bikretaa/features/shared/presentation/widgets/dialog_box/confirm_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../shared/presentation/widgets/snack_bar_messege/snackbar_messege.dart';
+import '../../supports_and_faqs/screens/support_and_faqs_screen.dart';
 
 class CustomDrawer extends StatefulWidget {
   const CustomDrawer({super.key});
@@ -124,31 +129,55 @@ class _CustomDrawerState extends State<CustomDrawer> {
                         ),
                         _drawerItem(
                           icon: Icons.notifications,
-                          title: 'Notification'.tr,
-                          onTap: () => Navigator.pop(context),
+                          title: 'notification'.tr,
+                          onTap: () {
+                            Navigator.pop(context);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => NotificationScreenUser(),
+                              ),
+                            );
+                          },
                           r: r,
                           textColor: textColor,
                           iconColor: iconColor,
                         ),
                         _drawerItem(
                           icon: Icons.settings,
-                          title: 'Setting'.tr,
-                          onTap: () => Navigator.pop(context),
+                          title: 'setting'.tr,
+                          onTap: () {
+                            Navigator.pop(context);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => SettingScreen(),
+                              ),
+                            );
+                          },
                           r: r,
                           textColor: textColor,
                           iconColor: iconColor,
                         ),
                         _drawerItem(
                           icon: Icons.help,
-                          title: 'Help'.tr,
-                          onTap: () => Navigator.pop(context),
+                          title: 'help'.tr,
+                          onTap: () {
+                            Navigator.pop(context);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => SupportFaqScreen(),
+                              ),
+                            );
+                          },
                           r: r,
                           textColor: textColor,
                           iconColor: iconColor,
                         ),
                         _drawerItem(
                           icon: Icons.privacy_tip,
-                          title: 'Privacy Policy'.tr,
+                          title: 'privacy_policy'.tr,
                           onTap: () => Navigator.pop(context),
                           r: r,
                           textColor: textColor,
@@ -164,8 +193,9 @@ class _CustomDrawerState extends State<CustomDrawer> {
                       Divider(color: isDark ? Colors.grey : Colors.black12),
                       _drawerItem(
                         icon: Icons.lock,
-                        title: 'Change Password'.tr,
-                        onTap: () => Navigator.pop(context),
+                        title: 'change_password'.tr,
+                        onTap: _onTapChangePassword,
+
                         r: r,
                         textColor: textColor,
                         iconColor: iconColor,
@@ -176,6 +206,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                         icon: Icons.logout,
                         title: 'Logout'.tr,
                         onTap: () async {
+                          Navigator.pop(context);
                           final confirm = await showConfirmDialog(
                             context: context,
                             title: "Logout".tr,
@@ -237,5 +268,37 @@ class _CustomDrawerState extends State<CustomDrawer> {
       SigninScreen.name,
       (route) => false,
     );
+  }
+
+  void _onTapChangePassword() async {
+    Navigator.pop(context);
+    User? user = FirebaseAuth.instance.currentUser;
+
+    if (user == null) return;
+
+    final ok = await showConfirmDialog(
+      context: context,
+      title: "Reset_Password".tr,
+      content: "${'Reset_Password_Message'.tr} ${user.email}?",
+      confirmText: 'Send'.tr,
+      confirmColor: Colors.blue,
+    );
+
+    if (ok) {
+      try {
+        await FirebaseAuth.instance.sendPasswordResetEmail(email: user.email!);
+
+        if (mounted) {
+          showSnackbarMessage(
+            context,
+            "${"Password_Reset_Success".tr} ${user.email}",
+          );
+        }
+      } on FirebaseAuthException catch (e) {
+        if (mounted) {
+          showSnackbarMessage(context, "Failed: ${e.message}");
+        }
+      } finally {}
+    }
   }
 }

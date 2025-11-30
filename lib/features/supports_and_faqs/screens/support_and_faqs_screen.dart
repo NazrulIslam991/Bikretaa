@@ -54,7 +54,12 @@ class _SupportFaqScreenState extends State<SupportFaqScreen> {
         ),
       ),
       body: ListView(
-        padding: EdgeInsets.all(r.width(0.02)),
+        padding: EdgeInsets.only(
+          top: r.height(0.01),
+          bottom: r.height(0.02),
+          left: r.width(0.04),
+          right: r.width(0.04),
+        ),
         children: [
           SectionText(
             text: 'welcome_support'.tr,

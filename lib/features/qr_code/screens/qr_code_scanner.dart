@@ -3,6 +3,7 @@ import 'package:bikretaa/features/qr_code/screens/qr_product_info_page.dart';
 import 'package:bikretaa/features/qr_code/widgets/qr_scanner_frame.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class QRScannerScreen extends StatefulWidget {
@@ -48,7 +49,7 @@ class _QRScannerScreenState extends State<QRScannerScreen>
     } else {
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(const SnackBar(content: Text("Invalid URL")));
+      ).showSnackBar(SnackBar(content: Text("invalid_url".tr)));
     }
   }
 
@@ -56,7 +57,7 @@ class _QRScannerScreenState extends State<QRScannerScreen>
     Clipboard.setData(ClipboardData(text: text));
     ScaffoldMessenger.of(
       context,
-    ).showSnackBar(const SnackBar(content: Text("Copied URL")));
+    ).showSnackBar(SnackBar(content: Text("copied_url".tr)));
   }
 
   void _handleDetectedQR(String raw) {
@@ -109,7 +110,7 @@ class _QRScannerScreenState extends State<QRScannerScreen>
       backgroundColor: backgroundColor,
       appBar: AppBar(
         title: Text(
-          "QR Code Scanner",
+          "qr_code_scanner".tr,
           style: TextStyle(
             fontSize: r.fontXL(),
             fontWeight: FontWeight.bold,
@@ -179,7 +180,7 @@ class _QRScannerScreenState extends State<QRScannerScreen>
                     onPressed: () => _openUrl(scannedUrl!),
                     icon: Icon(Icons.open_in_browser, size: r.iconSmall()),
                     label: Text(
-                      "Open URL",
+                      "open_url".tr,
                       style: TextStyle(fontSize: r.fontSmall()),
                     ),
                   ),
@@ -194,7 +195,7 @@ class _QRScannerScreenState extends State<QRScannerScreen>
                     });
                   },
                   child: Text(
-                    "Scan Again",
+                    "scan_again".tr,
                     style: TextStyle(fontSize: r.fontSmall()),
                   ),
                 ),

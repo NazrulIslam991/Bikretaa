@@ -25,7 +25,7 @@ class NotesScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'My Notes',
+          'my_notes'.tr,
           style: r.textStyle(
             fontSize: r.fontXL(),
             fontWeight: FontWeight.bold,
@@ -67,7 +67,7 @@ class NotesScreen extends StatelessWidget {
         if (controller.notes.isEmpty) {
           return Center(
             child: Text(
-              'No notes yet. Tap to add!',
+              'no_notes_yet'.tr,
               style: r.textStyle(
                 fontSize: r.fontMedium(),
                 color: theme.colorScheme.primary,
@@ -76,20 +76,27 @@ class NotesScreen extends StatelessWidget {
           );
         }
 
-        return ListView.builder(
-          padding: EdgeInsets.all(r.paddingMedium()),
-          itemCount: controller.notes.length,
-          itemBuilder: (context, index) {
-            final note = controller.notes[index];
-            return NoteItem(
-              note: note,
-              index: index,
-              controller: controller,
-              responsive: r,
-              theme: theme,
-              onDeleteWithUndo: _deleteWithUndo,
-            );
-          },
+        return Padding(
+          padding: EdgeInsets.only(
+            ///top: r.height(0.01),
+            bottom: r.height(0.02),
+            left: r.width(0.04),
+            right: r.width(0.04),
+          ),
+          child: ListView.builder(
+            itemCount: controller.notes.length,
+            itemBuilder: (context, index) {
+              final note = controller.notes[index];
+              return NoteItem(
+                note: note,
+                index: index,
+                controller: controller,
+                responsive: r,
+                theme: theme,
+                onDeleteWithUndo: _deleteWithUndo,
+              );
+            },
+          ),
         );
       }),
       floatingActionButton: FloatingActionButton(
@@ -149,7 +156,7 @@ class NotesScreen extends StatelessWidget {
         },
       ),
       action: SnackBarAction(
-        label: "Undo",
+        label: "undo".tr,
         onPressed: () {
           timer.cancel();
           controller.undoDelete();
@@ -166,9 +173,10 @@ class NotesScreen extends StatelessWidget {
   Future<void> _confirmDeleteSelected(BuildContext context) async {
     bool confirmed = await showConfirmDialog(
       context: context,
-      title: "Delete Notes",
-      content: "Are you sure?",
-      confirmText: "Delete",
+      title: "delete_notes".tr,
+      content: "are_you_sure".tr,
+      confirmText: "delete".tr,
+      cancelText: "cancel".tr,
       confirmColor: Theme.of(context).colorScheme.error,
     );
 

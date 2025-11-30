@@ -317,6 +317,13 @@ Map<String, String> Bangla = {
   // -------------------- Drawer / Misc --------------------
   'Edit_Profile': 'প্রোফাইল সম্পাদনা',
   'Are_you_sure_you_want_to_logout?': 'আপনি কি নিশ্চিত লগআউট করতে চান?',
+  "no_user_data_found": "কোনো ব্যবহারকারীর তথ্য পাওয়া যায়নি",
+  "notification": "নোটিফিকেশন",
+  "setting": "সেটিংস",
+  "help": "সাহায্য",
+  "privacy_policy": "গোপনীয়তা নীতি",
+  "logout": "লগআউট",
+  "are_you_sure_you_want_to_logout?": "আপনি কি নিশ্চিত যে লগআউট করতে চান?",
 
   // -------------------- weather --------------------
   'permission_denied': 'অনুমতি অস্বীকৃত',
@@ -336,4 +343,62 @@ Map<String, String> Bangla = {
   'exit_content': 'আপনি কি প্রস্থান করতে চান?',
   'cancel': 'না',
   'exit': 'হ্যাঁ',
+  /////////////Home page///////////////
+  "app_name": "বিক্রেতা",
+  "tagline": "আপনার স্মার্ট ব্যবসার সহকারী",
+  "todays_summary": "আজকের সারসংক্ষেপ",
+
+  "expiration_alerts": "মেয়াদোত্তীর্ণ সতর্কতা",
+  "expired_msg": " টি প্রোডাক্টের মেয়াদ শেষ! দেখুন এখনই।",
+  "quick_actions": "দ্রুত কার্যক্রম",
+  "business_tools": "ব্যবসার টুলস",
+
+  /////////////////////////////
+  "generate_qr_code": "কিউআর কোড তৈরি করুন",
+  "download_qr_code": "কিউআর কোড ডাউনলোড করুন",
+  "qr_code_generator": "কিউআর কোড জেনারেটর",
+
+  "please_fill_all_fields": "অনুগ্রহ করে সব ফিল্ড পূরণ করুন",
+  "generate_qr_first": "প্রথমে কিউআর কোড তৈরি করুন",
+  "qr_saved_success": "কিউআর কোড গ্যালারিতে সংরক্ষিত হয়েছে",
+  "qr_saved_failed": "কিউআর কোড সংরক্ষণ করতে ব্যর্থ হয়েছে",
+
+  ////////////////
+  "unit_converter": "একক রূপান্তর",
+  "category": "ধরন",
+  "enter_value": "মান লিখুন",
+  "from": "থেকে",
+  "to": "পর্যন্ত",
+  "convert": "রূপান্তর",
+  "conversion_error": "রূপান্তর ত্রুটি!",
+
+  //////////////////
+  "qr_code_scanner": "QR কোড স্ক্যানার",
+  "invalid_url": "ভুল URL",
+  "copied_url": "URL কপি হয়েছে",
+  "open_url": "URL খুলুন",
+  "scan_again": "আবার স্ক্যান করুন",
+
+  /////////////////////////////
+  "calculator": "ক্যালকুলেটর",
+  "history": "ইতিহাস",
+  "history_empty": "কোনো ইতিহাস নেই",
+  "error": "ত্রুটি",
+  "clear_history": "ইতিহাস মুছে ফেলুন",
+  /////////////////////////
+  "calendar_events": "দিনপঞ্জি",
+  "no_events_month": "এই মাসে কোনো ইভেন্ট নেই",
+
+  ////////////////////////
+  "my_notes": "আমার নোটস",
+  "no_notes_yet": "কোনো নোট নেই। নতুন নোট যোগ করতে ট্যাপ করুন!",
+  "delete_notes": "নোট মুছুন",
+  "are_you_sure": "আপনি কি নিশ্চিত?",
+  "undo": "ফিরিয়ে আনুন",
+  "add_new_note": "নতুন নোট যোগ করুন",
+  "headline_hint": "শিরোনাম",
+  "note_hint": "আপনার নোট লিখুন",
+  "headline_empty": "শিরোনাম খালি রাখা যাবে না",
+  "note_empty": "নোট খালি রাখা যাবে না",
+  "add": "যোগ করুন",
 };

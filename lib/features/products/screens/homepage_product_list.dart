@@ -114,9 +114,11 @@ class _ProductsFilterScreenState extends State<ProductsFilterScreen> {
         ],
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(
-          vertical: r.height(0),
-          horizontal: r.width(0.03),
+        padding: EdgeInsets.only(
+          //top: r.height(0.01),
+          bottom: r.height(0.02),
+          left: r.width(0.03),
+          right: r.width(0.03),
         ),
         child: Obx(() {
           final products = getFilteredList()

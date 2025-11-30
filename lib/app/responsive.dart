@@ -18,6 +18,7 @@ class Responsive {
 
   // Font Scale (adaptive to system text scale)
   double fontextraSmall() => adaptiveFont(0.02);
+  double fontmediumSmall() => adaptiveFont(0.025);
   double fontSmall() => adaptiveFont(0.03);
   double fontMedium() => adaptiveFont(0.032);
   double fontLarge() => adaptiveFont(0.038);
