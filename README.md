@@ -31,7 +31,7 @@ Admins can create and send push notifications to users. Includes title, message,
 ### **4. Shop Owner Dashboard**
 Shows today’s sales summary, expiry alerts, quick action buttons (sales, due, products), reports, and business tools.
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/bfdb6e3f-bd64-4c23-952b-58ddf5372bea" width="300" height="500" />
+  <img src="https://github.com/user-attachments/assets/bfdb6e3f-bd64-4c23-952b-58ddf5372bea" width="300" height="800" />
 </p>
 
 ---
@@ -97,7 +97,7 @@ Search for a customer’s pending dues using name or phone number and confirm th
 Update profile, manage password, notification settings, language, theme, support, and logout.
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/cb095a93-31b5-450a-8738-41799544b70d" width="300" height="500" />
+  <img src="https://github.com/user-attachments/assets/cb095a93-31b5-450a-8738-41799544b70d" width="300" height="800" />
 </p>
 
 ---
