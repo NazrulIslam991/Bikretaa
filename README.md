@@ -16,6 +16,13 @@ Shows total shops, active shops, analytics, performance stats, system errors, an
 ### **3. Admin Notifications**
 Admins can create and send push notifications to users. Includes title, message, target audience, and notification history.
 
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/b88ff144-0b5f-4914-ae1f-d29e7bd7e559" width="250" />
+  <img src="https://github.com/user-attachments/assets/f83a397e-521a-440b-98b5-29fd0113e6d2" width="250" />
+  <img src="https://github.com/user-attachments/assets/76bba3ff-0ecb-40ad-8a8b-d4e38596fbdf" width="250" />
+</p>
+
+
 ---
 
 ##  **Shop Owner – Home & Business Screens**
