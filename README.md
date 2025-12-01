@@ -7,11 +7,12 @@ It includes product management, sales, due collection, notifications, analytics,
 
 ##  **Admin Panel Screens**
 
-### **1. Admin User Management**
-Admins can view all shop owners, filter by status (Active/Inactive), search users, and manage accounts.
 
-### **2. Admin Dashboard**
+### **1. Admin Dashboard**
 Shows total shops, active shops, analytics, performance stats, system errors, and recent admin actions.
+
+### **2. Admin User Management**
+Admins can view all shop owners, filter by status (Active/Inactive), search users, and manage accounts.
 
 ### **3. Admin Notifications**
 Admins can create and send push notifications to users. Includes title, message, target audience, and notification history.
@@ -29,7 +30,9 @@ Admins can create and send push notifications to users. Includes title, message,
 
 ### **4. Shop Owner Dashboard**
 Shows today’s sales summary, expiry alerts, quick action buttons (sales, due, products), reports, and business tools.
-![Image](https://github.com/user-attachments/assets/bfdb6e3f-bd64-4c23-952b-58ddf5372bea)
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/bfdb6e3f-bd64-4c23-952b-58ddf5372bea" width="300" height="500" />
+</p>
 
 ---
 
@@ -38,16 +41,16 @@ Shows today’s sales summary, expiry alerts, quick action buttons (sales, due, 
 ### **5. All Products Screen**
 Displays all inventory items with product image, name, stock, price, expiry status, and quick access to details/edit.
 
-### **6. Add Product Screen**
-Add new products by entering name, category, purchase price, selling price, stock, supplier, manufacturing date, and expiry date.
-
-### **7. Product Filter Screen**
+### **6. Product Filter Screen**
 Filter products by:
 - Low Stock  
 - Out of Stock  
 - Expired  
 - Expiring Soon  
 - Category / Price Range  
+
+### **7. Add Product Screen**
+Add new products by entering name, category, purchase price, selling price, stock, supplier, manufacturing date, and expiry date.
 
 ### **8. Product Details Screen**
 Shows full product info including image, stock quantity, price, supplier, discount, product code, manufacturing & expiry date, description, and Edit/Delete actions.
@@ -61,9 +64,9 @@ Shows full product info including image, stock quantity, price, supplier, discou
 
 ---
 
-##  **Sales & Payment Screens**
+##  **Sales & Due colletion Screens**
 
-### **9. Product Sale / POS Screen**
+### **9. Product Sale **
 Record a new sale by adding customer details, product items, and confirming the transaction.
 
 ### **10. Sales History Screen**
@@ -93,7 +96,9 @@ Search for a customer’s pending dues using name or phone number and confirm th
 ### **13. Settings Screen**
 Update profile, manage password, notification settings, language, theme, support, and logout.
 
-![Image](https://github.com/user-attachments/assets/cb095a93-31b5-450a-8738-41799544b70d)
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/cb095a93-31b5-450a-8738-41799544b70d" width="300" height="500" />
+</p>
 
 ---
 
