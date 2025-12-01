@@ -1,10 +1,10 @@
 # 📱 Bikretaa – Shop Management App
 
-Bikretaa is a complete shop management app for shop owners and admins, providing an end-to-end solution for inventory, sales, and customer management. Shop owners can add products, track stock and expiry dates, filter items, and view detailed product info. The POS system allows quick sales recording, invoice generation, and due management, while the sales history offers filters by date and status.
+Bikretaa is a complete **shop management app** for shop owners and admins, providing an end-to-end solution for **inventory, sales, and customer management**. Shop owners can **add products**, track stock and expiry dates, filter items, and view detailed product information. The **POS system** allows quick sales recording, invoice generation, and due management, while the **sales history** offers filters by date and status.
 
-Admins can monitor shop performance, manage users, send notifications, and access analytics. The app also includes authentication features like email login, OTP verification, password reset, and profile setup. Users can customize settings, notifications, theme, and language, while business tools like a calculator, QR generator/scanner, unit converter, and AI chatbot help daily operations.
+Admins can monitor shop performance, manage users, send notifications, and access analytics. The app also includes **authentication features** like email login, OTP verification, password reset, and profile setup. Users can customize settings, notifications, theme, and language, while **business tools** like a calculator, QR generator/scanner, unit converter, and AI chatbot help daily operations.
 
-Overall, Bikretaa is a modern, user-friendly, and efficient platform to manage retail shops, track sales, and improve productivity.
+Overall, Bikretaa is a **modern, user-friendly, and efficient platform** to manage retail shops, track sales, and improve productivity.
 
 ---
 
