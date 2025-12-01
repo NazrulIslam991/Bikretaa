@@ -58,8 +58,9 @@ Shows full product info including image, stock quantity, price, supplier, discou
 <p align="center">
   <img src="https://github.com/user-attachments/assets/a7bfe7c7-1b14-4925-ba87-fa8871e06855" width="200" />
   <img src="https://github.com/user-attachments/assets/e8e90444-85c9-41cd-8ce0-aa0fcd915906" width="200" />
-  <img src="https://github.com/user-attachments/assets/fc3f574b-fbf7-43b5-a352-56067d7c6b74" width="200" />
   <img src="https://github.com/user-attachments/assets/ffaa2e46-35b0-4236-9658-e34cbb8b6bae" width="200" />
+  <img src="https://github.com/user-attachments/assets/fc3f574b-fbf7-43b5-a352-56067d7c6b74" width="200" />
+
 </p>
 
 ---
@@ -69,15 +70,15 @@ Shows full product info including image, stock quantity, price, supplier, discou
 ### **9. Product Sale **
 Record a new sale by adding customer details, product items, and confirming the transaction.
 
-### **10. Sales History Screen**
-Shows total sales, revenue, dues, paid amounts, and a list of sales with customer name, total price, paid, due, and edit option.
-
-### **11. Sales Filter Popup**
+### **10. Sales Filter Popup**
 Filter sales records by:
 - Custom Date  
 - Last Week  
 - Last Month  
 - Last Year  
+
+### **11. Sales History Screen**
+Shows total sales, revenue, dues, paid amounts, and a list of sales with customer name, total price, paid, due, and edit option.
 
 ### **12. Due Collection Screen**
 Search for a customer’s pending dues using name or phone number and confirm their due payments.
@@ -110,17 +111,18 @@ Startup screen showing the Bikretaa logo with a clean, modern design.
 ### **15. Login Screen**
 Users log in with email & password. Includes password visibility toggle, forgot password option, and sign-up link.
 
-### **16. Create Account – Step 1**
+### **16. Forgot Password Screen**
+Enter email to receive a password reset link.
+
+### **17. Create Account – Step 1**
 User provides an email to receive an OTP for registration.
 
-### **17. OTP Verification Screen**
+### **18. OTP Verification Screen**
 Enter the OTP received via email to verify the account, with an option to resend the code.
 
-### **18. Account Details Setup Screen**
+### **19. Account Details Setup Screen**
 User completes profile by entering shop name, shop type, phone number, and creating a password.
 
-### **19. Forgot Password Screen**
-Enter email to receive a password reset link.
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/70469928-ebf9-4c49-b539-ae56c20cf324" width="200" />
