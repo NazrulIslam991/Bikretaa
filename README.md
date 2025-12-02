@@ -34,8 +34,10 @@ Admins can create and send push notifications to users. Includes title, message,
 ### **4. Shop Owner Dashboard**
 Shows today’s sales summary, expiry alerts, quick action buttons (sales, due, products), reports, and business tools.
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/bfdb6e3f-bd64-4c23-952b-58ddf5372bea" width="300" />
+  <img src="https://github.com/user-attachments/assets/d7be513d-ad30-43ea-ad68-008e4c91816c" width="200" />
+  <img src="https://github.com/user-attachments/assets/319f82d4-0a79-4cab-be3f-4b13c719ebde" width="200" />
 </p>
+
 
 ---
 
@@ -61,7 +63,8 @@ Shows full product info including image, stock quantity, price, supplier, discou
 <p align="center">
   <img src="https://github.com/user-attachments/assets/a7bfe7c7-1b14-4925-ba87-fa8871e06855" width="200" />
   <img src="https://github.com/user-attachments/assets/e8e90444-85c9-41cd-8ce0-aa0fcd915906" width="200" />
-  <img src="https://github.com/user-attachments/assets/ffaa2e46-35b0-4236-9658-e34cbb8b6bae" width="200" />
+  <img src="https://github.com/user-attachments/assets/454077e1-16ec-4758-8eb0-b3b870277363" width="200" />
+  <img src="https://github.com/user-attachments/assets/151fed05-3595-413b-9238-8b25703b1eb7" width="200" />
   <img src="https://github.com/user-attachments/assets/fc3f574b-fbf7-43b5-a352-56067d7c6b74" width="200" />
 
 </p>
@@ -101,8 +104,10 @@ Search for a customer’s pending dues using name or phone number and confirm th
 Update profile, manage password, notification settings, language, theme, support, and logout.
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/cb095a93-31b5-450a-8738-41799544b70d" width="300" />
+  <img src="https://github.com/user-attachments/assets/43fdd447-c995-45f9-839e-6d1b6df5e45f" width="200" />
+  <img src="https://github.com/user-attachments/assets/4dc28771-fd4c-4a8b-bbaf-854c7a6070de" width="200" />
 </p>
+
 
 ---
 
