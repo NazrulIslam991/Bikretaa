@@ -19,7 +19,7 @@ class SalesHistoryCard extends StatelessWidget {
   final String customerUID;
 
   const SalesHistoryCard({
-    Key? key,
+    super.key,
     required this.customerName,
     required this.customerMobile,
     required this.customerAddress,
@@ -33,7 +33,7 @@ class SalesHistoryCard extends StatelessWidget {
     required this.date,
     required this.salesID,
     required this.customerUID,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

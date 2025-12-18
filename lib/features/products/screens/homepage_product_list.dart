@@ -11,7 +11,7 @@ import '../../../app/controller/product_controller/product_controller.dart';
 class ProductsFilterScreen extends StatefulWidget {
   final String title;
 
-  const ProductsFilterScreen({required this.title, Key? key}) : super(key: key);
+  const ProductsFilterScreen({required this.title, super.key});
 
   @override
   State<ProductsFilterScreen> createState() => _ProductsFilterScreenState();
@@ -180,7 +180,7 @@ class _ProductsFilterScreenState extends State<ProductsFilterScreen> {
     final r = Responsive.of(context);
     final theme = Theme.of(context);
 
-    return Container(
+    return SizedBox(
       height: height,
       child: TextField(
         controller: controller,

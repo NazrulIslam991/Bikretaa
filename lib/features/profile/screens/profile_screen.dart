@@ -54,7 +54,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             );
           }
 
-          final _user = snapshot.data!;
+          final user = snapshot.data!;
           return ListView(
             padding: EdgeInsets.all(r.width(0.02)),
             children: [
@@ -72,7 +72,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         radius: r.width(0.075),
                         backgroundColor: theme.colorScheme.secondary,
                         child: Text(
-                          _user.shopName.isNotEmpty ? _user.shopName[0] : "S",
+                          user.shopName.isNotEmpty ? user.shopName[0] : "S",
                           style: TextStyle(
                             fontSize: r.fontXXL(),
                             color: theme.colorScheme.primary,
@@ -86,7 +86,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              _user.shopName,
+                              user.shopName,
                               style: TextStyle(
                                 fontSize: r.fontXL(),
                                 fontWeight: FontWeight.bold,
@@ -95,7 +95,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                             SizedBox(height: r.height(0.005)),
                             Text(
-                              _user.shopType ?? "Shop Type not set",
+                              user.shopType ?? "Shop Type not set",
                               style: TextStyle(
                                 fontSize: r.fontMedium(),
                                 color: theme.colorScheme.primary,
@@ -103,7 +103,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                             SizedBox(height: r.height(0.005)),
                             Text(
-                              _user.email,
+                              user.email,
                               style: TextStyle(
                                 fontSize: r.fontMedium(),
                                 color: theme.colorScheme.primary,
@@ -148,7 +148,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                           SizedBox(width: r.width(0.03)),
                           Text(
-                            _user.email,
+                            user.email,
                             style: TextStyle(
                               fontSize: r.fontMedium(),
                               color: theme.colorScheme.primary,
@@ -166,7 +166,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                           SizedBox(width: r.width(0.03)),
                           Text(
-                            _user.phone,
+                            user.phone,
                             style: TextStyle(
                               fontSize: r.fontMedium(),
                               color: theme.colorScheme.primary,
@@ -174,7 +174,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                         ],
                       ),
-                      if (_user.createdAt != null) ...[
+                      if (user.createdAt != null) ...[
                         SizedBox(height: r.height(0.015)),
                         Row(
                           children: [
@@ -185,7 +185,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                             SizedBox(width: r.width(0.03)),
                             Text(
-                              "Joined: ${_user.createdAt!.toLocal().toString().split(' ')[0]}",
+                              "Joined: ${user.createdAt!.toLocal().toString().split(' ')[0]}",
                               style: TextStyle(
                                 fontSize: r.fontMedium(),
                                 color: theme.colorScheme.primary,

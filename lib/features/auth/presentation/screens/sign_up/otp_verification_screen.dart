@@ -43,7 +43,7 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
 
   @override
   void dispose() {
-    _otpEController.dispose();
+    //_otpEController.dispose();
     super.dispose();
   }
 
@@ -87,12 +87,12 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                     ),
                     SizedBox(height: r.height(0.06)),
                     SizedBox(
-                      height: 55.h,
+                      height: 70.h,
                       width: double.infinity,
                       child: CustomPinCodeField(
                         controller: _otpEController,
                         onCompleted: (value) {
-                          print("OTP input completed: $value");
+                          // print("OTP input completed: $value");
                         },
                       ),
                     ),
@@ -190,7 +190,7 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
   // Resend OTP
   void _onTapResendCode() async {
     final email = widget.email;
-    final otp = OtpGenerator.generate(length: 6);
+    final otp = OtpGenerator.generate(length: 5);
 
     final response = await OtpApiService.sendOtp(email: email, otp: otp);
 

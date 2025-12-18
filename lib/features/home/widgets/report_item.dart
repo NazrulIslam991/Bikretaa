@@ -6,8 +6,12 @@ class ReportItem extends StatelessWidget {
   final String title;
   final VoidCallback? onTap;
 
-  const ReportItem({Key? key, required this.r, required this.title, this.onTap})
-    : super(key: key);
+  const ReportItem({
+    super.key,
+    required this.r,
+    required this.title,
+    this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {

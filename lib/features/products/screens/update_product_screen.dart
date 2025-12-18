@@ -111,9 +111,11 @@ class _UpdateProductScreenState extends State<UpdateProductScreen> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.symmetric(
-            vertical: r.paddingSmall(),
-            horizontal: r.paddingMedium(),
+          padding: EdgeInsets.only(
+            left: r.width(0.02),
+            right: r.width(0.02),
+            top: r.height(0.01),
+            bottom: r.height(0.01),
           ),
           child: Form(
             key: _formKey,
@@ -121,64 +123,64 @@ class _UpdateProductScreenState extends State<UpdateProductScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 r.vSpace(0.01),
-                Container(
-                  height: 65.h,
+                SizedBox(
+                  height: 75.h,
                   child: ProductNameController(
                     ProductNameController: _productNameController,
                   ),
                 ),
-                Container(
-                  height: 65.h,
+                SizedBox(
+                  height: 75.h,
                   child: ProductBrandController(
                     productBandNameController: _brandNameController,
                   ),
                 ),
-                Container(
-                  height: 65.h,
+                SizedBox(
+                  height: 75.h,
                   child: ProductIdController(
                     productIdController: _productIdController,
                     readOnly: true,
                   ),
                 ),
-                Container(
-                  height: 65.h,
+                SizedBox(
+                  height: 75.h,
                   child: ProductPurchasePrice(
                     ProductPurchasePrice: _purchasePriceController,
                   ),
                 ),
-                Container(
-                  height: 65.h,
+                SizedBox(
+                  height: 75.h,
                   child: ProductSellingPriceController(
                     ProductSellingPriceController: _sellingPriceController,
                   ),
                 ),
-                Container(
-                  height: 65.h,
+                SizedBox(
+                  height: 75.h,
                   child: ProductDiscountController(
                     productDiscountController: _discountPriceController,
                   ),
                 ),
-                Container(
-                  height: 65.h,
+                SizedBox(
+                  height: 75.h,
                   child: ProductQuantityController(
                     productQuantityController: _quantityController,
                   ),
                 ),
-                Container(
-                  height: 65.h,
+                SizedBox(
+                  height: 75.h,
                   child: ProductSupplierNameController(
                     productSupplierNameController: _supplierNameController,
                   ),
                 ),
-                Container(
-                  height: 65.h,
+                SizedBox(
+                  height: 75.h,
                   child: ProductManufactureDateController(
                     productManufactureDateController:
                         _manufactureDateController,
                   ),
                 ),
-                Container(
-                  height: 65.h,
+                SizedBox(
+                  height: 75.h,
                   child: ProductExpireDateController(
                     ProductExpireDateController: _expireDateController,
                   ),

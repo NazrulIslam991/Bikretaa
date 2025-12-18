@@ -4,6 +4,7 @@ import 'package:bikretaa/features/auth/presentation/widgets/shop_type_dropdown_m
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../shared/presentation/share_preferences_helper/shared_preferences_helper.dart';
@@ -49,19 +50,18 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(
           vertical: r.height(0.02),
-          horizontal: r.width(0.02),
+          horizontal: r.width(0.04),
         ),
         child: Form(
           key: _formKey,
           child: Column(
             children: [
               SizedBox(
-                //height: r.height(0.08),
+                height: 75.h,
                 child: ShopNameWidget(
                   shopNameEcontroller: _shopNameEcontroller,
                 ),
               ),
-              SizedBox(height: r.height(0.01)),
               Container(
                 height: r.height(0.065),
                 padding: EdgeInsets.symmetric(horizontal: r.width(0.03)),
@@ -88,18 +88,17 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                   ],
                 ),
               ),
-              SizedBox(height: r.height(0.02)),
+              SizedBox(height: r.height(0.06)),
               SizedBox(
-                height: r.height(0.08),
+                height: 75.h,
                 child: MobileFeildWidget(mobileEcontroller: _mobileEcontroller),
               ),
-              SizedBox(height: r.height(0.01)),
 
               ShopTypeDropdownWidget(
                 initialValue: selectedShopType,
                 onSaved: (value) => setState(() => selectedShopType = value),
               ),
-              SizedBox(height: r.height(0.025)),
+              SizedBox(height: r.height(0.05)),
               ElevatedButton(
                 onPressed: _updateProfile,
                 child: Text(

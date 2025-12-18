@@ -6,10 +6,10 @@ class ProductCardWidget extends StatelessWidget {
   final VoidCallback onRemove;
 
   const ProductCardWidget({
-    Key? key,
+    super.key,
     required this.item,
     required this.onRemove,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

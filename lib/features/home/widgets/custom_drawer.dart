@@ -65,7 +65,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
               return Column(
                 children: [
                   // Drawer Header
-                  Container(
+                  SizedBox(
                     height: r.height(0.25),
                     width: r.height(0.26),
                     child: DrawerHeader(
@@ -206,7 +206,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                         icon: Icons.logout,
                         title: 'Logout'.tr,
                         onTap: () async {
-                          Navigator.pop(context);
+                          //Navigator.pop(context);
                           final confirm = await showConfirmDialog(
                             context: context,
                             title: "Logout".tr,

@@ -22,15 +22,15 @@ class EmailFeildWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final r = Responsive.of(context); // Responsive instance
+    final r = Responsive.of(context);
 
     return Container(
-      height: r.height(0.06),
+      //height: r.height(0.06),
       child: emailText != null
           ? TextFormField(
               initialValue: emailText,
               style: TextStyle(
-                fontSize: r.fontMedium(), // <-- Input text size here
+                fontSize: r.fontMedium(),
                 color: theme.colorScheme.onBackground,
               ),
               readOnly: true,

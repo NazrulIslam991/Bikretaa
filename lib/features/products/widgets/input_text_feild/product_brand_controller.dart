@@ -13,7 +13,7 @@ class ProductBrandController extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Container(
+    return SizedBox(
       height: 45.h,
       child: TextFormField(
         controller: _productBandNameController,

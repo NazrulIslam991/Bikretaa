@@ -173,7 +173,9 @@ class UpdateSalesDatabase {
             .where('salesID', isEqualTo: salesID)
             .where('productId', isEqualTo: oldEntry.key)
             .get();
-        for (var doc in revQuery.docs) await doc.reference.delete();
+        for (var doc in revQuery.docs) {
+          await doc.reference.delete();
+        }
       }
     }
 

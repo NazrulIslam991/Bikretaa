@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 import '../../../app/responsive.dart';
 
 class AdminNotificationScreen extends StatefulWidget {
-  const AdminNotificationScreen({Key? key}) : super(key: key);
+  const AdminNotificationScreen({super.key});
 
   @override
   State<AdminNotificationScreen> createState() =>
@@ -20,7 +20,7 @@ class _AdminNotificationScreenState extends State<AdminNotificationScreen> {
   final TextEditingController _messageController = TextEditingController();
   String _selectedAudience = 'All Users';
 
-  List<Map<String, String>> _recentNotifications = [
+  final List<Map<String, String>> _recentNotifications = [
     {
       "title": "New Shop Verification Process",
       "message": "We have updated our shop verification process",
@@ -104,7 +104,7 @@ class _AdminNotificationScreenState extends State<AdminNotificationScreen> {
                     // Title Input
                     SizedBox(
                       height: r.height(0.065),
-                      child: MessegeTitleInputField_admin(
+                      child: MessegeTitleInputFieldadmin(
                         controller: _titleController,
                       ),
                     ),
@@ -114,7 +114,7 @@ class _AdminNotificationScreenState extends State<AdminNotificationScreen> {
                     // Message Input
                     SizedBox(
                       width: double.infinity,
-                      child: MessageInputField_Admin(
+                      child: MessageInputFieldAdmin(
                         controller: _messageController,
                       ),
                     ),
@@ -124,7 +124,7 @@ class _AdminNotificationScreenState extends State<AdminNotificationScreen> {
                     // Audience Dropdown
                     SizedBox(
                       height: r.height(0.06),
-                      child: NotificationDropdownField_Admin(
+                      child: NotificationDropdownFieldAdmin(
                         value: _selectedAudience,
                         options: [
                           "All Users".tr,

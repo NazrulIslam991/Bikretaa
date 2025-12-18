@@ -76,8 +76,9 @@ class _CalculatorState extends State<Calculator> {
         result = '0';
         isResultShown = false;
       } else if (buttonText == '⌫') {
-        if (history.isNotEmpty)
+        if (history.isNotEmpty) {
           history = history.substring(0, history.length - 1);
+        }
         if (history.isEmpty) result = '0';
         isResultShown = false;
       } else if (buttonText == '=') {

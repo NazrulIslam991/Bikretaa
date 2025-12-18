@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 import '../../../app/responsive.dart';
 
-class MessegeTitleInputField_admin extends StatelessWidget {
+class MessegeTitleInputFieldadmin extends StatelessWidget {
   final TextEditingController controller;
 
-  const MessegeTitleInputField_admin({super.key, required this.controller});
+  const MessegeTitleInputFieldadmin({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {

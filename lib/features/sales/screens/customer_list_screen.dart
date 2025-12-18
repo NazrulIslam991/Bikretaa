@@ -172,7 +172,7 @@ class _CustomerListScreenState extends State<CustomerListScreen> {
     final r = Responsive.of(context);
     final theme = Theme.of(context);
 
-    return Container(
+    return SizedBox(
       height: height,
       child: TextField(
         controller: controller,

@@ -106,11 +106,11 @@ class _ShopTypeDropdownWidgetState extends State<ShopTypeDropdownWidget> {
       buttonStyleData: ButtonStyleData(
         height: r.height(0.065),
         padding: EdgeInsets.symmetric(horizontal: r.width(0.03)),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(r.radiusSmall()),
-          border: Border.all(color: borderColor),
-          color: backgroundColor,
-        ),
+        // decoration: BoxDecoration(
+        //   borderRadius: BorderRadius.circular(r.radiusSmall()),
+        //   border: Border.all(color: borderColor),
+        //   color: backgroundColor,
+        // ),
         elevation: 2,
       ),
       iconStyleData: IconStyleData(
@@ -120,7 +120,7 @@ class _ShopTypeDropdownWidgetState extends State<ShopTypeDropdownWidget> {
       ),
       dropdownStyleData: DropdownStyleData(
         maxHeight: r.height(0.25),
-        width: r.width(0.96),
+        width: r.width(0.92),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(r.radiusMedium()),
           color: backgroundColor,

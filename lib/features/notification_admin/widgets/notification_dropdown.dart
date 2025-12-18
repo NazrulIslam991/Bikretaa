@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 import '../../../app/responsive.dart';
 
-class NotificationDropdownField_Admin extends StatelessWidget {
+class NotificationDropdownFieldAdmin extends StatelessWidget {
   final String value;
   final List<String> options;
   final ValueChanged<String?> onChanged;
   final String label;
 
-  const NotificationDropdownField_Admin({
+  const NotificationDropdownFieldAdmin({
     super.key,
     required this.value,
     required this.options,

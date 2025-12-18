@@ -26,10 +26,10 @@ class _PasswordFeildWidgetState extends State<PasswordFeildWidget> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final r = Responsive.of(context); // Responsive instance
+    final r = Responsive.of(context);
 
     return Container(
-      height: r.height(0.06),
+      //height: r.height(0.06),
       child: TextFormField(
         controller: widget._passwordEcontroller,
         obscureText: _obscureText,

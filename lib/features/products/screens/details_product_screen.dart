@@ -333,7 +333,7 @@ class DetailsProductScreen extends StatelessWidget {
   }
 
   void _onTapDelete(BuildContext context) async {
-    final ProductDatabase _deleteProductDatabase = ProductDatabase();
+    final ProductDatabase deleteProductDatabase = ProductDatabase();
 
     final confirm = await showConfirmDialog(
       context: context,
@@ -351,7 +351,7 @@ class DetailsProductScreen extends StatelessWidget {
       );
 
       try {
-        await _deleteProductDatabase.deleteProduct(productId);
+        await deleteProductDatabase.deleteProduct(productId);
 
         Navigator.pop(context);
 

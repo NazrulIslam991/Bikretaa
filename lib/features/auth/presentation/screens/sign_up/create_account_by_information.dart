@@ -30,15 +30,16 @@ class CreateAccountByInformation extends StatefulWidget {
 class _CreateAccountByInformationState
     extends State<CreateAccountByInformation> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  TextEditingController _emailEcontroller = TextEditingController();
-  TextEditingController _shopNameEcontroller = TextEditingController();
-  TextEditingController _mobileEcontroller = TextEditingController();
-  TextEditingController _passwordEcontroller = TextEditingController();
-  TextEditingController _confirmpasswordEcontroller = TextEditingController();
+  final TextEditingController _emailEcontroller = TextEditingController();
+  final TextEditingController _shopNameEcontroller = TextEditingController();
+  final TextEditingController _mobileEcontroller = TextEditingController();
+  final TextEditingController _passwordEcontroller = TextEditingController();
+  final TextEditingController _confirmpasswordEcontroller =
+      TextEditingController();
 
   String? selectedShopType;
 
-  bool _SignupInProgress = false;
+  bool _signupInProgress = false;
 
   @override
   Widget build(BuildContext context) {
@@ -65,17 +66,17 @@ class _CreateAccountByInformationState
                         fontSize: r.fontXXXL(),
                       ),
                     ),
-                    SizedBox(height: r.height(0.04)),
+                    SizedBox(height: r.height(0.02)),
 
                     SizedBox(
-                      height: 65.h,
+                      height: 75.h,
                       child: ShopNameWidget(
                         shopNameEcontroller: _shopNameEcontroller,
                       ),
                     ),
 
                     SizedBox(
-                      height: 65.h,
+                      height: 75.h,
                       child: EmailFeildWidget(
                         emailEcontroller: _emailEcontroller,
                         emailText: widget.email,
@@ -83,14 +84,14 @@ class _CreateAccountByInformationState
                     ),
 
                     SizedBox(
-                      height: 65.h,
+                      height: 75.h,
                       child: MobileFeildWidget(
                         mobileEcontroller: _mobileEcontroller,
                       ),
                     ),
 
                     SizedBox(
-                      height: 65.h,
+                      height: 75.h,
                       child: ShopTypeDropdownWidget(
                         onSaved: (value) {
                           setState(() {
@@ -101,25 +102,27 @@ class _CreateAccountByInformationState
                     ),
 
                     SizedBox(
-                      height: 65.h,
+                      height: 75.h,
                       child: PasswordFeildWidget(
                         passwordEcontroller: _passwordEcontroller,
                       ),
                     ),
 
                     SizedBox(
-                      height: 65.h,
+                      height: 75.h,
                       child: ConfirmPasswordFeildWidget(
                         confirmpasswordEcontroller: _confirmpasswordEcontroller,
                         passwordEcontroller: _passwordEcontroller,
                       ),
                     ),
 
+                    SizedBox(height: r.height(0.02)),
+
                     Visibility(
-                      visible: !_SignupInProgress,
+                      visible: !_signupInProgress,
                       replacement: CenterCircularProgressIndiacator(),
                       child: ElevatedButton(
-                        onPressed: SignUpComplete,
+                        onPressed: signUpComplete,
                         child: Text(
                           'Done'.tr,
                           style: TextStyle(
@@ -150,7 +153,7 @@ class _CreateAccountByInformationState
     );
   }
 
-  void SignUpComplete() {
+  void signUpComplete() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       signUpProcess();
@@ -161,11 +164,11 @@ class _CreateAccountByInformationState
     final email = widget.email;
     final password = _passwordEcontroller.text.trim();
     final shopName = _shopNameEcontroller.text.trim();
-    final phone = '+8801' + _mobileEcontroller.text.trim();
+    final phone = '+8801${_mobileEcontroller.text.trim()}';
     final shopType = selectedShopType;
 
     setState(() {
-      _SignupInProgress = true;
+      _signupInProgress = true;
     });
 
     try {
@@ -213,7 +216,7 @@ class _CreateAccountByInformationState
       showSnackbarMessage(context, 'Something_went_wrong'.tr);
     } finally {
       setState(() {
-        _SignupInProgress = false;
+        _signupInProgress = false;
       });
     }
   }

@@ -69,12 +69,12 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                     ),
                     SizedBox(height: r.height(0.05)),
                     SizedBox(
-                      height: 65.h,
+                      height: 75.h,
                       child: EmailFeildWidget(
                         emailEcontroller: _emailEcontroller,
                       ),
                     ),
-                    //SizedBox(height: r.height(0.04)),
+                    SizedBox(height: r.height(0.02)),
                     Visibility(
                       visible: !_verificationCodeProgressIndicator,
                       replacement: CenterCircularProgressIndiacator(),
@@ -137,7 +137,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
         return;
       }
 
-      final otp = OtpGenerator.generate(length: 6);
+      final otp = OtpGenerator.generate(length: 5);
 
       // API call to send OTP
       final response = await OtpApiService.sendOtp(email: email, otp: otp);

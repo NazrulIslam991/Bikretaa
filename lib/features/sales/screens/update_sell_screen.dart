@@ -12,6 +12,7 @@ import 'package:bikretaa/features/shared/presentation/widgets/auth_user_input_fe
 import 'package:bikretaa/features/shared/presentation/widgets/snack_bar_messege/snackbar_messege.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../utils/phone_utils.dart';
@@ -89,23 +90,20 @@ class _UpdateSalesScreenState extends State<UpdateSalesScreen> {
             key: _formKey,
             child: Column(
               children: [
-                SizedBox(height: r.height(0.015)),
-                Container(
-                  height: r.height(0.08),
+                SizedBox(
+                  height: 75.h,
                   child: CustomerNameController(
                     CustomerNameController: _customerNameController,
                   ),
                 ),
-                SizedBox(height: r.height(0.016)),
-                Container(
-                  height: r.height(0.08),
+                SizedBox(
+                  height: 75.h,
                   child: MobileFeildWidget(
                     mobileEcontroller: _mobileEcontroller,
                   ),
                 ),
-                SizedBox(height: r.height(0.016)),
-                Container(
-                  height: r.height(0.08),
+                SizedBox(
+                  height: 75.h,
                   child: CustomerAddressController(
                     CustomerAddressController: _customerAddressController,
                   ),

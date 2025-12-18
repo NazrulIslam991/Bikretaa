@@ -46,9 +46,9 @@ dependencies:
   converter: ^0.4.0
   crypto: ^3.0.7
   encrypt: ^5.0.3
-
-
-
+  syncfusion_flutter_charts: ^28.2.7
+  pdf: ^3.10.7
+  printing: ^5.11.1
   cupertino_icons: ^1.0.8
 
 dev_dependencies:

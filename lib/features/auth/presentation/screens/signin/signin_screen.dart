@@ -1,5 +1,4 @@
 import 'package:bikretaa/app/body_background.dart';
-import 'package:bikretaa/app/controller/theme_controller/theme_controller.dart';
 import 'package:bikretaa/app/responsive.dart';
 import 'package:bikretaa/app/string.dart';
 import 'package:bikretaa/features/auth/presentation/database/firestore_user_check.dart';
@@ -35,7 +34,7 @@ class _SigninScreenState extends State<SigninScreen> {
   final TextEditingController _emailEcontroller = TextEditingController();
   final TextEditingController _passwordEcontroller = TextEditingController();
   bool _signinProgressIndicator = false;
-  final ThemeController _themeController = Get.find<ThemeController>();
+  //final ThemeController _themeController = Get.find<ThemeController>();
 
   @override
   Widget build(BuildContext context) {
@@ -67,8 +66,8 @@ class _SigninScreenState extends State<SigninScreen> {
 
                     SizedBox(height: r.height(0.05)),
 
-                    Container(
-                      height: 65.h,
+                    SizedBox(
+                      height: 75.h,
                       child: EmailFeildWidget(
                         emailEcontroller: _emailEcontroller,
                       ),
@@ -78,8 +77,8 @@ class _SigninScreenState extends State<SigninScreen> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Container(
-                          height: 65.h,
+                        SizedBox(
+                          height: 75.h,
                           child: PasswordFeildWidget(
                             passwordEcontroller: _passwordEcontroller,
                           ),
@@ -177,11 +176,9 @@ class _SigninScreenState extends State<SigninScreen> {
       if (userInformation != null) {
         await SharedPreferencesHelper.saveUser(userInformation);
       }
-      // >>>>>>>>>> Controllers Initialized AFTER LOGIN <<<<<<<<<<
       Get.put(ProductController(), permanent: true);
       Get.put(CustomerController(), permanent: true);
       Get.put(SalesController(), permanent: true);
-      // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
       if (email == AppConstants.adminEmail) {
         Navigator.pushNamedAndRemoveUntil(

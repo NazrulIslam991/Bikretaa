@@ -18,7 +18,7 @@ class CustomPinCodeField extends StatelessWidget {
     super.key,
     required this.controller,
     this.onCompleted,
-    this.length = 6,
+    this.length = 5,
     this.obscureText = false,
     this.activeColor,
     this.selectedColor,

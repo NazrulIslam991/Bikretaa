@@ -7,11 +7,11 @@ class ExpiryNotice extends StatelessWidget {
   final VoidCallback? onViewTap;
 
   const ExpiryNotice({
-    Key? key,
+    super.key,
     required this.r,
     required this.message,
     this.onViewTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -9,6 +9,7 @@ import 'package:bikretaa/features/shared/presentation/widgets/snack_bar_messege/
 import 'package:bikretaa/utils/string_utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../utils/phone_utils.dart';
@@ -70,22 +71,20 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                   child: Column(
                     children: [
                       SizedBox(height: r.height(0.015)),
-                      Container(
-                        height: r.height(0.08),
+                      SizedBox(
+                        height: 75.h,
                         child: CustomerNameController(
                           CustomerNameController: _customerNameController,
                         ),
                       ),
-                      SizedBox(height: r.height(0.016)),
-                      Container(
-                        height: r.height(0.08),
+                      SizedBox(
+                        height: 75.h,
                         child: MobileFeildWidget(
                           mobileEcontroller: _mobileEcontroller,
                         ),
                       ),
-                      SizedBox(height: r.height(0.016)),
-                      Container(
-                        height: r.height(0.08),
+                      SizedBox(
+                        height: 75.h,
                         child: CustomerAddressController(
                           CustomerAddressController: _customerAddressController,
                         ),
@@ -156,7 +155,7 @@ class _AddSalesScreenState extends State<AddSalesScreen> {
                           SizedBox(width: r.width(0.02)),
                           Expanded(
                             child: Container(
-                              padding: EdgeInsets.all(r.duefeildPadding()),
+                              padding: EdgeInsets.all(r.height(0.02)),
                               decoration: BoxDecoration(
                                 border: Border.all(color: Colors.grey),
                                 borderRadius: BorderRadius.circular(

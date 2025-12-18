@@ -23,7 +23,7 @@ class ForgotPasswordScreen extends StatefulWidget {
 
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  TextEditingController _emailEcontroller = TextEditingController();
+  final TextEditingController _emailEController = TextEditingController();
   bool _forgotPasswordProgressIndicator = false;
 
   @override
@@ -72,14 +72,15 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
                     SizedBox(height: r.height(0.05)),
 
-                    Container(
-                      height: 65.h,
+                    SizedBox(
+                      height: 75.h,
                       child: EmailFeildWidget(
-                        emailEcontroller: _emailEcontroller,
+                        emailEcontroller: _emailEController,
                       ),
                     ),
 
-                    //SizedBox(height: r.height(0.04)),
+                    SizedBox(height: r.height(0.02)),
+
                     Visibility(
                       visible: !_forgotPasswordProgressIndicator,
                       replacement: CenterCircularProgressIndiacator(),
@@ -124,7 +125,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   }
 
   Future<void> _sendPasswordResetLinkProcess() async {
-    final email = _emailEcontroller.text.trim();
+    final email = _emailEController.text.trim();
 
     setState(() {
       _forgotPasswordProgressIndicator = true;

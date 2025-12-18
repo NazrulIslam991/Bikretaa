@@ -4,6 +4,7 @@ import 'package:bikretaa/features/sales/widgets/text_input_feild/customer_addres
 import 'package:bikretaa/features/sales/widgets/text_input_feild/customer_name_controller.dart';
 import 'package:bikretaa/features/shared/presentation/widgets/auth_user_input_feild/mobile_feild_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class DueCollectionScreen extends StatefulWidget {
@@ -23,8 +24,8 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  bool _loading = false;
-  List<Map<String, String>> _addedProducts = [];
+  final bool _loading = false;
+  final List<Map<String, String>> _addedProducts = [];
 
   @override
   void initState() {
@@ -55,23 +56,20 @@ class _DueCollectionScreenState extends State<DueCollectionScreen> {
             key: _formKey,
             child: Column(
               children: [
-                SizedBox(height: r.height(0.015)),
-                Container(
-                  height: r.height(0.08),
+                SizedBox(
+                  height: 75.h,
                   child: CustomerNameController(
                     CustomerNameController: _customerNameController,
                   ),
                 ),
-                SizedBox(height: r.height(0.016)),
-                Container(
-                  height: r.height(0.08),
+                SizedBox(
+                  height: 75.h,
                   child: MobileFeildWidget(
                     mobileEcontroller: _mobileEcontroller,
                   ),
                 ),
-                SizedBox(height: r.height(0.016)),
-                Container(
-                  height: r.height(0.08),
+                SizedBox(
+                  height: 75.h,
                   child: CustomerAddressController(
                     CustomerAddressController: _customerAddressController,
                   ),

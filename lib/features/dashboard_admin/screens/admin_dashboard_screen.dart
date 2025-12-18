@@ -15,7 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AdminDashboardScreen extends StatelessWidget {
-  const AdminDashboardScreen({Key? key}) : super(key: key);
+  const AdminDashboardScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class AdminDashboardScreen extends StatelessWidget {
     final ThemeController themeController = Get.find<ThemeController>();
 
     // Logout helper
-    Future<void> _handleLogout() async {
+    Future<void> handleLogout() async {
       final confirm = await showConfirmDialog(
         context: context,
         title: 'Logout'.tr,
@@ -210,7 +210,7 @@ class AdminDashboardScreen extends StatelessWidget {
                 );
               }),
               IconButton(
-                onPressed: _handleLogout,
+                onPressed: handleLogout,
                 icon: Icon(
                   Icons.person_outline,
                   color: theme.textTheme.bodyLarge?.color,

@@ -36,18 +36,18 @@ class _AddProductScreenState extends State<AddProductScreen> {
   final TextEditingController _productNameController = TextEditingController();
   final TextEditingController _brandNameController = TextEditingController();
   final TextEditingController _productIdController = TextEditingController();
-  final TextEditingController _PurchasePriceController =
+  final TextEditingController _purchasePriceController =
       TextEditingController();
-  final TextEditingController _SellingPriceController = TextEditingController();
-  final TextEditingController _DiscountPriceController =
+  final TextEditingController _sellingPriceController = TextEditingController();
+  final TextEditingController _discountPriceController =
       TextEditingController();
-  final TextEditingController _QuantityController = TextEditingController();
-  final TextEditingController _SuppliarNameController = TextEditingController();
-  final TextEditingController _ProductDescriptionController =
+  final TextEditingController _quantityController = TextEditingController();
+  final TextEditingController _suppliarNameController = TextEditingController();
+  final TextEditingController _productDescriptionController =
       TextEditingController();
-  final TextEditingController _ManufactureDateController =
+  final TextEditingController _manufactureDateController =
       TextEditingController();
-  final TextEditingController _ExpireDateController = TextEditingController();
+  final TextEditingController _expireDateController = TextEditingController();
 
   File? _selectedImage;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -58,14 +58,14 @@ class _AddProductScreenState extends State<AddProductScreen> {
     _productNameController.dispose();
     _brandNameController.dispose();
     _productIdController.dispose();
-    _PurchasePriceController.dispose();
-    _SellingPriceController.dispose();
-    _DiscountPriceController.dispose();
-    _QuantityController.dispose();
-    _SuppliarNameController.dispose();
-    _ProductDescriptionController.dispose();
-    _ManufactureDateController.dispose();
-    _ExpireDateController.dispose();
+    _purchasePriceController.dispose();
+    _sellingPriceController.dispose();
+    _discountPriceController.dispose();
+    _quantityController.dispose();
+    _suppliarNameController.dispose();
+    _productDescriptionController.dispose();
+    _manufactureDateController.dispose();
+    _expireDateController.dispose();
     super.dispose();
   }
 
@@ -73,14 +73,14 @@ class _AddProductScreenState extends State<AddProductScreen> {
     _productNameController.clear();
     _brandNameController.clear();
     _productIdController.clear();
-    _PurchasePriceController.clear();
-    _SellingPriceController.clear();
-    _DiscountPriceController.clear();
-    _QuantityController.clear();
-    _SuppliarNameController.clear();
-    _ProductDescriptionController.clear();
-    _ManufactureDateController.clear();
-    _ExpireDateController.clear();
+    _purchasePriceController.clear();
+    _sellingPriceController.clear();
+    _discountPriceController.clear();
+    _quantityController.clear();
+    _suppliarNameController.clear();
+    _productDescriptionController.clear();
+    _manufactureDateController.clear();
+    _expireDateController.clear();
     _selectedImage = null;
   }
 
@@ -98,7 +98,12 @@ class _AddProductScreenState extends State<AddProductScreen> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.only(left: 8, right: 8, top: 3, bottom: 2),
+          padding: EdgeInsets.only(
+            left: r.width(0.02),
+            right: r.width(0.02),
+            top: r.height(0.01),
+            bottom: r.height(0.01),
+          ),
           child: Form(
             key: _formKey,
             child: Column(
@@ -107,69 +112,69 @@ class _AddProductScreenState extends State<AddProductScreen> {
                 SizedBox(height: r.height(0.01)),
 
                 SizedBox(
-                  height: 65.h,
+                  height: 75.h,
                   child: ProductNameController(
                     ProductNameController: _productNameController,
                   ),
                 ),
                 SizedBox(
-                  height: 65.h,
+                  height: 75.h,
                   child: ProductBrandController(
                     productBandNameController: _brandNameController,
                   ),
                 ),
                 SizedBox(
-                  height: 65.h,
+                  height: 75.h,
                   child: ProductIdController(
                     productIdController: _productIdController,
                     readOnly: false,
                   ),
                 ),
                 SizedBox(
-                  height: 65.h,
+                  height: 75.h,
                   child: ProductPurchasePrice(
-                    ProductPurchasePrice: _PurchasePriceController,
+                    ProductPurchasePrice: _purchasePriceController,
                   ),
                 ),
                 SizedBox(
-                  height: 65.h,
+                  height: 75.h,
                   child: ProductSellingPriceController(
-                    ProductSellingPriceController: _SellingPriceController,
+                    ProductSellingPriceController: _sellingPriceController,
                   ),
                 ),
                 SizedBox(
-                  height: 65.h,
+                  height: 75.h,
                   child: ProductDiscountController(
-                    productDiscountController: _DiscountPriceController,
+                    productDiscountController: _discountPriceController,
                   ),
                 ),
                 SizedBox(
-                  height: 65.h,
+                  height: 75.h,
                   child: ProductQuantityController(
-                    productQuantityController: _QuantityController,
+                    productQuantityController: _quantityController,
                   ),
                 ),
                 SizedBox(
-                  height: 65.h,
+                  height: 75.h,
                   child: ProductSupplierNameController(
-                    productSupplierNameController: _SuppliarNameController,
+                    productSupplierNameController: _suppliarNameController,
                   ),
                 ),
                 SizedBox(
-                  height: 65.h,
+                  height: 75.h,
                   child: ProductManufactureDateController(
                     productManufactureDateController:
-                        _ManufactureDateController,
+                        _manufactureDateController,
                   ),
                 ),
                 SizedBox(
-                  height: 65.h,
+                  height: 75.h,
                   child: ProductExpireDateController(
-                    ProductExpireDateController: _ExpireDateController,
+                    ProductExpireDateController: _expireDateController,
                   ),
                 ),
                 ProductDescriptionController(
-                  productDescriptionController: _ProductDescriptionController,
+                  productDescriptionController: _productDescriptionController,
                 ),
                 SizedBox(height: r.height(0.03)),
 
@@ -232,15 +237,15 @@ class _AddProductScreenState extends State<AddProductScreen> {
         productName: _productNameController.text.trim(),
         brandName: _brandNameController.text.trim(),
         purchasePrice:
-            double.tryParse(_PurchasePriceController.text.trim()) ?? 0,
-        sellingPrice: double.tryParse(_SellingPriceController.text.trim()) ?? 0,
+            double.tryParse(_purchasePriceController.text.trim()) ?? 0,
+        sellingPrice: double.tryParse(_sellingPriceController.text.trim()) ?? 0,
         discountPrice:
-            double.tryParse(_DiscountPriceController.text.trim()) ?? 0,
-        quantity: int.tryParse(_QuantityController.text.trim()) ?? 0,
-        supplierName: _SuppliarNameController.text.trim(),
-        description: _ProductDescriptionController.text.trim(),
-        manufactureDate: _ManufactureDateController.text.trim(),
-        expireDate: _ExpireDateController.text.trim(),
+            double.tryParse(_discountPriceController.text.trim()) ?? 0,
+        quantity: int.tryParse(_quantityController.text.trim()) ?? 0,
+        supplierName: _suppliarNameController.text.trim(),
+        description: _productDescriptionController.text.trim(),
+        manufactureDate: _manufactureDateController.text.trim(),
+        expireDate: _expireDateController.text.trim(),
         image: imageUrl,
         createdAt: DateTime.now(),
       );

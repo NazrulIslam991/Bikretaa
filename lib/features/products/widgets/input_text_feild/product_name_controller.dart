@@ -14,7 +14,7 @@ class ProductNameController extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Container(
-      height: 45.h,
+      // height: 45.h,
       child: TextFormField(
         controller: _ProductNameController,
         decoration: InputDecoration(

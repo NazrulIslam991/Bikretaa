@@ -9,13 +9,13 @@ class SummaryCard extends StatelessWidget {
   final String value;
 
   const SummaryCard({
-    Key? key,
+    super.key,
     required this.r,
     required this.icon,
     required this.color,
     required this.title,
     required this.value,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -79,6 +79,7 @@ class _FloatingMenuFABState extends State<FloatingMenuFAB>
                   ),
                 ),
                 FloatingActionButton(
+                  heroTag: "due_collection_fab",
                   mini: true,
                   onPressed: () {
                     Navigator.pushNamed(context, DueCollectionScreen.name);
@@ -133,6 +134,7 @@ class _FloatingMenuFABState extends State<FloatingMenuFAB>
                 ),
                 FloatingActionButton(
                   mini: true,
+                  heroTag: "product_sale_fab",
                   onPressed: () {
                     Navigator.pushNamed(context, AddSalesScreen.name);
                     toggle();
@@ -156,6 +158,7 @@ class _FloatingMenuFABState extends State<FloatingMenuFAB>
           bottom: r.height(0),
           child: FloatingActionButton(
             onPressed: toggle,
+            heroTag: "main_menu_fab",
             backgroundColor: Colors.blueGrey,
             foregroundColor: Colors.white,
             child: AnimatedRotation(
