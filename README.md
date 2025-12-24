@@ -29,106 +29,24 @@ Admins can create and send push notifications to users. Includes title, message,
 
 ---
 
-##  **Shop Owner – Home & Business Screens**
-
-### **4. Shop Owner Dashboard**
-Shows today’s sales summary, expiry alerts, quick action buttons (sales, due, products), reports, and business tools.
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/d7be513d-ad30-43ea-ad68-008e4c91816c" width="200" />
-  <img src="https://github.com/user-attachments/assets/319f82d4-0a79-4cab-be3f-4b13c719ebde" width="200" />
-</p>
-
-
----
-
-##  **Product Management Screens**
-
-### **5. All Products Screen**
-Displays all inventory items with product image, name, stock, price, expiry status, and quick access to details/edit.
-
-### **6. Product Filter Screen**
-Filter products by:
-- Low Stock  
-- Out of Stock  
-- Expired  
-- Expiring Soon  
-- Category / Price Range  
-
-### **7. Add Product Screen**
-Add new products by entering name, category, purchase price, selling price, stock, supplier, manufacturing date, and expiry date.
-
-### **8. Product Details Screen**
-Shows full product info including image, stock quantity, price, supplier, discount, product code, manufacturing & expiry date, description, and Edit/Delete actions.
-
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/a7bfe7c7-1b14-4925-ba87-fa8871e06855" width="200" />
-  <img src="https://github.com/user-attachments/assets/e8e90444-85c9-41cd-8ce0-aa0fcd915906" width="200" />
-  <img src="https://github.com/user-attachments/assets/454077e1-16ec-4758-8eb0-b3b870277363" width="200" />
-  <img src="https://github.com/user-attachments/assets/151fed05-3595-413b-9238-8b25703b1eb7" width="200" />
-  <img src="https://github.com/user-attachments/assets/fc3f574b-fbf7-43b5-a352-56067d7c6b74" width="200" />
-
-</p>
-
----
-
-##  **Sales & Due colletion Screens**
-
-### **9. Product Sale **
-Record a new sale by adding customer details, product items, and confirming the transaction.
-
-### **10. Sales Filter Popup**
-Filter sales records by:
-- Custom Date  
-- Last Week  
-- Last Month  
-- Last Year  
-
-### **11. Sales History Screen**
-Shows total sales, revenue, dues, paid amounts, and a list of sales with customer name, total price, paid, due, and edit option.
-
-### **12. Due Collection Screen**
-Search for a customer’s pending dues using name or phone number and confirm their due payments.
-
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/7ba7b159-025a-4f4f-98e5-3bd826b96a0c" width="200" />
-  <img src="https://github.com/user-attachments/assets/61c13ba3-2fb1-4d65-9cc7-8cbfceee584f" width="200" />
-  <img src="https://github.com/user-attachments/assets/186d12d5-9141-406f-86f7-f4f7d8536826" width="200" />
-  <img src="https://github.com/user-attachments/assets/fe576927-2865-4cdf-aa12-ae17f54fc08c" width="200" />
-</p>
-
----
-
-##  **User Settings & Tools**
-
-### **13. Settings Screen**
-Update profile, manage password, notification settings, language, theme, support, and logout.
-
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/43fdd447-c995-45f9-839e-6d1b6df5e45f" width="200" />
-  <img src="https://github.com/user-attachments/assets/4dc28771-fd4c-4a8b-bbaf-854c7a6070de" width="200" />
-</p>
-
-
----
-
 ##  **Authentication & Onboarding Screens**
 
-### **14. Splash Screen**
+### **4. Splash Screen**
 Startup screen showing the Bikretaa logo with a clean, modern design.
 
-### **15. Login Screen**
+### **5. Login Screen**
 Users log in with email & password. Includes password visibility toggle, forgot password option, and sign-up link.
 
-### **16. Forgot Password Screen**
+### **6. Forgot Password Screen**
 Enter email to receive a password reset link.
 
-### **17. Create Account – Step 1**
+### **7. Create Account – Step 1**
 User provides an email to receive an OTP for registration.
 
-### **18. OTP Verification Screen**
+### **8. OTP Verification Screen**
 Enter the OTP received via email to verify the account, with an option to resend the code.
 
-### **19. Account Details Setup Screen**
+### **9. Account Details Setup Screen**
 User completes profile by entering shop name, shop type, phone number, and creating a password.
 
 
@@ -144,5 +62,101 @@ User completes profile by entering shop name, shop type, phone number, and creat
   <img src="https://github.com/user-attachments/assets/f3396442-564f-4d73-9197-7fe720a6ac65" width="200" />
 </p>
 
+---
+
+##  **Shop Owner – Home & Business Screens**
+
+### **10. Shop Owner Dashboard**
+Shows today’s sales summary, expiry alerts, quick action buttons (sales, due, products), reports, and business tools.
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/d7be513d-ad30-43ea-ad68-008e4c91816c" width="200" />
+  <img src="https://github.com/user-attachments/assets/319f82d4-0a79-4cab-be3f-4b13c719ebde" width="200" />
+</p>
+
 
 ---
+
+##  **Product Management Screens**
+
+### **11. All Products Screen**
+Displays all inventory items with product image, name, stock, price, expiry status, and quick access to details/edit.
+
+### **6. Product Filter Screen**
+Filter products by:
+- Low Stock  
+- Out of Stock  
+- Expired  
+- Expiring Soon  
+- Category / Price Range  
+
+### **12. Add Product Screen**
+Add new products by entering name, category, purchase price, selling price, stock, supplier, manufacturing date, and expiry date.
+
+### **13. Product Details Screen**
+Shows full product info including image, stock quantity, price, supplier, discount, product code, manufacturing & expiry date, description, and Edit/Delete actions.
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/a7bfe7c7-1b14-4925-ba87-fa8871e06855" width="200" />
+  <img src="https://github.com/user-attachments/assets/e8e90444-85c9-41cd-8ce0-aa0fcd915906" width="200" />
+  <img src="https://github.com/user-attachments/assets/454077e1-16ec-4758-8eb0-b3b870277363" width="200" />
+  <img src="https://github.com/user-attachments/assets/151fed05-3595-413b-9238-8b25703b1eb7" width="200" />
+  <img src="https://github.com/user-attachments/assets/fc3f574b-fbf7-43b5-a352-56067d7c6b74" width="200" />
+
+</p>
+
+---
+
+##  **Sales & Due colletion Screens**
+
+### **14. Product Sale **
+Record a new sale by adding customer details, product items, and confirming the transaction.
+
+### **15. Sales Filter Popup**
+Filter sales records by:
+- Custom Date  
+- Last Week  
+- Last Month  
+- Last Year  
+
+### **16. Sales History Screen**
+Shows total sales, revenue, dues, paid amounts, and a list of sales with customer name, total price, paid, due, and edit option.
+
+### **17. Due Collection Screen**
+Search for a customer’s pending dues using name or phone number and confirm their due payments.
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/7ba7b159-025a-4f4f-98e5-3bd826b96a0c" width="200" />
+  <img src="https://github.com/user-attachments/assets/61c13ba3-2fb1-4d65-9cc7-8cbfceee584f" width="200" />
+  <img src="https://github.com/user-attachments/assets/186d12d5-9141-406f-86f7-f4f7d8536826" width="200" />
+  <img src="https://github.com/user-attachments/assets/fe576927-2865-4cdf-aa12-ae17f54fc08c" width="200" />
+</p>
+
+---
+
+##  **Reporting Screen**
+
+On the ReportsScreen, the user can view the Business Reports title with date range tabs like “Today,” “Days,” “Weeks,” and “Months,” allowing them to filter the reports by time. The Business Performance Banner shows whether sales have increased, decreased, or remained stable, with clear text and icons. The Sales & Profit Trend Card displays sales and profit graphs, with a “swap” icon to change the chart type, and shows a loading spinner if needed. The Inventory Health Card presents product status (In Stock, Low Stock, Out of Stock, Expired) with options to switch chart types. The Smart Alerts Section lists product alerts like low stock or expired items. The Stock Entry Analysis shows total items added, unique products, and total cost or dues, along with chart type options and loading indicators. Finally, the Export Section provides PDF and Excel options for downloading or printing reports.
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/4cbeeb5c-4f7d-422d-b83a-9f8dc964cd56" width="200" />
+  <img src="https://github.com/user-attachments/assets/43bad580-d8bd-4c8b-9d83-f965ce0890ea" width="200" />
+  <img src="https://github.com/user-attachments/assets/f9580f72-594e-40c6-a51f-9c3b6e4b62f6" width="200" />
+</p>
+
+---
+
+##  **User Settings & Tools**
+
+### **18. Settings Screen**
+Update profile, manage password, notification settings, language, theme, support, and logout.
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/43fdd447-c995-45f9-839e-6d1b6df5e45f" width="200" />
+  <img src="https://github.com/user-attachments/assets/4dc28771-fd4c-4a8b-bbaf-854c7a6070de" width="200" />
+</p>
+
+
+---
+
+
+
