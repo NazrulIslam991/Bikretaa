@@ -182,8 +182,7 @@ class _ReportsScreenState extends State<ReportsScreen>
               style: responsive.textStyle(
                 fontSize: responsive.fontXXL(),
                 fontWeight: FontWeight.bold,
-                color:
-                    theme.textTheme.titleLarge?.color ?? colorScheme.onSurface,
+                color: colorScheme.primary
               ),
             ),
             centerTitle: true,

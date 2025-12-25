@@ -9,7 +9,7 @@ class NotificationIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final r = Responsive.of(context); // Responsive instance
+    final r = Responsive.of(context);
 
     return Stack(
       children: [
@@ -18,36 +18,6 @@ class NotificationIcon extends StatelessWidget {
           onPressed: () =>
               Navigator.pushNamed(context, NotificationScreenUser.name),
         ),
-        if (count > 0)
-          Positioned(
-            right: r.width(0.017),
-            top: r.height(0.006),
-            child: Container(
-              padding: EdgeInsets.all(r.width(0.005)),
-              constraints: BoxConstraints(
-                minWidth: r.width(0.01),
-                minHeight: r.height(0.01),
-              ),
-              decoration: BoxDecoration(
-                color: Colors.blueAccent,
-                shape: BoxShape.circle,
-                border: Border.all(
-                  color: theme.colorScheme.onPrimary.withAlpha(
-                    (0.12 * 255).round(),
-                  ),
-                ),
-              ),
-              alignment: Alignment.center,
-              child: Text(
-                count.toString(),
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: r.fontSmall(),
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          ),
       ],
     );
   }

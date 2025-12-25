@@ -32,8 +32,6 @@ class SettingScreen extends StatefulWidget {
 class _SettingScreenState extends State<SettingScreen> {
   final ThemeController _themeController = Get.find<ThemeController>();
   bool _pushNotifications = true;
-  bool _orderAlerts = true;
-  bool _lowStockAlerts = true;
   bool _language = true;
   bool _loading = false;
   String _appVersion = '';
@@ -179,21 +177,21 @@ class _SettingScreenState extends State<SettingScreen> {
             ],
           ),
 
-          // NOTIFICATIONS
-          SectionTitleWidget(title: 'Notifications'.tr),
-          SectionBoxWidget(
-            children: [
-              SettingsTileWidget(
-                icon: Icons.notifications_active_outlined,
-                title: 'Push_Notifications'.tr,
-                subtitle: 'Enable_all_notifications'.tr,
-                trailing: Switch(
-                  value: _pushNotifications,
-                  onChanged: (v) => setState(() => _pushNotifications = v),
-                ),
-              ),
-            ],
-          ),
+          // // NOTIFICATIONS
+          // SectionTitleWidget(title: 'Notifications'.tr),
+          // SectionBoxWidget(
+          //   children: [
+          //     SettingsTileWidget(
+          //       icon: Icons.notifications_active_outlined,
+          //       title: 'Push_Notifications'.tr,
+          //       subtitle: 'Enable_all_notifications'.tr,
+          //       trailing: Switch(
+          //         value: _pushNotifications,
+          //         onChanged: (v) => setState(() => _pushNotifications = v),
+          //       ),
+          //     ),
+          //   ],
+          // ),
 
           // LANGUAGE & THEME
           SectionTitleWidget(title: 'Language_Theme'.tr),
