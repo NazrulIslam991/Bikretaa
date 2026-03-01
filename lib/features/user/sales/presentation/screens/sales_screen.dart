@@ -9,6 +9,7 @@ import 'package:bikretaa/features/shared/presentation/widgets/search_bar/search_
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -279,7 +280,10 @@ class _SalesScreenState extends State<SalesScreen> {
           ),
         ),
       ),
-      floatingActionButton: FloatingMenuFAB(),
+      floatingActionButton: Padding(
+        padding:  EdgeInsets.only(bottom: 90.r,right: 10.w),
+        child: FloatingMenuFAB(),
+      ),
     );
   }
 

@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:bikretaa/app/responsive.dart';
 import 'package:bikretaa/assets_path/assets_path.dart';
 import 'package:bikretaa/features/user/home/user_home/presentaion/screens/home_screen.dart';
@@ -10,7 +9,6 @@ import 'package:bikretaa/features/user/settings/setting/presentation/screens/set
 import 'package:bikretaa/features/shared/presentation/widgets/dialog_box/confirm_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
 
 class UserNavBarScreen extends StatefulWidget {
   const UserNavBarScreen({super.key});
@@ -21,7 +19,9 @@ class UserNavBarScreen extends StatefulWidget {
 }
 
 class _UserNavBarScreenState extends State<UserNavBarScreen> {
-  final List<Widget> _navigationScreen = [
+  int _currentIndex = 2;
+
+  final List<Widget> _screens = const [
     HomeScreen(),
     SalesScreen(),
     ProductsScreen(),
@@ -29,33 +29,20 @@ class _UserNavBarScreenState extends State<UserNavBarScreen> {
     SettingScreen(),
   ];
 
-  int _selectedScreen = 2;
-  final List<int> _navStack = [];
-
-  void _handleBackNavigation(bool didPop) async {
-    if (didPop) return;
-
-    if (_navStack.isNotEmpty) {
-      setState(() {
-        _selectedScreen = _navStack.removeLast();
-      });
+  Future<void> _handleBack() async {
+    if (_currentIndex != 0) {
+      setState(() => _currentIndex = 0);
       return;
     }
 
-    if (_selectedScreen != 0) {
-      setState(() => _selectedScreen = 0);
-      return;
-    }
+    if (Platform.isIOS) return;
 
-    if (Platform.isIOS) {
-      return;
-    }
     final shouldExit = await showConfirmDialog(
       context: context,
-      title: "exit_app".tr,
-      content: "exit_content".tr,
-      cancelText: "cancel".tr,
-      confirmText: "exit".tr,
+      title: "Exit App",
+      content: "Do you want to exit the app?",
+      cancelText: "Cancel",
+      confirmText: "Exit",
       confirmColor: Colors.red,
     );
 
@@ -66,112 +53,124 @@ class _UserNavBarScreenState extends State<UserNavBarScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     final r = Responsive.of(context);
+    final theme = Theme.of(context);
 
-    return PopScope(
-      canPop: false,
-      onPopInvokedWithResult: (didPop, result) => _handleBackNavigation(didPop),
+    final Color backgroundColor = theme.brightness == Brightness.light
+        ? Colors.grey.shade100
+        : Colors.grey.shade900;
+
+    final Color unselectedColor = theme.brightness == Brightness.light
+        ? Colors.black87
+        : Colors.white70;
+
+    return WillPopScope(
+      onWillPop: () async {
+        await _handleBack();
+        return false;
+      },
       child: Scaffold(
-        body: _navigationScreen[_selectedScreen],
-        bottomNavigationBar: BottomNavigationBar(
-          currentIndex: _selectedScreen,
-          onTap: (index) {
-            if (index != _selectedScreen) {
-              if (index == 0) {
-                _navStack.clear();
-              } else {
-                _navStack.remove(index);
-                _navStack.add(_selectedScreen);
-              }
-            }
-            setState(() => _selectedScreen = index);
-          },
-          type: BottomNavigationBarType.fixed,
-          backgroundColor:
-              theme.bottomNavigationBarTheme.backgroundColor ??
-              theme.scaffoldBackgroundColor,
-          selectedItemColor: theme.colorScheme.primary,
-          unselectedItemColor: theme.iconTheme.color,
-          showSelectedLabels: true,
-          showUnselectedLabels: true,
-          elevation: 8,
-          items: [
-            _buildNavItem(Icons.home, 'home'.tr, 0, theme, r),
-            _buildNavItem(
-              AssetPaths.doller,
-              'sale'.tr,
-              1,
-              theme,
-              r,
-              isImage: true,
-            ),
-            _buildNavItem(
-              AssetPaths.product,
-              'product'.tr,
-              2,
-              theme,
-              r,
-              isImage: true,
-            ),
-            _buildNavItem(
-              AssetPaths.report,
-              'reports'.tr,
-              3,
-              theme,
-              r,
-              isImage: true,
-            ),
-            _buildNavItem(Icons.settings, 'settings'.tr, 4, theme, r),
-          ],
+        extendBody: true,
+        body: _screens[_currentIndex],
+
+        ///  CUSTOM FLOATING BOTTOM NAVBAR
+        bottomNavigationBar: SizedBox(
+          height: r.height(0.13),
+          child: Stack(
+            alignment: Alignment.bottomCenter,
+            clipBehavior: Clip.none,
+            children: [
+              /// Background Bar
+              Container(
+                height: r.height(0.09),
+                margin: const EdgeInsets.fromLTRB(20, 0, 20, 25),
+                decoration: BoxDecoration(
+                  color: backgroundColor,
+                  borderRadius: BorderRadius.circular(50),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.15),
+                      blurRadius: 20,
+                      offset: const Offset(0, 5),
+                    ),
+                  ],
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    _navItem(0, Icons.home,  Colors.blue.shade200, unselectedColor),
+                    _navItem(1, AssetPaths.doller,
+                        Colors.blue.shade200, unselectedColor,
+                        isImage: true),
+                    const SizedBox(width: 50), 
+                    _navItem(3, AssetPaths.report,
+                        Colors.blue.shade200, unselectedColor,
+                        isImage: true),
+                    _navItem(4, Icons.settings,  Colors.blue.shade200, unselectedColor),
+                  ],
+                ),
+              ),
+
+              /// Floating Center Button
+              Positioned(
+                top: -20,
+                child: GestureDetector(
+                  onTap: () => setState(() => _currentIndex = 2),
+                  child: Container(
+                    height: r.height(0.07),
+                    //width: r.width(0.07),
+                    decoration: BoxDecoration(
+                      color: _currentIndex == 2
+                          ?  Colors.blue.shade200
+                          : Colors.grey.shade200,
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.2),
+                          blurRadius: 10,
+                        ),
+                      ],
+                    ),
+                    padding: const EdgeInsets.all(12),
+                    child: Image.asset(
+                      AssetPaths.product,
+                      color: _currentIndex == 2 ? Colors.black : Colors.black87,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  BottomNavigationBarItem _buildNavItem(
-    dynamic iconData,
-    String label,
-    int index,
-    ThemeData theme,
-    Responsive r, {
-    bool isImage = false,
-  }) {
-    bool isActive = _selectedScreen == index;
+  /// NAV ITEM
+  Widget _navItem(int index, dynamic icon, Color selectedColor, Color unselectedColor,
+      {bool isImage = false}) {
+    bool isSelected = _currentIndex == index;
 
-    Widget iconWidget = isImage
-        ? Image.asset(
-            iconData,
-            width: r.iconMedium(),
-            height: r.iconMedium(),
-            color: theme.iconTheme.color,
-          )
-        : Icon(iconData, size: r.iconMedium());
-
-    Widget activeIconWidget = Container(
-      decoration: BoxDecoration(
-        color: theme.colorScheme.primary.withValues(alpha: 0.15),
-        borderRadius: BorderRadius.circular(r.radiusMedium()),
+    return GestureDetector(
+      onTap: () => setState(() => _currentIndex = index),
+      child: Container(
+        height: Responsive.of(context).height(0.06),
+        width: 55,
+        decoration: BoxDecoration(
+          color: isSelected ? selectedColor : Theme.of(context).highlightColor,
+          shape: BoxShape.circle,
+        ),
+        padding: const EdgeInsets.all(8),
+        child: isImage
+            ? Image.asset(
+          icon,
+          color: isSelected ? Colors.black : unselectedColor,
+        )
+            : Icon(
+          icon,
+          color: isSelected ? Colors.black : unselectedColor,
+        ),
       ),
-      padding: EdgeInsets.all(r.width(0.015)),
-      child: isImage
-          ? Image.asset(
-              iconData,
-              width: r.iconMedium(),
-              height: r.iconMedium(),
-              color: theme.colorScheme.primary,
-            )
-          : Icon(
-              iconData,
-              size: r.iconMedium(),
-              color: theme.colorScheme.primary,
-            ),
-    );
-
-    return BottomNavigationBarItem(
-      icon: iconWidget,
-      activeIcon: activeIconWidget,
-      label: label,
     );
   }
 }

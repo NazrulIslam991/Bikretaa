@@ -21,8 +21,9 @@ class AppTheme {
     scaffoldBackgroundColor: Color(0xFFF5F5F5),
     appBarTheme: AppBarTheme(
       backgroundColor: Colors.white,
-      foregroundColor: Colors.black,
-      elevation: 1,
+      //foregroundColor: Colors.black,
+      elevation: 0,
+      scrolledUnderElevation: 0,
       systemOverlayStyle: StatusBarColor.lightMode,
     ),
     textTheme: TextTheme(
@@ -98,7 +99,8 @@ class AppTheme {
     appBarTheme: AppBarTheme(
       backgroundColor: Colors.black,
       foregroundColor: Colors.white,
-      elevation: 1,
+      elevation: 0,
+      scrolledUnderElevation: 0,
       systemOverlayStyle: StatusBarColor.darkMode,
     ),
     textTheme: TextTheme(

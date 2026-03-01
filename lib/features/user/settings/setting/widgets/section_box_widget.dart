@@ -9,12 +9,13 @@ class SectionBoxWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final r = Responsive.of(context);
+    final isDark = theme.brightness == Brightness.dark;
 
     return Container(
       decoration: BoxDecoration(
         color: theme.colorScheme.onSecondary,
         borderRadius: BorderRadius.circular(r.radiusMedium()),
-        border: Border.all(color: Colors.grey.shade300),
+        border: Border.all(color: isDark ? Colors.white30 : Colors.grey.shade300),
       ),
       child: Column(
         children: [
@@ -25,7 +26,7 @@ class SectionBoxWidget extends StatelessWidget {
                 height: r.height(0.002),
                 thickness: r.height(0.001),
                 indent: r.width(0.06),
-                color: Colors.grey.shade300,
+                  color: isDark ? Colors.white30 : Colors.grey.shade300
               ),
           ],
         ],

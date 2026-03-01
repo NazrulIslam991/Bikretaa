@@ -58,7 +58,7 @@ class SettingsTileWidget extends StatelessWidget {
               ),
             ),
       trailing:
-          trailing ?? Icon(Icons.chevron_right_rounded, size: r.fontSmall()),
+          trailing ?? Icon(Icons.chevron_right_rounded, size: r.iconLarge()),
       onTap: onTap,
     );
   }

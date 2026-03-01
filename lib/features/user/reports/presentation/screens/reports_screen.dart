@@ -361,7 +361,7 @@ class _ReportsScreenState extends State<ReportsScreen>
                       ),
                     ),
 
-                    responsive.vSpace(0.01),
+                    responsive.vSpace(0.017),
 
                     /// Export Buttons
                     Row(
@@ -432,7 +432,7 @@ class _ReportsScreenState extends State<ReportsScreen>
                             },
                           ),
                         ),
-                        responsive.hSpace(0.04),
+                        responsive.hSpace(0.05),
 
                         /// Excel Export Button
                         Expanded(
@@ -446,7 +446,7 @@ class _ReportsScreenState extends State<ReportsScreen>
                         ),
                       ],
                     ),
-                    responsive.vSpace(0.01),
+                    responsive.vSpace(0.12),
                   ],
                 ),
               ),

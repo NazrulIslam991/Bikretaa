@@ -48,6 +48,8 @@ class _SettingScreenState extends State<SettingScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final r = Responsive.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
 
     return Scaffold(
       appBar: AppBar(
@@ -69,7 +71,7 @@ class _SettingScreenState extends State<SettingScreen> {
             decoration: BoxDecoration(
               color: theme.colorScheme.onSecondary,
               borderRadius: BorderRadius.circular(r.radiusMedium()),
-              border: Border.all(color: Colors.grey.shade300),
+              border: Border.all(color: isDark ? Colors.white30 : Colors.grey.shade300),
             ),
             padding: EdgeInsets.all(r.width(0.03)),
             child: _userLoading
@@ -287,6 +289,8 @@ class _SettingScreenState extends State<SettingScreen> {
               ),
             ],
           ),
+          SizedBox(height: r.height(0.12)),
+
         ],
       ),
     );

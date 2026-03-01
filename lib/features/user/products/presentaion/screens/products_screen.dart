@@ -170,13 +170,16 @@ class _ProductsScreenState extends State<ProductsScreen> {
           },
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.pushNamed(context, AddProductScreen.name);
-        },
-        backgroundColor: Colors.blueGrey,
-        foregroundColor: Colors.white,
-        child: Icon(Icons.add_box_outlined, size: r.iconLarge()),
+      floatingActionButton: Padding(
+        padding:  EdgeInsets.only(bottom: 90.r,right: 10.w),
+        child: FloatingActionButton(
+          onPressed: () {
+            Navigator.pushNamed(context, AddProductScreen.name);
+          },
+          backgroundColor: Colors.blueGrey,
+          foregroundColor: Colors.white,
+          child: Icon(Icons.add_box_outlined, size: r.iconLarge()),
+        ),
       ),
     );
   }

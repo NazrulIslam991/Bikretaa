@@ -10,6 +10,7 @@ import 'package:bikretaa/features/user/home/user_home/presentaion/widgets/summar
 import 'package:bikretaa/features/user/home/user_home/presentaion/widgets/weather_widgets.dart';
 import 'package:bikretaa/features/shared/presentation/widgets/notification_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../quick_action_product_list/presentation/screens/quick_action_product_list.dart';
@@ -79,7 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        elevation: 1,
+        elevation: 0,
         titleSpacing: r.width(0.04),
         toolbarHeight: r.height(0.09),
         title: Row(
@@ -245,11 +246,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
               /// ---------- Quick Actions Grid ----------
               Container(
-                padding: EdgeInsets.only(
-                  top: r.paddingXLarge(),
-                  bottom: r.paddingMedium(),
-                  left: r.paddingMedium(),
-                  right: r.paddingMedium(),
+                padding: EdgeInsets.symmetric(
+                  horizontal: r.paddingMedium(),
+                  vertical: 20.h,
                 ),
                 decoration: BoxDecoration(
                   color: containerBg(Colors.white, Colors.grey.shade900),
@@ -259,14 +258,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   return GridView.builder(
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
+                    padding: EdgeInsets.zero,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 5,
-                      childAspectRatio: 1 / 1.2,
+                      childAspectRatio: 1,
+                      mainAxisSpacing: r.height(0.01),
+                      crossAxisSpacing: r.width(0.01),
                     ),
                     itemCount: quickActionController.selectedIndexes.length,
                     itemBuilder: (context, index) {
-                      final selectedIndex =
-                          quickActionController.selectedIndexes[index];
+                      final selectedIndex = quickActionController.selectedIndexes[index];
                       final tool = quickActions[selectedIndex];
                       return ActionButton(
                         r: r,
@@ -286,18 +287,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   );
                 }),
               ),
-
               SizedBox(height: r.height(0.02)),
               /// ---------- Business Tools ----------
               SectionTitle(title: "business_tools".tr),
               SizedBox(height: r.height(0.01)),
 
               Container(
-                padding: EdgeInsets.only(
-                  top: r.paddingXLarge(),
-                  bottom: r.paddingMedium(),
-                  left: r.paddingMedium(),
-                  right: r.paddingMedium(),
+                padding: EdgeInsets.symmetric(
+                  horizontal: r.paddingMedium(),
+                  vertical: 20.h,
                 ),
                 decoration: BoxDecoration(
                   color: containerBg(Colors.white, Colors.grey.shade900),
@@ -306,9 +304,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: GridView.builder(
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
+                  padding: EdgeInsets.zero,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 5,
-                    childAspectRatio: 1 / 1.2,
+                    childAspectRatio: 1,
+                    mainAxisSpacing: r.height(0.01),
+                    crossAxisSpacing: r.width(0.01),
                   ),
                   itemCount: businessTools.length,
                   itemBuilder: (context, index) {
@@ -330,6 +331,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                 ),
               ),
+              SizedBox(height: r.height(0.12)),
             ],
           ),
         ),
