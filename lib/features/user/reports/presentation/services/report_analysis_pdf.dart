@@ -7,11 +7,11 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 
-import '../../../app/controller/expense_report_controller.dart';
-import '../../../app/controller/product_controller/product_controller.dart';
-import '../../../app/controller/sales_report_controller.dart';
-import '../../../assets_path/assets_path.dart';
-import '../models/chart_data/chart_data.dart';
+import '../../../../../app/controller/expense_report_controller.dart';
+import '../../../../../app/controller/product_controller/product_controller.dart';
+import '../../../../../app/controller/sales_report_controller.dart';
+import '../../../../../assets_path/assets_path.dart';
+import '../models/chart_data.dart';
 import 'pdf_widgets_helper.dart';
 
 class ReportPdfService {

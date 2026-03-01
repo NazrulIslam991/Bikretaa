@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-import '../../features/reports/models/chart_data/chart_data.dart';
+import '../../features/user/reports/presentation/models/chart_data.dart';
 
 class ExpenseReportController extends GetxController {
   final FirebaseFirestore _db = FirebaseFirestore.instance;

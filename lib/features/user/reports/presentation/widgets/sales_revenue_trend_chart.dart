@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-import '../../../app/responsive.dart';
-import '../models/chart_data/chart_data.dart';
+import '../../../../../app/responsive.dart';
+import '../models/chart_data.dart';
 import '../screens/reports_screen.dart';
 
 Widget salesRevenueTrendChart(

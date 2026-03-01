@@ -1,8 +1,8 @@
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
-import '../../../app/controller/product_controller/product_controller.dart';
-import '../models/chart_data/chart_data.dart';
+import '../../../../../app/controller/product_controller/product_controller.dart';
+import '../models/chart_data.dart';
 
 class PdfWidgetsHelper {
   static pw.Widget buildHeader(String date, String range, pw.MemoryImage logo) {

@@ -4,7 +4,7 @@ import 'package:bikretaa/app/responsive.dart';
 import 'package:bikretaa/assets_path/assets_path.dart';
 import 'package:bikretaa/features/home/screens/home_screen.dart';
 import 'package:bikretaa/features/products/screens/products_screen.dart';
-import 'package:bikretaa/features/reports/screens/reports_screen.dart';
+import 'package:bikretaa/features/user/reports/presentation/screens/reports_screen.dart';
 import 'package:bikretaa/features/user/sales/presentation/screens/sales_screen.dart';
 import 'package:bikretaa/features/user/settings/setting/presentation/screens/setting_screen.dart';
 import 'package:bikretaa/features/shared/presentation/widgets/dialog_box/confirm_dialog.dart';

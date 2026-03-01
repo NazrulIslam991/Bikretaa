@@ -1,17 +1,17 @@
 import 'dart:typed_data' as td; // Prefix ব্যবহার করা হলো
 
 import 'package:bikretaa/app/responsive.dart';
-import 'package:bikretaa/features/reports/widgets/bikretaa_analytics_card.dart';
-import 'package:bikretaa/features/reports/widgets/inventory_alert_tile.dart';
-import 'package:bikretaa/features/reports/widgets/report_export_action.dart';
-import 'package:bikretaa/features/reports/widgets/sales_revenue_trend_chart.dart';
-import 'package:bikretaa/features/reports/widgets/stock_investment_analysis_chart.dart';
+import 'package:bikretaa/features/user/reports/presentation/widgets/bikretaa_analytics_card.dart';
+import 'package:bikretaa/features/user/reports/presentation/widgets/inventory_alert_tile.dart';
+import 'package:bikretaa/features/user/reports/presentation/widgets/report_export_action.dart';
+import 'package:bikretaa/features/user/reports/presentation/widgets/sales_revenue_trend_chart.dart';
+import 'package:bikretaa/features/user/reports/presentation/widgets/stock_investment_analysis_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../app/controller/expense_report_controller.dart';
-import '../../../app/controller/product_controller/product_controller.dart';
-import '../../../app/controller/sales_report_controller.dart';
+import '../../../../../app/controller/expense_report_controller.dart';
+import '../../../../../app/controller/product_controller/product_controller.dart';
+import '../../../../../app/controller/sales_report_controller.dart';
 import '../services/report_analysis_pdf.dart';
 import '../widgets/stock_distribution_chart.dart';
 
