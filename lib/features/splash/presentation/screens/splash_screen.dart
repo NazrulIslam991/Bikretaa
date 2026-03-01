@@ -8,6 +8,8 @@ import 'package:bikretaa/features/shared/presentation/widgets/background.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../../../onboarding/presentaion/screens/onboarding_screen.dart';
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
   static const String name = '/';
@@ -34,7 +36,7 @@ class _SplashScreenState extends State<SplashScreen> {
         Navigator.pushReplacementNamed(context, UserNavBarScreen.name);
       }
     } else {
-      Navigator.pushReplacementNamed(context, SigninScreen.name);
+      Navigator.pushReplacementNamed(context, OnboardingScreen.name);
     }
   }
 

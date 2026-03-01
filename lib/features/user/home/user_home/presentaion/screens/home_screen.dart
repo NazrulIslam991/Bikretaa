@@ -288,16 +288,6 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
 
               SizedBox(height: r.height(0.02)),
-
-              /// ---------- Sales & Reports ----------
-              SectionTitle(title: "sales_reports".tr),
-              SizedBox(height: r.height(0.01)),
-              ReportItem(r: r, title: "Last Week Sales"),
-              ReportItem(r: r, title: "Last Month Sales"),
-              ReportItem(r: r, title: "Fixed Date Sales"),
-              ReportItem(r: r, title: "All Products Report"),
-              SizedBox(height: r.height(0.03)),
-
               /// ---------- Business Tools ----------
               SectionTitle(title: "business_tools".tr),
               SizedBox(height: r.height(0.01)),

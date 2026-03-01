@@ -5,7 +5,7 @@ import 'package:bikretaa/features/user/notification/presentation/services/notifi
 import 'package:bikretaa/features/auth/presentation/screens/forgot_password_screen.dart';
 import 'package:bikretaa/features/auth/presentation/screens/sign_up/create_account_screen.dart';
 import 'package:bikretaa/features/auth/presentation/screens/signin/signin_screen.dart';
-import 'package:bikretaa/features/auth/presentation/screens/splash_screen.dart';
+import 'package:bikretaa/features/splash/presentation/screens/splash_screen.dart';
 import 'package:bikretaa/features/user/home/calculator/presentaion/screens/calculator.dart';
 import 'package:bikretaa/features/user/home/calender/presentation/screens/calender_screen.dart';
 import 'package:bikretaa/features/user/home/notes/presentation/screens/notes_screen.dart';
@@ -24,6 +24,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../features/onboarding/presentaion/screens/onboarding_screen.dart';
 import '../features/user/notification/presentation/screens/notification_screen_user.dart';
 
 class BikretaaApp extends StatelessWidget {
@@ -74,6 +75,7 @@ class BikretaaApp extends StatelessWidget {
                     NotificationScreenUser.name: (context) =>
                         NotificationScreenUser(),
                     Calculator.name: (context) => Calculator(),
+                    OnboardingScreen.name: (context) => OnboardingScreen(),
                     CalendarScreen.name: (context) => CalendarScreen(),
                     QRScannerScreen.name: (context) => QRScannerScreen(),
                     QRGeneratorScreen.name: (context) => QRGeneratorScreen(),
