@@ -1,6 +1,6 @@
 import 'package:bikretaa/app/responsive.dart';
-import 'package:bikretaa/features/products/screens/details_product_screen.dart';
-import 'package:bikretaa/features/products/widgets/copyable_text_widget.dart';
+import 'package:bikretaa/features/user/products/presentaion/screens/details_product_screen.dart';
+import 'package:bikretaa/features/user/products/presentaion/widgets/copyable_text_widget/copyable_text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';

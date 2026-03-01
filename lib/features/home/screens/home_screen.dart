@@ -12,7 +12,7 @@ import 'package:bikretaa/features/shared/presentation/widgets/notification_widge
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../products/screens/homepage_product_list.dart';
+import '../../user/products/presentaion/screens/homepage_product_list.dart';
 import '../widgets/get_business_tools_action_screen.dart';
 import '../widgets/get_quick_action_screen.dart';
 import '../widgets/home_banner.dart' show HomeBannerSlider;

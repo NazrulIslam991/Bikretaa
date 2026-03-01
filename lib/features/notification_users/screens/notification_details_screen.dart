@@ -1,5 +1,5 @@
 import 'package:bikretaa/app/responsive.dart';
-import 'package:bikretaa/features/products/widgets/copyable_text_widget.dart';
+import 'package:bikretaa/features/user/products/presentaion/widgets/copyable_text_widget/copyable_text_widget.dart';
 import 'package:bikretaa/features/user/settings/setting/widgets/divider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

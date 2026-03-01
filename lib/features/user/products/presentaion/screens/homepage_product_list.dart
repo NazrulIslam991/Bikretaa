@@ -1,12 +1,12 @@
 import 'package:bikretaa/app/responsive.dart';
-import 'package:bikretaa/features/products/model/product_model.dart';
-import 'package:bikretaa/features/products/widgets/product_card.dart';
+import 'package:bikretaa/features/user/products/presentaion/models/product_model.dart';
+import 'package:bikretaa/features/user/products/presentaion/widgets/product_card/product_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../../app/controller/product_controller/product_controller.dart';
+import '../../../../../app/controller/product_controller/product_controller.dart';
 
 class ProductsFilterScreen extends StatefulWidget {
   final String title;

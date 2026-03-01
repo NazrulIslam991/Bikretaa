@@ -1,9 +1,10 @@
 import 'package:bikretaa/app/controller/theme_controller/theme_controller.dart';
-import 'package:bikretaa/features/products/widgets/product_screen_shimmer/ShimmerCard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
+
+import 'ShimmerCard.dart';
 
 class ProductsShimmerScreen extends StatelessWidget {
   const ProductsShimmerScreen({super.key});

@@ -16,7 +16,7 @@ import 'app/controller/sales_report_controller.dart';
 import 'app/controller/theme_controller/theme_controller.dart';
 import 'features/notification_users/services/notification_service.dart';
 import 'app/string.dart';
-import 'features/products/database/cloudinary_database.dart';
+import 'features/user/products/presentaion/database/cloudinary_database.dart';
 
 final cloudinaryService = CloudinaryService(
   cloudName: AppConstants.cloudName,

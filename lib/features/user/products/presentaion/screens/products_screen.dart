@@ -1,17 +1,18 @@
 import 'package:bikretaa/app/responsive.dart';
 import 'package:bikretaa/assets_path/assets_path.dart';
-import 'package:bikretaa/features/products/database/product_database.dart';
-import 'package:bikretaa/features/products/model/product_model.dart';
-import 'package:bikretaa/features/products/screens/add_product_screen.dart';
-import 'package:bikretaa/features/products/widgets/bottom_filter_sheet_for_product.dart';
-import 'package:bikretaa/features/products/widgets/product_card.dart';
-import 'package:bikretaa/features/products/widgets/product_screen_shimmer/product_shimmer_widget.dart';
+import 'package:bikretaa/features/user/products/presentaion/database/product_database.dart';
+import 'package:bikretaa/features/user/products/presentaion/models/product_model.dart';
+import 'package:bikretaa/features/user/products/presentaion/screens/add_product_screen.dart';
+import 'package:bikretaa/features/user/products/presentaion/widgets/bottom_filter_sheet/bottom_filter_sheet_for_product.dart';
+import 'package:bikretaa/features/user/products/presentaion/widgets/product_card/product_card.dart';
 import 'package:bikretaa/features/shared/presentation/widgets/search_bar/search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:permission_handler/permission_handler.dart';
+
+import '../widgets/product_screen_shimmer/product_shimmer_widget.dart';
 
 class ProductsScreen extends StatefulWidget {
   const ProductsScreen({super.key});

@@ -1,4 +1,4 @@
-import 'package:bikretaa/features/products/model/product_model.dart';
+import 'package:bikretaa/features/user/products/presentaion/models/product_model.dart';
 import 'package:bikretaa/features/user/sales/presentation/database/customer_info_database.dart';
 import 'package:bikretaa/features/user/sales/presentation/models/DueModel.dart';
 import 'package:bikretaa/features/user/sales/presentation/models/PaidModel.dart';

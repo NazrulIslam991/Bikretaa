@@ -1,5 +1,5 @@
-import 'package:bikretaa/features/products/database/product_database.dart';
-import 'package:bikretaa/features/products/model/product_model.dart';
+import 'package:bikretaa/features/user/products/presentaion/database/product_database.dart';
+import 'package:bikretaa/features/user/products/presentaion/models/product_model.dart';
 import 'package:get/get.dart';
 import '../../../features/shared/presentation/get_storeage_helper/get_storage_helper.dart';
 import '../../../features/notification_users/services/notification_service.dart';

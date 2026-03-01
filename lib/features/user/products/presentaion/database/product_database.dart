@@ -1,4 +1,4 @@
-import 'package:bikretaa/features/products/model/product_model.dart';
+import 'package:bikretaa/features/user/products/presentaion/models/product_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 

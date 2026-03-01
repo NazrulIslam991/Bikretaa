@@ -1,26 +1,27 @@
 import 'dart:io';
 
 import 'package:bikretaa/app/responsive.dart';
-import 'package:bikretaa/features/products/database/product_database.dart';
-import 'package:bikretaa/features/products/model/product_model.dart';
-import 'package:bikretaa/features/products/widgets/image_picker/custom_image_picker.dart';
-import 'package:bikretaa/features/products/widgets/input_text_feild/product_brand_controller.dart';
-import 'package:bikretaa/features/products/widgets/input_text_feild/product_description_controller.dart';
-import 'package:bikretaa/features/products/widgets/input_text_feild/product_discount_controller.dart';
-import 'package:bikretaa/features/products/widgets/input_text_feild/product_expire_date_controller.dart';
-import 'package:bikretaa/features/products/widgets/input_text_feild/product_id_controller.dart';
-import 'package:bikretaa/features/products/widgets/input_text_feild/product_manufacture_date_controller.dart';
-import 'package:bikretaa/features/products/widgets/input_text_feild/product_name_controller.dart';
-import 'package:bikretaa/features/products/widgets/input_text_feild/product_purchase_price_controller.dart';
-import 'package:bikretaa/features/products/widgets/input_text_feild/product_quantity_controller.dart';
-import 'package:bikretaa/features/products/widgets/input_text_feild/product_selling_price_controller.dart';
-import 'package:bikretaa/features/products/widgets/input_text_feild/product_supplier_name_controller.dart';
+import 'package:bikretaa/features/user/products/presentaion/database/product_database.dart';
+import 'package:bikretaa/features/user/products/presentaion/models/product_model.dart';
+import 'package:bikretaa/features/user/products/presentaion/widgets/input_text_field/product_brand_controller.dart';
+import 'package:bikretaa/features/user/products/presentaion/widgets/input_text_field/product_description_controller.dart';
+import 'package:bikretaa/features/user/products/presentaion/widgets/input_text_field/product_discount_controller.dart';
+import 'package:bikretaa/features/user/products/presentaion/widgets/input_text_field/product_expire_date_controller.dart';
+import 'package:bikretaa/features/user/products/presentaion/widgets/input_text_field/product_id_controller.dart';
+import 'package:bikretaa/features/user/products/presentaion/widgets/input_text_field/product_manufacture_date_controller.dart';
+import 'package:bikretaa/features/user/products/presentaion/widgets/input_text_field/product_name_controller.dart';
+import 'package:bikretaa/features/user/products/presentaion/widgets/input_text_field/product_purchase_price_controller.dart';
+import 'package:bikretaa/features/user/products/presentaion/widgets/input_text_field/product_quantity_controller.dart';
+import 'package:bikretaa/features/user/products/presentaion/widgets/input_text_field/product_selling_price_controller.dart';
+import 'package:bikretaa/features/user/products/presentaion/widgets/input_text_field/product_supplier_name_controller.dart';
 import 'package:bikretaa/features/shared/presentation/widgets/circular_progress/circular_progress_indicatior.dart';
 import 'package:bikretaa/features/shared/presentation/widgets/snack_bar_messege/snackbar_messege.dart';
 import 'package:bikretaa/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+
+import '../widgets/image_picker/custom_image_picker.dart';
 
 class AddProductScreen extends StatefulWidget {
   const AddProductScreen({super.key});

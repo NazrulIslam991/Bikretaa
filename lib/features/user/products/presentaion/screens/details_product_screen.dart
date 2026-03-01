@@ -1,8 +1,8 @@
 import 'package:bikretaa/app/responsive.dart';
-import 'package:bikretaa/features/products/database/product_database.dart';
-import 'package:bikretaa/features/products/model/product_model.dart';
-import 'package:bikretaa/features/products/screens/update_product_screen.dart';
-import 'package:bikretaa/features/products/widgets/copyable_text_widget.dart';
+import 'package:bikretaa/features/user/products/presentaion/database/product_database.dart';
+import 'package:bikretaa/features/user/products/presentaion/models/product_model.dart';
+import 'package:bikretaa/features/user/products/presentaion/screens/update_product_screen.dart';
+import 'package:bikretaa/features/user/products/presentaion/widgets/copyable_text_widget/copyable_text_widget.dart';
 import 'package:bikretaa/features/user/settings/setting/widgets/divider.dart';
 import 'package:bikretaa/features/shared/presentation/widgets/circular_progress/circular_progress_indicatior_2.dart';
 import 'package:bikretaa/features/shared/presentation/widgets/dialog_box/confirm_dialog.dart';
