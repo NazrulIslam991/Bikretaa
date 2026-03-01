@@ -1,5 +1,5 @@
-import 'package:bikretaa/features/sales/database/customer_info_database.dart';
-import 'package:bikretaa/features/sales/model/customer_model.dart';
+import 'package:bikretaa/features/user/sales/presentation/database/customer_info_database.dart';
+import 'package:bikretaa/features/user/sales/presentation/models/customer_model.dart';
 import 'package:get/get.dart';
 
 class CustomerController extends GetxController {

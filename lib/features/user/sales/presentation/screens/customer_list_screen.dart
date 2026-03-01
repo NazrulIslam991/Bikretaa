@@ -1,6 +1,6 @@
 import 'package:bikretaa/app/controller/customer_controller/customer_controller.dart';
 import 'package:bikretaa/app/responsive.dart';
-import 'package:bikretaa/features/sales/model/customer_model.dart';
+import 'package:bikretaa/features/user/sales/presentation/models/customer_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

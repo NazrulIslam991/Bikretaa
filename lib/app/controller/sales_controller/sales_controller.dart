@@ -1,4 +1,4 @@
-import 'package:bikretaa/features/sales/database/sales_screen_database.dart';
+import 'package:bikretaa/features/user/sales/presentation/database/sales_screen_database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 

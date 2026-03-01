@@ -1,7 +1,7 @@
 import 'package:bikretaa/app/responsive.dart';
-import 'package:bikretaa/features/sales/widgets/products_list_widget.dart';
-import 'package:bikretaa/features/sales/widgets/text_input_feild/customer_address.dart';
-import 'package:bikretaa/features/sales/widgets/text_input_feild/customer_name_controller.dart';
+import 'package:bikretaa/features/user/sales/presentation/widgets/product_list_widget/products_list_widget.dart';
+import 'package:bikretaa/features/user/sales/presentation/widgets/text_input_feild/customer_address.dart';
+import 'package:bikretaa/features/user/sales/presentation/widgets/text_input_feild/customer_name_controller.dart';
 import 'package:bikretaa/features/shared/presentation/widgets/auth_user_input_feild/mobile_feild_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

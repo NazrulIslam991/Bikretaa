@@ -1,9 +1,9 @@
 import 'package:bikretaa/app/responsive.dart';
-import 'package:bikretaa/features/sales/database/add_sales_screen_database.dart';
-import 'package:bikretaa/features/sales/model/SalesModel.dart';
-import 'package:bikretaa/features/sales/widgets/products_list_widget.dart';
-import 'package:bikretaa/features/sales/widgets/text_input_feild/customer_address.dart';
-import 'package:bikretaa/features/sales/widgets/text_input_feild/customer_name_controller.dart';
+import 'package:bikretaa/features/user/sales/presentation/database/add_sales_screen_database.dart';
+import 'package:bikretaa/features/user/sales/presentation/models/SalesModel.dart';
+import 'package:bikretaa/features/user/sales/presentation/widgets/product_list_widget/products_list_widget.dart';
+import 'package:bikretaa/features/user/sales/presentation/widgets/text_input_feild/customer_address.dart';
+import 'package:bikretaa/features/user/sales/presentation/widgets/text_input_feild/customer_name_controller.dart';
 import 'package:bikretaa/features/shared/presentation/widgets/auth_user_input_feild/mobile_feild_widget.dart';
 import 'package:bikretaa/features/shared/presentation/widgets/snack_bar_messege/snackbar_messege.dart';
 import 'package:bikretaa/utils/string_utils.dart';
@@ -12,7 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../../utils/phone_utils.dart';
+import '../../../../../utils/phone_utils.dart';
 
 class AddSalesScreen extends StatefulWidget {
   const AddSalesScreen({super.key});

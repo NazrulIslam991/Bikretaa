@@ -1,6 +1,6 @@
 import 'package:bikretaa/app/responsive.dart';
-import 'package:bikretaa/features/sales/screens/add_sales_screen.dart';
-import 'package:bikretaa/features/sales/screens/due_collection_screen.dart';
+import 'package:bikretaa/features/user/sales/presentation/screens/add_sales_screen.dart';
+import 'package:bikretaa/features/user/sales/presentation/screens/due_collection_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

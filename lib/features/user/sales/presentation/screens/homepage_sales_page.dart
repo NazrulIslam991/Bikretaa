@@ -1,13 +1,13 @@
 import 'package:bikretaa/app/controller/sales_controller/sales_controller.dart';
 import 'package:bikretaa/app/responsive.dart';
-import 'package:bikretaa/features/sales/model/customer_model.dart';
-import 'package:bikretaa/features/sales/widgets/sale_card/sales_history_card.dart';
+import 'package:bikretaa/features/user/sales/presentation/models/customer_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../database/customer_info_database.dart';
 import '../widgets/sale_card/homepage_sales_summary_card.dart';
+import '../widgets/sale_card/sales_history_card.dart';
 
 class SalesSummaryScreen extends StatelessWidget {
   final String title;

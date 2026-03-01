@@ -1,5 +1,5 @@
 import 'package:bikretaa/app/responsive.dart';
-import 'package:bikretaa/features/sales/screens/update_sell_screen.dart';
+import 'package:bikretaa/features/user/sales/presentation/screens/update_sell_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

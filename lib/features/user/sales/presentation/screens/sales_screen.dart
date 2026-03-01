@@ -1,20 +1,21 @@
 import 'package:bikretaa/app/responsive.dart';
 import 'package:bikretaa/assets_path/assets_path.dart';
-import 'package:bikretaa/features/sales/database/customer_info_database.dart';
-import 'package:bikretaa/features/sales/database/sales_screen_database.dart';
-import 'package:bikretaa/features/sales/model/customer_model.dart';
-import 'package:bikretaa/features/sales/widgets/bottom_filter_sheet_for_sales.dart';
-import 'package:bikretaa/features/sales/widgets/floating_menu_fab.dart';
-import 'package:bikretaa/features/sales/widgets/sale_card/sales_history_card.dart';
-import 'package:bikretaa/features/sales/widgets/sale_card/sales_summary_card.dart';
-import 'package:bikretaa/features/sales/widgets/sale_screen_shimmer/sales_history_shimmer.dart';
-import 'package:bikretaa/features/sales/widgets/sale_screen_shimmer/sales_summary_shimmer.dart';
+import 'package:bikretaa/features/user/sales/presentation/database/customer_info_database.dart';
+import 'package:bikretaa/features/user/sales/presentation/database/sales_screen_database.dart';
+import 'package:bikretaa/features/user/sales/presentation/models/customer_model.dart';
+import 'package:bikretaa/features/user/sales/presentation/widgets/bottom_filter_sheet/bottom_filter_sheet_for_sales.dart';
+import 'package:bikretaa/features/user/sales/presentation/widgets/floating_action_widget/floating_menu_fab.dart';
 import 'package:bikretaa/features/shared/presentation/widgets/search_bar/search_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../widgets/sale_card/sales_history_card.dart';
+import '../widgets/sale_card/sales_summary_card.dart';
+import '../widgets/sale_screen_shimmer/sales_history_shimmer.dart';
+import '../widgets/sale_screen_shimmer/sales_summary_shimmer.dart';
 
 class SalesScreen extends StatefulWidget {
   const SalesScreen({super.key});

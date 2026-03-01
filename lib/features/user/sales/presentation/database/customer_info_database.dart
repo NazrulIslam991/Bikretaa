@@ -1,4 +1,4 @@
-import 'package:bikretaa/features/sales/model/customer_model.dart';
+import 'package:bikretaa/features/user/sales/presentation/models/customer_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CustomerDatabase {

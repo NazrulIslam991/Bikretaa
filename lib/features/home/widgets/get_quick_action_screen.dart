@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 import '../../products/screens/add_product_screen.dart';
 import '../../products/screens/homepage_product_list.dart';
-import '../../sales/screens/add_sales_screen.dart';
-import '../../sales/screens/customer_list_screen.dart';
-import '../../sales/screens/due_collection_screen.dart';
-import '../../sales/screens/homepage_sales_page.dart';
+import '../../user/sales/presentation/screens/add_sales_screen.dart';
+import '../../user/sales/presentation/screens/customer_list_screen.dart';
+import '../../user/sales/presentation/screens/due_collection_screen.dart';
+import '../../user/sales/presentation/screens/homepage_sales_page.dart';
 
 Widget getQuickActionScreenByTitle(String title) {
   switch (title) {

@@ -1,13 +1,12 @@
 import 'package:bikretaa/app/responsive.dart';
-import 'package:bikretaa/features/sales/database/add_sales_screen_database.dart';
-import 'package:bikretaa/features/sales/database/customer_info_database.dart';
-import 'package:bikretaa/features/sales/database/update_screen_database.dart';
-import 'package:bikretaa/features/sales/model/SalesModel.dart';
-import 'package:bikretaa/features/sales/model/customer_model.dart';
-import 'package:bikretaa/features/sales/widgets/products_list_widget.dart';
-import 'package:bikretaa/features/sales/widgets/sale_screen_shimmer/update_sales_screen_shimmer.dart';
-import 'package:bikretaa/features/sales/widgets/text_input_feild/customer_address.dart';
-import 'package:bikretaa/features/sales/widgets/text_input_feild/customer_name_controller.dart';
+import 'package:bikretaa/features/user/sales/presentation/database/add_sales_screen_database.dart';
+import 'package:bikretaa/features/user/sales/presentation/database/customer_info_database.dart';
+import 'package:bikretaa/features/user/sales/presentation/database/update_screen_database.dart';
+import 'package:bikretaa/features/user/sales/presentation/models/SalesModel.dart';
+import 'package:bikretaa/features/user/sales/presentation/models/customer_model.dart';
+import 'package:bikretaa/features/user/sales/presentation/widgets/product_list_widget/products_list_widget.dart';
+import 'package:bikretaa/features/user/sales/presentation/widgets/text_input_feild/customer_address.dart';
+import 'package:bikretaa/features/user/sales/presentation/widgets/text_input_feild/customer_name_controller.dart';
 import 'package:bikretaa/features/shared/presentation/widgets/auth_user_input_feild/mobile_feild_widget.dart';
 import 'package:bikretaa/features/shared/presentation/widgets/snack_bar_messege/snackbar_messege.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -15,8 +14,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../../utils/phone_utils.dart';
-import '../../../utils/string_utils.dart';
+import '../../../../../utils/phone_utils.dart';
+import '../../../../../utils/string_utils.dart';
+import '../widgets/sale_screen_shimmer/update_sales_screen_shimmer.dart';
 
 class UpdateSalesScreen extends StatefulWidget {
   final String salesID;

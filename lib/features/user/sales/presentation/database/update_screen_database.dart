@@ -1,8 +1,8 @@
-import 'package:bikretaa/features/sales/database/customer_info_database.dart';
-import 'package:bikretaa/features/sales/model/DueModel.dart';
-import 'package:bikretaa/features/sales/model/PaidModel.dart';
-import 'package:bikretaa/features/sales/model/RevenueModel.dart';
-import 'package:bikretaa/features/sales/model/SalesModel.dart';
+import 'package:bikretaa/features/user/sales/presentation/database/customer_info_database.dart';
+import 'package:bikretaa/features/user/sales/presentation/models/DueModel.dart';
+import 'package:bikretaa/features/user/sales/presentation/models/PaidModel.dart';
+import 'package:bikretaa/features/user/sales/presentation/models/RevenueModel.dart';
+import 'package:bikretaa/features/user/sales/presentation/models/SalesModel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UpdateSalesDatabase {
