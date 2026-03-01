@@ -75,14 +75,14 @@ class _UserNavBarScreenState extends State<UserNavBarScreen> {
 
         ///  CUSTOM FLOATING BOTTOM NAVBAR
         bottomNavigationBar: SizedBox(
-          height: r.height(0.13),
+          height: r.height(0.12),
           child: Stack(
             alignment: Alignment.bottomCenter,
             clipBehavior: Clip.none,
             children: [
               /// Background Bar
               Container(
-                height: r.height(0.09),
+                height: r.height(0.08),
                 margin: const EdgeInsets.fromLTRB(20, 0, 20, 25),
                 decoration: BoxDecoration(
                   color: backgroundColor,
@@ -113,11 +113,11 @@ class _UserNavBarScreenState extends State<UserNavBarScreen> {
 
               /// Floating Center Button
               Positioned(
-                top: -20,
+                top: -13,
                 child: GestureDetector(
                   onTap: () => setState(() => _currentIndex = 2),
                   child: Container(
-                    height: r.height(0.07),
+                    height: r.height(0.065),
                     //width: r.width(0.07),
                     decoration: BoxDecoration(
                       color: _currentIndex == 2

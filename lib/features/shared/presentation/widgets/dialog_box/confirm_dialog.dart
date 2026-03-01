@@ -66,7 +66,7 @@ Future<bool> showConfirmDialog({
                           borderRadius: BorderRadius.circular(r.radiusMedium()),
                         ),
                         side: BorderSide(color: theme.colorScheme.primary),
-                        padding: EdgeInsets.symmetric(vertical: r.height(0.02)),
+                        //padding: EdgeInsets.symmetric(vertical: r.height(0.02)),
                       ),
                       child: Text(
                         cancelText.tr,
@@ -89,7 +89,7 @@ Future<bool> showConfirmDialog({
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(r.radiusMedium()),
                         ),
-                        padding: EdgeInsets.symmetric(vertical: r.height(0.02)),
+                        //padding: EdgeInsets.symmetric(vertical: r.height(0.005)),
                       ),
                       child: Text(
                         confirmText.tr,

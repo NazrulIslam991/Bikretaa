@@ -265,17 +265,17 @@ class _SettingScreenState extends State<SettingScreen> {
 
           SizedBox(height: r.height(0.02)),
 
-          // DANGER ZONE
-          Text(
-            'DANGER_ZONE'.tr,
-            style: r.textStyle(
-              fontSize: r.fontSmall(),
-              fontWeight: FontWeight.w700,
-              color: Colors.red,
-              height: 1.2,
-            ),
-          ),
-          SizedBox(height: r.height(0.01)),
+          // // DANGER ZONE
+          // Text(
+          //   'DANGER_ZONE'.tr,
+          //   style: r.textStyle(
+          //     fontSize: r.fontSmall(),
+          //     fontWeight: FontWeight.w700,
+          //     color: Colors.red,
+          //     height: 1.2,
+          //   ),
+          // ),
+          // SizedBox(height: r.height(0.01)),
           SectionBoxWidget(
             children: [
               SettingsTileWidget(

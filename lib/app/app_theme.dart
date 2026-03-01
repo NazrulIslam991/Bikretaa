@@ -1,5 +1,6 @@
 import 'package:bikretaa/app/status_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppTheme {
   // Light Theme
@@ -18,7 +19,7 @@ class AppTheme {
       error: Colors.red,
       onError: Colors.white,
     ),
-    scaffoldBackgroundColor: Color(0xFFF5F5F5),
+    scaffoldBackgroundColor: Colors.white,
     appBarTheme: AppBarTheme(
       backgroundColor: Colors.white,
       //foregroundColor: Colors.black,
@@ -65,9 +66,16 @@ class AppTheme {
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        fixedSize: Size.fromWidth(double.maxFinite),
+        fixedSize: Size(double.maxFinite, 45.h),
         backgroundColor: Colors.blue,
         foregroundColor: Colors.white,
+        padding: EdgeInsets.symmetric(vertical: 12),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      ),
+    ),
+    outlinedButtonTheme: OutlinedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        fixedSize: Size(double.maxFinite, 45.h),
         padding: EdgeInsets.symmetric(vertical: 12),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       ),

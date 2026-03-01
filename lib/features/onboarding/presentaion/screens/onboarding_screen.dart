@@ -2,6 +2,7 @@ import 'package:bikretaa/app/responsive.dart';
 import 'package:bikretaa/assets_path/assets_path.dart';
 import 'package:bikretaa/features/auth/presentation/screens/signin/signin_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -137,41 +138,37 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 const SizedBox(height: 18),
 
                 /// Button
-                SizedBox(
-                  width: double.infinity,
-                  height: 52,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blueAccent,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blueAccent,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
                     ),
-                    onPressed: () {
-                      if (_currentPage ==
-                          _onboardingData.length - 1) {
-                        Navigator.pushReplacementNamed(
-                          context,
-                          SigninScreen.name,
-                        );
-                      } else {
-                        _pageController.nextPage(
-                          duration:
-                          const Duration(milliseconds: 300),
-                          curve: Curves.easeInOut,
-                        );
-                      }
-                    },
-                    child: Text(
-                      _currentPage ==
-                          _onboardingData.length - 1
-                          ? "Get Started"
-                          : "Next",
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white,
-                      ),
+                  ),
+                  onPressed: () {
+                    if (_currentPage ==
+                        _onboardingData.length - 1) {
+                      Navigator.pushReplacementNamed(
+                        context,
+                        SigninScreen.name,
+                      );
+                    } else {
+                      _pageController.nextPage(
+                        duration:
+                        const Duration(milliseconds: 300),
+                        curve: Curves.easeInOut,
+                      );
+                    }
+                  },
+                  child: Text(
+                    _currentPage ==
+                        _onboardingData.length - 1
+                        ? "Get Started"
+                        : "Next",
+                    style:  TextStyle(
+                      fontSize: 18.sp,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
                     ),
                   ),
                 ),

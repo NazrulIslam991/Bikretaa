@@ -229,7 +229,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                         iconColor: iconColor,
                       ),
 
-                      SizedBox(height: r.height(0.01)),
+                      SizedBox(height: r.height(0.12)),
                     ],
                   ),
                 ],

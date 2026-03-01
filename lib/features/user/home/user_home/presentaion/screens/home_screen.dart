@@ -2,6 +2,7 @@ import 'package:bikretaa/app/controller/product_controller/product_controller.da
 import 'package:bikretaa/app/controller/quick_action_controller/quick_action_controller.dart';
 import 'package:bikretaa/app/controller/sales_controller/sales_controller.dart';
 import 'package:bikretaa/app/responsive.dart';
+import 'package:bikretaa/assets_path/assets_path.dart';
 import 'package:bikretaa/features/admin/deshboard/presentation/widgets/section_tile_widget_admin.dart';
 import 'package:bikretaa/features/user/home/user_home/presentaion/widgets/action_button.dart';
 import 'package:bikretaa/features/user/home/user_home/presentaion/widgets/custom_drawer.dart';
@@ -33,7 +34,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final List<HomeSlider> sliders = [
-    HomeSlider(assetPath: 'assets/images/slider_1.png'),
+    HomeSlider(assetPath: AssetPaths.banner_1),
   ];
 
   final QuickActionController quickActionController = Get.put(

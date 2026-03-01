@@ -213,35 +213,36 @@ class DetailsProductScreen extends StatelessWidget {
       bottomNavigationBar: Padding(
         padding: EdgeInsets.all(responsive.width(0.03)),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            SizedBox(
-              //height: responsive.height(0.06),
-              width: responsive.width(0.25),
-              child: ElevatedButton(
-                onPressed: () {
-                  _onTapEdit(context);
-                },
-                child: Text(
-                  "edit".tr,
-                  style: responsive.textStyle(
-                    fontSize: responsive.fontMedium(),
+            Expanded(
+              child: SizedBox(
+                child: ElevatedButton(
+                  onPressed: () {
+                    _onTapEdit(context);
+                  },
+                  child: Text(
+                    "edit".tr,
+                    style: responsive.textStyle(
+                      fontSize: responsive.fontMedium(),
+                    ),
                   ),
                 ),
               ),
             ),
-            SizedBox(
-              //height: responsive.height(0.06),
-              width: responsive.width(0.25),
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-                onPressed: () {
-                  _onTapDelete(context);
-                },
-                child: Text(
-                  "delete".tr,
-                  style: responsive.textStyle(
-                    fontSize: responsive.fontMedium(),
+            SizedBox(width: responsive.width(0.05),),
+            Expanded(
+              child: SizedBox(
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                  onPressed: () {
+                    _onTapDelete(context);
+                  },
+                  child: Text(
+                    "delete".tr,
+                    style: responsive.textStyle(
+                      fontSize: responsive.fontMedium(),
+                    ),
                   ),
                 ),
               ),

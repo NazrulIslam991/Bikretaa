@@ -108,19 +108,15 @@ class _SigninScreenState extends State<SigninScreen> {
                     Visibility(
                       visible: !_signinProgressIndicator,
                       replacement: CenterCircularProgressIndiacator(),
-                      child: SizedBox(
-                        //width: double.infinity,
-                        //height: r.height(0.05),
-                        child: ElevatedButton(
-                          onPressed: _onTapSignin,
-                          child: Text(
-                            'Done'.tr,
-                            style: TextStyle(
-                              fontStyle: FontStyle.italic,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              fontSize: r.fontMedium(),
-                            ),
+                      child: ElevatedButton(
+                        onPressed: _onTapSignin,
+                        child: Text(
+                          'Done'.tr,
+                          style: TextStyle(
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            fontSize: r.fontMedium(),
                           ),
                         ),
                       ),

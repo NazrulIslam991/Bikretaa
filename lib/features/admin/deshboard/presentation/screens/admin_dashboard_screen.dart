@@ -196,7 +196,7 @@ class AdminDashboardScreen extends StatelessWidget {
                   );
                 },
               ),
-              //SizedBox(width: r.width(0.01)),
+              SizedBox(width: r.width(0.02)),
               Obx(() {
                 return IconButton(
                   onPressed: () => themeController.toggleTheme(),
@@ -212,11 +212,12 @@ class AdminDashboardScreen extends StatelessWidget {
               IconButton(
                 onPressed: handleLogout,
                 icon: Icon(
-                  Icons.person_outline,
+                  Icons.logout_outlined,
                   color: theme.textTheme.bodyLarge?.color,
                   size: r.iconMedium(),
                 ),
               ),
+              SizedBox(width: r.width(0.01)),
             ],
           ),
         ),
