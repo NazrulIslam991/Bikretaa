@@ -3,7 +3,7 @@ import 'package:bikretaa/features/products/database/product_database.dart';
 import 'package:bikretaa/features/products/model/product_model.dart';
 import 'package:bikretaa/features/products/screens/update_product_screen.dart';
 import 'package:bikretaa/features/products/widgets/copyable_text_widget.dart';
-import 'package:bikretaa/features/setting/widgets/divider.dart';
+import 'package:bikretaa/features/user/settings/setting/widgets/divider.dart';
 import 'package:bikretaa/features/shared/presentation/widgets/circular_progress/circular_progress_indicatior_2.dart';
 import 'package:bikretaa/features/shared/presentation/widgets/dialog_box/confirm_dialog.dart';
 import 'package:bikretaa/features/shared/presentation/widgets/snack_bar_messege/snackbar_messege.dart';

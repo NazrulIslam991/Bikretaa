@@ -1,10 +1,10 @@
 import 'package:bikretaa/app/responsive.dart';
 import 'package:bikretaa/features/auth/presentation/model/user_model.dart';
-import 'package:bikretaa/features/profile/screens/update_profile.dart';
+import 'package:bikretaa/features/user/settings/profile/presentaion/screens/update_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../shared/presentation/share_preferences_helper/shared_preferences_helper.dart';
+import '../../../../../shared/presentation/share_preferences_helper/shared_preferences_helper.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});

@@ -1,25 +1,25 @@
 import 'package:bikretaa/app/controller/theme_controller/theme_controller.dart';
 import 'package:bikretaa/app/responsive.dart';
-import 'package:bikretaa/features/about_us/screens/about_screen.dart';
+import 'package:bikretaa/features/user/settings/about_us/presentation/screens/about_screen.dart';
 import 'package:bikretaa/features/auth/presentation/model/user_model.dart';
 import 'package:bikretaa/features/auth/presentation/screens/signin/signin_screen.dart';
-import 'package:bikretaa/features/profile/screens/profile_screen.dart';
-import 'package:bikretaa/features/profile/screens/update_profile.dart';
-import 'package:bikretaa/features/setting/widgets/setting_widgets/section_box_widget.dart';
-import 'package:bikretaa/features/setting/widgets/setting_widgets/section_title_widget.dart';
-import 'package:bikretaa/features/setting/widgets/setting_widgets/setting_title_widget.dart';
+import 'package:bikretaa/features/user/settings/profile/presentaion/screens/profile_screen.dart';
+import 'package:bikretaa/features/user/settings/profile/presentaion/screens/update_profile.dart';
+import 'package:bikretaa/features/user/settings/setting/widgets/section_box_widget.dart';
+import 'package:bikretaa/features/user/settings/setting/widgets/section_title_widget.dart';
+import 'package:bikretaa/features/user/settings/setting/widgets/setting_title_widget.dart';
 import 'package:bikretaa/features/shared/presentation/share_preferences_helper/shared_preferences_helper.dart';
 import 'package:bikretaa/features/shared/presentation/widgets/circular_progress/circular_progress_indicatior.dart';
 import 'package:bikretaa/features/shared/presentation/widgets/circular_progress/circular_progress_indicatior_2.dart';
 import 'package:bikretaa/features/shared/presentation/widgets/dialog_box/confirm_dialog.dart';
 import 'package:bikretaa/features/shared/presentation/widgets/snack_bar_messege/snackbar_messege.dart';
-import 'package:bikretaa/features/supports_and_faqs/screens/support_and_faqs_screen.dart';
+import 'package:bikretaa/features/user/settings/supports_and_faqs/presentaion/screens/support_and_faqs_screen.dart';
 import 'package:bikretaa/utils/app_version_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../app/controller/language_controller/language_controller.dart';
+import '../../../../../../app/controller/language_controller/language_controller.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({super.key});

@@ -1,7 +1,7 @@
 import 'package:bikretaa/app/responsive.dart';
 import 'package:bikretaa/features/auth/presentation/screens/signin/signin_screen.dart';
 import 'package:bikretaa/features/notification_users/screens/notification_screen_user.dart';
-import 'package:bikretaa/features/setting/screens/setting_screen.dart';
+import 'package:bikretaa/features/user/settings/setting/presentation/screens/setting_screen.dart';
 import 'package:bikretaa/features/shared/presentation/share_preferences_helper/shared_preferences_helper.dart';
 import 'package:bikretaa/features/shared/presentation/widgets/circular_progress/circular_progress_indicatior_2.dart';
 import 'package:bikretaa/features/shared/presentation/widgets/dialog_box/confirm_dialog.dart';
@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../shared/presentation/widgets/snack_bar_messege/snackbar_messege.dart';
-import '../../supports_and_faqs/screens/support_and_faqs_screen.dart';
+import '../../user/settings/supports_and_faqs/presentaion/screens/support_and_faqs_screen.dart';
 
 class CustomDrawer extends StatefulWidget {
   const CustomDrawer({super.key});

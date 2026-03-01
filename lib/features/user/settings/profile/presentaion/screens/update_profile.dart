@@ -7,11 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../shared/presentation/share_preferences_helper/shared_preferences_helper.dart';
-import '../../shared/presentation/widgets/auth_user_input_feild/mobile_feild_widget.dart';
-import '../../shared/presentation/widgets/auth_user_input_feild/shop_name_widget.dart';
-import '../../shared/presentation/widgets/circular_progress/circular_progress_indicatior_2.dart';
-import '../../shared/presentation/widgets/snack_bar_messege/snackbar_messege.dart';
+import '../../../../../shared/presentation/share_preferences_helper/shared_preferences_helper.dart';
+import '../../../../../shared/presentation/widgets/auth_user_input_feild/mobile_feild_widget.dart';
+import '../../../../../shared/presentation/widgets/auth_user_input_feild/shop_name_widget.dart';
+import '../../../../../shared/presentation/widgets/circular_progress/circular_progress_indicatior_2.dart';
+import '../../../../../shared/presentation/widgets/snack_bar_messege/snackbar_messege.dart';
 
 class UpdateProfileScreen extends StatefulWidget {
   const UpdateProfileScreen({super.key});

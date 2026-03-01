@@ -1,4 +1,4 @@
-import 'package:bikretaa/features/supports_and_faqs/widgets/expansion_card_widget.dart';
+import 'package:bikretaa/features/user/settings/supports_and_faqs/presentaion/widgets/expansion_card_widget.dart';
 import 'package:flutter/material.dart';
 
 class FAQCard extends StatelessWidget {
