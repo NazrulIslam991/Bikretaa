@@ -5,7 +5,7 @@ import 'package:bikretaa/features/auth/presentation/database/firestore_user_chec
 import 'package:bikretaa/features/auth/presentation/screens/forgot_password_screen.dart';
 import 'package:bikretaa/features/auth/presentation/screens/sign_up/create_account_screen.dart';
 import 'package:bikretaa/features/auth/presentation/widgets/auth_botto_text.dart';
-import 'package:bikretaa/features/shared/presentation/screens/admin_main_nav_bar_screen.dart';
+import 'package:bikretaa/features/admin/bottom_navbar/presentation/screens/admin_main_nav_bar_screen.dart';
 import 'package:bikretaa/features/shared/presentation/screens/main_nav_bar_screen.dart';
 import 'package:bikretaa/features/shared/presentation/share_preferences_helper/shared_preferences_helper.dart';
 import 'package:bikretaa/features/shared/presentation/widgets/auth_user_input_feild/email_feild_controller.dart';

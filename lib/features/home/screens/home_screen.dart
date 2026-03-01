@@ -2,7 +2,7 @@ import 'package:bikretaa/app/controller/product_controller/product_controller.da
 import 'package:bikretaa/app/controller/quick_action_controller/quick_action_controller.dart';
 import 'package:bikretaa/app/controller/sales_controller/sales_controller.dart';
 import 'package:bikretaa/app/responsive.dart';
-import 'package:bikretaa/features/dashboard_admin/widgets/section_tile_widget_admin.dart';
+import 'package:bikretaa/features/admin/deshboard/presentation/widgets/section_tile_widget_admin.dart';
 import 'package:bikretaa/features/home/widgets/action_button.dart';
 import 'package:bikretaa/features/home/widgets/custom_drawer.dart';
 import 'package:bikretaa/features/home/widgets/expire_noties_widgets.dart';

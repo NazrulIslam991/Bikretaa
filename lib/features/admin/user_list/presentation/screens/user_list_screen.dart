@@ -1,16 +1,16 @@
 import 'package:bikretaa/app/responsive.dart';
 import 'package:bikretaa/features/shared/presentation/widgets/search_bar/search_bar.dart';
-import 'package:bikretaa/features/users_admin/widgets/user_card_admin.dart';
+import 'package:bikretaa/features/admin/user_list/presentation/widgets/user_card_admin.dart';
 import 'package:flutter/material.dart';
 
-class AdminUserScreen extends StatefulWidget {
-  const AdminUserScreen({super.key});
+class UserListScreen extends StatefulWidget {
+  const UserListScreen({super.key});
 
   @override
-  State<AdminUserScreen> createState() => _AdminUserScreenState();
+  State<UserListScreen> createState() => _UserListScreenState();
 }
 
-class _AdminUserScreenState extends State<AdminUserScreen> {
+class _UserListScreenState extends State<UserListScreen> {
   final TextEditingController _searchController = TextEditingController();
 
   List<Map<String, dynamic>> users = [

@@ -2,11 +2,11 @@ import 'package:bikretaa/app/controller/language_controller/language_controller.
 import 'package:bikretaa/app/controller/theme_controller/theme_controller.dart';
 import 'package:bikretaa/app/responsive.dart';
 import 'package:bikretaa/features/auth/presentation/screens/signin/signin_screen.dart';
-import 'package:bikretaa/features/dashboard_admin/widgets/activities_card_widget_admin.dart';
-import 'package:bikretaa/features/dashboard_admin/widgets/info_card_admin.dart';
-import 'package:bikretaa/features/dashboard_admin/widgets/kpi_admin_widget.dart';
-import 'package:bikretaa/features/dashboard_admin/widgets/quick_action_card_admin.dart';
-import 'package:bikretaa/features/dashboard_admin/widgets/section_tile_widget_admin.dart';
+import 'package:bikretaa/features/admin/deshboard/presentation/widgets/activities_card_widget_admin.dart';
+import 'package:bikretaa/features/admin/deshboard/presentation/widgets/info_card_admin.dart';
+import 'package:bikretaa/features/admin/deshboard/presentation/widgets/kpi_admin_widget.dart';
+import 'package:bikretaa/features/admin/deshboard/presentation/widgets/quick_action_card_admin.dart';
+import 'package:bikretaa/features/admin/deshboard/presentation/widgets/section_tile_widget_admin.dart';
 import 'package:bikretaa/features/shared/presentation/share_preferences_helper/shared_preferences_helper.dart';
 import 'package:bikretaa/features/shared/presentation/widgets/circular_progress/circular_progress_indicatior_2.dart';
 import 'package:bikretaa/features/shared/presentation/widgets/dialog_box/confirm_dialog.dart';

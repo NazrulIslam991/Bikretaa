@@ -1,11 +1,11 @@
-import 'package:bikretaa/features/notification_admin/widgets/messege_input_feild_admin.dart';
-import 'package:bikretaa/features/notification_admin/widgets/messege_title_input_feild_admin.dart';
-import 'package:bikretaa/features/notification_admin/widgets/notification_card_admin.dart';
-import 'package:bikretaa/features/notification_admin/widgets/notification_dropdown.dart';
+import 'package:bikretaa/features/admin/notification/presentaion/widgets/messege_input_feild_admin.dart';
+import 'package:bikretaa/features/admin/notification/presentaion/widgets/messege_title_input_feild_admin.dart';
+import 'package:bikretaa/features/admin/notification/presentaion/widgets/notification_card_admin.dart';
+import 'package:bikretaa/features/admin/notification/presentaion/widgets/notification_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../app/responsive.dart';
+import '../../../../../app/responsive.dart';
 
 class AdminNotificationScreen extends StatefulWidget {
   const AdminNotificationScreen({super.key});

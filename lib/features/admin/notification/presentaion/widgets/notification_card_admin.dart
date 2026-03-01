@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../app/responsive.dart';
+import '../../../../../app/responsive.dart';
 
 class NotificationCardAdmin extends StatelessWidget {
   final Map<String, String> notification;

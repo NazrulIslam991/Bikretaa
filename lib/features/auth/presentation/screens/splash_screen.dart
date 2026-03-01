@@ -2,7 +2,7 @@ import 'package:bikretaa/app/responsive.dart';
 import 'package:bikretaa/app/string.dart';
 import 'package:bikretaa/assets_path/assets_path.dart';
 import 'package:bikretaa/features/auth/presentation/screens/signin/signin_screen.dart';
-import 'package:bikretaa/features/shared/presentation/screens/admin_main_nav_bar_screen.dart';
+import 'package:bikretaa/features/admin/bottom_navbar/presentation/screens/admin_main_nav_bar_screen.dart';
 import 'package:bikretaa/features/shared/presentation/screens/main_nav_bar_screen.dart';
 import 'package:bikretaa/features/shared/presentation/widgets/background.dart';
 import 'package:firebase_auth/firebase_auth.dart';

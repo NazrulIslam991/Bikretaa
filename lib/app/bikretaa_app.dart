@@ -17,7 +17,7 @@ import 'package:bikretaa/features/qr_code/screens/qr_product_info_page.dart';
 import 'package:bikretaa/features/sales/screens/add_sales_screen.dart';
 import 'package:bikretaa/features/sales/screens/due_collection_screen.dart';
 import 'package:bikretaa/features/setting/screens/setting_screen.dart';
-import 'package:bikretaa/features/shared/presentation/screens/admin_main_nav_bar_screen.dart';
+import 'package:bikretaa/features/admin/bottom_navbar/presentation/screens/admin_main_nav_bar_screen.dart';
 import 'package:bikretaa/features/shared/presentation/screens/main_nav_bar_screen.dart';
 import 'package:bikretaa/utils/languages.dart';
 import 'package:flutter/material.dart';

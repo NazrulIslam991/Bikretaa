@@ -177,21 +177,6 @@ class _SettingScreenState extends State<SettingScreen> {
             ],
           ),
 
-          // // NOTIFICATIONS
-          // SectionTitleWidget(title: 'Notifications'.tr),
-          // SectionBoxWidget(
-          //   children: [
-          //     SettingsTileWidget(
-          //       icon: Icons.notifications_active_outlined,
-          //       title: 'Push_Notifications'.tr,
-          //       subtitle: 'Enable_all_notifications'.tr,
-          //       trailing: Switch(
-          //         value: _pushNotifications,
-          //         onChanged: (v) => setState(() => _pushNotifications = v),
-          //       ),
-          //     ),
-          //   ],
-          // ),
 
           // LANGUAGE & THEME
           SectionTitleWidget(title: 'Language_Theme'.tr),

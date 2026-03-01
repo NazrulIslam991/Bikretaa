@@ -1,8 +1,8 @@
 import 'package:bikretaa/app/responsive.dart';
-import 'package:bikretaa/features/dashboard_admin/screens/admin_dashboard_screen.dart';
-import 'package:bikretaa/features/notification_admin/screens/admin_notification_screen.dart';
+import 'package:bikretaa/features/admin/deshboard/presentation/screens/admin_dashboard_screen.dart';
+import 'package:bikretaa/features/admin/notification/presentaion/screens/admin_notification_screen.dart';
 import 'package:bikretaa/features/shared/presentation/widgets/dialog_box/confirm_dialog.dart';
-import 'package:bikretaa/features/users_admin/screens/admin_user_screen.dart';
+import 'package:bikretaa/features/admin/user_list/presentation/screens/user_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -17,7 +17,7 @@ class AdminMainNavBarScreen extends StatefulWidget {
 class _AdminMainNavBarScreenState extends State<AdminMainNavBarScreen> {
   final List<Widget> _navigationScreen = [
     AdminDashboardScreen(),
-    AdminUserScreen(),
+    UserListScreen(),
     AdminNotificationScreen(),
   ];
 
