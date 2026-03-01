@@ -14,7 +14,7 @@ import 'app/controller/product_controller/product_controller.dart';
 import 'app/controller/sales_controller/sales_controller.dart';
 import 'app/controller/sales_report_controller.dart';
 import 'app/controller/theme_controller/theme_controller.dart';
-import 'features/notification_users/services/notification_service.dart';
+import 'features/user/notification/presentation/services/notification_service.dart';
 import 'app/string.dart';
 import 'features/user/products/presentaion/database/cloudinary_database.dart';
 

@@ -1,5 +1,5 @@
 import 'package:bikretaa/app/responsive.dart';
-import 'package:bikretaa/features/notification_users/screens/notification_screen_user.dart';
+import 'package:bikretaa/features/user/notification/presentation/screens/notification_screen_user.dart';
 import 'package:flutter/material.dart';
 
 class NotificationIcon extends StatelessWidget {

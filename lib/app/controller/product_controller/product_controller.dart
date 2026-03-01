@@ -2,7 +2,7 @@ import 'package:bikretaa/features/user/products/presentaion/database/product_dat
 import 'package:bikretaa/features/user/products/presentaion/models/product_model.dart';
 import 'package:get/get.dart';
 import '../../../features/shared/presentation/get_storeage_helper/get_storage_helper.dart';
-import '../../../features/notification_users/services/notification_service.dart';
+import '../../../features/user/notification/presentation/services/notification_service.dart';
 
 class ProductController extends GetxController {
   final ProductDatabase _productDatabase = ProductDatabase();

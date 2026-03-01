@@ -1,30 +1,30 @@
 import 'package:bikretaa/app/app_theme.dart';
 import 'package:bikretaa/app/controller/language_controller/language_controller.dart';
 import 'package:bikretaa/app/controller/theme_controller/theme_controller.dart';
-import 'package:bikretaa/features/notification_users/services/notification_service.dart';
+import 'package:bikretaa/features/user/notification/presentation/services/notification_service.dart';
 import 'package:bikretaa/features/auth/presentation/screens/forgot_password_screen.dart';
 import 'package:bikretaa/features/auth/presentation/screens/sign_up/create_account_screen.dart';
 import 'package:bikretaa/features/auth/presentation/screens/signin/signin_screen.dart';
 import 'package:bikretaa/features/auth/presentation/screens/splash_screen.dart';
-import 'package:bikretaa/features/calculator/screens/calculator.dart';
-import 'package:bikretaa/features/calender/screen/calender_screen.dart';
-import 'package:bikretaa/features/notes/screens/notes_screen.dart';
+import 'package:bikretaa/features/user/home/calculator/presentaion/screens/calculator.dart';
+import 'package:bikretaa/features/user/home/calender/presentation/screens/calender_screen.dart';
+import 'package:bikretaa/features/user/home/notes/presentation/screens/notes_screen.dart';
 import 'package:bikretaa/features/user/products/presentaion/screens/add_product_screen.dart';
 import 'package:bikretaa/features/user/products/presentaion/screens/products_screen.dart';
-import 'package:bikretaa/features/qr_code/screens/qr_code_generator.dart';
-import 'package:bikretaa/features/qr_code/screens/qr_code_scanner.dart';
-import 'package:bikretaa/features/qr_code/screens/qr_product_info_page.dart';
+import 'package:bikretaa/features/user/home/qr_code/presentaion/screens/qr_code_generator.dart';
+import 'package:bikretaa/features/user/home/qr_code/presentaion/screens/qr_code_scanner.dart';
+import 'package:bikretaa/features/user/home/qr_code/presentaion/screens/qr_product_info_page.dart';
 import 'package:bikretaa/features/user/sales/presentation/screens/add_sales_screen.dart';
 import 'package:bikretaa/features/user/sales/presentation/screens/due_collection_screen.dart';
 import 'package:bikretaa/features/user/settings/setting/presentation/screens/setting_screen.dart';
 import 'package:bikretaa/features/admin/bottom_navbar/presentation/screens/admin_main_nav_bar_screen.dart';
-import 'package:bikretaa/features/shared/presentation/screens/main_nav_bar_screen.dart';
+import 'package:bikretaa/features/user/bottom_navigation_bar/presentation/screens/user_nav_bar_screen.dart';
 import 'package:bikretaa/utils/languages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../features/notification_users/screens/notification_screen_user.dart';
+import '../features/user/notification/presentation/screens/notification_screen_user.dart';
 
 class BikretaaApp extends StatelessWidget {
   const BikretaaApp({super.key});
@@ -62,7 +62,7 @@ class BikretaaApp extends StatelessWidget {
                         CreateAccountScreen(),
                     ForgotPasswordScreen.name: (context) =>
                         ForgotPasswordScreen(),
-                    MainNavBarScreen.name: (context) => MainNavBarScreen(),
+                    UserNavBarScreen.name: (context) => UserNavBarScreen(),
                     AdminMainNavBarScreen.name: (context) =>
                         AdminMainNavBarScreen(),
                     AddProductScreen.name: (context) => AddProductScreen(),

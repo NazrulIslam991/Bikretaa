@@ -6,7 +6,7 @@ import 'package:bikretaa/features/auth/presentation/screens/forgot_password_scre
 import 'package:bikretaa/features/auth/presentation/screens/sign_up/create_account_screen.dart';
 import 'package:bikretaa/features/auth/presentation/widgets/auth_botto_text.dart';
 import 'package:bikretaa/features/admin/bottom_navbar/presentation/screens/admin_main_nav_bar_screen.dart';
-import 'package:bikretaa/features/shared/presentation/screens/main_nav_bar_screen.dart';
+import 'package:bikretaa/features/user/bottom_navigation_bar/presentation/screens/user_nav_bar_screen.dart';
 import 'package:bikretaa/features/shared/presentation/share_preferences_helper/shared_preferences_helper.dart';
 import 'package:bikretaa/features/shared/presentation/widgets/auth_user_input_feild/email_feild_controller.dart';
 import 'package:bikretaa/features/shared/presentation/widgets/auth_user_input_feild/password_feild_widget.dart';
@@ -189,7 +189,7 @@ class _SigninScreenState extends State<SigninScreen> {
       } else {
         Navigator.pushNamedAndRemoveUntil(
           context,
-          MainNavBarScreen.name,
+          UserNavBarScreen.name,
           (predicate) => false,
         );
       }
