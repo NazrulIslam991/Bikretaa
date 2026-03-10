@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import 'customer_due_screen.dart';
+
 class CustomerListScreen extends StatefulWidget {
   final String title;
 
@@ -278,7 +280,17 @@ class CustomerInformationCard extends StatelessWidget {
                 size: r.iconSmall(),
                 color: theme.iconTheme.color,
               ),
-              onPressed: () {},
+              onPressed: () {
+                final shopUID = FirebaseAuth.instance.currentUser?.uid ?? "";
+                if (shopUID.isNotEmpty) {
+                  Get.to(
+                        () => CustomerDueScreen(
+                      customer: customer,
+                      shopUID: shopUID,
+                    ),
+                  );
+                }
+              },
             ),
           ],
         ),

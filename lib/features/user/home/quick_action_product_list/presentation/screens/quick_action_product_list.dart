@@ -144,7 +144,7 @@ class _ProductsFilterScreenState extends State<ProductsFilterScreen> {
               crossAxisCount: 2,
               mainAxisSpacing: r.height(0.02),
               crossAxisSpacing: r.width(0.03),
-              childAspectRatio: 1.w / 1.18.h,
+              childAspectRatio: 1.w / 1.2.h,
             ),
             itemCount: products.length,
             itemBuilder: (context, index) {
